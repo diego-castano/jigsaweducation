@@ -3,7 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jigsaw Education Evidence — Discovery Brief</title>
+<title>Jigsaw Education Evidence — Discovery Brief · March 2026</title>
+<meta name="description" content="Internal discovery brief for the Jigsaw Education Evidence website redesign. Company profile, current site analysis, pain points, recommended additions, and discovery questions.">
+<meta name="author" content="Diego Castaño">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jigsaw Education Evidence — Discovery Brief · March 2026">
+<meta property="og:description" content="Internal discovery brief for the Jigsaw Education Evidence website redesign. Company profile, current site analysis, pain points, recommended additions, and discovery questions.">
+<meta property="og:image" content="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png">
+<meta property="og:url" content="https://diego-castano.github.io/jigsaweducation/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jigsaw Education Evidence — Discovery Brief · March 2026">
+<meta name="twitter:description" content="Internal discovery brief for the Jigsaw Education Evidence website redesign. Company profile, current site analysis, pain points, recommended additions, and discovery questions.">
+<link rel="icon" type="image/png" href="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png">
+<link rel="apple-touch-icon" href="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,8 +59,12 @@
 <!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="sidebar-brand">
-    <img src="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png" alt="Jigsaw" style="filter:none;">
+    <div class="sidebar-logo-wrap">
+      <img src="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png" alt="Jigsaw Education Evidence">
+    </div>
     <div class="sidebar-meta">Discovery Brief &middot; March 2026</div>
+    <p class="sidebar-desc">Internal discovery brief for the <strong>Jigsaw Education Evidence</strong> website redesign. Company profile, current site analysis, pain points, recommended additions, and discovery questions.</p>
+    <span class="sidebar-author">Prepared by Diego Casta&ntilde;o &middot; March 2026</span>
   </div>
   <nav id="nav">
     <a href="#hero" class="active"><svg><use href="#i-home"/></svg>Overview</a>
@@ -68,10 +88,6 @@
 
   <!-- 1. HERO -->
   <section id="hero">
-    <div class="hero-top">
-      <img src="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png" alt="Jigsaw Education Evidence" class="hero-logo">
-      <span class="hero-badge">Internal Document</span>
-    </div>
     <h1>Jigsaw Education Evidence<br><span>Discovery Brief</span></h1>
     <p class="hero-subtitle">Website Redesign Project — Discovery &amp; Planning Phase</p>
     <div class="hero-grid">
@@ -299,63 +315,186 @@
     <div class="rec-grid">
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-edit"/></svg></div><div class="rec-title">Blog / Insights Section</div><span class="badge badge-high">High</span></div>
-        <p class="rec-body">You already produce the content — Learning Briefs, journal publications, conference presentations, policy recommendations. The problem is none of it lives on your site. It all goes to LinkedIn or third-party journals, and your website gets zero benefit. A blog changes that equation entirely: every post becomes a permanent SEO asset that brings organic traffic from people searching for exactly the topics you specialise in. It gives your LinkedIn audience somewhere to click through to. It gives donors and partners a reason to come back. And it signals that Jigsaw is active, producing, and leading conversations — not a static organisation with a static site. We build it with categories matching your four technical focus areas, so content is automatically organised and discoverable. Your team writes a post, picks a category, and the site does the rest.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-edit"/></svg></div><div class="rec-title">Blog / Insights Section</div><span class="badge badge-high">High</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You already produce the content — Learning Briefs, journal publications, conference presentations, policy recommendations. The problem is none of it lives on your site...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p><strong>You already produce the content</strong> — Learning Briefs, journal publications, conference presentations, policy recommendations. The problem? None of it lives on your site. It all goes to LinkedIn or third-party journals, and your website gets zero benefit.</p>
+          <div class="rec-highlight">Every blog post becomes a permanent SEO asset that brings organic traffic from people searching for exactly the topics you specialise in.</div>
+          <p>It gives your LinkedIn audience somewhere to click through to, gives donors and partners a reason to come back, and signals that Jigsaw is <strong>active, producing, and leading conversations</strong> — not a static organisation with a static site.</p>
+          <ul>
+            <li>Categories matching your four technical focus areas</li>
+            <li>Content automatically organised and discoverable</li>
+            <li>Your team writes a post, picks a category &mdash; the site does the rest</li>
+          </ul>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-book"/></svg></div><div class="rec-title">Evidence Library</div><span class="badge badge-high">High</span></div>
-        <p class="rec-body">This is the centrepiece of the new site — and your most powerful differentiator. You have roughly 100 publications that prove Jigsaw's depth and rigour, but right now they're scattered across external journals, partner websites, and a flat list on your current Publications page. The Evidence Library brings it all together into a single, searchable, filterable hub: title, authors, date, a short summary sentence, and either a link to the external source or a hosted PDF. Visitors can filter by region, author, and technical focus area to find exactly what's relevant to them. For a donor evaluating whether to work with you, this is the page that closes the deal — it shows volume, breadth, and academic credibility at a glance. We build it as a Custom Post Type in WordPress so your team can add new publications without touching code, and the filters update automatically.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-book"/></svg></div><div class="rec-title">Evidence Library</div><span class="badge badge-high">High</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">This is the centrepiece of the new site — and your most powerful differentiator. You have roughly 100 publications that prove Jigsaw's depth and rigour...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>This is <strong>the centrepiece of the new site</strong> &mdash; and your most powerful differentiator. You have roughly 100 publications that prove Jigsaw&rsquo;s depth and rigour, but right now they&rsquo;re scattered across external journals, partner websites, and a flat list on your current Publications page.</p>
+          <p>The Evidence Library brings it all together into a <strong>single, searchable, filterable hub</strong>:</p>
+          <ul>
+            <li>Title, authors, date, and a short summary sentence</li>
+            <li>Link to the external source or a hosted PDF</li>
+            <li>Filter by region, author, and technical focus area</li>
+          </ul>
+          <div class="rec-highlight">For a donor evaluating whether to work with you, this is the page that closes the deal &mdash; it shows volume, breadth, and academic credibility at a glance.</div>
+          <p>Built as a <strong>Custom Post Type in WordPress</strong>, your team can add new publications without touching code, and the filters update automatically.</p>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">Visual Identity System (No-Photo Approach)</div><span class="badge badge-high">High</span></div>
-        <p class="rec-body">Your photo policy is clear and well-reasoned — no identifiable faces without consent, no stock photos, no AI-generated images of people. This is the right decision for an organisation working with vulnerable populations, but it creates a real design challenge: most websites rely on photography to create emotional connection and visual rhythm. Without it, a site can feel cold or corporate — which is exactly what you don't want. The solution is a purpose-built visual system: your brand's geometric patterns (the J repeat from the guidelines), data visualisations that tell your impact story, abstract situational photography (landscapes, classrooms, technology without faces), and a consistent icon language across the four focus areas. This isn't a workaround — done well, it becomes your visual signature. It makes your site immediately recognisable and unlike anything else in the sector. This is a design deliverable we develop alongside the site, not an afterthought.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">Visual Identity System (No-Photo Approach)</div><span class="badge badge-high">High</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">Your photo policy is clear and well-reasoned — no identifiable faces without consent, no stock photos, no AI-generated images of people...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>Your photo policy is clear and well-reasoned &mdash; <strong>no identifiable faces</strong> without consent, no stock photos, no AI-generated images of people. This is the right decision for an organisation working with vulnerable populations, but it creates a real design challenge: most websites rely on photography to create emotional connection.</p>
+          <p>The solution is a <strong>purpose-built visual system</strong>:</p>
+          <ul>
+            <li>Your brand&rsquo;s geometric patterns (the J repeat from the guidelines)</li>
+            <li>Data visualisations that tell your impact story</li>
+            <li>Abstract situational photography (landscapes, classrooms, technology without faces)</li>
+            <li>Consistent icon language across the four focus areas</li>
+          </ul>
+          <div class="rec-highlight">This isn&rsquo;t a workaround &mdash; done well, it becomes your visual signature. It makes your site immediately recognisable and unlike anything else in the sector.</div>
+          <p>This is a design deliverable we develop <strong>alongside the site</strong>, not an afterthought.</p>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-trending"/></svg></div><div class="rec-title">Impact / Results Page</div><span class="badge badge-high">High</span></div>
-        <p class="rec-body">You've worked in 30+ countries, partnered with 60+ organisations, conducted research with thousands of participants over more than a decade. Those numbers are powerful — but right now they're buried in copy or mentioned in passing. A dedicated Impact page puts them front and centre with visual counters, a map of countries, and key milestones on a timeline. Donors and institutional partners think in metrics; this page speaks their language. It also gives you a living page that grows with every new project — when you finish a new study or enter a new country, one number changes and the page tells a bigger story. It's low-effort to maintain and high-impact for credibility.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-trending"/></svg></div><div class="rec-title">Impact / Results Page</div><span class="badge badge-high">High</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You've worked in 30+ countries, partnered with 60+ organisations, conducted research with thousands of participants over more than a decade...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>You&rsquo;ve worked in <strong>30+ countries</strong>, partnered with <strong>60+ organisations</strong>, conducted research with thousands of participants over more than a decade. Those numbers are powerful &mdash; but right now they&rsquo;re buried in copy or mentioned in passing.</p>
+          <p>A dedicated Impact page puts them front and centre:</p>
+          <ul>
+            <li>Visual counters with animated numbers</li>
+            <li>Interactive map of countries</li>
+            <li>Key milestones on a timeline</li>
+          </ul>
+          <div class="rec-highlight">Donors and institutional partners think in metrics &mdash; this page speaks their language.</div>
+          <p>It&rsquo;s a <strong>living page</strong> that grows with every new project. When you finish a new study or enter a new country, one number changes and the page tells a bigger story. Low-effort to maintain, high-impact for credibility.</p>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-mail"/></svg></div><div class="rec-title">Newsletter Signup (Site-wide)</div><span class="badge badge-high">High</span></div>
-        <p class="rec-body">Right now, every visitor to your site is a dead end. They read, they leave, and you have no way to reach them again. A newsletter signup changes that — even a simple "Subscribe for updates on our latest research" in the footer and a dedicated section on the homepage starts building an owned audience. Connected to Mailchimp or a similar platform, it gives you a direct channel to share new publications, announce projects, and stay top-of-mind with donors, partners, and the broader education research community. LinkedIn is great, but you don't own that audience — the algorithm decides who sees your posts. An email list is yours. And for an organisation that only recently moved away from Twitter, this becomes your second reliable distribution channel alongside LinkedIn.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-mail"/></svg></div><div class="rec-title">Newsletter Signup (Site-wide)</div><span class="badge badge-high">High</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">Right now, every visitor to your site is a dead end. They read, they leave, and you have no way to reach them again...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>Right now, <strong>every visitor to your site is a dead end</strong>. They read, they leave, and you have no way to reach them again.</p>
+          <p>A newsletter signup changes that &mdash; even a simple &ldquo;Subscribe for updates on our latest research&rdquo; in the footer starts building an <strong>owned audience</strong>. Connected to Mailchimp or a similar platform, it gives you a direct channel to:</p>
+          <ul>
+            <li>Share new publications and announce projects</li>
+            <li>Stay top-of-mind with donors, partners, and the research community</li>
+            <li>Build a distribution channel you actually own</li>
+          </ul>
+          <div class="rec-highlight">LinkedIn is great, but you don&rsquo;t own that audience &mdash; the algorithm decides who sees your posts. An email list is yours.</div>
+          <p>For an organisation that only recently moved away from Twitter, this becomes your <strong>second reliable distribution channel</strong> alongside LinkedIn.</p>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-target"/></svg></div><div class="rec-title">Technical Focus Landing Pages</div><span class="badge badge-med">Medium</span></div>
-        <p class="rec-body">You have four clear areas of expertise: EdTech, Education in Emergencies, Education for Girls, and Education, Climate &amp; Environment. Right now these are subpages with minimal content. Turning each into a proper landing page — with context on why this area matters, your approach, relevant team members who specialise in it, and auto-linked case studies — does two things. First, it makes your expertise tangible for a potential client who cares about one specific area. Second, it creates four strong SEO entry points: someone searching "education technology research low-income countries" should find Jigsaw. These pages make that possible. The case study links are automated through WordPress taxonomies, so when you publish a new case study tagged "EdTech," it appears on the landing page without anyone touching it.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-target"/></svg></div><div class="rec-title">Technical Focus Landing Pages</div><span class="badge badge-med">Medium</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You have four clear areas of expertise: EdTech, Education in Emergencies, Education for Girls, and Education, Climate &amp; Environment...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>You have <strong>four clear areas of expertise</strong>: EdTech, Education in Emergencies, Education for Girls, and Education, Climate &amp; Environment. Right now these are subpages with minimal content.</p>
+          <p>Turning each into a proper landing page does two things:</p>
+          <ul>
+            <li><strong>Makes your expertise tangible</strong> for a potential client who cares about one specific area &mdash; with context on why it matters, your approach, relevant team members, and auto-linked case studies</li>
+            <li><strong>Creates four strong SEO entry points</strong> &mdash; someone searching &ldquo;education technology research low-income countries&rdquo; should find Jigsaw</li>
+          </ul>
+          <div class="rec-highlight">Case study links are automated through WordPress taxonomies &mdash; publish a new case study tagged &ldquo;EdTech,&rdquo; and it appears on the landing page without anyone touching it.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-briefcase"/></svg></div><div class="rec-title">Careers / Work With Us</div><span class="badge badge-med">Medium</span></div>
-        <p class="rec-body">You're a team of 21 that just expanded into Zambia. That's growth — and growth attracts talent. A Careers page, even a simple one that says "We don't have open positions right now, but we're always interested in hearing from researchers passionate about education in low-income contexts," does more than you'd think. It signals to the sector that Jigsaw is a real, growing organisation — not a consultancy that might disappear. It gives prospective researchers a way to express interest. And it helps with recruitment when you do have openings, because the page already exists and is indexed by Google. The alternative — no page at all — says nothing, and silence is never a good recruiter.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-briefcase"/></svg></div><div class="rec-title">Careers / Work With Us</div><span class="badge badge-med">Medium</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You're a team of 21 that just expanded into Zambia. That's growth — and growth attracts talent...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>You&rsquo;re a team of 21 that just expanded into Zambia. <strong>That&rsquo;s growth &mdash; and growth attracts talent.</strong></p>
+          <p>A Careers page, even a simple one, does more than you&rsquo;d think:</p>
+          <ul>
+            <li>Signals Jigsaw is a <strong>real, growing organisation</strong> &mdash; not a consultancy that might disappear</li>
+            <li>Gives prospective researchers a way to express interest</li>
+            <li>Helps with recruitment when you do have openings &mdash; the page already exists and is indexed by Google</li>
+          </ul>
+          <div class="rec-highlight">The alternative &mdash; no page at all &mdash; says nothing. And silence is never a good recruiter.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">FAQ / How We Work</div><span class="badge badge-med">Medium</span></div>
-        <p class="rec-body">Potential clients often want to know: what does working with Jigsaw actually look like? How long does a typical engagement take? What's the process? Do you embed with our team or work independently? Right now, that information doesn't exist on the site — which means it only comes out in a call or email. An FAQ or "How We Work" page answers those questions upfront, reduces friction for inbound leads, and pre-qualifies enquiries so the conversations you do have are more productive. It also positions Jigsaw as approachable and transparent — values you already hold but don't yet communicate on the site. For an organisation that works with governments and large INGOs accustomed to formal procurement processes, showing your methodology upfront builds trust before the first meeting.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">FAQ / How We Work</div><span class="badge badge-med">Medium</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">Potential clients often want to know: what does working with Jigsaw actually look like? How long does a typical engagement take?...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>Potential clients often want to know: <strong>what does working with Jigsaw actually look like?</strong> How long does a typical engagement take? Do you embed with our team or work independently?</p>
+          <p>Right now, that information doesn&rsquo;t exist on the site &mdash; which means it only comes out in a call or email. An FAQ or &ldquo;How We Work&rdquo; page:</p>
+          <ul>
+            <li>Answers questions upfront and reduces friction for inbound leads</li>
+            <li>Pre-qualifies enquiries so conversations are more productive</li>
+            <li>Positions Jigsaw as <strong>approachable and transparent</strong></li>
+          </ul>
+          <div class="rec-highlight">For an organisation that works with governments and large INGOs accustomed to formal procurement processes, showing your methodology upfront builds trust before the first meeting.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-search"/></svg></div><div class="rec-title">404 Page &amp; Site Search</div><span class="badge badge-low">Low</span></div>
-        <p class="rec-body">Small detail, big signal. A custom 404 page that points visitors back to useful content (instead of a generic error) shows attention to detail. A functional site search is essential for a content-heavy site — especially once the Evidence Library is live with 100+ publications and dozens of case studies. Visitors who know what they're looking for need a fast path to it. These are both low-effort, low-cost additions that quietly elevate the overall quality perception of the site. For an audience of researchers and institutional stakeholders who notice these things, it matters.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-search"/></svg></div><div class="rec-title">404 Page &amp; Site Search</div><span class="badge badge-low">Low</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">Small detail, big signal. A custom 404 page that points visitors back to useful content shows attention to detail...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p><strong>Small detail, big signal.</strong> A custom 404 page that points visitors back to useful content (instead of a generic error) shows attention to detail.</p>
+          <p>A functional site search is essential for a content-heavy site &mdash; especially once the Evidence Library is live with 100+ publications and dozens of case studies.</p>
+          <ul>
+            <li>Visitors who know what they&rsquo;re looking for need a fast path to it</li>
+            <li>Low-effort, low-cost additions that quietly elevate quality perception</li>
+          </ul>
+          <div class="rec-highlight">For an audience of researchers and institutional stakeholders who notice these things, it matters.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-globe"/></svg></div><div class="rec-title">Jigsaw Zambia Section</div><span class="badge badge-med">Medium</span></div>
-        <p class="rec-body">You've just opened Jigsaw Education Zambia Ltd. with two new team members — that's a milestone worth making visible. A dedicated section (even a single page initially) signals growth, local presence, and commitment to the regions you serve. More importantly, it gives your Zambia team a home on the site from day one. We build it now as a lightweight page that can expand into a full microsite later without restructuring anything. The cost of adding it now is minimal; the cost of retrofitting later is not.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-globe"/></svg></div><div class="rec-title">Jigsaw Zambia Section</div><span class="badge badge-med">Medium</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You've just opened Jigsaw Education Zambia Ltd. with two new team members — that's a milestone worth making visible...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>You&rsquo;ve just opened <strong>Jigsaw Education Zambia Ltd.</strong> with two new team members &mdash; that&rsquo;s a milestone worth making visible.</p>
+          <p>A dedicated section signals:</p>
+          <ul>
+            <li><strong>Growth and local presence</strong> &mdash; commitment to the regions you serve</li>
+            <li>A home on the site for your Zambia team from day one</li>
+            <li>A lightweight page that can expand into a full microsite later without restructuring</li>
+          </ul>
+          <div class="rec-highlight">The cost of adding it now is minimal. The cost of retrofitting later is not.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-building"/></svg></div><div class="rec-title">Partner &amp; Client Showcase (Redesigned)</div><span class="badge badge-med">Medium</span></div>
-        <p class="rec-body">Your current homepage has a basic logo strip — but you work with FCDO, World Bank, Gates Foundation, UNICEF, Save the Children, and the European Commission. That's not a logo strip, that's your strongest credibility signal. A redesigned showcase groups partners by type (bilateral donors, INGOs, international organisations), adds context on hover, and links directly to relevant case studies. When a potential client lands on your site, this is what converts them from "interesting" to "let's talk." Right now it's an afterthought; it should be a centrepiece.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-building"/></svg></div><div class="rec-title">Partner &amp; Client Showcase (Redesigned)</div><span class="badge badge-med">Medium</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">Your current homepage has a basic logo strip — but you work with FCDO, World Bank, Gates Foundation, UNICEF, Save the Children...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>Your current homepage has a basic logo strip &mdash; but you work with <strong>FCDO, World Bank, Gates Foundation, UNICEF, Save the Children, and the European Commission</strong>. That&rsquo;s not a logo strip &mdash; that&rsquo;s your strongest credibility signal.</p>
+          <p>A redesigned showcase:</p>
+          <ul>
+            <li>Groups partners by type (bilateral donors, INGOs, international organisations)</li>
+            <li>Adds context on hover</li>
+            <li>Links directly to relevant case studies</li>
+          </ul>
+          <div class="rec-highlight">When a potential client lands on your site, this is what converts them from &ldquo;interesting&rdquo; to &ldquo;let&rsquo;s talk.&rdquo; Right now it&rsquo;s an afterthought &mdash; it should be a centrepiece.</div>
+        </div></div>
       </div>
 
       <div class="rec-card reveal-card">
-        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">Accessibility &amp; Multilingual Readiness</div><span class="badge badge-low">Low</span></div>
-        <p class="rec-body">You work across 30+ countries, your brand guidelines already include Tajawal for Arabic, and your audience includes government officials and education stakeholders in low-income contexts — many accessing the web on low-bandwidth mobile connections. Building the site with WCAG AA compliance and a translation-ready architecture (RTL support, multilingual plugin compatibility) costs almost nothing if done from the start, but becomes a significant rebuild if added later. For an organisation advocating inclusive education, an accessible website isn't just best practice — it's a statement of values that your partners and donors will notice.</p>
+        <div class="rec-head" onclick="toggleRec(this)"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">Accessibility &amp; Multilingual Readiness</div><span class="badge badge-low">Low</span><svg class="expand-arrow"><use href="#i-chevron"/></svg></div>
+        <p class="rec-preview">You work across 30+ countries, your brand guidelines already include Tajawal for Arabic, and your audience includes government officials...</p>
+        <div class="rec-body-wrap"><div class="rec-body">
+          <p>You work across <strong>30+ countries</strong>, your brand guidelines already include Tajawal for Arabic, and your audience includes government officials and education stakeholders in low-income contexts &mdash; many accessing the web on <strong>low-bandwidth mobile connections</strong>.</p>
+          <p>Building the site with the right foundation from day one:</p>
+          <ul>
+            <li><strong>WCAG AA compliance</strong> for accessibility</li>
+            <li>Translation-ready architecture (RTL support, multilingual plugin compatibility)</li>
+            <li>Costs almost nothing if done from the start</li>
+          </ul>
+          <div class="rec-highlight">For an organisation advocating inclusive education, an accessible website isn&rsquo;t just best practice &mdash; it&rsquo;s a statement of values that your partners and donors will notice.</div>
+        </div></div>
       </div>
 
     </div>
@@ -390,9 +529,7 @@
       </button>
       <div class="q-body">
         <div class="q-item"><span class="q-num">Q6</span><input type="checkbox" id="q6"><label class="q-text" for="q6">Is the current site content being carried over as-is, or is your team rewriting it? Specifically the case studies &mdash; are all 60+ migrating, or a curated selection?</label></div>
-        <div class="q-item"><span class="q-num">Q7</span><input type="checkbox" id="q7"><label class="q-text" for="q7">You mentioned a concept note, technical brief, and sitemap are in progress. Will those be shared before the call, or should we work from the current structure?</label></div>
-        <div class="q-item"><span class="q-num">Q8</span><input type="checkbox" id="q8"><label class="q-text" for="q8">Who will be the day-to-day content editor after launch? Just Kara, or multiple team members?</label></div>
-        <div class="q-item"><span class="q-num">Q9</span><input type="checkbox" id="q9"><label class="q-text" for="q9">Are there any pages or sections on the current site that should NOT be migrated?</label></div>
+        <div class="q-item"><span class="q-num">Q7</span><input type="checkbox" id="q7"><label class="q-text" for="q7">Are there any pages or sections on the current site that should NOT be migrated?</label></div>
       </div>
     </div>
 
@@ -403,11 +540,11 @@
         <svg class="arrow"><use href="#i-chevron"/></svg>
       </button>
       <div class="q-body">
-        <div class="q-item"><span class="q-num">Q10</span><input type="checkbox" id="q10"><label class="q-text" for="q10">Do you want newsletter / mailing list integration? Do you currently use a platform like Mailchimp?</label></div>
-        <div class="q-item"><span class="q-num">Q11</span><input type="checkbox" id="q11"><label class="q-text" for="q11">Any data visualisation needs? Interactive maps of countries where you&rsquo;ve worked, research output dashboards?</label></div>
-        <div class="q-item"><span class="q-num">Q12</span><input type="checkbox" id="q12"><label class="q-text" for="q12">Any integration with external platforms? EdTech Hub, academic databases, ORCID for researchers?</label></div>
-        <div class="q-item"><span class="q-num">Q13</span><input type="checkbox" id="q13"><label class="q-text" for="q13">Do you currently own a hosting account, or will that be part of the new setup?</label></div>
-        <div class="q-item"><span class="q-num">Q14</span><input type="checkbox" id="q14"><label class="q-text" for="q14">Any accessibility requirements beyond standard best practice? WCAG compliance may matter for credibility given your sector.</label></div>
+        <div class="q-item"><span class="q-num">Q8</span><input type="checkbox" id="q8"><label class="q-text" for="q10">Do you want newsletter / mailing list integration? Do you currently use a platform like Mailchimp?</label></div>
+        <div class="q-item"><span class="q-num">Q9</span><input type="checkbox" id="q9b"><label class="q-text" for="q11">Any data visualisation needs? Interactive maps of countries where you&rsquo;ve worked, research output dashboards?</label></div>
+        <div class="q-item"><span class="q-num">Q10</span><input type="checkbox" id="q10"><label class="q-text" for="q12">Any integration with external platforms? EdTech Hub, academic databases, ORCID for researchers?</label></div>
+        <div class="q-item"><span class="q-num">Q11</span><input type="checkbox" id="q11"><label class="q-text" for="q13">Do you currently own a hosting account, or will that be part of the new setup?</label></div>
+        <div class="q-item"><span class="q-num">Q12</span><input type="checkbox" id="q12"><label class="q-text" for="q14">Any accessibility requirements beyond standard best practice? WCAG compliance may matter for credibility given your sector.</label></div>
       </div>
     </div>
 
@@ -418,10 +555,10 @@
         <svg class="arrow"><use href="#i-chevron"/></svg>
       </button>
       <div class="q-body">
-        <div class="q-item"><span class="q-num">Q15</span><input type="checkbox" id="q15"><label class="q-text" for="q15">Given the Dignified Storytelling pledge, what is the photo policy? Can field photos be used at all, or do we need a fully illustration/abstract visual approach?</label></div>
-        <div class="q-item"><span class="q-num">Q16</span><input type="checkbox" id="q16"><label class="q-text" for="q16">Do you have existing brand guidelines (logo files, colour palette, typography, tone of voice)? Or will you need us to propose a visual identity direction?</label></div>
-        <div class="q-item"><span class="q-num">Q17</span><input type="checkbox" id="q17"><label class="q-text" for="q17">Any websites in your sector whose design you admire? This is the fastest way for us to align on visual direction.</label></div>
-        <div class="q-item"><span class="q-num">Q18</span><input type="checkbox" id="q18"><label class="q-text" for="q18">Should the Zambia entity have its own section or page, or is it folded into the main site?</label></div>
+        <div class="q-item"><span class="q-num">Q13</span><input type="checkbox" id="q13"><label class="q-text" for="q15">Given the Dignified Storytelling pledge, what is the photo policy? Can field photos be used at all, or do we need a fully illustration/abstract visual approach?</label></div>
+        <div class="q-item"><span class="q-num">Q14</span><input type="checkbox" id="q14"><label class="q-text" for="q16">Do you have existing brand guidelines (logo files, colour palette, typography, tone of voice)? Or will you need us to propose a visual identity direction?</label></div>
+        <div class="q-item"><span class="q-num">Q15</span><input type="checkbox" id="q15"><label class="q-text" for="q17">Any websites in your sector whose design you admire? This is the fastest way for us to align on visual direction.</label></div>
+        <div class="q-item"><span class="q-num">Q16</span><input type="checkbox" id="q16"><label class="q-text" for="q18">Should the Zambia entity have its own section or page, or is it folded into the main site?</label></div>
       </div>
     </div>
   </section>
@@ -440,7 +577,7 @@
       <div class="sum-highlight-navy">
         <div class="sum-label">Recommended CMS</div>
         <div class="sum-val">WordPress or Custom Build</div>
-        <div class="sum-sub" style="margin-top:8px;">WP Engine managed hosting &middot; Decision pending client input on complexity and long-term maintenance preferences</div>
+        <div class="sum-sub" style="margin-top:8px;">WordPress for editorial control and fast updates. Custom build if the Evidence Library requires advanced filtering or functionality beyond WP&rsquo;s ceiling. Final call depends on scope complexity.</div>
       </div>
     </div>
 

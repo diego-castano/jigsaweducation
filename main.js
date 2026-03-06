@@ -24,6 +24,11 @@ function toggleQ(btn) {
   btn.closest('.q-group').classList.toggle('open');
 }
 
+// Recommendation cards expand/collapse
+function toggleRec(head) {
+  head.closest('.rec-card').classList.toggle('open');
+}
+
 // Mobile sidebar
 const menuBtn = document.getElementById('menu-toggle');
 const sidebar = document.getElementById('sidebar');
