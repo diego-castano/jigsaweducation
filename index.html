@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jigsaw Education Evidence — Discovery Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SVG SPRITE (hidden) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+  <symbol id="i-bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></symbol>
+  <symbol id="i-trending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+</svg>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <img src="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png" alt="Jigsaw" style="filter:none;">
+    <div class="sidebar-meta">Discovery Brief &middot; March 2026</div>
+  </div>
+  <nav id="nav">
+    <a href="#hero" class="active"><svg><use href="#i-home"/></svg>Overview</a>
+    <a href="#profile"><svg><use href="#i-building"/></svg>Company Profile</a>
+    <a href="#site"><svg><use href="#i-monitor"/></svg>Site Analysis</a>
+    <a href="#pain"><svg><use href="#i-alert"/></svg>Pain Points</a>
+    <a href="#recs"><svg><use href="#i-star"/></svg>Recommendations</a>
+    <a href="#questions"><svg><use href="#i-help"/></svg>Discovery Questions</a>
+    <a href="#summary"><svg><use href="#i-clipboard"/></svg>Project Summary</a>
+  </nav>
+  <div class="sidebar-footer">Internal Discovery Document</div>
+</aside>
+
+<!-- HAMBURGER -->
+<button id="menu-toggle" aria-label="Toggle menu">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- 1. HERO -->
+  <section id="hero">
+    <div class="hero-top">
+      <img src="https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/theme/logo/1/logo_Jigsaw_logo_thin_left.png" alt="Jigsaw Education Evidence" class="hero-logo">
+      <span class="hero-badge">Internal Document</span>
+    </div>
+    <h1>Jigsaw Education Evidence<br><span>Discovery Brief</span></h1>
+    <p class="hero-subtitle">Website Redesign Project — Discovery &amp; Planning Phase</p>
+    <div class="hero-grid">
+      <div class="hero-card">
+        <div class="label">Date</div>
+        <div class="value">March 2026</div>
+      </div>
+      <div class="hero-card">
+        <div class="label">Client</div>
+        <div class="value">Jigsaw Education Evidence</div>
+      </div>
+      <div class="hero-card">
+        <div class="label">Status</div>
+        <div class="value">Discovery Phase</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. COMPANY PROFILE -->
+  <section id="profile">
+    <div class="section-num reveal">Section 02</div>
+    <h2 class="reveal">Company Profile</h2>
+
+    <div class="stat-bar reveal">
+      <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Years</div></div>
+      <div class="stat-item"><div class="stat-num">60+</div><div class="stat-label">Organisations</div></div>
+      <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Countries</div></div>
+      <div class="stat-item"><div class="stat-num">~21</div><div class="stat-label">Team</div></div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div class="kv reveal-card"><div class="kv-label">Organisation</div><div class="kv-val"><strong>Jigsaw Education Evidence Ltd.</strong><br><span style="font-size:.82rem; color:var(--muted);">Note: Formerly &ldquo;Jigsaw Consult&rdquo; &mdash; rebranded to Jigsaw Education Evidence. Some references may still use old name.</span></div></div>
+      <div class="kv reveal-card"><div class="kv-label">Type</div><div class="kv-val">Certified Social Enterprise — England &amp; Wales</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Company No.</div><div class="kv-val">06844615 &middot; VAT GB173850004</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Founded</div><div class="kv-val">~2013</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Headquarters</div><div class="kv-val">The Lighthouse, 60-62 High Street, London NW10 4LL</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Second Office</div><div class="kv-val"><strong>Jigsaw Education Zambia Ltd.</strong> &mdash; Lusaka, Zambia<br><span style="font-size:.82rem; color:var(--muted);">Separate entity &mdash; confirm if included in website scope</span></div></div>
+      <div class="kv reveal-card"><div class="kv-label">Team Leader</div><div class="kv-val"><strong>David Hollow</strong>, PhD &middot; 15+ yrs &middot; 25+ countries &middot; Research Director, EdTech Hub</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Project Contact</div><div class="kv-val"><strong>Kara Melville-Bain</strong> &middot; Operations Manager<br><strong>Becky</strong> &middot; Design / Visual input<br><strong>Dave</strong> &middot; Strategic oversight</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Website</div><div class="kv-val">jigsaweducation.org &middot; White Fuse CMS</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Flagship</div><div class="kv-val"><strong>EdTech Hub</strong> (FCDO + World Bank + Gates Foundation)</div></div>
+      <div class="kv reveal-card"><div class="kv-label">Social Presence</div><div class="kv-val">LinkedIn &middot; X (Twitter) &middot; YouTube channel<br><span style="font-size:.82rem; color:var(--muted);">Confirm activity levels &amp; integration needs for new site</span></div></div>
+    </div>
+
+    <div class="kv kv-wide reveal-card" style="margin-bottom:16px;">
+      <div class="kv-label">What They Do</div>
+      <div class="kv-val">Applied research, evaluation, strategy and technical assistance for education in low- and middle-income countries.</div>
+    </div>
+
+    <div class="kv kv-wide reveal-card" style="margin-bottom:16px;">
+      <div class="kv-label">Technical Focus Areas</div>
+      <div class="tags" style="margin-top:10px;">
+        <span class="focus-pill"><svg><use href="#i-phone"/></svg> Education Technology</span>
+        <span class="focus-pill"><svg><use href="#i-alert"/></svg> Education in Emergencies</span>
+        <span class="focus-pill"><svg><use href="#i-user"/></svg> Education for Girls</span>
+        <span class="focus-pill"><svg><use href="#i-globe"/></svg> Education, Climate &amp; Environment</span>
+      </div>
+    </div>
+
+    <div class="kv kv-wide reveal-card" style="margin-bottom:16px;">
+      <div class="kv-label">Key Clients &amp; Partners</div>
+      <div class="tags">
+        <span class="tag">FCDO</span><span class="tag">GIZ</span><span class="tag">SDC</span>
+        <span class="tag">Dubai Cares</span><span class="tag">World Bank</span>
+        <span class="tag">Gates Foundation</span><span class="tag">European Commission</span>
+        <span class="tag">UNICEF</span><span class="tag">GSMA</span><span class="tag">PwC</span>
+        <span class="tag">Save the Children</span><span class="tag">Tearfund</span>
+        <span class="tag">VSO</span><span class="tag">War Child</span>
+        <span class="tag">Refugee Education UK</span><span class="tag">UNHCR</span>
+      </div>
+    </div>
+
+    <div class="kv kv-wide reveal-card" style="margin-bottom:28px;">
+      <div class="kv-label">Values &amp; Commitments</div>
+      <div class="kv-val" style="margin-top:6px; line-height:1.8;">
+        Rigour &middot; Dignity &middot; Participatory methods &middot; Local context &middot; Anti-racism<br>
+        TRUST Global Code of Conduct &middot; Dignified Storytelling pledge &middot; Discounted NGO rates
+      </div>
+    </div>
+
+    <h3 class="reveal">Team (21 People)</h3>
+    <div class="team-grid">
+      <div class="team-card leader reveal-card"><div class="team-name">David Hollow</div><div class="team-role">Team Leader</div></div>
+      <div class="team-card contact reveal-card"><div class="team-name">Kara Melville-Bain</div><div class="team-role">Operations Manager &middot; Project Contact</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Katrina Barnes</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Rebecca Daltry</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Jonny D'Rozario</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Aime Parfait Emerusenge</div><div class="team-role">Research Assistant</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Catherine Gladwell</div><div class="team-role">Research Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Gopal Iyer</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Neema Jayasinghe</div><div class="team-role">Researcher</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Alison Joyner</div><div class="team-role">Research Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Saalim Koomar</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Joel Mitchell</div><div class="team-role">Research Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Julia Pacitto</div><div class="team-role">Research Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Janice Sequeira</div><div class="team-role">Research Portfolio Manager</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Hiruy Teka</div><div class="team-role">Research Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Neil Thakrar</div><div class="team-role">Researcher</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Matt Thomas</div><div class="team-role">Research Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Noor Ullah</div><div class="team-role">Research Assistant</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Tim Unwin</div><div class="team-role">Senior Adviser</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Iona Wotton</div><div class="team-role">Researcher</div></div>
+      <div class="team-card reveal-card"><div class="team-name">Rozina Zazai</div><div class="team-role">Research Assistant</div></div>
+    </div>
+  </section>
+
+  <!-- 3. CURRENT SITE -->
+  <section id="site">
+    <div class="section-num reveal">Section 03</div>
+    <h2 class="reveal">Current Site Analysis</h2>
+
+    <div class="platform-card reveal">
+      <div class="platform-label">Current Platform</div>
+      <div class="platform-name">White Fuse — Niche UK Nonprofit CMS</div>
+      <div class="platform-desc">Rigid, limited design customisation, weak SEO capabilities. This is the root constraint driving the need for a redesign.</div>
+    </div>
+
+    <h3 class="reveal">Site Structure</h3>
+    <div class="site-chips reveal">
+      <span class="chip">Home</span>
+      <span class="chip">Services</span>
+      <span class="chip">Technical Focus</span>
+      <span class="chip strong">Case Studies</span>
+      <span class="chip strong">Team</span>
+      <span class="chip">About</span>
+      <span class="chip">Publications</span>
+      <span class="chip">Contact</span>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal-card">
+        <div class="kv-label">Strongest Asset</div>
+        <div class="kv-val" style="margin-top:6px;">Case Studies — 60+ detailed project descriptions, poorly surfaced</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">Team Pages</div>
+        <div class="kv-val" style="margin-top:6px;">21 individual bio pages — text-heavy, inconsistent layout</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">Publications</div>
+        <div class="kv-val" style="margin-top:6px;">Learning Briefs, Year in Review, Anti-racism resources — static flat list</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">Logo &amp; Branding</div>
+        <div class="kv-val" style="margin-top:6px;">Hosted on S3 &middot; Partner logos on homepage &middot; Basic visual identity</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">PDFs Available</div>
+        <div class="kv-val" style="margin-top:6px;">Downloadable reports but no filterable library or search</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">No Content Engine</div>
+        <div class="kv-val" style="margin-top:6px;">No blog, no news feed, no RSS — organisation appears dormant</div>
+      </div>
+      <div class="card reveal-card">
+        <div class="kv-label">Photo Policy</div>
+        <div class="kv-val" style="margin-top:6px;">Dignified Storytelling pledge limits use of field photography. Current site uses very few images &mdash; design must work without relying on photos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PAIN POINTS -->
+  <section id="pain">
+    <div class="section-num reveal">Section 04</div>
+    <h2 class="reveal">Pain Points</h2>
+    <div class="pain-grid">
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-lock"/></svg></div><div class="pain-title">Platform Ceiling</div></div>
+        <p class="pain-body">White Fuse is rigid, poorly supported for SEO, and offers limited design customisation. This is the root cause of "very basic."</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-shield"/></svg></div><div class="pain-title">Credibility Gap</div></div>
+        <p class="pain-body">They work with FCDO, World Bank, Gates Foundation, UNICEF. Their site looks like a small local charity, not a trusted research org in 30+ countries.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-folder"/></svg></div><div class="pain-title">Case Studies Are Buried</div></div>
+        <p class="pain-body">Their strongest asset (60+ engagements, 30+ countries) sits behind a flat list with no filtering, tags, or visual hierarchy.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-user"/></svg></div><div class="pain-title">Team Bios Lack Impact</div></div>
+        <p class="pain-body">Individual pages exist but are text-heavy with no visual consistency. Showcasing credentials is critical to winning contracts.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-edit"/></svg></div><div class="pain-title">No Content Engine</div></div>
+        <p class="pain-body">No blog, no news, no RSS. Publications page is a static list. No way to surface content or signal activity.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-mail"/></svg></div><div class="pain-title">No Audience Capture</div></div>
+        <p class="pain-body">No newsletter signup, no mailing list, no lead magnet. Every visitor is a dead end — zero owned audience being built.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-search"/></svg></div><div class="pain-title">SEO is Nonexistent</div></div>
+        <p class="pain-body">White Fuse generates poor markup, no schema, no structured data. For an org producing public research, a massive missed opportunity.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-phone"/></svg></div><div class="pain-title">Poor Mobile Experience</div></div>
+        <p class="pain-body">White Fuse templates aren't reliably responsive. Stakeholders in low-income countries predominantly access the web via mobile.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-star"/></svg></div><div class="pain-title">No Social Proof Beyond Logos</div></div>
+        <p class="pain-body">No testimonials, no impact numbers, no partner quotes. The site tells but doesn't show results.</p>
+      </div>
+
+      <div class="pain-card reveal-card">
+        <div class="pain-head"><div class="pain-icon"><svg><use href="#i-bar-chart"/></svg></div><div class="pain-title">No Analytics Sophistication</div></div>
+        <p class="pain-body">Likely basic GA at best. No event tracking, no conversion goals, no visitor behaviour insights.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. RECOMMENDATIONS -->
+  <section id="recs">
+    <div class="section-num reveal">Section 05</div>
+    <h2 class="reveal">Recommended Additions</h2>
+    <div class="rec-grid">
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-edit"/></svg></div><div class="rec-title">Blog / Insights Section</div><span class="badge badge-high">High</span></div>
+        <p class="rec-body">They produce Learning Briefs, publish in journals, have deep institutional knowledge. A blog gives SEO fuel, return visits, and shareable LinkedIn content. WordPress posts with categories matching technical focus areas.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-book"/></svg></div><div class="rec-title">Evidence Library</div><span class="badge badge-high">High</span></div>
+        <p class="rec-body">Central hub for all publications: Learning Briefs, Policy Briefs, Year in Review, Research Reports. Filterable by type, technical area, country, and year. Downloadable PDFs with metadata. This replaces the current static Publications page and becomes the primary content showcase.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">Visual Identity System (No-Photo Approach)</div><span class="badge badge-high">High</span></div>
+        <p class="rec-body">Due to their Dignified Storytelling pledge, the site cannot rely on field photography. Design a visual system using brand colours, geometric patterns, abstract illustrations, data visualisations, and icons to create visual richness without photos. This is a core design constraint.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-trending"/></svg></div><div class="rec-title">Impact / Results Page</div><span class="badge badge-high">High</span></div>
+        <p class="rec-body">Dedicated page with key numbers: countries, organisations, studies, years. Visual counters or infographic layout. Donors respond to quantified impact.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-mail"/></svg></div><div class="rec-title">Newsletter Signup (Site-wide)</div><span class="badge badge-high">High</span></div>
+        <p class="rec-body">Persistent CTA in footer + homepage section. Connected to Mailchimp or similar. Captures the audience they currently lose entirely on every visit.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-target"/></svg></div><div class="rec-title">Technical Focus Landing Pages</div><span class="badge badge-med">Medium</span></div>
+        <p class="rec-body">Each area (EdTech, Emergencies, Girls, Climate) as a proper landing page with context, auto-linked case studies, and relevant specialist team members.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-briefcase"/></svg></div><div class="rec-title">Careers / Work With Us</div><span class="badge badge-med">Medium</span></div>
+        <p class="rec-body">Signals organisational health, attracts research talent. Even a "no current openings" page with a general application email is better than silence.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-layers"/></svg></div><div class="rec-title">FAQ / How We Work</div><span class="badge badge-med">Medium</span></div>
+        <p class="rec-body">For potential clients: typical engagement model, phases, timeline expectations. Reduces friction for inbound leads and positions them as approachable experts.</p>
+      </div>
+
+      <div class="rec-card reveal-card">
+        <div class="rec-head"><div class="rec-icon"><svg><use href="#i-search"/></svg></div><div class="rec-title">404 Page &amp; Site Search</div><span class="badge badge-low">Low</span></div>
+        <p class="rec-body">Custom 404 and functional search improve UX for a content-heavy site. Small effort, meaningful quality signal for credibility-conscious visitors.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. DISCOVERY QUESTIONS -->
+  <section id="questions">
+    <div class="section-num reveal">Section 06</div>
+    <h2 class="reveal">Discovery Call Questions</h2>
+    <p class="reveal" style="font-size:.85rem; color:var(--muted); margin-bottom:28px; line-height:1.6;">Tick off questions as you cover them during the call. Click a category to expand or collapse.</p>
+
+    <div class="q-group open">
+      <button class="q-toggle" onclick="toggleQ(this)">
+        <svg class="cat-icon"><use href="#i-book"/></svg>
+        Evidence Library
+        <svg class="arrow"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="q-body">
+        <div class="q-item"><span class="q-num">Q1</span><input type="checkbox" id="q1"><label class="q-text" for="q1">How many publications exist today? Are they all PDFs, or are some HTML-based? Do you have a master list or spreadsheet?</label></div>
+        <div class="q-item"><span class="q-num">Q2</span><input type="checkbox" id="q2"><label class="q-text" for="q2">What categories make sense for filtering? By type (Learning Brief, Policy Brief, Report), by technical area, by country, by year?</label></div>
+        <div class="q-item"><span class="q-num">Q3</span><input type="checkbox" id="q3"><label class="q-text" for="q3">Should publications be downloadable only, or also readable on-site (embedded PDF viewer or HTML summary)?</label></div>
+        <div class="q-item"><span class="q-num">Q4</span><input type="checkbox" id="q4"><label class="q-text" for="q4">Will new publications be added regularly? Who uploads them &mdash; Kara, researchers, or multiple team members?</label></div>
+        <div class="q-item"><span class="q-num">Q5</span><input type="checkbox" id="q5"><label class="q-text" for="q5">Do you want a &ldquo;Featured&rdquo; or &ldquo;Latest&rdquo; section on the homepage pulling from the Evidence Library?</label></div>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <button class="q-toggle" onclick="toggleQ(this)">
+        <svg class="cat-icon"><use href="#i-edit"/></svg>
+        Content &amp; Migration
+        <svg class="arrow"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="q-body">
+        <div class="q-item"><span class="q-num">Q6</span><input type="checkbox" id="q6"><label class="q-text" for="q6">Is the current site content being carried over as-is, or is your team rewriting it? Specifically the case studies &mdash; are all 60+ migrating, or a curated selection?</label></div>
+        <div class="q-item"><span class="q-num">Q7</span><input type="checkbox" id="q7"><label class="q-text" for="q7">You mentioned a concept note, technical brief, and sitemap are in progress. Will those be shared before the call, or should we work from the current structure?</label></div>
+        <div class="q-item"><span class="q-num">Q8</span><input type="checkbox" id="q8"><label class="q-text" for="q8">Who will be the day-to-day content editor after launch? Just Kara, or multiple team members?</label></div>
+        <div class="q-item"><span class="q-num">Q9</span><input type="checkbox" id="q9"><label class="q-text" for="q9">Are there any pages or sections on the current site that should NOT be migrated?</label></div>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <button class="q-toggle" onclick="toggleQ(this)">
+        <svg class="cat-icon"><use href="#i-settings"/></svg>
+        Functionality &amp; Technical
+        <svg class="arrow"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="q-body">
+        <div class="q-item"><span class="q-num">Q10</span><input type="checkbox" id="q10"><label class="q-text" for="q10">Do you want newsletter / mailing list integration? Do you currently use a platform like Mailchimp?</label></div>
+        <div class="q-item"><span class="q-num">Q11</span><input type="checkbox" id="q11"><label class="q-text" for="q11">Any data visualisation needs? Interactive maps of countries where you&rsquo;ve worked, research output dashboards?</label></div>
+        <div class="q-item"><span class="q-num">Q12</span><input type="checkbox" id="q12"><label class="q-text" for="q12">Any integration with external platforms? EdTech Hub, academic databases, ORCID for researchers?</label></div>
+        <div class="q-item"><span class="q-num">Q13</span><input type="checkbox" id="q13"><label class="q-text" for="q13">Do you currently own a hosting account, or will that be part of the new setup?</label></div>
+        <div class="q-item"><span class="q-num">Q14</span><input type="checkbox" id="q14"><label class="q-text" for="q14">Any accessibility requirements beyond standard best practice? WCAG compliance may matter for credibility given your sector.</label></div>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <button class="q-toggle" onclick="toggleQ(this)">
+        <svg class="cat-icon"><use href="#i-target"/></svg>
+        Design &amp; Imagery (For Becky Call)
+        <svg class="arrow"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="q-body">
+        <div class="q-item"><span class="q-num">Q15</span><input type="checkbox" id="q15"><label class="q-text" for="q15">Given the Dignified Storytelling pledge, what is the photo policy? Can field photos be used at all, or do we need a fully illustration/abstract visual approach?</label></div>
+        <div class="q-item"><span class="q-num">Q16</span><input type="checkbox" id="q16"><label class="q-text" for="q16">Do you have existing brand guidelines (logo files, colour palette, typography, tone of voice)? Or will you need us to propose a visual identity direction?</label></div>
+        <div class="q-item"><span class="q-num">Q17</span><input type="checkbox" id="q17"><label class="q-text" for="q17">Any websites in your sector whose design you admire? This is the fastest way for us to align on visual direction.</label></div>
+        <div class="q-item"><span class="q-num">Q18</span><input type="checkbox" id="q18"><label class="q-text" for="q18">Should the Zambia entity have its own section or page, or is it folded into the main site?</label></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PROJECT SUMMARY -->
+  <section id="summary">
+    <div class="section-num reveal">Section 07</div>
+    <h2 class="reveal">Project Summary</h2>
+
+    <div class="sum-hero reveal">
+      <div class="sum-highlight">
+        <div class="sum-label">Key Feature</div>
+        <div class="sum-val">Evidence Library</div>
+        <div style="color:rgba(255,255,255,.7); font-size:.82rem; margin-top:8px;">Filterable publications hub &middot; Core content showcase</div>
+      </div>
+      <div class="sum-highlight-navy">
+        <div class="sum-label">Recommended CMS</div>
+        <div class="sum-val">WordPress or Custom Build</div>
+        <div class="sum-sub" style="margin-top:8px;">WP Engine managed hosting &middot; Decision pending client input on complexity and long-term maintenance preferences</div>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Client</div>
+        <div class="sum-val">Jigsaw Education Evidence Ltd.</div>
+        <div class="sum-sub">Certified Social Enterprise</div>
+      </div>
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Project Contacts</div>
+        <div class="sum-val">Kara &middot; Becky &middot; Dave</div>
+        <div class="sum-sub">Operations &middot; Design &middot; Strategy</div>
+      </div>
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Key Feature</div>
+        <div class="sum-val">Evidence Library</div>
+        <div class="sum-sub">Filterable publications &amp; research hub</div>
+      </div>
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Timeline</div>
+        <div class="sum-val">Kickoff March 2026</div>
+        <div class="sum-sub">Awaiting sitemap + concept note</div>
+      </div>
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Scope</div>
+        <div class="sum-val">8&ndash;12 pages</div>
+        <div class="sum-sub">+ CPTs for Case Studies, Team &amp; Evidence Library</div>
+      </div>
+      <div class="sum-card reveal-card">
+        <div class="sum-label">Current Platform</div>
+        <div class="sum-val">White Fuse CMS</div>
+        <div class="sum-sub">Migrating away</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg><use href="#i-arrow-up"/></svg>
+</button>
+
+<script src="main.js"></script>
+</body>
+</html>
