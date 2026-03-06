@@ -721,7 +721,7 @@ h3 {
 }
 
 .sum-highlight .sum-label { color: rgba(255,255,255,.7); }
-.sum-highlight .sum-val { font-size: 1.6rem; font-weight: 900; letter-spacing: -.02em; }
+.sum-highlight .sum-val { font-size: 1.6rem; font-weight: 900; letter-spacing: -.02em; color: #fff; }
 
 .sum-highlight-navy {
   background: var(--navy);
