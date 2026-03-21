@@ -874,6 +874,19 @@ h3 {
 
 .q-text { font-size: .85rem; line-height: 1.65; color: var(--text); }
 
+.q-answer {
+  margin: 8px 0 4px 40px;
+  padding: 12px 16px;
+  background: var(--orange-light);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: .83rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.q-answer strong { color: var(--navy); }
+
 /* ── PROJECT SUMMARY ── */
 #summary {
   background: var(--white);
