@@ -1,0 +1,32 @@
+{
+  "name": "jigsaw-design-system",
+  "version": "1.0.0",
+  "description": "Jigsaw Education Evidence — design system v1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server.js",
+    "boneyard:generate": "boneyard generate"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.0.21",
+    "@fontsource/jetbrains-mono": "^5.0.20",
+    "@fontsource/lato": "^5.0.20",
+    "boneyard-js": "^1.8.1",
+    "compression": "^1.7.4",
+    "express": "^4.19.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "tailwindcss": "^4.0.0",
+    "vite": "^5.4.10"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
