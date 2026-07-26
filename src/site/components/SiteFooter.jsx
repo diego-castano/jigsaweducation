@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import SiteLogo from './SiteLogo';
-import FooterSignup from './FooterSignup';
-import { MAIN_NAV, FOOTER_NAV, OFFICES, LEGAL, SITE } from '../../data/site';
+import FooterTopBand from './FooterSignup';
+import { MAIN_NAV, FOOTER_NAV, OFFICES, LEGAL } from '../../data/site';
 
 // The footer is the close of the site, not an afterthought: three bands on
 // navy-900, hairline-divided.
@@ -29,37 +28,16 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-900 text-cream-50 mt-24">
+    // No top margin: every page's last section carries its own bottom padding,
+    // and the extra 96px only ever showed up as a stray cream stripe between a
+    // page's closing band and the navy.
+    <footer className="bg-navy-900 text-cream-50">
       <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
-        <div className="py-14 lg:py-16 grid gap-10 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
-            {/* SiteLogo is inline-flex, so it needs a block wrapper or the
-                LinkedIn link below rides up onto the same line. */}
-            <div>
-              <SiteLogo size={44} reversed />
-            </div>
-            {/* The one line of voice in the footer. It is the client's own
-                tagline, so it says something rather than decorating. */}
-            <p className="mt-6 max-w-[30ch] font-display text-lg text-cream-200 italic">
-              {SITE.tagline}
-            </p>
-            <a
-              href={SITE.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 mt-8 text-sm font-bold text-cream-50 hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-full"
-            >
-              <span className="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center shrink-0">
-                <span className="font-bold text-xs">in</span>
-              </span>
-              <span className="link-sweep">LinkedIn</span>
-            </a>
-          </div>
-
-          {/* Route-aware: stands down on /contact, where the page carries its
-              own signup band with the client's verbatim copy. */}
-          <FooterSignup />
-        </div>
+        {/* The whole band is route-aware: with the signup it is a 5/7 grid;
+            on pages that carry their own signup (Contact, Work for us) it
+            recomposes as one full-width identity row instead of leaving a
+            seven-column hole. */}
+        <FooterTopBand />
 
         {/* Four columns, one grid. Cells stretch so every hairline runs the
             full height of the band; the content still starts at the top of
