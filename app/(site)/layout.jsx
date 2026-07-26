@@ -1,5 +1,8 @@
 import SiteHeader from '../../src/site/components/SiteHeader';
 import SiteFooter from '../../src/site/components/SiteFooter';
+import MobileTabBar from '../../src/site/components/MobileTabBar';
+import BackToTop from '../../src/site/components/BackToTop';
+import { MobileNavProvider } from '../../src/site/components/MobileNavContext';
 import { SITE, LEGAL, OFFICES } from '../../src/data/site';
 
 // Route group: every public page renders inside this chrome. /design-system
@@ -38,9 +41,17 @@ export default function SiteLayout({ children }) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <SiteHeader />
-      <main id="main">{children}</main>
-      <SiteFooter />
+      <MobileNavProvider>
+        <SiteHeader />
+        {/* The wrapper's bottom padding keeps the footer's legal line clear of
+            the fixed tab bar on mobile; from lg the bar is gone and so is it. */}
+        <div className="pb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+          <main id="main">{children}</main>
+          <SiteFooter />
+        </div>
+        <MobileTabBar />
+        <BackToTop />
+      </MobileNavProvider>
     </>
   );
 }

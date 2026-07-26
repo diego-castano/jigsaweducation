@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SiteHeader from '../src/site/components/SiteHeader';
+import { MobileNavProvider } from '../src/site/components/MobileNavContext';
 import SiteFooter from '../src/site/components/SiteFooter';
 import Icon from '../src/components/Icon';
 
@@ -12,7 +13,7 @@ export const metadata = {
 // unmatched URLs outside it. Carries the chrome itself for that reason.
 export default function NotFound() {
   return (
-    <>
+    <MobileNavProvider>
       <SiteHeader />
       <main id="main">
         <section className="relative overflow-hidden">
@@ -61,6 +62,6 @@ export default function NotFound() {
         </section>
       </main>
       <SiteFooter />
-    </>
+    </MobileNavProvider>
   );
 }
