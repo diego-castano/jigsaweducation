@@ -5,12 +5,13 @@
 nixPkgs = ["nodejs_20", "npm-9_x"]
 
 [phases.install]
-# Do NOT use --omit=optional — Rollup ships its native binary as an optional dep
-# (e.g. @rollup/rollup-linux-x64-gnu) and Vite's build will fail without it.
+# Do NOT use --omit=optional — Next ships platform binaries (SWC, sharp) as
+# optional deps and the build fails without them.
 cmds = ["npm ci || npm install"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-cmd = "node server.js"
+# next start binds $PORT, which Railway injects.
+cmd = "npm run start"

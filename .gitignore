@@ -1,8 +1,17 @@
 node_modules/
+.next/
+out/
 dist/
 .DS_Store
 *.log
 .env
 .env.local
-.vite/
 .boneyard/
+next-env.d.ts
+
+# Client-private material. This repo is PUBLIC: the source docx carries the
+# client's internal review comments, and project-context holds fee and
+# comms notes. None of it ships to GitHub.
+New website sitemap and design.docx
+docs/project-context.md
+docs/client/

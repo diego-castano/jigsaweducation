@@ -1,32 +1,35 @@
 {
-  "name": "jigsaw-design-system",
+  "name": "jigsaw-website",
   "version": "1.0.0",
-  "description": "Jigsaw Education Evidence — design system v1.0",
+  "description": "Jigsaw Education Evidence — website and design system",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "start": "node server.js",
-    "boneyard:generate": "boneyard generate"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p ${PORT:-3000}",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource-variable/fraunces": "^5.0.21",
+    "@fontsource-variable/literata": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.0.20",
     "@fontsource/lato": "^5.0.20",
+    "@tailwindcss/postcss": "^4.3.3",
     "boneyard-js": "^1.8.1",
-    "compression": "^1.7.4",
-    "express": "^4.19.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "cobe": "^2.0.1",
+    "d3-geo": "^3.1.1",
+    "next": "^16.2.12",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.0.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "tailwindcss": "^4.0.0",
-    "vite": "^5.4.10"
+    "tailwindcss": "^4.0.0"
   },
   "engines": {
     "node": ">=20"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true
   }
 }
