@@ -1,8 +1,7 @@
-import PageHero from '../../../src/site/components/PageHero';
-import Section, { SectionHeading } from '../../../src/site/components/Section';
+import Reveal from '../../../src/site/components/Reveal';
 import MailingListForm from '../../../src/site/components/MailingListForm';
 import LocatorMap from '../../../src/site/components/LocatorMap';
-import Icon from '../../../src/components/Icon';
+import ContactEmails from '../../../src/site/components/contact/ContactEmails';
 import { OFFICES } from '../../../src/data/site';
 
 export const metadata = {
@@ -15,86 +14,126 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHero
-        kicker="Get in touch"
-        title="Contact"
-        lede="Get in touch with us to talk about building and using evidence for education in your work."
-      />
+      {/* Opener kept deliberately short. There is no contact form on this site
+          and no reason to pretend otherwise, so the page says who to write to
+          and then gets out of the way of the two addresses below. */}
+      <section className="relative overflow-hidden">
+        <span
+          className="blob"
+          style={{
+            width: 480,
+            height: 480,
+            top: -250,
+            right: -150,
+            background: '#ffcca8',
+            opacity: 0.26
+          }}
+          aria-hidden="true"
+        />
 
-      <Section width="narrow" className="pb-0">
-        <div className="bg-navy-900 text-cream-50 rounded-2xl p-8 sm:p-10">
-          <h2 className="font-display text-2xl sm:text-3xl text-cream-50">
-            Sign up for occasional updates
-          </h2>
-          <p className="mt-3 text-cream-200">
-            Sign up here if you would like to receive occasional updates about Jigsaw&rsquo;s work.
-          </p>
-          <div className="mt-6 max-w-md">
-            <MailingListForm reversed />
+        <div className="relative mx-auto max-w-[1240px] px-6 pt-14 pb-12 sm:px-8 lg:px-10 lg:pt-20 lg:pb-16">
+          <div className="grid gap-y-7 lg:grid-cols-12 lg:items-end lg:gap-x-12">
+            <Reveal className="lg:col-span-4">
+              <h1 className="font-display display-xl text-5xl leading-[0.95] text-navy-900 sm:text-6xl lg:text-[68px]">
+                Contact
+              </h1>
+            </Reveal>
+
+            <Reveal delay={90} className="lg:col-span-7 lg:col-start-6 lg:self-end">
+              <p className="max-w-[46ch] text-xl leading-[1.35] text-ink-800 sm:text-2xl lg:text-[26px]">
+                Get in touch with us to talk about building and using evidence for education in your
+                work.
+              </p>
+            </Reveal>
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* Side by side, deliberately equal. The brief is explicit that neither
-          office outranks the other, and the headings frame each by scope of
-          work rather than by headquarters and branch. */}
-      <Section>
-        <SectionHeading kicker="Our offices" title="Two offices, one team" />
+      {/* The two mailboxes, stacked and equal. The client is explicit that
+          neither outranks the other, and their own headings frame each by scope
+          of work rather than by headquarters and branch. */}
+      <ContactEmails offices={OFFICES} />
 
-        <ul className="grid md:grid-cols-2 gap-6 mt-10">
-          {OFFICES.map((office) => (
-            <li
-              key={office.id}
-              className="bg-cream-100 border border-cream-300 rounded-2xl overflow-hidden flex flex-col"
-            >
-              <LocatorMap
-                countryId={office.countryId}
-                coords={office.coords}
-                label={`Map showing ${office.city}, ${office.country}`}
-              />
+      {/* Postal detail, one surface step down. The locator maps stay because a
+          server-rendered country plate beats an iframe that would set
+          third-party cookies on a site whose Policies page leads on data
+          protection, but they read as a small plan beside the address now
+          rather than as the lid of a card. */}
+      <section className="border-t border-cream-300 bg-cream-100">
+        <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+          <Reveal>
+            <h2 className="font-display display-m text-3xl leading-[1.05] text-navy-900 sm:text-4xl lg:text-[44px]">
+              Two offices, one team
+            </h2>
+          </Reveal>
 
-              <div className="p-7 flex-1 flex flex-col">
-                <h3 className="font-display text-xl text-navy-900 leading-snug">
-                  {office.heading}
-                </h3>
-
-                <dl className="mt-5 space-y-4 text-sm flex-1">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <a
-                        href={`mailto:${office.email}`}
-                        className="inline-flex items-center gap-2 text-sea-700 hover:text-orange-600 underline underline-offset-4 break-all"
-                      >
-                        <Icon name="mail" size={15} className="shrink-0" />
-                        {office.email}
-                      </a>
-                    </dd>
+          <ul className="mt-10 grid gap-y-0 lg:mt-14 lg:grid-cols-2 lg:gap-x-12">
+            {OFFICES.map((office, i) => (
+              <Reveal
+                as="li"
+                key={office.id}
+                delay={i * 110}
+                className={
+                  i === 1
+                    ? 'mt-10 border-t border-cream-300 pt-10 lg:mt-0 lg:border-t-0 lg:border-l lg:border-cream-300 lg:pt-0 lg:pl-12'
+                    : ''
+                }
+              >
+                <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+                  <div className="w-full max-w-[210px] shrink-0 overflow-hidden rounded-xl">
+                    <LocatorMap
+                      countryId={office.countryId}
+                      coords={office.coords}
+                      label={`Map showing ${office.city}, ${office.country}`}
+                    />
                   </div>
-                  <div>
-                    <dt className="text-[10px] uppercase tracking-[0.2em] text-ink-500 font-bold mb-2">
+
+                  <div className="min-w-0">
+                    <h3 className="font-display text-xl leading-snug text-navy-900 lg:text-2xl">
+                      {office.org}
+                    </h3>
+                    <p className="mt-5 font-mono text-[10px] tracking-[0.2em] text-ink-600 uppercase">
                       {office.addressLabel}
-                    </dt>
-                    <dd className="text-ink-700 not-italic">
-                      <address className="not-italic">
-                        {office.org}
-                        <br />
-                        {office.address.map((line) => (
-                          <span key={line}>
-                            {line}
-                            <br />
-                          </span>
-                        ))}
-                        {office.country}
-                      </address>
-                    </dd>
+                    </p>
+                    <address className="mt-2.5 text-base leading-relaxed text-ink-700 not-italic">
+                      {office.address.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                      <span className="block">{office.country}</span>
+                    </address>
                   </div>
-                </dl>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Section>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Closing band. Cream-200 rather than navy: the footer directly below
+          is already a navy band carrying this same form, and two dark bands
+          with duplicate signups reading back to back was the one flaw in the
+          first pass of this page. */}
+      <section className="border-t border-cream-300 bg-cream-200">
+        <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+          <div className="grid gap-y-8 lg:grid-cols-12 lg:items-end lg:gap-x-12">
+            <Reveal className="lg:col-span-6">
+              <h2 className="font-display display-m text-3xl leading-[1.08] text-navy-900 sm:text-4xl">
+                Sign up for occasional updates
+              </h2>
+              <p className="mt-5 max-w-[44ch] text-lg leading-relaxed text-ink-700">
+                Sign up here if you would like to receive occasional updates about Jigsaw&rsquo;s
+                work.
+              </p>
+            </Reveal>
+
+            <Reveal delay={110} className="lg:col-span-5 lg:col-start-8 lg:self-end">
+              <MailingListForm />
+            </Reveal>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

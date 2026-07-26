@@ -11,10 +11,13 @@ export default function HeroesPage() {
         title="Hero patterns"
         lede="Three hero variations covering the editorial, statement, and visual openings the site needs."
       />
-      <Section title="Statement hero" description="No photo. Big Fraunces title, decorative blob shapes, dual CTA. The default for content pages.">
+      <Section
+        title="Statement hero"
+        description={'No photo. Big Literata title, single-colour orange blobs, dual CTA. The default for content pages. Blobs were sea-and-orange in the first draft; the client review simplified them to one hue so the orange accent stays the one colour that reads as "action" on the page, per the 3:1 sea/orange rule.'}
+      >
         <div className="relative bg-cream-100 border border-cream-300 rounded-2xl px-8 py-16 lg:py-24 overflow-hidden">
-          <div className="blob bg-sea-300" style={{ top: '-80px', right: '-80px', width: '300px', height: '300px' }} />
-          <div className="blob bg-orange-300" style={{ bottom: '-50px', left: '-50px', width: '200px', height: '200px' }} />
+          <div className="blob bg-orange-300" style={{ top: '-80px', right: '-80px', width: '300px', height: '300px' }} />
+          <div className="blob bg-orange-200" style={{ bottom: '-50px', left: '-50px', width: '200px', height: '200px' }} />
           <div className="relative z-10 max-w-2xl">
             <div className="text-xs uppercase tracking-[0.2em] text-orange-500 font-bold mb-4">Education in Emergencies</div>
             <h1 className="font-display display-l text-5xl lg:text-6xl text-navy-900 leading-[0.95] mb-5">
@@ -27,6 +30,9 @@ export default function HeroesPage() {
             </div>
           </div>
         </div>
+        <p className="text-sm text-ink-600 mt-4">
+          Full-page variant, home only: the two blobs above are replaced by <code className="font-mono text-xs bg-cream-200 px-1.5 py-0.5 rounded">GlobeBackdrop</code>, an animated globe rendered with cobe behind the headline. It is a homepage-specific backdrop, not a general hero option.
+        </p>
       </Section>
       <Section title="Editorial split hero" description="For homepage and major landing pages. Title left, featured publication right.">
         <div className="relative bg-navy-900 rounded-2xl p-8 lg:p-12 overflow-hidden text-cream-50">

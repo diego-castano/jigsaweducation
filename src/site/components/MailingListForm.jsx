@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import Icon from '../../components/Icon';
 
 // The client has a barely-used Mailchimp account and wants to capture contacts
@@ -9,6 +9,10 @@ import Icon from '../../components/Icon';
 // real, then reports that it is not connected yet rather than pretending to
 // have subscribed anyone.
 export default function MailingListForm({ reversed = false, compact = false }) {
+  // Unique per instance: Contact renders this form twice on one page (its
+  // own band plus the footer's), and a hardcoded id meant duplicate DOM ids.
+  const inputId = useId();
+  const messageId = useId();
   const [email, setEmail] = useState('');
   const [state, setState] = useState('idle'); // idle | error | stubbed
   const [message, setMessage] = useState('');
@@ -41,11 +45,11 @@ export default function MailingListForm({ reversed = false, compact = false }) {
   return (
     <form onSubmit={submit} noValidate>
       <div className={`flex gap-2 ${compact ? '' : 'flex-col sm:flex-row'}`}>
-        <label htmlFor="mailing-list-email" className="sr-only">
+        <label htmlFor={inputId} className="sr-only">
           Email address
         </label>
         <input
-          id="mailing-list-email"
+          id={inputId}
           type="email"
           value={email}
           onChange={(e) => {
@@ -54,7 +58,7 @@ export default function MailingListForm({ reversed = false, compact = false }) {
           }}
           placeholder="your@email.com"
           aria-invalid={state === 'error'}
-          aria-describedby={state === 'idle' ? undefined : 'mailing-list-message'}
+          aria-describedby={state === 'idle' ? undefined : messageId}
           className={`flex-1 min-w-0 px-4 py-3 border rounded-full text-sm transition-colors focus:outline-none ${inputBase}`}
         />
         <button
@@ -67,7 +71,7 @@ export default function MailingListForm({ reversed = false, compact = false }) {
 
       {state !== 'idle' && (
         <p
-          id="mailing-list-message"
+          id={messageId}
           role="status"
           className={`mt-3 text-sm flex items-start gap-2 ${
             state === 'error'

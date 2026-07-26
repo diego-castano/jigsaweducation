@@ -19,6 +19,7 @@ export default function TechnicalFocusPage() {
     slug: area.slug,
     title: area.title,
     icon: area.icon,
+    spot: area.spot,
     summary: area.summary,
     caseStudies: caseStudiesByTopic(area.title).map((cs) => ({
       slug: cs.slug,

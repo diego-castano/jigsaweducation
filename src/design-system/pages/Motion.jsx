@@ -59,6 +59,48 @@ export default function MotionPage() {
           </div>
         </Card>
       </Section>
+      <Section
+        title="Site motion utilities"
+        description="A small shared vocabulary in globals.css, used across every page so the site moves the same way everywhere. Every one of these collapses under prefers-reduced-motion: transforms are removed and elements simply render in their end state."
+      >
+        <Card>
+          <div className="space-y-5">
+            {[
+              {
+                token: '.rv + <Reveal>',
+                spec: '700ms emphasized',
+                use: 'Reveal-on-scroll. <Reveal delay={80}> staggers a group of children as they enter the viewport; the class fades in and lifts 22px, driven by an IntersectionObserver in Reveal.jsx.'
+              },
+              {
+                token: '.link-sweep',
+                spec: '350ms emphasized',
+                use: 'Directional underline sweep on inline links: enters from the left on hover/focus, exits to the right on leave. Never a static underline.'
+              },
+              {
+                token: '.row-sweep',
+                spec: '450ms emphasized',
+                use: 'Full-row background sweep for list rows and nav items. Colour is set per use with --sweep; content needs relative z-[1] to sit above the sweep layer.'
+              },
+              {
+                token: '.expand-grid',
+                spec: '500ms emphasized',
+                use: 'Smooth height expansion for accordions and detail panels, animating grid-template-rows from 0fr to 1fr with the .open class rather than animating height or max-height.'
+              },
+              {
+                token: '.marquee',
+                spec: '60s linear, loops',
+                use: 'Slow infinite band for the partner-logo wall, pausing on hover. 60 seconds reads premium; anything faster reads like an ad banner. One marquee on the whole site.'
+              }
+            ].map((d) => (
+              <div key={d.token} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                <div className="w-40 shrink-0 text-xs font-mono text-navy-900 font-bold">{d.token}</div>
+                <div className="w-32 shrink-0 text-[11px] font-mono text-ink-500">{d.spec}</div>
+                <div className="flex-1 text-sm text-ink-700 leading-relaxed">{d.use}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </Section>
       <Section title="Microinteractions" description="The small moments that make the system feel considered.">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="group cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300">

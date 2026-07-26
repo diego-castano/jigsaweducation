@@ -133,7 +133,22 @@ function FocusDetail({ area, onClose }) {
 
       <div className="lg:grid lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
-          <Icon name={area.icon} size={72} strokeWidth={1} className="text-sea-600" />
+          {/* The custom illustrated spot (media-gen, brand palette, no human
+              figures per photo policy). The stroke icon stays as fallback for
+              any area whose glyph is missing. */}
+          {area.spot ? (
+            <img
+              src={area.spot}
+              alt=""
+              width={112}
+              height={112}
+              loading="lazy"
+              decoding="async"
+              className="w-24 lg:w-28 rounded-2xl border border-cream-300"
+            />
+          ) : (
+            <Icon name={area.icon} size={72} strokeWidth={1} className="text-sea-600" />
+          )}
           <h3 className="mt-5 font-display display-s text-2xl leading-tight text-navy-900">
             {area.title}
           </h3>

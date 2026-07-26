@@ -11,7 +11,7 @@ export default function Filters() {
       <PageHeader
         kicker="Site Modules · 05"
         title="Filter system"
-        lede={"The Evidence Library's filtering pattern — search, faceted dropdowns, active chips, and result count. Inspired by EdTech Hub's library, simplified to avoid the busyness Kara flagged in r4d.org."}
+        lede={"The Evidence Library's filtering pattern: search, faceted dropdowns, active chips, sort, and pagination. Inspired by EdTech Hub's library, simplified to avoid the busyness Kara flagged in r4d.org. On the live site this is a working system, not a static mockup: search and facets query the publication data directly, chips and sort update the result set in place, and long result sets paginate."}
       />
       <Section title="Filter bar">
         <Card>
@@ -85,6 +85,10 @@ export default function Filters() {
           </div>
         </Card>
       </Section>
+      <Section
+        title="Functional, not visual"
+        description="Everything demonstrated above is wired to real data on the Evidence Library page: the search box filters the full publication set as you type, the facet dropdowns (region, method, topic) narrow it further, active chips reflect and clear the current query, sort re-orders the visible results, and pagination breaks a large result set into pages. This page exists to document the pattern, not to stand in for a feature that has not been built yet."
+      />
     </div>
   );
 }

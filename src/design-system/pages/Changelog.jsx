@@ -3,6 +3,15 @@ import PageHeader from '../../components/PageHeader';
 
 export default function Changelog() {
   const releases = [
+    { v: 'v2.0.0', date: 'July 2026', tag: 'Client feedback pass', items: [
+      'Literata replaces Fraunces as the display typeface: the client rejected Fraunces over its bulbous J and ball-terminal f/j, and Literata\'s J plants on the baseline with its f closing in a small flag instead',
+      'Semantic state tokens added (success, warning, error): badges and feedback components previously reached for stock Tailwind colours outside the brand palette',
+      'Publication card rebuilt: portrait cover to the left, typographic fallback by type, landscape tile and dot pattern and shadow removed',
+      'Team card rebuilt: one fixed duotone recipe that lifts on hover, country replaces city and the chip is omitted when unknown, social chips stay quiet until hover',
+      'Footer rebuilt: company blurb removed, legal line set in Lato rather than mono, three-band structure with mailing-list capture',
+      'Filter system confirmed functional on the live Evidence Library: search, facets, chips, sort and pagination all operate on real data, not a static mockup',
+      'The full public site is now built on this system, not just documented by it'
+    ]},
     { v: 'v1.0.0', date: 'March 2026', tag: 'Initial release', items: [
       'Full token set — colour, type, spacing, radius, elevation, motion',
       'Component library — buttons, inputs, cards, badges, navigation, feedback, containers',

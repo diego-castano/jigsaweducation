@@ -12,9 +12,15 @@ export const TECHNICAL_FOCUS_INTRO = placeholder(
   'summary paragraph explaining why we focus on certain areas and how these intersect'
 );
 
+// Each area carries a custom illustrated spot glyph, generated with the
+// media-gen toolkit (Nano Banana Pro) in the brand palette from one shared
+// style anchor. Object-only compositions: the client's photo policy bars
+// AI-generated people, so no glyph contains a human figure. These are spot
+// illustrations for the detail bands; the 16-24px UI icons stay SVG.
 export const TECHNICAL_FOCUS = [
   {
     slug: 'climate-resilient-learning-environments',
+    spot: '/icons/focus/climate-resilient-learning-environments.png',
     title: 'Climate-resilient learning environments',
     icon: 'globe',
     summary: placeholder('summary of climate-resilient learning environments'),
@@ -22,6 +28,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'education-financing-and-cost-effectiveness',
+    spot: '/icons/focus/education-financing-and-cost-effectiveness.png',
     title: 'Education financing and cost-effectiveness',
     icon: 'briefcase',
     summary: placeholder('summary of education financing and cost-effectiveness'),
@@ -29,6 +36,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'education-in-crisis-and-conflict',
+    spot: '/icons/focus/education-in-crisis-and-conflict.png',
     title: 'Education in crisis and conflict',
     icon: 'shield',
     summary: placeholder('summary of education in crisis and conflict'),
@@ -36,6 +44,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'education-policy-systems-and-governance',
+    spot: '/icons/focus/education-policy-systems-and-governance.png',
     title: 'Education policy, systems and governance',
     icon: 'layers',
     summary: placeholder('summary of education policy, systems and governance'),
@@ -43,6 +52,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'foundational-learning',
+    spot: '/icons/focus/foundational-learning.png',
     title: 'Foundational Learning',
     icon: 'book-open',
     summary: placeholder('summary of foundational learning'),
@@ -50,6 +60,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'skills-and-pathways-to-employment',
+    spot: '/icons/focus/skills-and-pathways-to-employment.png',
     title: 'Skills and pathways to employment',
     icon: 'graduation',
     summary: placeholder('summary of skills and pathways to employment'),
@@ -57,6 +68,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'teacher-professional-development',
+    spot: '/icons/focus/teacher-professional-development.png',
     title: 'Teacher professional development',
     icon: 'users',
     summary: placeholder('summary of teacher professional development'),
@@ -64,6 +76,7 @@ export const TECHNICAL_FOCUS = [
   },
   {
     slug: 'technology-and-education',
+    spot: '/icons/focus/technology-and-education.png',
     title: 'Technology and education',
     icon: 'zap',
     summary: placeholder('summary of technology and education'),
