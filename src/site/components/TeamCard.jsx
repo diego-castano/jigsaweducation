@@ -106,7 +106,7 @@ export default function TeamCard({ person }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${person.name} on LinkedIn`}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-cream-200 text-[10px] font-bold text-navy-900 transition-colors hover:bg-sea-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    className="tactile flex h-10 w-10 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-cream-200 text-[10px] font-bold text-navy-900 transition-colors hover:bg-sea-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     in
                   </a>
@@ -117,7 +117,7 @@ export default function TeamCard({ person }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${person.name} on ORCID`}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-cream-200 text-[9px] font-bold text-navy-900 transition-colors hover:bg-success-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    className="tactile flex h-10 w-10 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-cream-200 text-[9px] font-bold text-navy-900 transition-colors hover:bg-success-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     iD
                   </a>

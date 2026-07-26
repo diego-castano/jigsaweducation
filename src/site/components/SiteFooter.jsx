@@ -51,10 +51,10 @@ export default function SiteFooter() {
                 two-track grid would not. */}
             <ul className="text-sm lg:columns-2 lg:gap-x-6">
               {MAIN_NAV.map((item) => (
-                <li key={item.href} className="mb-2.5 break-inside-avoid last:mb-0">
+                <li key={item.href} className="mb-1.5 break-inside-avoid last:mb-0">
                   <Link
                     href={item.href}
-                    className="link-sweep text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    className="link-sweep inline-block py-1.5 text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
                   >
                     {item.label}
                   </Link>
@@ -65,12 +65,12 @@ export default function SiteFooter() {
 
           <nav aria-label="Legal and careers" className={`lg:col-span-2 ${SEAM}`}>
             <h2 className={LABEL}>More</h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1.5 text-sm">
               {FOOTER_NAV.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="link-sweep text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    className="link-sweep inline-block py-1.5 text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
                   >
                     {item.label}
                   </Link>
@@ -95,7 +95,7 @@ export default function SiteFooter() {
                 </span>
                 <a
                   href={`mailto:${office.email}`}
-                  className="link-sweep inline-block mt-3 text-sm text-cream-200 hover:text-orange-400 transition-colors rounded-sm [overflow-wrap:anywhere] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                  className="link-sweep inline-block mt-2 py-1.5 text-sm text-cream-200 hover:text-orange-400 transition-colors rounded-sm [overflow-wrap:anywhere] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
                 >
                   {office.email}
                 </a>
@@ -104,11 +104,14 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        <div className="border-t border-navy-800 py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div
+          className="border-t border-navy-800 py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+          style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
+        >
           <p className="text-xs text-cream-400 leading-relaxed max-w-3xl">{LEGAL.line}</p>
           <div className="flex items-center gap-6 shrink-0">
             <p className="text-xs text-cream-400">© {year}</p>
-            <a href="#main" className="link-sweep text-xs text-cream-300 hover:text-orange-400 transition-colors">
+            <a href="#main" className="link-sweep inline-block py-2.5 text-xs text-cream-300 hover:text-orange-400 transition-colors">
               Back to top
             </a>
           </div>

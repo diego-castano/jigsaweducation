@@ -39,7 +39,7 @@ export default function SignpostTrio() {
 
           <Link
             href={s.href}
-            className="inline-flex items-center gap-2 w-fit mt-8 text-sm font-bold text-sea-700 group-hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+            className="inline-flex items-center gap-2 w-fit mt-8 py-2 -my-2 text-sm font-bold text-sea-700 group-hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
           >
             <span className="link-sweep">
               Read more
@@ -55,7 +55,7 @@ export default function SignpostTrio() {
           {s.secondaryLink && (
             <Link
               href={s.secondaryLink.href}
-              className="inline-flex items-center gap-1.5 w-fit mt-4 text-sm text-ink-600 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+              className="inline-flex items-center gap-1.5 w-fit mt-4 py-2 -my-1 text-sm text-ink-600 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
             >
               <span className="link-sweep">{s.secondaryLink.label}</span>
               <Icon name="arrow-up-right" size={14} />

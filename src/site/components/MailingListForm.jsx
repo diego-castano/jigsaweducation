@@ -59,11 +59,14 @@ export default function MailingListForm({ reversed = false, compact = false }) {
           placeholder="your@email.com"
           aria-invalid={state === 'error'}
           aria-describedby={state === 'idle' ? undefined : messageId}
-          className={`flex-1 min-w-0 px-4 py-3 border rounded-full text-sm transition-colors focus:outline-none ${inputBase}`}
+          // text-base on touch screens: any input under 16px makes iOS Safari zoom
+          // the whole page on focus, which is the single most app-breaking bug
+          // a mobile form can have.
+          className={`flex-1 min-w-0 px-4 py-3 border rounded-full text-base sm:text-sm transition-colors focus:outline-none ${inputBase}`}
         />
         <button
           type="submit"
-          className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+          className="tactile px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           Sign up
         </button>

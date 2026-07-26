@@ -109,7 +109,7 @@ export default function PublicationBrowser({ publications, facets }) {
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={current === 1}
-                className="px-4 py-2 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
+                className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >
                 Previous
               </button>
@@ -119,7 +119,7 @@ export default function PublicationBrowser({ publications, facets }) {
                   type="button"
                   onClick={() => setPage(n)}
                   aria-current={n === current ? 'page' : undefined}
-                  className={`w-9 h-9 rounded-full text-sm transition-colors ${
+                  className={`tactile min-w-11 h-11 rounded-full text-sm transition-colors ${
                     n === current
                       ? 'bg-navy-900 text-cream-50 font-bold'
                       : 'text-ink-700 hover:bg-cream-200'
@@ -132,7 +132,7 @@ export default function PublicationBrowser({ publications, facets }) {
                 type="button"
                 onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
                 disabled={current === pageCount}
-                className="px-4 py-2 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
+                className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >
                 Next
               </button>

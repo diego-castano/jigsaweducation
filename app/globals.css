@@ -123,7 +123,13 @@
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
 }
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  /* The grey flash iOS paints on every tap reads as a broken link. Feedback
+     comes from .tactile and the components' own hover/active states instead. */
+  -webkit-tap-highlight-color: transparent;
+}
 body {
   background: #FDFAF4;
   color: #1A1A17;
@@ -330,6 +336,11 @@ h1, h2, h3, h4, h5 {
 .img-fade { opacity: 0; transition: opacity 0.3s var(--ease-decelerate); }
 .img-fade.img-loaded { opacity: 1; }
 
+/* Tactile press for pill buttons and icon discs: the physical-push feedback
+   a native app gives. Applied to primary controls, never blanket. */
+.tactile { transition: transform 0.15s var(--ease-standard); }
+.tactile:active { transform: scale(0.97); }
+
 /* Skip link — WCAG AA, first focusable element on every page */
 .skip-link {
   position: absolute; left: 8px; top: -60px;
@@ -358,6 +369,8 @@ h1, h2, h3, h4, h5 {
   .expand-grid { transition: none !important; }
   .marquee-track { animation: none !important; flex-wrap: wrap; width: auto; }
   .img-fade { opacity: 1 !important; transition: none !important; }
+  .tactile { transition: none !important; }
+  .tactile:active { transform: none !important; }
 }
 
 /* === DARK / NAVY THEME (brand-reverse) ===

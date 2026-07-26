@@ -35,7 +35,7 @@ function LinkedInLink() {
       href={SITE.linkedin}
       target="_blank"
       rel="noopener noreferrer"
-      className="group inline-flex items-center gap-2.5 text-sm font-bold text-cream-50 hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-full"
+      className="group inline-flex items-center gap-2.5 py-1.5 text-sm font-bold text-cream-50 hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-full"
     >
       <span className="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center shrink-0">
         <span className="font-bold text-xs">in</span>

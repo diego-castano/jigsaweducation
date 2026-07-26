@@ -83,7 +83,7 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
                 <Link
                   href="/case-studies"
-                  className="group inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+                  className="tactile group inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
                 >
                   See our work
                   <Icon
@@ -94,7 +94,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/publications"
-                  className="link-sweep text-sm font-bold text-sea-700 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+                  className="link-sweep inline-block py-3 text-sm font-bold text-sea-700 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
                 >
                   Evidence library
                 </Link>

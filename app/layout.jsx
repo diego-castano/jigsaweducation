@@ -22,7 +22,10 @@ export const metadata = {
 export const viewport = {
   themeColor: '#FDFAF4',
   width: 'device-width',
-  initialScale: 1
+  initialScale: 1,
+  // Lets the page draw into the notch/home-bar areas; the header, footer and
+  // drawer pad themselves back out with env(safe-area-inset-*).
+  viewportFit: 'cover'
 };
 
 export default function RootLayout({ children }) {

@@ -117,7 +117,7 @@ export default function PublicationCard({ pub }) {
           href={pub.pdf}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative z-10 self-start shrink-0 w-9 h-9 rounded-full bg-cream-200 hover:bg-orange-100 text-navy-700 hover:text-orange-700 flex items-center justify-center transition-colors"
+          className="tactile relative z-10 self-start shrink-0 w-11 h-11 rounded-full bg-cream-200 hover:bg-orange-100 text-navy-700 hover:text-orange-700 flex items-center justify-center transition-colors"
           aria-label={`Download ${pub.title} as PDF, ${pub.fileSize}`}
         >
           <Icon name="download" size={16} />

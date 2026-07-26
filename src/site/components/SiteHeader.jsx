@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SiteLogo from './SiteLogo';
 import Icon from '../../components/Icon';
-import { MAIN_NAV } from '../../data/site';
+import { MAIN_NAV, FOOTER_NAV, OFFICES } from '../../data/site';
 
 // Seven items, no dropdowns, logo returns home — exactly as the brief asks.
 // The client's dislikes were explicit: "busy, enormous dropdowns" on
@@ -43,12 +43,16 @@ export default function SiteHeader() {
   const isActive = (href) => pathname === href || pathname.startsWith(href + '/');
 
   return (
+    <>
     <header
       className={`sticky top-0 z-40 bg-cream-50/90 backdrop-blur-md transition-shadow ${
         scrolled ? 'shadow-sm border-b border-cream-300' : 'border-b border-transparent'
       }`}
     >
-      <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
+      <div
+        className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10"
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      >
         <div className="flex items-center justify-between h-20 gap-6">
           <SiteLogo size={40} />
 
@@ -81,7 +85,7 @@ export default function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="lg:hidden p-2.5 -mr-2 rounded-xl text-navy-900 hover:bg-cream-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="tactile lg:hidden p-3 -mr-3 rounded-xl text-navy-900 hover:bg-cream-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
             aria-label="Open menu"
             aria-expanded={open}
           >
@@ -89,8 +93,12 @@ export default function SiteHeader() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer. A SIBLING of the header on purpose: the header's
+          backdrop-blur creates a containing block for fixed descendants, and
+          inside it this fixed inset-0 wrapper measured 80px tall — the whole
+          menu rendered clipped into the header strip. */}
       <div
         // overflow-hidden matters: the drawer sits translated 100% to the
         // right while closed, and without clipping here that off-canvas box
@@ -117,13 +125,17 @@ export default function SiteHeader() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="p-2 -mr-2 rounded-xl text-navy-900 hover:bg-cream-200 transition-colors"
+              className="tactile p-3 -mr-3 rounded-xl text-navy-900 hover:bg-cream-200 transition-colors"
               aria-label="Close menu"
             >
               <Icon name="x" size={22} />
             </button>
           </div>
-          <nav aria-label="Main, mobile" className="flex-1 overflow-y-auto px-4 py-6">
+          <nav
+            aria-label="Main, mobile"
+            className="flex-1 overflow-y-auto px-4 py-6"
+            style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
+          >
             <ul className="space-y-1">
               {MAIN_NAV.map((item) => {
                 const active = isActive(item.href);
@@ -145,9 +157,37 @@ export default function SiteHeader() {
                 );
               })}
             </ul>
+
+            {/* The drawer is the whole site map, the way an app drawer is:
+                the two footer-only routes and both mailboxes ride along. */}
+            <ul className="mt-6 pt-6 border-t border-cream-300 space-y-1">
+              {FOOTER_NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center px-4 py-3 rounded-xl text-base text-ink-700 hover:bg-cream-100 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-6 pt-6 border-t border-cream-300 space-y-1">
+              {OFFICES.map((office) => (
+                <li key={office.id}>
+                  <a
+                    href={`mailto:${office.email}`}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-sea-700 hover:bg-cream-100 transition-colors [overflow-wrap:anywhere]"
+                  >
+                    <Icon name="mail" size={16} className="shrink-0 text-ink-500" />
+                    {office.email}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
       </div>
-    </header>
+    </>
   );
 }

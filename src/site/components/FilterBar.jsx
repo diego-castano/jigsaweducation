@@ -37,7 +37,7 @@ function Dropdown({ label, options, selected, onToggle }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className={`inline-flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-full border text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
+        className={`tactile inline-flex items-center gap-2 pl-4 pr-3 py-3 sm:py-2.5 rounded-full border text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
           count
             ? 'bg-sea-50 border-sea-300 text-navy-900 font-bold'
             : 'bg-cream-50 border-cream-300 text-ink-700 hover:border-cream-400'
@@ -53,7 +53,7 @@ function Dropdown({ label, options, selected, onToggle }) {
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2 z-30 w-72 max-h-80 overflow-y-auto bg-cream-50 border border-cream-300 rounded-2xl shadow-lg p-2">
+        <div className="absolute left-0 top-full mt-2 z-30 w-72 max-w-[calc(100vw-3rem)] max-h-80 overflow-y-auto bg-cream-50 border border-cream-300 rounded-2xl shadow-lg p-2">
           <ul>
             {options.map((opt) => {
               const active = selected.includes(opt);
@@ -62,7 +62,7 @@ function Dropdown({ label, options, selected, onToggle }) {
                   <button
                     type="button"
                     onClick={() => onToggle(opt)}
-                    className={`w-full text-left flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-colors ${
+                    className={`w-full text-left flex items-center gap-2.5 px-3 py-3 sm:py-2.5 rounded-xl text-sm transition-colors ${
                       active ? 'bg-cream-200 text-navy-900 font-bold' : 'text-ink-700 hover:bg-cream-100'
                     }`}
                   >
@@ -123,7 +123,7 @@ export default function FilterBar({
             value={search}
             onChange={(e) => onSearch(e.target.value)}
             placeholder={searchPlaceholder}
-            className="w-full pl-11 pr-4 py-2.5 bg-cream-50 border border-cream-300 rounded-full text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-orange-500 transition-colors"
+            className="w-full pl-11 pr-4 py-2.5 bg-cream-50 border border-cream-300 rounded-full text-base sm:text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-orange-500 transition-colors"
           />
         </div>
 
@@ -145,7 +145,7 @@ export default function FilterBar({
               key={`${key}:${value}`}
               type="button"
               onClick={() => onToggle(key, value)}
-              className="inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-sea-100 hover:bg-sea-200 text-navy-800 rounded-full text-xs font-bold transition-colors"
+              className="tactile inline-flex items-center gap-1.5 pl-3 pr-2 py-2.5 sm:py-1.5 bg-sea-100 hover:bg-sea-200 text-navy-800 rounded-full text-xs font-bold transition-colors"
             >
               {value}
               <Icon name="x" size={13} />
@@ -155,7 +155,7 @@ export default function FilterBar({
           <button
             type="button"
             onClick={onClear}
-            className="text-xs text-ink-600 hover:text-orange-600 underline underline-offset-4 ml-1"
+            className="text-xs text-ink-600 hover:text-orange-600 underline underline-offset-4 ml-1 py-2.5 sm:py-0"
           >
             Clear all
           </button>
@@ -180,7 +180,7 @@ export default function FilterBar({
               id="sort"
               value={sort}
               onChange={(e) => onSort(e.target.value)}
-              className="bg-cream-50 border border-cream-300 rounded-full px-4 py-2 text-sm text-ink-800 focus:outline-none focus:border-orange-500"
+              className="bg-cream-50 border border-cream-300 rounded-full px-4 py-2.5 text-base sm:text-sm text-ink-800 focus:outline-none focus:border-orange-500"
             >
               {sortOptions.map((o) => (
                 <option key={o.value} value={o.value}>

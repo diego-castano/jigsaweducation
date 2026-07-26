@@ -133,7 +133,7 @@ export default function TeamPage() {
               >
                 <Link
                   href="/work-for-us"
-                  className="team-band-link group inline-flex items-center gap-2 rounded-sm font-display text-xl text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 lg:text-2xl"
+                  className="team-band-link group inline-flex items-center gap-2 py-1.5 rounded-sm font-display text-xl text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 lg:text-2xl"
                 >
                   {/* The sweep sits on the words, not on the whole flex box,
                       so the rule stops where the sentence stops. */}
@@ -146,7 +146,7 @@ export default function TeamPage() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="team-band-link group inline-flex items-center gap-2 rounded-sm font-display text-xl text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 lg:text-2xl"
+                  className="team-band-link group inline-flex items-center gap-2 py-1.5 rounded-sm font-display text-xl text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 lg:text-2xl"
                 >
                   <span className="link-sweep">Talk to the team</span>
                   <Icon
