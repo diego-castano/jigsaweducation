@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import SiteLogo from './SiteLogo';
-import MailingListForm from './MailingListForm';
+import FooterSignup from './FooterSignup';
 import { MAIN_NAV, FOOTER_NAV, OFFICES, LEGAL, SITE } from '../../data/site';
 
 // The footer is the close of the site, not an afterthought: three bands on
@@ -56,17 +56,9 @@ export default function SiteFooter() {
             </a>
           </div>
 
-          <div className="lg:col-span-7">
-            <h2 className="font-display text-xl text-cream-50 mb-1.5">
-              Occasional updates about our work
-            </h2>
-            <p className="text-sm text-cream-300 mb-5 max-w-md">
-              New case studies and publications, a few times a year. Nothing more frequent than that.
-            </p>
-            <div className="max-w-md">
-              <MailingListForm reversed />
-            </div>
-          </div>
+          {/* Route-aware: stands down on /contact, where the page carries its
+              own signup band with the client's verbatim copy. */}
+          <FooterSignup />
         </div>
 
         {/* Four columns, one grid. Cells stretch so every hairline runs the
