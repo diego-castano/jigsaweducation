@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Icon from '../../../components/Icon';
 import Reveal from '../Reveal';
@@ -23,16 +23,29 @@ const LAYOUT = [
 ];
 
 // Written out rather than interpolated so Tailwind's scanner sees them.
-// Tiles take the even slots; the detail band slots in on the odd one directly
-// after whichever tile is open, which is what makes the mobile accordion work
-// without a second copy of the panel in the DOM.
+// Tiles take the even slots; the detail band slots into the odd slot right
+// AFTER THE ROW of whichever tile is open — click a first-row tile and the
+// summary unfolds directly under that row, not at the bottom of the mosaic
+// where it lands off-screen. Each breakpoint has its own row shape, so each
+// gets its own order map: 1-col (every tile is a row), 2-col pairs from sm,
+// and the 6+6 / 4+4+4 / 3+3+6 mosaic from lg.
 const TILE_ORDER = [
   'order-0', 'order-2', 'order-4', 'order-6',
   'order-8', 'order-10', 'order-12', 'order-14'
 ];
-const BAND_ORDER = [
+const BAND_ORDER_BASE = [
   'order-1', 'order-3', 'order-5', 'order-7',
   'order-9', 'order-11', 'order-13', 'order-15'
+];
+// sm rows: [0,1] [2,3] [4,5] [6,7] → band follows the row's last tile.
+const BAND_ORDER_SM = [
+  'sm:order-3', 'sm:order-3', 'sm:order-7', 'sm:order-7',
+  'sm:order-11', 'sm:order-11', 'sm:order-15', 'sm:order-15'
+];
+// lg rows: [0,1] [2,3,4] [5,6,7].
+const BAND_ORDER_LG = [
+  'lg:order-3', 'lg:order-3', 'lg:order-9', 'lg:order-9',
+  'lg:order-9', 'lg:order-15', 'lg:order-15', 'lg:order-15'
 ];
 
 const PANEL_ID = 'technical-focus-detail';
@@ -43,6 +56,20 @@ export default function FocusMosaic({ areas }) {
   // with its own content instead of emptying first.
   const [state, setState] = useState({ active: null, shown: 0 });
   const buttons = useRef([]);
+
+  // Safety net for the tall first-row tiles: once the band has its height,
+  // nudge it into view if the fold still cuts it. block:'nearest' is a no-op
+  // when it is already visible, so most clicks scroll nothing.
+  useEffect(() => {
+    if (state.active === null) return;
+    const t = setTimeout(() => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document
+        .getElementById(PANEL_ID)
+        ?.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    }, 540);
+    return () => clearTimeout(t);
+  }, [state.active]);
 
   const open = state.active !== null;
   const area = areas[state.shown];
@@ -106,8 +133,9 @@ export default function FocusMosaic({ areas }) {
         className={[
           'col-span-full expand-grid',
           open ? 'open' : '',
-          open ? BAND_ORDER[state.active % BAND_ORDER.length] : 'order-last',
-          'sm:order-last'
+          open
+            ? `${BAND_ORDER_BASE[state.active]} ${BAND_ORDER_SM[state.active]} ${BAND_ORDER_LG[state.active]}`
+            : 'order-last'
         ].join(' ')}
       >
         <div>

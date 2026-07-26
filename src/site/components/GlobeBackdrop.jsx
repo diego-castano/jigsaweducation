@@ -18,9 +18,34 @@ const SIZE = 820;
 const LONDON = [51.5449, -0.2405];
 const LUSAKA = [-15.3875, 28.3228];
 
-export default function GlobeBackdrop({ className = '' }) {
+export default function GlobeBackdrop({ className = '', parallax = 0 }) {
   const canvasRef = useRef(null);
+  const wrapRef = useRef(null);
   const [ready, setReady] = useState(false);
+
+  // Parallax: the wrapper drifts down at a fraction of the scroll speed, so
+  // the globe recedes slower than the page and stays in view behind the next
+  // section. Direct style writes on rAF — never React state per frame — and
+  // nothing moves under prefers-reduced-motion.
+  useEffect(() => {
+    if (!parallax) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (wrapRef.current) {
+          wrapRef.current.style.transform = `translateY(${window.scrollY * parallax}px)`;
+        }
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [parallax]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -83,7 +108,7 @@ export default function GlobeBackdrop({ className = '' }) {
   }, []);
 
   return (
-    <div className={`pointer-events-none select-none ${className}`} aria-hidden="true">
+    <div ref={wrapRef} className={`pointer-events-none select-none will-change-transform ${className}`} aria-hidden="true">
       <canvas
         ref={canvasRef}
         width={SIZE * 2}

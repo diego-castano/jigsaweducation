@@ -37,23 +37,28 @@ const [LEAD_BEFORE, LEAD_AFTER] = LEAD_SENTENCE.split(ITALIC_PHRASE);
 export default function HomePage() {
   return (
     <>
-      {/* 1. The four core sentences, split hero */}
-      <section className="relative overflow-hidden">
-        {/* The animated backdrop: a slow dotted globe rising from the hero's
-            bottom-left, offices marked in orange, one arc between them.
-            Placement is the lesson of two failed attempts: tucked behind the
-            opaque photo only its edge slivers showed and it read as a flat
-            blob. Here the dotted face is actually visible in the dead corner
-            under the CTAs, cropped by the section edge like a horizon — and it
-            hands off into the "Global reach" band below with motion the flat
-            map deliberately does not have. Desktop only: on mobile the hero
-            stacks and a background globe just muddies the type. */}
-        <GlobeBackdrop className="absolute -bottom-[590px] -left-32 hidden lg:block opacity-[0.55]" />
-        <span
-          className="blob"
-          style={{ width: 380, height: 380, top: -190, right: -120, background: '#ffcca8', opacity: 0.22 }}
-          aria-hidden="true"
+      {/* Blocks 1 and 2 share one positioning context so the globe can live
+          uncropped behind both: it rises through the hero's bottom-left and
+          keeps drifting behind the signpost band, on a parallax that lets it
+          recede slower than the page. The signposts sit at z-10 with the page
+          background showing the globe through their hairline gaps. Desktop
+          only: on mobile the hero stacks and a background globe muddies type. */}
+      <div className="relative">
+        <GlobeBackdrop
+          parallax={0.22}
+          className="absolute top-[440px] -left-72 z-0 hidden lg:block opacity-[0.5]"
         />
+
+        {/* 1. The four core sentences, split hero */}
+        <section className="relative">
+          {/* The blob keeps its own clipper now that the section no longer
+              crops: unclipped it would push the page sideways on the right. */}
+          <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+            <span
+              className="blob"
+              style={{ width: 380, height: 380, top: -190, right: -120, background: '#ffcca8', opacity: 0.22 }}
+            />
+          </div>
 
         <div className="relative max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-16 pb-16 lg:pt-24 lg:pb-24">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -139,12 +144,13 @@ export default function HomePage() {
             </Reveal>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* 2. Three ways in */}
-      <Section>
-        <SignpostTrio />
-      </Section>
+        {/* 2. Three ways in — z-10 so the columns ride above the globe */}
+        <Section className="relative z-10">
+          <SignpostTrio />
+        </Section>
+      </div>
 
       {/* 3. Where we work */}
       <Section tone="sunken">
