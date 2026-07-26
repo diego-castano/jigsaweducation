@@ -54,12 +54,18 @@ export default function PublicationCard({ pub }) {
       </div>
 
       <div className="flex flex-col min-w-0 flex-1">
+        {/* The brief lists six tile fields: cover, title, date, region/country,
+            method/service, topic specialism. Region and country ride the badge
+            row; method and topic close the card as quiet mono lines below. */}
         <div className="flex flex-wrap items-center gap-2 mb-2.5">
           <span className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-bold ${style.badge}`}>
             {pub.type}
           </span>
           {pub.region && (
-            <span className="font-mono text-[11px] text-ink-500">{pub.region}</span>
+            <span className="font-mono text-[11px] text-ink-500">
+              {pub.region}
+              {pub.countries?.length > 0 && ` · ${pub.countries.join(' · ')}`}
+            </span>
           )}
         </div>
 
@@ -88,6 +94,12 @@ export default function PublicationCard({ pub }) {
               </span>
             )}
             {pub.summary}
+          </p>
+        )}
+
+        {(pub.method || pub.topic) && (
+          <p className="mt-3 text-xs text-ink-600 leading-relaxed">
+            {[pub.method, pub.topic].filter(Boolean).join(' · ')}
           </p>
         )}
 

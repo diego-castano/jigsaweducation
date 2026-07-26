@@ -215,6 +215,53 @@ The frontend mockup is built. 56 pages prerender; `npm run build` is clean.
 - **Heading structure verified.** One `h1` per page, no skipped levels, meta description on all 56 routes — checked against the prerendered HTML, not by eye. The live site's Team page has a single `h1` and no other heading at all.
 - **Skip link** as the first focusable element on every page.
 
+### Compliance audit — 26 July 2026
+
+A page-by-page audit against the brief's structure tables found ten gaps.
+Fixed the same day, in code:
+
+- **Publications method filter was dead** — `method` was null on all ten
+  records and empty facets don't render, so one of the brief's three named
+  filters didn't exist for the user. Four briefs whose titles state their own
+  method now carry a draft classification (flagged `needsReview`, same footing
+  as the case-study tagging); Year in Review and the anti-racism resources
+  stay null honestly. A `country` facet joined `region`, per "Region/Country".
+- **The publication tile dropped three of the brief's six fields** — method,
+  topic and country now print on the card.
+- **Contact's two emails were stacked** — the brief says "deliberately
+  side-by-side so that there is no hierarchy". Now two equal columns split by
+  a hairline. The signup also moved to first position, where the brief lists it.
+- **Distinctives paragraph three had no inline links** — the brief marks it
+  "[link to each relevant page]". The client's own phrases now anchor to
+  Services and Technical focus, matched by substring, never retyped.
+- **Work for us had rewritten client copy and an invented lede** — the
+  sentence is verbatim again (including their "sign-up" hyphen, now an anchor
+  to the form) and the lede is gone.
+- **Case-study method links landed on the Services index** — each service row
+  now carries `id={slug}` and opens itself on hash arrival, so the link lands
+  on the named service, open.
+
+Documented as deliberate, no action:
+- `caseStudySlug` stays null on all ten publications — the brief's own wording
+  is conditional ("[If linked…]") and no public output maps cleanly to a case
+  study. The client's log frame draws those links; both sides of the bridge
+  are built and switch on with the data.
+- The footer tagline: the client removed the descriptive blurb; the official
+  tagline was added later at Diego's direction as the footer's one line of
+  voice. Different sentence, different job.
+- The "Type" facet on Publications is an extra beyond the brief's three
+  filters; it has values from day one and stays unless the client objects.
+- Contact's address labels differ ("Office address" / "Registered address")
+  because the client's own docx uses exactly those labels.
+- The Case studies intro paragraph is build-written (the brief requires the
+  "indicative, not comprehensive" statement but supplies no copy) — needs
+  client sign-off, listed in §7.
+
+Still blocked on client assets: six Policies PDFs, 18 partner logo files,
+publication cover images, country flags and partner logos for case-study
+summary boxes. Note for launch: six pages render review-phase notes aimed at
+the client (draft warnings, pending-asset lines); they must strip before go-live.
+
 ### Known gaps in this build
 
 - The design system doc pages still demo the v1 publication card and team card. They need resyncing with the site components so the client reviews one system, not two.

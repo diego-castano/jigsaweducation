@@ -12,7 +12,13 @@ const PER_PAGE = 8;
 // Year still appears on the tile, it just is not a facet.
 export default function PublicationBrowser({ publications, facets }) {
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState({ region: [], method: [], topic: [] });
+  const [selected, setSelected] = useState({
+    region: [],
+    country: [],
+    method: [],
+    topic: [],
+    type: []
+  });
   const [sort, setSort] = useState('recent');
   const [page, setPage] = useState(1);
 
@@ -28,7 +34,7 @@ export default function PublicationBrowser({ publications, facets }) {
   };
 
   const clear = () => {
-    setSelected({ region: [], method: [], topic: [] });
+    setSelected({ region: [], country: [], method: [], topic: [], type: [] });
     setSearch('');
     setPage(1);
   };
@@ -39,8 +45,11 @@ export default function PublicationBrowser({ publications, facets }) {
     const filtered = publications.filter((p) => {
       if (q && !`${p.title} ${p.summary || ''} ${p.type}`.toLowerCase().includes(q)) return false;
       if (selected.region.length && !selected.region.includes(p.region)) return false;
+      if (selected.country.length && !selected.country.some((c) => p.countries?.includes(c)))
+        return false;
       if (selected.method.length && !selected.method.includes(p.method)) return false;
       if (selected.topic.length && !selected.topic.includes(p.topic)) return false;
+      if (selected.type.length && !selected.type.includes(p.type)) return false;
       return true;
     });
 

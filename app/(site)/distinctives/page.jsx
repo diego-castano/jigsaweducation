@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { Fragment } from 'react';
 import Section from '../../../src/site/components/Section';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import Placeholder from '../../../src/site/components/Placeholder';
@@ -61,6 +63,33 @@ function withItalic(text, phrase) {
       {text.slice(at + phrase.length)}
     </>
   );
+}
+
+// Same substring discipline, for links: the brief annotates paragraph three
+// with "[link to each relevant page]", so the client's own phrases become the
+// anchors to Services and Technical focus. Segments are matched exactly and
+// never retyped; a phrase that stops matching simply renders as plain text.
+function withInlineLinks(node, links) {
+  let parts = [node];
+  for (const { phrase, href } of links) {
+    parts = parts.flatMap((part) => {
+      if (typeof part !== 'string') return [part];
+      const at = part.indexOf(phrase);
+      if (at === -1) return [part];
+      return [
+        part.slice(0, at),
+        <Link
+          key={href}
+          href={href}
+          className="link-sweep text-navy-900 underline decoration-orange-300 decoration-2 underline-offset-[6px] hover:decoration-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+        >
+          {phrase}
+        </Link>,
+        part.slice(at + phrase.length)
+      ];
+    });
+  }
+  return parts;
 }
 
 function DistinctiveRow({ index, side, title, summary }) {
@@ -196,8 +225,20 @@ export default function DistinctivesPage() {
       <section className="bg-cream-100 border-b border-cream-300">
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 py-16 lg:py-20">
           <Reveal>
+            {/* The brief marks this paragraph "[link to each relevant page]":
+                the client's own phrases anchor to Services and Technical
+                focus, and the italic accent rides on the remaining text. */}
             <p className="font-display display-s text-2xl sm:text-3xl lg:text-[40px] text-navy-900 leading-[1.25] max-w-[30ch] sm:max-w-[46ch] lg:max-w-[52ch]">
-              {withItalic(introThree, 'bend the curve of progress')}
+              {withInlineLinks(introThree, [
+                { phrase: 'suite of bespoke services', href: '/services' },
+                { phrase: 'technical areas', href: '/technical-focus' }
+              ]).map((part, i) =>
+                typeof part === 'string' ? (
+                  <Fragment key={i}>{withItalic(part, 'bend the curve of progress')}</Fragment>
+                ) : (
+                  part
+                )
+              )}
             </p>
           </Reveal>
           <Reveal delay={120} className="mt-10 lg:mt-14 lg:columns-2 lg:gap-14">

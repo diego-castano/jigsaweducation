@@ -86,7 +86,7 @@ export default async function CaseStudyPage({ params }) {
               {study.method}
               {service && (
                 <Link
-                  href="/services"
+                  href={`/services#${service.slug}`}
                   className="block mt-2 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
                 >
                   {service.title}

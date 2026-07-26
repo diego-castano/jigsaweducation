@@ -26,8 +26,12 @@ export const teamMemberBySlug = (slug) => TEAM.find((p) => p.slug === slug) || n
 // rather than a fixed list. An empty facet is worse than a missing one.
 export const publicationFacets = () => {
   const uniq = (xs) => [...new Set(xs.filter(Boolean))].sort();
+  // The brief names the filters "Region/Country · Method/service · Topic
+  // specialism". Country rides with region as its own facet; Type is an extra
+  // beyond the brief that earns its place by having values from day one.
   return {
     region: uniq(PUBLICATIONS.map((p) => p.region)),
+    country: uniq(PUBLICATIONS.flatMap((p) => p.countries || [])),
     method: uniq(PUBLICATIONS.map((p) => p.method)),
     topic: uniq(PUBLICATIONS.map((p) => p.topic)),
     type: uniq(PUBLICATIONS.map((p) => p.type))

@@ -23,7 +23,7 @@ export default function ServiceRow({ service, index, open, onToggle, delay = 0 }
   const caseStudies = service.caseStudies || [];
 
   return (
-    <Reveal as="li" delay={delay} className="border-t border-cream-300">
+    <Reveal as="li" delay={delay} id={service.slug} className="border-t border-cream-300 scroll-mt-24">
       {/* The open row reads as a surface band between two hairlines, not as a
           card. It sits on this wrapper rather than on the <Reveal> element,
           whose own transition is declared unlayered in globals.css and would

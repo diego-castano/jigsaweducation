@@ -14,6 +14,19 @@ import { placeholder } from './placeholder';
 // - `topic` / `method` — assigned only where the title states it outright.
 //   Anything less certain is null so the client can classify it themselves.
 //
+// `method` carries a DRAFT classification on the four briefs whose titles
+// state their own method, on the same footing as the case-study tagging:
+// defensible from the source, flagged needsReview, for the client to correct.
+// Year in Review and the anti-racism resources stay null — an annual report
+// has no research method, and inventing one to feed a filter would be worse
+// than a smaller facet.
+//
+// `caseStudySlug` stays null on all ten deliberately. The brief's own wording
+// is conditional ("[If linked to a specific case study]"), and none of the ten
+// public outputs maps cleanly to any of the seventeen case studies. The
+// client's log frame is the source that will draw those links; the button and
+// the case-study-side block both switch on the moment it does.
+//
 // The client's Google Sheets log frame is meant to become the source of this
 // file. Roughly 100 publications are expected; these ten are what is public today.
 
@@ -33,7 +46,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'Global',
     countries: [],
-    method: null,
+    method: 'Research localisation, training, and capacity strengthening',
     topic: 'Skills and pathways to employment',
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
@@ -54,7 +67,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'Global',
     countries: [],
-    method: null,
+    method: 'Technical assistance and evidence synthesis',
     topic: 'Technology and education',
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
@@ -76,7 +89,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'Global',
     countries: [],
-    method: null,
+    method: 'Research localisation, training, and capacity strengthening',
     topic: null,
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
@@ -97,7 +110,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'South Asia',
     countries: ['Afghanistan'],
-    method: null,
+    method: 'Large-scale, mixed-method studies',
     topic: 'Education in crisis and conflict',
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),

@@ -3,7 +3,7 @@ import PageHero from '../../../src/site/components/PageHero';
 import Section from '../../../src/site/components/Section';
 import MailingListForm from '../../../src/site/components/MailingListForm';
 import Icon from '../../../src/components/Icon';
-import { JOBS, JOBS_EMPTY_MESSAGE, JOBS_FOOTNOTE } from '../../../src/data/jobs';
+import { JOBS, JOBS_EMPTY_MESSAGE } from '../../../src/data/jobs';
 
 export const metadata = {
   title: 'Work for us',
@@ -15,11 +15,10 @@ export const metadata = {
 export default function WorkForUsPage() {
   return (
     <>
-      <PageHero
-        kicker="Careers"
-        title="Work for us"
-        lede="We are a group of mixed-method education applied researchers, working in the contexts where education is hardest and matters most."
-      />
+      {/* No lede: the brief specifies a simple holding page and supplies no
+          intro copy for it. An invented paragraph here read as client voice
+          nobody approved. */}
+      <PageHero kicker="Careers" title="Work for us" />
 
       <Section width="narrow">
         <h2 className="font-display text-2xl text-navy-900 mb-6">Current opportunities</h2>
@@ -45,18 +44,28 @@ export default function WorkForUsPage() {
           </div>
         )}
 
+        {/* The client's sentence, verbatim including their "sign-up" hyphen —
+            the first pass had quietly rewritten it. Their own phrases carry
+            the two links. */}
         <p className="mt-10 text-lg text-ink-700 leading-relaxed">
-          {JOBS_FOOTNOTE.split('contact us')[0]}
+          {'If you are interested in working at Jigsaw, please '}
           <Link
             href="/contact"
             className="text-sea-700 hover:text-orange-600 underline underline-offset-4"
           >
             contact us
           </Link>
-          {' or sign up below to receive updates.'}
+          {' or '}
+          <a
+            href="#signup"
+            className="text-sea-700 hover:text-orange-600 underline underline-offset-4"
+          >
+            sign-up
+          </a>
+          {' to receive updates.'}
         </p>
 
-        <div className="mt-8 max-w-md">
+        <div id="signup" className="mt-8 max-w-md scroll-mt-28">
           <MailingListForm />
         </div>
 
