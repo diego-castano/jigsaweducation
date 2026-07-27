@@ -1,99 +1,61 @@
-# Jigsaw 2026 — Design System
+# Jigsaw Education Evidence — Website
 
-The presentation-ready design system for **Jigsaw Education Evidence**.
-Foundations, components, motion patterns, site templates, brand applications, and documentation — all in one scrollable document.
+The full site rebuild for **Jigsaw Education Evidence** ([jigsaweducation.org](https://www.jigsaweducation.org/)): eleven routes over the client's approved sitemap, plus the living design system preserved at [`/design-system`](https://jigsaweducation-production.up.railway.app/design-system).
 
 ## Stack
 
-- **Vite 5** — bundler with code-splitting and Lightning CSS minification
-- **React 18** — with `lazy()` + `Suspense` for per-section code splitting
-- **Tailwind CSS v4** — via the official Vite plugin, tokens declared in `src/app.css` with `@theme`
-- **Boneyard** — auto-generated skeleton loading placeholders ([github.com/0xGF/boneyard](https://github.com/0xGF/boneyard))
-- **Self-hosted fonts** — Fraunces (variable), Lato, JetBrains Mono via [@fontsource](https://fontsource.org)
-- **Express + compression** — production static server for Railway
+- **Next.js 16** — App Router, static prerendering (62 pages), per-route metadata, generated `sitemap.xml` and `robots.txt`
+- **React 19** · **Tailwind CSS v4** — tokens declared in `app/globals.css` under `@theme`
+- **Literata** (variable, multi-axis) + **Lato** + **JetBrains Mono**, self-hosted via [@fontsource](https://fontsource.org)
+- **cobe** — the 5KB WebGL globe behind the home hero
+- **d3-geo + world-atlas** — the interactive world map and the office locator plates, no tile provider, no API keys
 
 ## Develop
 
 ```bash
 npm install
-npm run dev          # Vite dev server, hot reload, http://localhost:5173
+npm run dev          # http://localhost:3000
 ```
 
-## Build & preview
+## Build & deploy
 
 ```bash
-npm run build        # → ./dist
-npm run preview      # serve the production build locally on :4173
+npm run build        # static prerender, all routes
+npm run start        # production server on $PORT
 ```
 
-## Generate boneyard skeletons (optional)
-
-The skeleton wrapper has a built-in shimmer fallback, so the site works without
-boneyard snapshots. To generate pixel-accurate skeletons from your real layout:
-
-```bash
-npm run boneyard:generate
-```
-
-(Requires `boneyard-js` CLI to discover `<Skeleton>` markers and snapshot them.)
-
-## Deploy to Railway
-
-This repo includes both `railway.json` and `nixpacks.toml`. Railway will:
-
-1. `npm ci` (install)
-2. `npm run build` (Vite build → `./dist`)
-3. `node server.js` (Express static server, listens on `$PORT`)
-
-Connect the repo in Railway. No environment variables required.
-
-```bash
-# Or deploy via the Railway CLI
-railway up
-```
-
-The Express server (`server.js`) sets:
-- `Cache-Control: max-age=1y, immutable` on `/assets/*` (Vite-hashed filenames)
-- `Cache-Control: max-age=1h` on everything else
-- `gzip` compression for HTML, JS, CSS, JSON
-- SPA fallback: every unmatched route serves `index.html`
-
-## Speed optimisations applied
-
-- Per-section `React.lazy()` + `<Suspense>` → only the visible code ships first
-- Manual chunks split for `react`, `boneyard`, `fonts`, and remaining `vendor`
-- Self-hosted fonts (no Google Fonts CDN round-trip)
-- Tailwind v4 generates only the classes used (built-in tree-shake)
-- Lightning CSS minification
-- All Unsplash images use `?auto=format&q=80` and `loading="lazy"`
-- `dns-prefetch` + `preconnect` for `images.unsplash.com`
-- `prefers-reduced-motion` honoured — animations short-circuit
-- Express `compression()` for gzip on all text responses
+Railway builds from `main` via `nixpacks.toml` (`npm ci` → `next build` → `next start`). No environment variables required yet; Mailchimp wiring lands with the backend phase.
 
 ## Project structure
 
 ```
+app/
+├── (site)/              # public site: 11 routes, shared chrome in layout.jsx
+│   └── template.jsx     # route-enter transition (app-shell effect)
+├── design-system/       # the v1 design-system document, preserved
+├── sitemap.js · robots.js · opengraph-image.jsx · icon.svg
 src/
-├── App.jsx                # single-page scroll shell + scroll-spy
-├── main.jsx               # React entry
-├── app.css                # tokens (@theme) + base styles + dark mode
-├── components/            # shared primitives
-│   ├── Sidebar.jsx
-│   ├── LogoMark.jsx       # uses /public/logo.png
-│   ├── Icon.jsx
-│   ├── Btn.jsx · Badge.jsx · Card.jsx · Section.jsx · PageHeader.jsx
-│   ├── CodeBlock.jsx · Swatch.jsx · Splash.jsx · CopyToast (in-App)
-│   ├── PublicationCard.jsx · TeamCard.jsx
-│   └── SkeletonWrapper.jsx
-├── pages/                 # 30 lazy-loaded sections
-├── data/                  # nav.js · publications.js · team.js · tokens.js
-├── hooks/                 # useCopy.js · useScrollSpy.js
-└── icons/                 # ICON_PATHS (Lucide-style stroke 1.5)
-public/
-└── logo.png               # the official Jigsaw J badge
+├── data/                # ALL content lives here — bios, case studies,
+│                        #   publications, services, focus areas, offices.
+│                        #   The future CMS replaces these files, not the pages.
+├── site/components/     # site-only components (header, footer, tab bar, cards…)
+├── components/          # design-system primitives (also used by /design-system)
+├── design-system/       # the 30 documentation pages
+docs/
+├── build-plan.md        # decisions, feedback fixes, audits, open client items
+├── design-direction.md  # the design rules every page follows
+├── CHANGELOG.md         # session-by-session build history
+└── client/              # client-private material (gitignored — public repo)
 ```
+
+## Conventions that keep this scalable
+
+- **Content is data.** Pages render from `src/data/*`; placeholder copy is marked with the `placeholder()` helper and renders visibly unfinished via `<Placeholder>`. Swapping in the client's copy is a data edit, never a layout edit.
+- **Client copy is verbatim.** Anything the client wrote is never retyped — emphasis and inline links are applied by exact-substring split (`withItalic`, `withInlineLinks` in `distinctives/page.jsx`).
+- **Motion is CSS-first** and lives in `globals.css` (`.rv`/`<Reveal>`, `.link-sweep`, `.row-sweep`, `.expand-grid`, `.marquee`, `.tactile`, `.route-enter`). Everything collapses under `prefers-reduced-motion`.
+- **A11y is enforced, not aspired to**: one `h1` per page, no heading skips, meta description on every route — checked against the prerendered HTML in `.next/server/app`.
+- **Assets still owed by the client** (partner logos, policy PDFs, publication covers, flags) render as honest, documented fallbacks — never invented stand-ins.
 
 ## Credits
 
-Design & build · Diego Castaño · v1.0 · March 2026
-Built for [jigsaweducation.org](https://www.jigsaweducation.org/).
+Design & build · Diego Castaño · v2.0 · July 2026

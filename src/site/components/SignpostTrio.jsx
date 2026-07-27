@@ -23,7 +23,10 @@ export default function SignpostTrio() {
           as="li"
           key={s.href}
           delay={i * 90}
-          className={`group flex flex-col min-h-[16rem] py-9 transition-colors duration-300 hover:bg-cream-100 focus-within:bg-cream-100 ${
+          // Translucent tint, not opaque fill: with the globe drifting behind
+          // this band, a solid hover patch cut a hard-edged rectangle out of
+          // the backdrop and read as a glitch.
+          className={`group flex flex-col min-h-[16rem] py-9 transition-colors duration-300 hover:bg-cream-100/70 focus-within:bg-cream-100/70 ${
             i > 0 ? 'border-t border-cream-300 md:border-t-0 md:border-l md:pl-8 lg:pl-10' : ''
           } ${i < SIGNPOSTS.length - 1 ? 'md:pr-8 lg:pr-10' : ''}`}
         >

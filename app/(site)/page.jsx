@@ -44,9 +44,14 @@ export default function HomePage() {
           background showing the globe through their hairline gaps. Desktop
           only: on mobile the hero stacks and a background globe muddies type. */}
       <div className="relative">
+        {/* The vertical mask is the legibility deal: the sphere runs at full
+            presence through the hero and the seam, then dissolves under the
+            signpost text zone so placeholder copy never fights dot matrix.
+            The parallax drags the fade along with the globe, which keeps the
+            crest visible into the band without ever sitting under words. */}
         <GlobeBackdrop
           parallax={0.22}
-          className="absolute top-[440px] -left-72 z-0 hidden lg:block opacity-[0.5]"
+          className="absolute top-[440px] -left-72 z-0 hidden lg:block opacity-[0.5] [mask-image:linear-gradient(to_bottom,black_32%,transparent_72%)]"
         />
 
         {/* 1. The four core sentences, split hero */}
