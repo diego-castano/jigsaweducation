@@ -1,0 +1,822 @@
+==========================================================================================
+AREA: Home page + shared chrome (app/(site)/page.jsx, layouts, src/data/{home,site,partners,nav}.js, header/footer/tab-bar/signup/map/globe components)
+NOTES: Wiring risks. (1) H1 emphasis: page.jsx splits CORE_SENTENCES[0] on the literal string 'education research'; if the client edits sentence 1 and the phrase disappears, LEAD_AFTER is undefined and the italic phrase still renders appended — the admin needs an emphasis-range or rich-text field for the headline, not a plain string plus a hardcoded split. (2) Client components import data modules directly: SiteHeader, FooterSignup, MobileTabBar ('use client') import MAIN_NAV/FOOTER_NAV/OFFICES/SITE, and WorldMap imports MAP_COUNTRIES — DB loaders must pass this data down as props from a server layout or serialize it, since these files cannot call server-side loaders themselves. (3) MAP_COUNTRIES.id keys world-atlas numeric ISO codes on purpose (name drift: Türkiye, Eswatini); the admin country picker must store the numeric code, and a bad id silently drops the country from the map. (4) GlobeBackdrop hardcodes London/Lusaka coords in [lat,lon] while OFFICES stores [lon,lat] — same data, flipped axes, two places to update on an office move; derive globe markers from OFFICES. (5) The '{n} countries shown' figure and the WorldMap svg title are computed from MAP_COUNTRIES.length — no separate count field. (6) TRACK_RECORD figures (15/150/50) are restated verbatim inside PARTNERS_INTRO prose and in SITE.description/home metadata description; a client editing the numbers in settings will not update the prose — either template the prose or flag the duplication in the admin. (7) FooterSignup's ROUTES_WITH_OWN_SIGNUP must stay in sync with which pages embed their own MailingListForm. (8) PartnerLogoWall splits PARTNERS into rows of slice(0,9)/slice(9) — a list that grows past 18 unbalances the two marquee bands; compute the split. (9) SIGNPOSTS[].kicker exists in data but SignpostTrio never renders it — dead field, drop or wire before modelling. (10) Placeholder() sentinel strings (signpost summaries, MAP_SUMMARY) are awaiting client copy; the Placeholder chip auto-disappears once real text replaces them. (11) TRACK_RECORD.needsClientConfirmation and MAP_IS_SEED_DATA are editorial flags worth surfacing as admin warnings, not public content.
+------------------------------------------------------------------------------------------
+[text      |settings] src/data/site.js SITE.name
+    Org short name 'Jigsaw'; feeds title template, OG siteName, schema alternateName
+    -> app/layout.jsx metadata, app/(site)/layout.jsx schema, FooterSignup
+[text      |settings] src/data/site.js SITE.legalName
+    'Jigsaw Education Evidence Ltd.'; schema Organization name
+    -> app/(site)/layout.jsx organisationSchema
+[text      |settings] src/data/site.js SITE.tagline
+    'Rigorous evidence for lasting change in education'; default page title suffix and the footer's one line of voice
+    -> app/layout.jsx title/OG, FooterSignup IdentityBlock
+[longtext  |settings] src/data/site.js SITE.description
+    Site-wide meta description and schema description
+    -> app/layout.jsx metadata, organisationSchema
+[link      |settings] src/data/site.js SITE.url
+    Canonical origin https://www.jigsaweducation.org; metadataBase and schema url
+    -> app/layout.jsx, organisationSchema
+[link      |settings] src/data/site.js SITE.linkedin
+    Company LinkedIn URL
+    -> FooterSignup LinkedInLink, organisationSchema sameAs
+[list      |settings] src/data/site.js MAIN_NAV
+    7 header items {href,label}; labels editable, hrefs are routes (structural). Brief mandates 7 items, no dropdowns
+    -> SiteHeader desktop nav + mobile drawer, SiteFooter Explore column
+[list      |settings] src/data/site.js FOOTER_NAV
+    2 footer-only items {href,label}: Policies, Work for us; labels editable, hrefs structural
+    -> SiteFooter More column, SiteHeader drawer
+[list      |settings] src/data/site.js OFFICES
+    2 offices: heading, org, city, country, email, address[] lines, addressLabel editable; id/countryId/coords are wiring (map + globe keys)
+    -> SiteFooter office columns, SiteHeader drawer mailtos, organisationSchema, contact page
+[derived   |no      ] src/data/site.js OFFICES[].countryId + coords
+    Numeric ISO 3166-1 code and [lon,lat]; must match world-atlas ids or the office drops off the map silently
+    -> WorldMap (via MAP_COUNTRIES convention), GlobeBackdrop duplicates coords
+[longtext  |settings] src/data/site.js LEGAL.line
+    Full legal sentence (Social Enterprise, UK + Zambia company/VAT numbers); pending 'Registered BCorp' addition
+    -> SiteFooter bottom band
+[text      |settings] src/data/site.js LEGAL numbers (ukCompanyNumber, vatNumber, zambiaCompanyNumber, socialEnterprise)
+    Structured legal facts; vatNumber also feeds schema vatID. Keep in sync with LEGAL.line or generate the line from them
+    -> organisationSchema vatID; LEGAL.line duplicates them as prose
+[number    |settings] src/data/site.js TRACK_RECORD
+    years:15, assignments:150, organisations:50 + needsClientConfirmation flag; brief figures pending client sign-off
+    -> Home hero mono stat line (page.jsx), likely other pages
+[list      |yes     ] src/data/home.js CORE_SENTENCES
+    4 final client sentences, verbatim, in order; sentence 1 is the H1, 2-4 are the hairline lines
+    -> app/(site)/page.jsx hero
+[derived   |no      ] app/(site)/page.jsx ITALIC_PHRASE + split logic (lines 31-33)
+    H1 splits sentence 1 on the literal phrase 'education research' to italicise it; editing sentence 1 without that phrase breaks the split (LEAD_AFTER undefined)
+    -> Home H1; admin needs a rich-text or emphasis-range field instead
+[list      |yes     ] src/data/home.js SIGNPOSTS
+    3 boxes {href,title,kicker,icon,summary,secondaryLink}; summaries are placeholder(); kicker field exists but SignpostTrio never renders it; hrefs/icons structural
+    -> SignpostTrio on Home
+[link      |yes     ] src/data/home.js SIGNPOSTS[2].secondaryLink
+    'Our story' -> /distinctives#our-story; the only about-us route since the About page was retired. Label editable, href structural
+    -> SignpostTrio third column
+[longtext  |yes     ] src/data/home.js MAP_SUMMARY
+    placeholder() summary sentence beside the map; brief marks it [tbc]
+    -> Home 'Where we work' section
+[list      |yes     ] src/data/home.js MAP_COUNTRIES
+    12 seed countries {name, numeric ISO id, office?}; names editable, id must be a valid world-atlas ISO code (validate in admin), office flag drives orange fill
+    -> WorldMap fills + svg title, Home '{n} countries shown' count
+[boolean   |settings] src/data/home.js MAP_IS_SEED_DATA
+    Flag that the country list is derived seed data, not client-confirmed; drop once client supplies the real list
+    -> documentation only (no renderer reads it today)
+[longtext  |yes     ] src/data/partners.js PARTNERS_INTRO
+    Client paragraph (15 years / 150 assignments / 50 organisations); duplicates TRACK_RECORD figures in prose
+    -> Home 'Who we work with' section
+[list      |yes     ] src/data/partners.js PARTNERS
+    18 orgs {name, full, logo:null} in the client's specified order; logo is a pending image slot per partner (SVGs to be recreated), full feeds the sr-only indexable list
+    -> PartnerLogoWall marquee plates + sr-only list
+[metadata  |yes     ] app/(site)/page.jsx metadata (lines 14-20)
+    Home <title> (absolute) and meta description; description restates CORE_SENTENCES — per-page SEO fields in admin
+    -> Home page head
+[image     |yes     ] app/(site)/page.jsx HERO_PHOTO (line 25)
+    Hardcoded S3 URL of client's Voices of Refugee Youth field photo (2019); photo policy: client's own images only, no stock
+    -> Home hero right column
+[link      |yes     ] app/(site)/page.jsx HERO_PHOTO_HREF (line 27)
+    '/case-studies/voices-of-refugee-youth' — photo links to its case study; should become a case-study picker in admin
+    -> Home hero photo link
+[text      |yes     ] app/(site)/page.jsx hero photo credit (line 135)
+    'Voices of Refugee Youth, Pakistan and Rwanda' caption under the photo, hardcoded in JSX
+    -> Home hero
+[text      |yes     ] app/(site)/page.jsx hero CTAs (lines 98, 109)
+    'See our work' -> /case-studies and 'Evidence library' -> /publications; labels editable, hrefs structural
+    -> Home hero buttons
+[text      |yes     ] app/(site)/page.jsx stat line (lines 142-148)
+    '{years} years / {assignments}+ assignments / {organisations}+ organisations' — numbers from TRACK_RECORD, unit labels hardcoded in JSX
+    -> Home hero, under photo
+[text      |yes     ] app/(site)/page.jsx SectionHeading 'Global reach, local evidence' (line 167)
+    Hardcoded section title for the map block
+    -> Home 'Where we work'
+[derived   |yes     ] app/(site)/page.jsx map caption (lines 169-172)
+    '{MAP_COUNTRIES.length} countries shown.' is computed; trailing sentence 'Drawn from our published case studies and not yet complete.' is hardcoded, editable text
+    -> Home map section
+[text      |yes     ] app/(site)/page.jsx SectionHeading kicker+title (line 183)
+    Kicker 'Who we work with' and title 'Partners in building evidence', hardcoded in JSX
+    -> Home partners section
+[text      |yes     ] src/site/components/SignpostTrio.jsx 'Read more' (line 48)
+    Link label shared by all three signposts (+ sr-only 'about {title}'); could be a per-signpost field or a global string
+    -> SignpostTrio
+[text      |yes     ] src/site/components/PartnerLogoWall.jsx pending note (line 90)
+    'Names are set in type while the partner logo files are pending.' — should auto-hide once logos exist; treat as derived from PARTNERS logo coverage
+    -> Home partner wall footer
+[text      |yes     ] src/site/components/WorldMap.jsx legend labels (lines 96, 99)
+    'Our offices' / 'Where we have worked' legend text, hardcoded
+    -> WorldMap legend
+[derived   |no      ] src/site/components/WorldMap.jsx svg <title> (lines 53-57)
+    Accessible map description generated from MAP_COUNTRIES; edits flow through automatically
+    -> WorldMap
+[structural|no      ] src/site/components/WorldMap.jsx projection + fills (lines 16-23, 67-76)
+    Natural Earth projection constants and brand fill colours; client must not touch
+    -> WorldMap
+[derived   |no      ] src/site/components/GlobeBackdrop.jsx LONDON/LUSAKA (lines 18-19)
+    Office [lat,lon] duplicated from OFFICES coords (note: axis order flipped vs site.js); markers/arc should read from OFFICES so an office change updates both
+    -> Home hero decorative globe
+[structural|no      ] src/site/components/GlobeBackdrop.jsx cobe config (lines 67-99)
+    Decorative WebGL globe colours, rotation, parallax; aria-hidden atmosphere only
+    -> Home hero backdrop
+[text      |yes     ] src/site/components/FooterSignup.jsx signup heading (line 72)
+    'Occasional updates about our work' — footer mailing-list heading, hardcoded
+    -> FooterTopBand on every page except /contact and /work-for-us
+[text      |yes     ] src/site/components/FooterSignup.jsx signup blurb (line 75)
+    'New case studies and publications, a few times a year. Nothing more frequent than that.' hardcoded
+    -> FooterTopBand
+[text      |yes     ] src/site/components/FooterSignup.jsx 'LinkedIn' label (line 43)
+    Visible link text beside the 'in' roundel; low value but client-visible
+    -> FooterTopBand
+[structural|no      ] src/site/components/FooterSignup.jsx ROUTES_WITH_OWN_SIGNUP (line 16)
+    ['/contact','/work-for-us'] — routes where the footer form recomposes; must track which pages ship their own signup
+    -> FooterTopBand layout switch
+[text      |yes     ] src/site/components/MailingListForm.jsx UI strings (lines 48, 59, 71)
+    sr-only label 'Email address', placeholder 'your@email.com', button 'Sign up'
+    -> Footer band + Contact + Work for us
+[text      |settings] src/site/components/MailingListForm.jsx validation/stub messages (lines 26, 33, 38)
+    'Enter an email address.', 'That does not look like an email address.', and the Mailchimp-not-connected stub (stub dies in the backend phase)
+    -> MailingListForm status line
+[list      |settings] src/site/components/MobileTabBar.jsx TABS (lines 15-20)
+    4 tabs {href,label,icon}: Home/Services/Work/Library plus the hardcoded 'Menu' slot (line 86); labels editable with care, hrefs/icons and the 5-slot count structural
+    -> MobileTabBar, mobile only
+[structural|no      ] src/site/components/SiteHeader.jsx aria strings (lines 162, 209, 132, 200, 215)
+    'Open menu'/'Close menu'/'Main'/'Menu' aria labels; keep out of the admin
+    -> SiteHeader
+[text      |yes     ] src/site/components/SiteFooter.jsx column labels (lines 47, 67)
+    'Explore' and 'More' column headings, hardcoded (office columns use office.city)
+    -> SiteFooter
+[derived   |no      ] src/site/components/SiteFooter.jsx '© {year}' + 'Back to top' (lines 113-116)
+    Year computed at render; 'Back to top' label hardcoded, low-value editable
+    -> SiteFooter bottom band
+[text      |no      ] app/(site)/layout.jsx 'Skip to content' (line 42)
+    Skip link text, hardcoded; a11y fixture, safe to leave out of admin
+    -> every public page
+[derived   |no      ] app/(site)/layout.jsx organisationSchema (lines 15-31)
+    JSON-LD Organization built from SITE, LEGAL, OFFICES; regenerates from settings, never edited directly
+    -> every public page head
+[metadata  |no      ] app/layout.jsx metadata + viewport (lines 4-29)
+    Title template '%s — Jigsaw', OG defaults, en_GB locale, themeColor #FDFAF4 — all derived from SITE or structural
+    -> whole app
+[structural|no      ] src/data/nav.js NAV + SECTION_IDS
+    Sidebar nav for the internal /design-system styleguide, not the public site; no client editing
+    -> /design-system only
+[structural|no      ] src/site/components/Placeholder.jsx 'Copy tbc' chip
+    Renders the chip when copy is a placeholder() sentinel; becomes inert once the CMS supplies real strings
+    -> SignpostTrio summaries, MAP_SUMMARY, any placeholder() field
+==========================================================================================
+AREA: Services, Technical focus, Distinctives pages
+NOTES: Wiring risks. (1) Title-keyed joins: relations.js caseStudiesByService/caseStudiesByTopic match case studies against SERVICES[].title and TECHNICAL_FOCUS[].title as exact strings — renaming a service or area in the admin silently empties its related-case-studies list unless the CMS joins by slug/id instead (recommended migration) or updates both sides. (2) Substring-dependent formatting: Distinctives paragraph three runs through withItalic/withInlineLinks, which match exact phrases ('suite of bespoke services', 'technical areas', 'bend the curve of progress'); an edited paragraph degrades to plain text with no error — the CMS either needs rich text for this field or a visible warning. (3) Stats duplication: CRISIS_STATS (80/250/260) restate figures inside DISTINCTIVES_INTRO[1]; model them as one editable stats list and warn that the paragraph must agree. CRISIS_STATS, STORY_MILESTONES, ROW_SIDES and the founding-date note all live inside distinctives/page.jsx, not src/data — they must move into the DB-backed loader. (4) Client-component prop boundaries: ServiceIndex and FocusMosaic are 'use client' islands that receive already-mapped plain objects (slug, title, icon, spot, summary, caseStudies[{slug,title}]) from server pages — DB loaders must preserve those exact shapes. (5) FocusMosaic layout assumes exactly 8 areas and ServiceIndex numbering assumes order; 'Six ways of working' hardcodes the count; adding/removing entries in admin has visual consequences the client should be warned about. (6) OUR_STORY.milestones (data) is dead — the rendered timeline is STORY_MILESTONES in page JSX; unify on one field. (7) Spot glyphs follow the /icons/focus/<slug>.png path convention; the CMS should store an explicit image URL per area (fallback stroke icon already handles null). (8) UI microcopy ('Related case studies', empty-state line, 'Continue', CrossLinks blurbs) is duplicated across ServiceRow and FocusMosaic and shared across pages — belongs in a global-strings settings area, not per-page. (9) needsClientConfirmation prints an internal note about the unresolved founding date; production publish flow must force it off. (10) DISTINCTIVES_STATS_CITATION null-fallback copy is hardcoded in page JSX; keep the field a plain URL and let the page own the fallback. (11) ExpandableCard.jsx exists but none of these three pages imports it — no fields from it here. (12) Placeholder detection keys off the literal 'Placeholder —' prefix (isPlaceholder in src/data/placeholder.js); once fields come from the DB, real copy drops the dashed treatment automatically, but admin previews could reuse that predicate.
+------------------------------------------------------------------------------------------
+[metadata  |yes — settings/SEO panel] app/(site)/services/page.jsx metadata.description
+    SEO description listing the six services; must track service titles if renamed
+    -> Services page <head>
+[metadata  |yes — settings/SEO panel] app/(site)/services/page.jsx metadata.title ('Services')
+    Browser-tab/SEO title
+    -> Services page <head>
+[text      |yes     ] app/(site)/services/page.jsx h1 ('Services')
+    Page h1, hardcoded in JSX left rail
+    -> Services page sticky left rail
+[longtext  |yes     ] src/data/services.js SERVICES_INTRO
+    Intro paragraph, currently placeholder('summary paragraph explaining what we mean by services…'); renders through <Placeholder> dashed styling until real copy lands
+    -> Services page left rail
+[text      |yes     ] app/(site)/services/page.jsx caption ('Six ways of working')
+    Small caption above the see-also line; the word 'Six' should update if service count changes
+    -> Services page left rail
+[link      |yes — text yes, hrefs settings] app/(site)/services/page.jsx see-also sentence ('See also Technical focus and Team.')
+    Inline sentence with two hardcoded Next links to /technical-focus and /team
+    -> Services page left rail
+[list      |yes — with warning] src/data/services.js SERVICES[].title (6 items)
+    Six service names verbatim from the client's July brief (Large-scale mixed-method studies … Embedded learning partnerships); relations.js matches case studies BY TITLE, so renaming breaks the join unless the admin updates both
+    -> Services index rows, metadata description, case-study cross-links via caseStudiesByService
+[longtext  |yes     ] src/data/services.js SERVICES[].summary (6 items)
+    All six are placeholder() strings marked [tbc] in the brief
+    -> ServiceRow expanded panel
+[structural|no      ] src/data/services.js SERVICES[].slug (6 items)
+    URL fragments (/services#slug) that case-study pages deep-link to; ServiceRow uses them as element ids
+    -> ServiceIndex hash routing, ServiceRow id
+[derived   |settings — constrained picker] src/data/services.js SERVICES[].icon (6 items)
+    SVG icon name from the shared Icon set (microscope, flask, users, book-open, compass, heart); a dropdown of valid names at most
+    -> ServiceRow ghost watermark glyph
+[derived   |no — computed facet] src/data/services.js SERVICES[].caseStudySlugs
+    Currently empty and unused; the live join is caseStudiesByService(title) in src/data/relations.js at render
+    -> ServiceRow related-case-studies list
+[text      |settings — global UI strings] src/site/components/services/ServiceRow.jsx 'Related case studies' + 'No published case studies tagged to this area yet.'
+    Hardcoded UI microcopy inside the expand panel (label and empty-state)
+    -> every service row panel
+[structural|no      ] src/site/components/services/ServiceRow.jsx numeral 01-06
+    Watermark index numeral computed from array position
+    -> service index rows
+[metadata  |yes — settings/SEO panel] app/(site)/technical-focus/page.jsx metadata.title/description
+    SEO title 'Technical focus' and description listing the eight areas; must track area renames
+    -> Technical focus <head>
+[text      |yes     ] app/(site)/technical-focus/page.jsx h1 ('Technical focus')
+    Page h1 hardcoded in the compact opener
+    -> Technical focus opener
+[longtext  |yes     ] src/data/technical-focus.js TECHNICAL_FOCUS_INTRO
+    Intro paragraph, placeholder('summary paragraph explaining why we focus on certain areas…')
+    -> Technical focus opener right column
+[text      |yes     ] app/(site)/technical-focus/page.jsx instruction line ('Select an area for its summary and the case studies behind it.')
+    Hardcoded helper sentence above the mosaic
+    -> Technical focus page
+[list      |yes — with warning] src/data/technical-focus.js TECHNICAL_FOCUS[].title (8 items)
+    Eight area names verbatim from the July brief, brief's order and capitalisation ('Foundational Learning' capital L kept deliberately); relations.js caseStudiesByTopic matches BY TITLE — rename breaks the join
+    -> FocusTile labels, FocusDetail heading, metadata description, case-study topic links
+[longtext  |yes     ] src/data/technical-focus.js TECHNICAL_FOCUS[].summary (8 items)
+    All eight are placeholder() strings
+    -> FocusDetail band
+[image     |yes — image upload] src/data/technical-focus.js TECHNICAL_FOCUS[].spot (8 items)
+    Custom illustrated spot glyphs at /public/icons/focus/<slug>.png (all 8 files exist), generated via media-gen in brand palette, object-only per the no-AI-people photo policy; rendered 112x112 with rounded border in FocusDetail, stroke icon is the fallback when null
+    -> FocusDetail band left column
+[derived   |settings — constrained picker] src/data/technical-focus.js TECHNICAL_FOCUS[].icon (8 items)
+    SVG icon name (globe, briefcase, shield, layers, book-open, graduation, users, zap) used for tile plate icon and oversized ghost glyph
+    -> FocusTile plate + ghost, FocusDetail fallback
+[structural|no      ] src/data/technical-focus.js TECHNICAL_FOCUS[].slug (8 items)
+    Slug keys and spot-file naming convention; also React keys
+    -> FocusMosaic keys, spot path convention
+[structural|no      ] src/site/components/technical-focus/FocusMosaic.jsx LAYOUT/TILE_ORDER/BAND_ORDER_*
+    The 6+6/4+4+4/3+3+6 mosaic geometry, tone assignments (sea/cream/orange/navy) and detail-band insertion order; assumes exactly 8 areas — adding/removing an area in admin changes composition
+    -> Technical focus mosaic
+[text      |settings — global UI strings] src/site/components/technical-focus/FocusMosaic.jsx FocusDetail strings ('Related case studies', 'No published case studies tagged to this area yet.', close-button title)
+    Hardcoded microcopy in the detail band
+    -> FocusDetail band
+[metadata  |yes — settings/SEO panel] app/(site)/distinctives/page.jsx metadata.title/description
+    SEO title 'Distinctives' and description naming the five distinctives; must track renames
+    -> Distinctives <head>
+[text      |yes     ] app/(site)/distinctives/page.jsx h1 ('Distinctives')
+    Page h1 hardcoded in the opener
+    -> Distinctives opener
+[longtext  |yes — with substring warning] src/data/distinctives.js DISTINCTIVES_INTRO (3 paragraphs)
+    VERBATIM finished client copy; para1 = opener lede, para2 = right column AND the source of the three stats figures, para3 = display-size editorial line. Para3 must keep the exact substrings 'suite of bespoke services', 'technical areas' (become inline links) and 'bend the curve of progress' (italic) — substring mismatch silently drops the links/italic
+    -> Distinctives opener (1,2) and editorial band (3)
+[number    |yes — but pair with intro para 2] app/(site)/distinctives/page.jsx CRISIS_STATS (80%, 250m, 260m + labels)
+    Three stat objects (value, unit, label) hardcoded in page JSX, extracted from intro paragraph two; edits to the paragraph must keep these in sync, values animate via CountUp
+    -> navy stats band
+[link      |yes     ] src/data/distinctives.js DISTINCTIVES_STATS_CITATION
+    Citation URL for the stats, currently null [tbc]; when null the band prints the fallback 'Citation URL to come from the Jigsaw team. Figures should not publish unsourced.' hardcoded in page JSX
+    -> stats band mono citation line
+[structural|no — or advanced settings] app/(site)/distinctives/page.jsx inline-link config (phrases → /services, /technical-focus)
+    withInlineLinks/withItalic phrase-to-href map hardcoded in JSX; degrades to plain text when phrases stop matching
+    -> editorial band paragraph three
+[longtext  |yes     ] src/data/distinctives.js DISTINCTIVES_PREAMBLE
+    VERBATIM finished client copy ('These are the distinctives that you should experience…'), runs in two columns under paragraph three
+    -> editorial band
+[text      |yes     ] app/(site)/distinctives/page.jsx h2 ('What you should experience')
+    Section heading hardcoded above the five rows
+    -> distinctives rows section
+[list      |yes     ] src/data/distinctives.js DISTINCTIVES[].title (5 items)
+    Five distinctive titles, finished client copy (full sentences with periods, e.g. 'We are driven by evidence uptake.')
+    -> DistinctiveRow headings, metadata description
+[longtext  |yes     ] src/data/distinctives.js DISTINCTIVES[].summary (5 items)
+    All five are placeholder() strings marked [tbc]
+    -> DistinctiveRow body
+[structural|no      ] src/data/distinctives.js DISTINCTIVES[].slug (5 items)
+    React keys only on this page
+    -> row keys
+[structural|no      ] app/(site)/distinctives/page.jsx ROW_SIDES + watermark numerals 01-05
+    Strict left/right alternation and giant cropped cream numerals computed from index; splitting rows 1-3 / 4-5 around the quote is hardcoded (slice(0,3)/slice(3), ol start={4})
+    -> the five distinctive rows
+[list      |yes     ] src/data/testimonials.js TESTIMONIALS + DISTINCTIVES_TESTIMONIAL (IDRC)
+    Pull-quote records lifted VERBATIM from the live site (quote + attribution 'IDRC'); page picks by id 'idrc' via getTestimonial; admin should manage the testimonial list and which id this page shows, with the no-invented-praise rule surfaced
+    -> Distinctives quote band between rows 3 and 4
+[text      |yes     ] src/data/distinctives.js OUR_STORY.heading ('Our story')
+    Section heading for the absorbed About content; #our-story anchor is separate and load-bearing
+    -> Our story section, linked from Home signpost
+[longtext  |yes     ] src/data/distinctives.js OUR_STORY.body
+    placeholder() origin-story copy carried over from the retired About page
+    -> Our story left column
+[boolean   |yes — admin-only flag] src/data/distinctives.js OUR_STORY.needsClientConfirmation
+    When true the page prints an internal founding-date-unresolved note (2009 vs 2013 vs 15 years, hardcoded in page JSX); must flip to false / the note must not ship to production
+    -> Our story internal note
+[list      |yes     ] app/(site)/distinctives/page.jsx STORY_MILESTONES (3 items) + 'Year tbc' label
+    Timeline entries hardcoded in page JSX as placeholder() strings, each needing a year + text; OUR_STORY.milestones in data is empty and unused — CMS model should be a repeatable {year, text} list replacing both
+    -> Our story timeline rail
+[derived   |no — computed facet] src/data/relations.js caseStudiesByService / caseStudiesByTopic
+    Server-side joins from case-study records to services/areas, matched by exact title string; feed the related-case-studies lists on both pages
+    -> ServiceRow panels, FocusDetail band
+[list      |settings — global navigation strings] src/site/components/CrossLinks.jsx ALL map (titles + blurbs for 6 routes)
+    'Continue' band labels and one-line blurbs per route ('What we offer the teams we work with', etc.), hardcoded in the component and shared by six pages; the 'Continue' kicker is also hardcoded
+    -> end-of-page Continue band on all three pages (hrefs per page are hardcoded arrays in each page.jsx)
+[structural|no      ] app/(site)/services/page.jsx + distinctives/page.jsx blob decorations
+    Decorative peach blobs with hardcoded size/position/color
+    -> Services and Distinctives openers
+==========================================================================================
+AREA: Team + Case studies (list and [slug] detail routes)
+NOTES: Wiring risks: (1) CaseStudyBrowser is 'use client' with hardcoded UI strings (search placeholder, sort labels, empty state); making those editable means threading them as props from the server page — facets themselves are computed by relations.js caseStudyFacets() and must stay derived. (2) study.service is a foreign key by exact title string into SERVICES (case-studies/[slug] does SERVICES.find(s => s.title === study.service)); the admin needs a relation/select, since free text breaks the service link and the service facet. (3) topics power both filtering and the computed Related work block; countries feed the home map via countriesFromCaseStudies() — retagging a study ripples across three surfaces. (4) Publications point at case studies via publication.caseStudySlug, so renaming a case-study slug orphans publication links and breaks URLs; slugs should be locked or migration-aware. (5) Team page splits the client's verbatim INTRO by exact substring (CONTRACTORS_SENTENCE); if the CMS stores one paragraph the loader must keep the split-with-fallback, or the model should store lead and band sentence separately with a note that the combined text is client-verbatim. (6) Team detail meta description and the `${TEAM.length} researchers · London & Lusaka` stat are computed in JSX and need loader-side equivalents (the 'London & Lusaka' suffix is hardcoded and drifts if the team moves). (7) '[tbc]' is a magic string sentinel in section bodies; model missing copy as null in the DB. (8) isDerived and needsReview are approval-workflow flags the client should be able to clear, and the draft-banner copy itself is hardcoded in the detail page. (9) Person JSON-LD depends on SITE.legalName/SITE.url from src/data/site.js (a settings-level record). (10) Team country is null for 16/18 by deliberate policy — the admin should allow null and never require it.
+------------------------------------------------------------------------------------------
+[list      |yes     ] src/data/team.js TEAM (18 items)
+    Collection field shape per person: slug (route id), name, role, country (nullable; 16/18 null on purpose — chip hidden when null), bio (verbatim client copy, \n\n paragraph breaks, <=150 words), bioWordCount (informational), photo (S3 URL, nullable — Zazai null), linkedin (nullable), orcid (nullable), needsReview (bool, all false).
+    -> team/page.jsx grid, team/[slug]/page.jsx, TeamCard
+[derived   |no      ] src/data/team.js TEAM[].slug
+    Route segment and generateStaticParams source; changing it breaks URLs — admin should auto-generate from name with warning.
+    -> team/[slug] routing, TeamCard link
+[number    |no      ] src/data/team.js TEAM[].bioWordCount
+    Hand-counted word count used only as a data note (brief's 150-word ceiling); should become computed in admin, not typed.
+    -> none (documentation)
+[boolean   |settings] src/data/team.js TEAM[].needsReview
+    Editorial flag, currently false everywhere and unrendered; keep as admin-only workflow field.
+    -> none on the public site
+[metadata  |yes     ] app/(site)/team/page.jsx metadata
+    title 'Team'; description one sentence about mixed-method researchers based in London and Lusaka; canonical /team.
+    -> team list page <head>
+[longtext  |yes     ] app/(site)/team/page.jsx INTRO
+    Verbatim client paragraph from the brief (comment says it stays that way); full team intro ending with the contractors-and-advisers sentence.
+    -> team list opener (lead) and lower band (tail)
+[derived   |no      ] app/(site)/team/page.jsx CONTRACTORS_SENTENCE + splitAt
+    Exact-substring split of INTRO that moves the closing sentence into the lower band; falls back to whole paragraph if the substring drifts. In the CMS model INTRO lead + band sentence as two fields, or keep the split server-side.
+    -> team list page
+[text      |yes     ] app/(site)/team/page.jsx h1
+    Hardcoded page title 'Team' in JSX (no PageHero on this page).
+    -> team list opener
+[derived   |settings] app/(site)/team/page.jsx stat line
+    `${TEAM.length} researchers · London & Lusaka` — count computed from data, but 'researchers · London & Lusaka' is a hardcoded suffix the client may want to edit.
+    -> team list opener, mono caption under h1
+[link      |settings] app/(site)/team/page.jsx band links
+    Two hardcoded CTAs: 'Work with us' -> /work-for-us and 'Talk to the team' -> /contact; labels editable, hrefs are internal routes.
+    -> contractors band under the grid
+[structural|no      ] app/(site)/team/page.jsx CrossLinks hrefs
+    ['/services','/technical-focus','/case-studies'] — internal route array; labels come from CrossLinks itself.
+    -> team list footer
+[structural|no      ] app/(site)/team/page.jsx COLUMN_OFFSET
+    Masonry offset classes; layout logic, order is alphabetical array order by design.
+    -> team grid
+[derived   |no      ] app/(site)/team/[slug]/page.jsx generateStaticParams + generateMetadata
+    Params from TEAM slugs; title pattern `${name}, ${role}`; description = first two sentences of bio via regex split — becomes a loader-side computation, or an optional per-person seoDescription override field.
+    -> team detail <head> and SSG
+[derived   |no      ] app/(site)/team/[slug]/page.jsx personSchema JSON-LD
+    Schema.org Person built from name/role/linkedin/orcid plus SITE.legalName and SITE.url; never client-edited directly.
+    -> team detail <script ld+json>
+[structural|no      ] app/(site)/team/[slug]/page.jsx inline labels
+    Breadcrumb 'All team', sr-only 'Based in'/'LinkedIn'/'ORCID' dts, link texts 'LinkedIn'/'ORCID', initials fallback gradient — UI chrome, keep fixed.
+    -> team detail page
+[structural|no      ] src/site/components/TeamCard.jsx
+    Renders name/role/country chip/linkedin ('in')/orcid ('iD') from person prop; initials fallback with deterministic tint from name.charCodeAt(0); grayscale hover recipe per client feedback — no editable copy inside.
+    -> team list grid
+[list      |yes     ] src/data/case-studies.js CASE_STUDIES (17 items)
+    Collection field shape per study: slug, title, countries[] (may be empty -> 'Not specified'), partners[], service (exact-title FK into SERVICES), topics[], method (short label), summary (card + meta description), sections{criticalQuestion, collaboration, buildingEvidence, pathwaysToUptake} (longtext each; '[tbc]' sentinel = awaiting copy), image (S3 URL nullable — 11/17 null), links[] of {label,url}, sourceUrl (provenance, unrendered), isDerived (bool).
+    -> case-studies list, [slug] detail, CaseStudyCard, relations.js facets, home map countries
+[structural|no      ] src/data/case-studies.js IMAGE_BASE
+    S3 URL prefix constant for image paths; disappears once images become CMS uploads.
+    -> case-studies.js image fields
+[boolean   |yes     ] src/data/case-studies.js CASE_STUDIES[].isDerived
+    True for 16/17 (all but voices-of-refugee-youth): body text was restructured by us from client prose, and the flag renders the 'Draft… needs the team's approval' notice on detail pages. Client clears it per study once they approve copy.
+    -> case-studies/[slug] draft notice
+[text      |yes     ] src/data/case-studies.js edtech-hub sections.buildingEvidence
+    Value is the literal sentinel '[tbc]', which the detail page renders as an 'Awaiting copy' placeholder box; admin should model missing copy as empty/null instead of a magic string.
+    -> case-studies/edtech-hub detail
+[metadata  |settings] src/data/case-studies.js CASE_STUDIES[].sourceUrl
+    Provenance link to the live White Fuse page; never rendered — admin-only reference field.
+    -> none on the public site
+[metadata  |yes     ] app/(site)/case-studies/page.jsx metadata
+    title 'Case studies'; description naming UNICEF/UNHCR/FCDO/Dubai Cares/World Bank/EdTech Hub; canonical /case-studies.
+    -> case-studies list <head>
+[text      |yes     ] app/(site)/case-studies/page.jsx PageHero props
+    kicker 'Our work', title 'Case studies', lede = INTRO const ('indicative of our work rather than a comprehensive record…' — brief requires the indicative disclaimer to stay).
+    -> case-studies list hero
+[structural|no      ] app/(site)/case-studies/page.jsx CrossLinks hrefs
+    ['/services','/technical-focus','/publications'] internal route array.
+    -> case-studies list footer
+[derived   |no      ] src/data/relations.js caseStudyFacets()
+    Filter options (country/service/topic) computed as sorted uniques from CASE_STUDIES — never stored or edited; retagging a study updates the filters automatically. countriesFromCaseStudies() feeds the home map the same way.
+    -> CaseStudyBrowser FilterBar, home map
+[text      |settings] src/site/components/CaseStudyBrowser.jsx UI strings
+    Client component with hardcoded chrome: search placeholder 'Search case studies, partners or countries…', sort labels 'A–Z'/'Z–A', noun 'case study/case studies', empty state 'Nothing matches those filters' + 'Clear all filters'. Editable only if passed down as props from the server page.
+    -> case-studies list filter bar and empty state
+[structural|no      ] src/site/components/CaseStudyBrowser.jsx filter/sort logic
+    OR within a facet, AND across facets, title A–Z sort, search over title/summary/partners/countries — behaviour, not content.
+    -> case-studies list
+[structural|no      ] src/site/components/CaseStudyCard.jsx
+    Renders countries mono line, title link, summary, dt labels 'Partners'/'Service', microscope-icon plate when image is null (no-stock policy) — no editable copy inside.
+    -> case-studies list grid, [slug] Related work
+[derived   |no      ] app/(site)/case-studies/[slug]/page.jsx generateStaticParams + generateMetadata
+    Params from CASE_STUDIES slugs; title = study.title, description = study.summary — pure data pass-through, moves into the loader.
+    -> case study detail <head> and SSG
+[structural|settings] app/(site)/case-studies/[slug]/page.jsx SECTION_ORDER
+    Fixed four-section order and headings ('The critical question', 'Collaboration', 'Building evidence', 'Pathways to evidence uptake') — the brief mandates the format; headings could live in settings but the order and keys must not be client-editable.
+    -> every case study detail body
+[structural|no      ] app/(site)/case-studies/[slug]/page.jsx summary box labels
+    Singular/plural 'Country/Countries' and 'Partner/Partners' dts, 'Method' dt, italic 'Not specified' fallback for empty countries — computed chrome.
+    -> case study detail header
+[derived   |no      ] app/(site)/case-studies/[slug]/page.jsx service link
+    SERVICES.find by exact title match on study.service, linking to /services#slug — string FK; the admin must make service a select/relation or a typo silently drops the link.
+    -> case study detail Method cell
+[text      |settings] app/(site)/case-studies/[slug]/page.jsx draft + awaiting-copy notices
+    Two hardcoded internal-facing paragraphs: the isDerived 'Draft… needs the team's approval' banner and the '[tbc]' 'Awaiting copy' box — both should disappear from the live site once the client approves copy; keep the strings in settings if they survive.
+    -> case study detail body
+[structural|settings] app/(site)/case-studies/[slug]/page.jsx section headings
+    Breadcrumb 'All case studies', 'Find out more', 'Publications from this study', 'Related work' — page chrome.
+    -> case study detail
+[derived   |no      ] app/(site)/case-studies/[slug]/page.jsx related work
+    others = up to 3 studies sharing any topic; relatedPublications = publicationsForCaseStudy(slug), matched on the publication-side caseStudySlug FK — both computed, never curated by hand.
+    -> case study detail footer sections
+==========================================================================================
+AREA: Publications (list + detail), Contact, Policies, Work for us, 404
+NOTES: Wiring risks. (1) PublicationBrowser and FilterBar are 'use client' — they must keep receiving publications+facets as serializable props from the server page; the DB loader stays server-side and publicationFacets() becomes a server-computed object passed down, never a client fetch. (2) relations.js facets are computed from tags, so publication region/method/topic/type must be controlled-vocabulary fields in the admin; free text fragments the filter dropdowns (e.g. 'Learning brief' vs 'Learning Brief' becomes two facets). (3) PublicationCard TYPE_STYLE and PUBLICATION_TYPES are coupled: a client-created type gets the Research Report fallback colours silently — either lock type to the five values or move the colour map into CMS type records. (4) The [slug] route derives static params, metadata, JSON-LD, and the related list from the publications collection; slug edits break URLs and the caseStudySlug FK crosses into the case-studies area (case-study pages call publicationsForCaseStudy). (5) Three internal build-notes render publicly (publications count note, both policies status paragraphs, the work-for-us open question) — inventory them as deletable rich-text slots, not permanent fields. (6) jobs.js JOBS_FOOTNOTE and the JSX interest sentence are duplicates; the JSX wins because it carries links — model it as rich text with links or the admin edit will not show. (7) Contact renders no page-owned data file: hero, signup sentence and 'Two offices, one team' are all hardcoded JSX, and everything else comes from site.js OFFICES (shared with footer and LocatorMap; countryId/coords must survive edits or the map returns null). (8) fileSize on publications and policies is a hand-typed string — compute it at upload in the CMS. (9) All PDF links point at the legacy Hubble S3 bucket; migration should re-host files or the client cannot replace them. (10) PUBLICATION_FILTERS export is dead code.
+------------------------------------------------------------------------------------------
+[metadata  |settings] app/(site)/publications/page.jsx metadata.description
+    SEO description for the publications list ('The Jigsaw evidence library: ... All free to download.')
+    -> publications list page <head>
+[text      |yes     ] app/(site)/publications/page.jsx PageHero kicker
+    Kicker 'Evidence library' hardcoded in JSX
+    -> publications list hero
+[text      |yes     ] app/(site)/publications/page.jsx PageHero title
+    Page title 'Publications' hardcoded in JSX
+    -> publications list hero
+[longtext  |yes     ] src/data/publications.js PUBLICATIONS_INTRO
+    Verbatim client copy, hero lede; one paragraph incl. link-worthy mention of case studies page
+    -> publications list hero lede
+[text      |yes     ] app/(site)/publications/page.jsx info note paragraph
+    Build-status note ('These {N} outputs are what is public...100 entries expected'); interpolates PUBLICATIONS.length; internal commentary, should be deleted or CMS-flagged before launch
+    -> publications list, below browser
+[list      |settings] app/(site)/publications/page.jsx CrossLinks hrefs
+    ['/case-studies','/technical-focus','/team'] cross-link targets
+    -> publications list footer band
+[list      |yes     ] src/data/publications.js PUBLICATIONS[] (10 entries)
+    Core collection; per-entry shape: slug, type, title, authors(null now), date(null|string), year(null|number, drives sort), region, countries[], method(null-able), topic(null-able), summary(placeholder()), abstract(placeholder()), pdf(S3 URL), fileSize(display string), external(bool, flips button label), coverImage(null-able), caseStudySlug(null-able FK to case study), needsReview(bool admin flag)
+    -> list page, [slug] page, PublicationCard, relations.js facets, sitemap via generateStaticParams
+[structural|no      ] src/data/publications.js PUBLICATIONS[].slug
+    URL segment; changing it breaks /publications/[slug] links and canonical
+    -> routing, generateStaticParams, related-links
+[text      |yes     ] src/data/publications.js PUBLICATIONS[].title
+    Real titles from live site (verbatim client copy)
+    -> card, detail h1, metadata title, JSON-LD
+[longtext  |yes     ] src/data/publications.js PUBLICATIONS[].summary / .abstract
+    All 10 are placeholder(); summary shows on card with 'Awaiting copy' badge, abstract on detail page via Placeholder component
+    -> PublicationCard, [slug] Abstract section
+[link      |yes     ] src/data/publications.js PUBLICATIONS[].pdf + .fileSize
+    Absolute S3 (legacy Hubble bucket) PDF URLs; fileSize is a hand-typed display string, not computed — admin should be a file-upload field that auto-fills size
+    -> card download button, detail Download PDF button
+[image     |yes     ] src/data/publications.js PUBLICATIONS[].coverImage
+    All null; card falls back to a typographic spine coloured by type; A5 portrait expected when supplied
+    -> PublicationCard cover slot via SmartImage
+[text      |yes     ] src/data/publications.js PUBLICATIONS[].region/.countries/.method/.topic/.type
+    Facet tags; values feed computed filter options so free-text drift fragments filters — admin should use controlled-vocab pickers
+    -> FilterBar dropdowns (via publicationFacets), card badge row, detail sidebar
+[link      |yes     ] src/data/publications.js PUBLICATIONS[].caseStudySlug
+    Nullable FK; when set, detail page shows 'Read more about this study' button and case-study side shows the publication
+    -> [slug] page via caseStudyBySlug, case-study pages via publicationsForCaseStudy
+[list      |settings] src/data/publications.js PUBLICATION_TYPES
+    Controlled vocab of 5 types; PublicationCard TYPE_STYLE colour map is keyed to these exact strings (unknown types fall back to Research Report styling), so new types need a code/style entry
+    -> admin type picker; TYPE_STYLE lookup
+[metadata  |no      ] src/data/publications.js PUBLICATION_FILTERS
+    ['region','method','topic'] — documents the brief; NOT consumed by the browser (facet object keys drive the UI), candidate for deletion
+    -> none found
+[derived   |no      ] src/data/relations.js publicationFacets()
+    COMPUTED, never stored: unique+sorted option lists for region, country (flatMap of countries[]), method, topic, type from PUBLICATIONS; empty facets auto-hide in FilterBar
+    -> publications list page → PublicationBrowser → FilterBar
+[derived   |no      ] src/data/relations.js caseStudyBySlug / publicationBySlug / publicationsForCaseStudy / caseStudiesByService / caseStudiesByTopic / teamMemberBySlug / caseStudyFacets / countriesFromCaseStudies
+    Lookup and facet helpers computed from the three collections; must be reimplemented over DB queries, never exposed as editable content
+    -> publication [slug], case-study pages, services/focus boxes, home map
+[derived   |settings] app/(site)/publications/[slug]/page.jsx generateMetadata
+    Title from pub.title; description templated '{type} from Jigsaw Education Evidence{, date}. Free to download.' — template string itself could be a setting
+    -> detail page <head>
+[text      |yes     ] app/(site)/publications/[slug]/page.jsx breadcrumb label
+    'Evidence library' back-link text hardcoded
+    -> detail page breadcrumb
+[text      |settings] app/(site)/publications/[slug]/page.jsx fallback strings
+    'Authors to be confirmed' / 'date to be confirmed' italic fallbacks when fields are null
+    -> detail page byline
+[text      |settings] app/(site)/publications/[slug]/page.jsx section + button labels
+    'Abstract' h2, 'Download PDF' vs 'View publication' (switched by pub.external), 'Read more about this study', 'More {type}s' related heading (derived from type)
+    -> detail page body
+[structural|no      ] app/(site)/publications/[slug]/page.jsx meta sidebar labels
+    'Type/Date/Region/Country/Method \/ service/Topic' dl labels; rows self-hide when value is null
+    -> detail page aside
+[derived   |no      ] app/(site)/publications/[slug]/page.jsx schema (JSON-LD)
+    ScholarlyArticle structured data built from pub + SITE; never client-edited
+    -> detail page <script type=ld+json>
+[derived   |no      ] app/(site)/publications/[slug]/page.jsx related
+    Computed: first 2 other publications of the same type
+    -> 'More {type}s' section
+[number    |settings] src/site/components/PublicationBrowser.jsx PER_PAGE
+    Pagination size, 8 per page
+    -> publications list grid
+[text      |settings] src/site/components/PublicationBrowser.jsx UI strings
+    'Search publications…' placeholder, sort labels ('Most recent'/'Oldest'/'A–Z'), 'Previous'/'Next', empty state 'Nothing matches those filters' + 'Clear all filters'
+    -> publications browser (client component)
+[structural|no      ] src/site/components/PublicationBrowser.jsx filter/sort logic
+    Search matches title+summary+type; null year sorts last under 'Most recent'; facet keys fixed to region/country/method/topic/type
+    -> publications list
+[structural|no      ] src/site/components/PublicationCard.jsx TYPE_STYLE
+    Colour map (badge/spine/ink) keyed by exact type string with Research Report fallback
+    -> every publication card
+[text      |settings] src/site/components/PublicationCard.jsx fallback strings
+    'Authors tbc', 'Date tbc', 'Awaiting copy' placeholder badge, 'PDF · {size}', download aria-label template
+    -> publication cards
+[derived   |no      ] src/site/components/FilterBar.jsx dropdown labels
+    Facet labels are the capitalized object key ('region'→'Region'); renaming a facet for display needs a key→label map, not data edits
+    -> publications browser filter row
+[text      |settings] src/site/components/FilterBar.jsx UI strings
+    'Clear all', 'Sort', 'Remove filter' (sr-only), '{n} of {total} publications' result count
+    -> filter bar
+[metadata  |settings] app/(site)/contact/page.jsx metadata.description
+    SEO description naming London and Lusaka offices
+    -> contact <head>
+[text      |yes     ] app/(site)/contact/page.jsx h1 + hero lede
+    'Contact' h1 and lede sentence 'Get in touch with us to talk about building and using evidence...' hardcoded in JSX
+    -> contact hero
+[text      |yes     ] app/(site)/contact/page.jsx mailing-list strip copy
+    'Sign up here if you would like to receive occasional updates about Jigsaw's work.' hardcoded beside MailingListForm
+    -> contact signup strip
+[text      |yes     ] app/(site)/contact/page.jsx 'Two offices, one team' h2
+    Section heading for the postal-address block, hardcoded
+    -> contact addresses section
+[list      |yes     ] src/data/site.js OFFICES[] (consumed here)
+    2 offices; shape: id, heading (verbatim scope-of-work framing), org, city, country, countryId (numeric ISO for world-atlas), coords [lon,lat], email, address[] (lines), addressLabel; heading/org/email/address are client copy, countryId+coords are map plumbing
+    -> ContactEmails, contact address block, LocatorMap, footer
+[structural|no      ] src/data/site.js OFFICES[].countryId + .coords
+    Feed LocatorMap projection and pin; a wrong ISO id silently renders no map (component returns null) — admin should set these via a country/geocode picker, not raw fields
+    -> LocatorMap on contact page
+[structural|no      ] src/site/components/ContactEmails.jsx
+    Renders offices side-by-side per brief ('no hierarchy'); email split at @ for line-break; all copy comes in via office props, component itself has none
+    -> contact page
+[structural|no      ] src/site/components/LocatorMap.jsx
+    Server-rendered SVG country outline + pin from world-atlas TopoJSON (chosen over Google iframe for cookie reasons); colours hardcoded; no editable content
+    -> contact address block
+[metadata  |settings] app/(site)/policies/page.jsx metadata.description
+    SEO description listing the six policy areas
+    -> policies <head>
+[text      |yes     ] app/(site)/policies/page.jsx PageHero kicker/title
+    'Governance' kicker and 'Policies' title hardcoded
+    -> policies hero
+[text      |yes     ] src/data/policies.js POLICIES_INTRO
+    Verbatim client sentence, hero lede
+    -> policies hero
+[list      |yes     ] src/data/policies.js POLICIES[] (6)
+    Per-policy shape: slug, title, file (null|PDF URL), fileSize (null|string), awaitingFile (bool → renders 'Awaiting document' row instead of link); all six currently await documents
+    -> PolicyRow list
+[list      |yes     ] src/data/policies.js ADDITIONAL_POLICIES[] (2)
+    Same shape, both with live S3 PDFs (Language 69.5 KB — filename typo 'Jigaw' is the client's; Environmental 403 KB); in DB these should merge into one policies table with an ordering/group field
+    -> 'Also published' list
+[text      |yes     ] app/(site)/policies/page.jsx status paragraphs
+    'None of the six policies above are published...' and 'These two are live on the current site but are not in the new brief's list...' — build commentary hardcoded in JSX, must be removable at launch
+    -> policies body
+[text      |yes     ] app/(site)/policies/page.jsx section headings
+    'Also published', 'Standards we commit to', 'Reporting a concern' h2s hardcoded
+    -> policies body
+[list      |yes     ] src/data/policies.js STANDARDS_INTRO + STANDARDS[]
+    Intro sentence (verbatim client copy) plus 2 external links {title, url} (TRUST Code, Dignified Storytelling)
+    -> standards section
+[text      |yes     ] src/data/policies.js CONCERNS_CONTACT
+    Reporting email, currently null ([tbc] in brief); null shows the italic 'Reporting route to be confirmed' fallback, a value renders the mailto sentence 'To report any concerns about Jigsaw's work please contact ...' (that sentence is hardcoded JSX)
+    -> 'Reporting a concern' card
+[text      |settings] app/(site)/policies/page.jsx PolicyRow labels
+    'Awaiting document' badge and 'PDF · {size}' meta line inside the local PolicyRow component
+    -> both policy lists
+[metadata  |settings] app/(site)/work-for-us/page.jsx metadata.description
+    SEO description for careers holding page
+    -> work-for-us <head>
+[text      |yes     ] app/(site)/work-for-us/page.jsx PageHero kicker/title
+    'Careers' kicker + 'Work for us' title; deliberately no lede (brief supplies none)
+    -> work-for-us hero
+[text      |yes     ] app/(site)/work-for-us/page.jsx 'Current opportunities' h2
+    Section heading hardcoded
+    -> work-for-us body
+[list      |yes     ] src/data/jobs.js JOBS[]
+    Currently empty (the real state); per-job shape when populated: slug, title, location — thin, will need description/apply-link fields when the client posts a real vacancy
+    -> vacancy cards
+[text      |yes     ] src/data/jobs.js JOBS_EMPTY_MESSAGE
+    'No advertised vacancies at the moment' — verbatim brief copy, shown in the empty-state card
+    -> work-for-us empty state
+[text      |yes     ] app/(site)/work-for-us/page.jsx interest sentence
+    Verbatim client sentence with embedded /contact link and #signup anchor ('...please contact us or sign-up to receive updates', client's hyphen preserved); hardcoded in JSX because of the inline links — DUPLICATES the unused JOBS_FOOTNOTE export
+    -> work-for-us body
+[text      |no      ] src/data/jobs.js JOBS_FOOTNOTE
+    Plain-text twin of the JSX sentence above; not consumed anywhere — reconcile before CMS migration or the admin edits a dead field
+    -> none found
+[metadata  |settings] src/data/jobs.js JOBS_MAILING_LIST
+    'general' — which mailing list the signup targets; open client question (separate vacancies list?)
+    -> intended for MailingListForm wiring
+[text      |yes     ] app/(site)/work-for-us/page.jsx open-question note
+    Italic 'Open question for the client: should vacancies use a separate mailing list...' — internal note in public JSX, delete before launch
+    -> work-for-us body
+[metadata  |no      ] app/not-found.jsx metadata
+    Title 'Page not found', robots noindex/follow
+    -> 404 <head>
+[text      |yes     ] app/not-found.jsx copy block
+    '404' display numeral, h1 'We can't find that piece.', lede 'The page you were looking for has moved or never existed...', button labels 'Back to home' (/), 'Evidence library' (/publications), 'Contact us' (/contact)
+    -> 404 page
+[structural|no      ] app/not-found.jsx chrome
+    Carries its own SiteHeader/SiteFooter/MobileNavProvider because it sits outside the (site) group; blob colour #ffb077 hardcoded
+    -> 404 page
+==========================================================================================
+AREA: SEO/metadata surfaces + brand tokens (sitemap, robots, OG image, favicon, per-route metadata, design tokens, icon set)
+NOTES: Wiring risks. (1) SITE.url fan-out: metadataBase, every sitemap entry, robots sitemap pointer, and JSON-LD urls all derive from it — one settings field, high blast radius, validate as URL. (2) Per-page metadata objects are hardcoded in server page files; making them editable means each page.jsx must read title/description/canonical from the DB loader while keeping alternates.canonical locked to the route path (canonical should be derived, not free text, or the client can break indexing). (3) Detail-page SEO is fully derived from TEAM/CASE_STUDIES/PUBLICATIONS records (bio first-two-sentences, study.summary, pub type+date template) — the admin edits the record, and the publications description template ('Free to download.') is a hidden hardcoded string worth promoting to a settings field. (4) Home metadata uses title.absolute to dodge the '%s — Jigsaw' template; a naive title field would reintroduce double branding. (5) Colour hexes are duplicated in four places that can drift: globals.css @theme, src/data/tokens.js, opengraph-image.jsx inline styles, app/icon.svg — pick globals.css as canonical and generate or at least lint the rest. (6) opengraph-image.jsx carries three hardcoded copy strings ('EDUCATION EVIDENCE', 'J', 'London · Lusaka') that read as brand facts; 'London · Lusaka' should track the OFFICES cities if offices ever change. (7) robots noindex on /design-system and not-found robots rules are policy, not content — keep out of the client-facing admin. (8) sitemap priorities/changeFrequency are code constants; new CMS-created pages will not appear in the sitemap unless the loader feeds sitemap.js too.
+------------------------------------------------------------------------------------------
+[text      |settings] src/data/site.js SITE.name
+    Org short name 'Jigsaw'; feeds root title default+template ('%s — Jigsaw'), OG siteName, OG image heading
+    -> app/layout.jsx metadata, app/opengraph-image.jsx, header/footer
+[text      |settings] src/data/site.js SITE.legalName
+    'Jigsaw Education Evidence Ltd.'; used in JSON-LD publisher/worksFor on team and publication detail pages
+    -> team/[slug] and publications/[slug] schema.org blocks, footer legal
+[text      |settings] src/data/site.js SITE.tagline
+    'Rigorous evidence for lasting change in education'; root <title> suffix, OG title, OG image hero line, OG image alt
+    -> app/layout.jsx, app/opengraph-image.jsx
+[longtext  |settings] src/data/site.js SITE.description
+    Org meta description used as root description and OG description
+    -> app/layout.jsx metadata
+[link      |settings] src/data/site.js SITE.url
+    Canonical origin https://www.jigsaweducation.org; metadataBase, every sitemap URL, robots sitemap pointer, JSON-LD urls — changing it rewrites all canonicals
+    -> app/layout.jsx, app/sitemap.js, app/robots.js, detail-page schemas
+[link      |settings] src/data/site.js SITE.linkedin
+    Company LinkedIn URL
+    -> footer/contact surfaces
+[metadata  |no      ] app/layout.jsx metadata (root)
+    Title default `${name} — ${tagline}` + template `%s — ${name}`, description, openGraph (type website, locale en_GB), canonical '/', robots index:true — all values derived from SITE; only SITE fields should be edited, not the shape
+    -> every route via App Router metadata inheritance
+[structural|no      ] app/layout.jsx viewport export
+    themeColor #FDFAF4 (cream-50), viewportFit cover — browser chrome tint, must match cream token
+    -> all routes
+[metadata  |yes     ] app/(site)/page.jsx metadata
+    Home SEO: absolute title 'Jigsaw — Rigorous evidence for lasting change in education' (bypasses template), description paragraph, canonical '/'
+    -> home route head
+[metadata  |yes     ] app/(site)/services/page.jsx metadata
+    Title 'Services', description listing the six service lines, canonical '/services'
+    -> services route head
+[metadata  |yes     ] app/(site)/technical-focus/page.jsx metadata
+    Title 'Technical focus', description listing the eight focus areas, canonical '/technical-focus'
+    -> technical-focus route head
+[metadata  |yes     ] app/(site)/distinctives/page.jsx metadata
+    Title 'Distinctives', description naming the five distinctives, canonical '/distinctives'
+    -> distinctives route head
+[metadata  |yes     ] app/(site)/team/page.jsx metadata
+    Title 'Team', description (London/Lusaka researcher mix), canonical '/team'
+    -> team listing head
+[metadata  |yes     ] app/(site)/case-studies/page.jsx metadata
+    Title 'Case studies', description naming partners (UNICEF, UNHCR, FCDO…), canonical '/case-studies'
+    -> case-studies listing head
+[metadata  |yes     ] app/(site)/publications/page.jsx metadata
+    Title 'Publications', description ('evidence library… free to download'), canonical '/publications'
+    -> publications listing head
+[metadata  |yes     ] app/(site)/contact/page.jsx metadata
+    Title 'Contact', description with both office cities, canonical '/contact'
+    -> contact route head
+[metadata  |yes     ] app/(site)/policies/page.jsx metadata
+    Title 'Policies', description listing policy topics, canonical '/policies'
+    -> policies route head
+[metadata  |yes     ] app/(site)/work-for-us/page.jsx metadata
+    Title 'Work for us', description (holding page), canonical '/work-for-us'
+    -> work-for-us route head
+[metadata  |yes     ] app/not-found.jsx metadata
+    Title 'Page not found', robots index:false follow:true — title editable, robots rule structural
+    -> 404 route
+[metadata  |no      ] app/design-system/layout.jsx metadata
+    Title 'Design System v2', description, robots noindex+nofollow — internal doc, keep out of admin content editing
+    -> /design-system routes
+[derived   |no      ] app/(site)/team/[slug]/page.jsx generateMetadata
+    Per-person title `${name}, ${role}`; description computed as first two sentences of person.bio; canonical /team/{slug} — edits happen on the team record, not here
+    -> 18 team detail heads
+[derived   |no      ] app/(site)/case-studies/[slug]/page.jsx generateMetadata
+    Title = study.title, description = study.summary, canonical /case-studies/{slug} — edits happen on the case-study record
+    -> case-study detail heads
+[derived   |no      ] app/(site)/publications/[slug]/page.jsx generateMetadata
+    Title = pub.title; description template `${type} from Jigsaw Education Evidence, ${date}. Free to download.` — the template string itself is hardcoded copy an admin may want as a settings field
+    -> publication detail heads
+[derived   |no      ] app/sitemap.js default export
+    10 static routes with priorities/changeFrequency plus every TEAM, CASE_STUDIES, PUBLICATIONS slug; regenerates from collections — never hand-edited
+    -> /sitemap.xml
+[structural|no      ] app/robots.js default export
+    Allow all, disallow /design-system, sitemap pointer from SITE.url — breaking this de-indexes the site
+    -> /robots.txt
+[image     |yes     ] app/opengraph-image.jsx OpengraphImage
+    Generated 1200x630 OG card: 'J' disc mark, 'Jigsaw', kicker 'EDUCATION EVIDENCE', SITE.tagline as hero line, footer 'London · Lusaka' — kicker and cities are hardcoded JSX strings; hexes (#FDFAF4, #ff7816, #1a3340, #6B6B61, #44443D) duplicate tokens inline
+    -> og:image on every route (single site-wide image)
+[derived   |no      ] app/opengraph-image.jsx alt/size exports
+    alt = `${SITE.name} — ${SITE.tagline}`; size 1200x630, contentType image/png
+    -> og:image:alt
+[image     |settings] app/icon.svg
+    Favicon: orange (#ff7816) circle with cream (#FDFAF4) jigsaw-J mark — replace-the-file asset, admin should offer upload in settings
+    -> browser tab icon, all routes
+[structural|no      ] app/globals.css @theme colour scales
+    Brand palette reference: orange 50-700 (500 #ff7816), sea 50-700 (500 #407c9b), navy 100-900 (900 #1a3340), cream 50-500 (50 #FDFAF4), ink 500-900 (900 #1A1A17) — admin UI should reuse these token names/hexes, client never edits
+    -> every Tailwind class site-wide, admin UI styling
+[structural|no      ] app/globals.css @theme viz + semantic colours
+    Dataviz: viz-cyan #66c8d8, viz-teal #52a0b2, viz-emerald #1c998a, viz-amber #f9b233, viz-coral #ff421d; states: success #1c998a, warning #f9b233, error #d63a1a, info #407c9b (each with 50/500/700) — coral is banned near CTAs by design note
+    -> badges, feedback components, charts, admin UI
+[structural|no      ] app/globals.css @theme font stacks
+    --font-display 'Literata Variable' (serif, opsz 7-72, self-hosted), --font-body 'Lato', --font-mono 'JetBrains Mono' — Literata chosen over Fraunces per client letterform feedback; admin UI should reuse
+    -> all headings/body/code site-wide
+[structural|no      ] app/globals.css @theme shadows + easing
+    shadow-xs..xl on rgba(44,83,104) navy base; ease-standard/decelerate/accelerate/emphasized cubic-beziers
+    -> cards, modals, all motion utilities
+[structural|no      ] app/globals.css radius (comment block, line 112)
+    Radius scale is Tailwind v4 defaults kept deliberately: rounded-xl 12px, 2xl 16px, 3xl 24px, full — client signed off; no custom tokens exist
+    -> all rounded components, admin UI
+[structural|no      ] src/data/tokens.js SCALES
+    JS mirror of the @theme colour scales (orange/sea/navy/cream/ink/viz) for programmatic use — must stay byte-identical with globals.css; a DB-backed admin should treat one as the source and generate the other
+    -> design-system doc pages, chart components
+[structural|no      ] src/icons/index.js ICON_PATHS
+    54 available icon names (arrow-right, arrow-up-right, arrow-down, check, x, chevron-down/right/left, menu, search, filter, download, external, mail, globe, map-pin, users, user, book-open, graduation, file-text, flask, microscope, message, send, phone, alert, info, check-circle, shield, star, heart, sparkles, compass, layers, plus, minus, edit, trash, settings, copy, eye, home, palette, type, ruler, circle, square, play, pause, briefcase, lightbulb, zap, rocket); unknown names fall back to 'circle' — admin icon pickers must constrain to this list
+    -> src/components/Icon.jsx, every page and card using <Icon name=…>
+[structural|no      ] src/components/Icon.jsx
+    Icon renderer: 24x24 viewBox, stroke 1.5, currentColor; optional title prop makes it accessible content — component contract, not content
+    -> site-wide
+==========================================================================================
+AREA: Client constraints that shape the admin (docs/client/new-website-sitemap.md, docs/project-context.md, docs/build-plan.md, docs/CHANGELOG.md)
+NOTES: Admin help text must be UK English — the client writes "organisations", "specialise", "localisation", and hyphenates "sign-up"; mirror their spelling in labels and hints. Tone: warm, plain, low-jargon (Kara is non-technical; only Kara and Becky will publish). Verbatim-copy rule is the biggest wiring risk: several blocks (Work for us, Distinctives intro, publications-library paragraph, contact sentences, footer legal line) are client-supplied word-for-word and one audit already had to revert a paraphrase — flag these fields as "client-supplied copy" in the admin so edits are deliberate. Second risk: Distinctives paragraph-3 inline links anchor by substring match on the client's own phrases, so editing that paragraph can silently kill the Services/Technical-focus links — either store links as structured spans or validate anchors on save. Derived data the client must not touch directly: publication filter facets (computed from taxonomy), case-study-to-service hash links (service row id={slug}), map country highlighting, team duotone filter, publication-card cover fallback. Cross-page dependencies: services/focus-area slugs are link targets from case studies and the home globe; renaming a service must not change its slug. Unresolved facts (10 vs 15 years, 50+ vs 60+ orgs, dropped 30+ countries, nothing published since 2023, BCorp line, mailing-list split) sit inside otherwise-final copy — surface them as admin notes rather than hardcoding. Launch checklist embedded in content: strip review-phase notes on six pages, connect Mailchimp, migrate assets off the legacy jigsawconsult S3 bucket. The docx itself is gitignored (public repo); only the extracted markdown ships.
+------------------------------------------------------------------------------------------
+[text      |yes     ] Home > signpost trio (Services / Technical focus / Distinctives boxes)
+    Three box summaries all [summary tbc] in the brief — awaiting client copy; box titles and link targets are fixed by the brief
+    -> Home page SignpostTrio
+[text      |yes     ] Home > world map
+    [global map summary sentence tbc] — short summary sentence/paragraph beside the map, awaiting client copy
+    -> Home WorldMap section
+[list      |yes     ] Home > world map country list
+    [full list of countries to highlight tbc] — client-editable country list feeding the interactive map (build-plan §5: 'Countries come from a data file the client can edit')
+    -> Home WorldMap
+[longtext  |yes     ] Services page > 6 service boxes
+    Each of the 6 services: [summary text and linked case studies tbc] — summary copy plus a curated case-study link list per service; the 6 service NAMES are final client copy
+    -> Services ExpandableCard x6; case-study method links land on these via id={slug} hash
+[longtext  |yes     ] Technical focus page > 8 area boxes
+    Each of the 8 areas: [summary text and linked case studies tbc]; the 8 area NAMES are final client copy
+    -> Technical focus ExpandableCard x8; home globe focus panels
+[longtext  |yes     ] Distinctives page > 5 distinctives
+    Each of the 5: [summary text tbc]; the 5 distinctive TITLES are final verbatim client copy
+    -> Distinctives DistinctiveList
+[link      |yes     ] Distinctives page > intro paragraph 2
+    [embedded URL for citations tbc] — citation URL for the 80%/250M/260M statistics; paragraph text itself is verbatim client copy
+    -> Distinctives intro
+[derived   |no      ] Distinctives page > intro paragraph 3 inline links
+    Brief marks '[link to each relevant page]' — links anchor the client's own phrases by substring match, never retyped; admin must not let free-text edits break the anchor phrases
+    -> Distinctives intro
+[list      |yes     ] Team page > member list + bios
+    [team list tbc] / [other bios tbc] — only Rebecca Daltry's bio supplied; current 18 bios migrated from live site as stand-ins; bio hard limit 150 words, LinkedIn required-ish, ORCID optional
+    -> Team grid + /team/[slug]
+[text      |yes     ] Team members > country field
+    Country (not city) per client feedback #9; currently null for 16 of 18 members and the chip is omitted when unknown — admin should allow blank, never force a guess
+    -> TeamCard chip
+[list      |yes     ] Case studies > full list
+    [full list of case studies tbc] — only the GERE refugee-education one supplied as a worked example; 17 migrated studies are stand-ins
+    -> Case studies grid + /case-studies/[slug]
+[structural|no      ] Case study subpage > four-section body
+    Fixed structure on every page: The critical question (max 3 sentences) / Collaboration (max 3) / Building evidence (max 3-5) / Pathways to evidence uptake (max 2-3) — admin should enforce the four named sections and surface the sentence caps
+    -> CaseStudyTemplate
+[metadata  |yes     ] Case studies > isDerived flag
+    16 of 17 case studies carry isDerived:true (bodies restructured from Jigsaw prose, pending team approval); each page renders a draft warning — flag must be per-record clearable by the client and the warning must strip at launch
+    -> /case-studies/[slug] draft notice
+[list      |yes     ] Publications > full set
+    [full set of publications tbc] — ~100 publications fed from the client's Google Sheets log frame; current 10 are stand-ins; only Kara and Becky publish
+    -> Publications library + /publications/[slug]
+[metadata  |yes     ] Publications > needsReview method tags
+    4 publications carry a draft method classification flagged needsReview (titles state their own method); Year in Review and anti-racism resources stay honestly null — admin must show the flag and allow clearing it
+    -> Publications method facet
+[link      |yes     ] Publications > caseStudySlug link
+    Null on all 10 by design (brief's wording is conditional); the client's log frame supplies these links — optional per-publication field, renders a 'Read more about this study' button when set
+    -> /publications/[slug]
+[derived   |no      ] Publications > filter facets (region/country, method/service, topic)
+    The brief's three named filters are computed from publication taxonomy fields; the extra 'Type' facet is a build addition kept unless the client objects — facet machinery is not editable, the per-record taxonomy values are
+    -> Publications filter bar
+[list      |yes     ] Policies page > 6 policy documents
+    Privacy, Whistleblowing, Ethics, GDPR/data protection, Cybersecurity, Safeguarding — all [linked PDF], zero PDFs received; page intro and standards list (TRUST Code, Dignified Storytelling) are verbatim client copy
+    -> Policies PolicyList
+[text      |yes     ] Policies page > concerns-reporting contact
+    'To report any concerns about Jigsaw's work please contact [tbc]' — contact still unset
+    -> Policies page
+[list      |yes     ] Work for us > job tiles + holding message
+    Job list empty today with holding message; client copy is VERBATIM including the 'sign-up' hyphen (an audit already reverted a rewrite once) — copy fields must warn against paraphrase
+    -> Work for us JobTiles + empty state
+[structural|settings] Work for us / Contact > mailing list
+    Becky's open question: separate vacancies list or the general one? Mailchimp connection pending — admin ships one form component; do not let the client spawn ad-hoc forms
+    -> MailingListForm on Contact, Work for us, Footer
+[structural|no      ] Contact page > two office blocks
+    LOCKED: UK and Zambia side-by-side, 'deliberately no hierarchy', similar wording, signup first — admin edits the text per office but cannot reorder, stack, or drop one office
+    -> Contact OfficeCards
+[text      |settings] Contact > office details (emails, addresses)
+    info@jigsaweducation.org / zambiateam@jigsaweducation.org + two street addresses, verbatim from client docx including labels 'Office address'/'Registered address' — editable as settings-level company data
+    -> Contact, SiteFooter
+[text      |settings] Footer > legal line
+    Company numbers 06844615 / 120251030229, VAT GB173850004, Social Enterprise wording — verbatim; 'registered BCorp' to be appended when finalised (Becky); rendered in Lato per feedback #11
+    -> SiteFooter
+[link      |settings] Footer > social links
+    LinkedIn ONLY — client left Twitter/X on ethical grounds; admin should not offer other social slots
+    -> SiteFooter
+[structural|no      ] Header > 7 nav items
+    LOCKED: exactly 7 items, no dropdowns, logo returns home — nav is not client-editable
+    -> SiteHeader, mobile tab bar + drawer
+[list      |yes     ] Home > partner logo wall
+    18 logos in the client's FIXED order (UNICEF...VVOB); all 18 SVG files still pending (live site has one composite PNG) — order editable only by explicit reorder, each slot needs an SVG upload
+    -> Home PartnerLogoWall
+[text      |yes     ] Home > four core sentences + 'who we work with' paragraph
+    Final verbatim client copy (15 years / 150 assignments / 50+ organisations) — editable but the numbers are contested (10 vs 15 years, 50+ vs 60+ orgs, dropped 30+ countries, per build-plan §7); admin help text should note the pending decision
+    -> Home hero + who-we-work-with section
+[image     |yes     ] Publication covers
+    Pending asset: portrait front-cover image per publication (plus dates/authors per changelog); card falls back to initials/type block when missing — fallback is automatic, not editable
+    -> PublicationCard, publication subpage
+[image     |yes     ] Case study summary box > country flags + partner logos
+    Pending assets: flag and partner-logo files for the summary boxes on case-study subpages
+    -> CaseStudyTemplate summary box
+[image     |settings] Site logo wordmark
+    Pending: official logo without 'Consult' + wordmark as PNG/SVG; must use the official logo font, NEVER a web font — SiteLogo.jsx has a single WORDMARK_SRC constant to swap; until then J mark alone with Lato stand-in
+    -> SiteLogo in header/footer
+[structural|no      ] All image uploads (photo policy)
+    LOCKED policy: own photos only, no stock, no Getty, no AI-generated people; no identifiable faces without written consent, extra restrictions for children; team photos are colour originals (system applies the duotone) with initials-avatar fallback — admin upload flow should restate this policy, not enforce-by-blocking
+    -> Team photos, case-study/hero imagery
+[boolean   |settings] Six pages > review-phase notes (draft warnings, pending-asset lines)
+    Notes aimed at the client during review render on six pages; MUST strip before go-live — model as a single 'review mode' toggle or per-note flags, prominent in the admin
+    -> Six public pages incl. case-study subpages
+[structural|no      ] i18n languages
+    LOCKED: English primary + Arabic, French, Spanish, AI auto-translated with an 'auto-translated' caveat; languages are specified, not automatic — client edits English source only, does not add/remove locales
+    -> site-wide (scaffolded, not populated)
+[structural|no      ] Placeholder rendering (Placeholder component)
+    Build-plan discipline: [tbc] slots must be VISIBLY placeholder so the client never reviews stand-in text as finished — admin should keep a filled/placeholder state per slot rather than letting stand-ins pass silently
+    -> every page with pending copy (~25 texts)
+[text      |yes     ] Case studies index > intro paragraph
+    Build-written (brief requires the 'indicative, not comprehensive' statement but supplies no copy) — needs client sign-off; editable with a pending-approval flag
+    -> Case studies page lede
