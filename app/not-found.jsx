@@ -10,6 +10,7 @@ export async function generateMetadata() {
   return {
     title: page.title,
     ...(page.description ? { description: page.description } : {}),
+    ...(page.ogImage ? { openGraph: { images: [{ url: page.ogImage }] } } : {}),
     robots: { index: false, follow: true }
   };
 }

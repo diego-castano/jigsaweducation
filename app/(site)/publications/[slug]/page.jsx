@@ -7,6 +7,7 @@ import Icon from '../../../../src/components/Icon';
 import { getSingleton, getCollection, getItem, getMediaMeta } from '../../../../src/lib/content';
 import Prose from '../../../../src/site/components/Prose';
 import { isPlaceholder } from '../../../../src/data/placeholder';
+import { CLASSIFICATION_LABELS } from '../../../../src/lib/labels';
 
 export async function generateStaticParams() {
   const publications = await getCollection('publications');
@@ -53,12 +54,12 @@ export default async function PublicationPage({ params }) {
   };
 
   const meta = [
-    { label: 'Type', value: pub.type },
-    { label: 'Date', value: pub.date },
-    { label: 'Region', value: pub.region },
-    { label: 'Country', value: pub.countries?.join(', ') },
-    { label: 'Method / service', value: pub.method },
-    { label: 'Topic', value: pub.topic }
+    { label: CLASSIFICATION_LABELS.type, value: pub.type },
+    { label: CLASSIFICATION_LABELS.date, value: pub.date },
+    { label: CLASSIFICATION_LABELS.region, value: pub.region },
+    { label: CLASSIFICATION_LABELS.country, value: pub.countries?.join(', ') },
+    { label: CLASSIFICATION_LABELS.methodService, value: pub.method },
+    { label: CLASSIFICATION_LABELS.topic, value: pub.topic }
   ].filter((m) => m.value);
 
   return (

@@ -104,6 +104,7 @@ function Row({ row, collection, orderable, draggable, busy, onDuplicate, onDelet
         <div className="flex shrink-0 items-center gap-2">
           {row.hasDraft && <Badge tone="amber">Draft edits</Badge>}
           {row.hidden && <Badge>Hidden</Badge>}
+          {row.needsReview && <Badge tone="amber">Needs review</Badge>}
 
           {/* The action cluster sits above the row's stretched edit link. */}
           <div className={`relative z-10 flex items-center gap-0.5 ${actionReveal}`}>
@@ -163,15 +164,29 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
   }
 
   const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  // Instant, client-side: the whole collection is already in the row data.
+  const FILTERS = [
+    { id: 'all', label: 'All', match: () => true },
+    { id: 'visible', label: 'Visible', match: (row) => !row.hidden },
+    { id: 'hidden', label: 'Hidden', match: (row) => row.hidden },
+    { id: 'draft', label: 'Draft edits', match: (row) => row.hasDraft },
+    ...(items.some((row) => row.needsReview)
+      ? [{ id: 'review', label: 'Needs review', match: (row) => row.needsReview }]
+      : [])
+  ];
+  const activeFilter = FILTERS.find((f) => f.id === statusFilter) || FILTERS[0];
+
   const needle = search.trim().toLowerCase();
-  const visible = needle
-    ? items.filter(
-        (row) =>
-          row.title.toLowerCase().includes(needle) ||
-          row.slug.toLowerCase().includes(needle) ||
-          row.columns.some((column) => String(column.value).toLowerCase().includes(needle))
-      )
-    : items;
+  const visible = items.filter(
+    (row) =>
+      activeFilter.match(row) &&
+      (!needle ||
+        row.title.toLowerCase().includes(needle) ||
+        row.slug.toLowerCase().includes(needle) ||
+        row.columns.some((column) => String(column.value).toLowerCase().includes(needle)))
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -179,8 +194,9 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
   );
 
   // Reordering a filtered subset would scramble the hidden rows, so dragging
-  // pauses while a search is active.
-  const draggable = orderable && !needle && items.length > 1;
+  // pauses while a search or status filter is active.
+  const filtering = Boolean(needle) || statusFilter !== 'all';
+  const draggable = orderable && !filtering && items.length > 1;
 
   const handleDuplicate = async (row) => {
     setBusyId(row.id);
@@ -248,17 +264,44 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
 
   return (
     <div className="space-y-3">
-      <SearchInput
-        value={search}
-        onChange={setSearch}
-        placeholder={`Search by ${itemLabel} name…`}
-        aria-label={`Search this list of ${itemLabel}s`}
-        className="max-w-sm"
-      />
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <SearchInput
+          value={search}
+          onChange={setSearch}
+          placeholder={`Search by ${itemLabel} name…`}
+          aria-label={`Search this list of ${itemLabel}s`}
+          className="max-w-sm"
+        />
+        <div role="group" aria-label="Filter by status" className="flex flex-wrap items-center gap-1">
+          {FILTERS.map((filter) => {
+            const count = filter.id === 'all' ? items.length : items.filter(filter.match).length;
+            const active = statusFilter === filter.id;
+            return (
+              <button
+                key={filter.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setStatusFilter(filter.id)}
+                className={
+                  'rounded-full px-3 py-1.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none ' +
+                  (active
+                    ? 'bg-navy-900 text-cream-50'
+                    : 'text-ink-600 hover:bg-cream-200 hover:text-navy-900')
+                }
+              >
+                {filter.label}
+                <span className={'ml-1.5 font-mono font-normal ' + (active ? 'text-cream-300' : 'text-ink-500')}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {visible.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-cream-300 px-4 py-8 text-center text-sm text-ink-600">
-          Nothing matches “{search.trim()}”.
+          {needle ? `Nothing matches “${search.trim()}”.` : `No ${itemLabel}s in this state.`}
         </p>
       ) : (
         <DndContext
@@ -288,8 +331,8 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
         </DndContext>
       )}
 
-      {orderable && needle && visible.length > 0 && (
-        <p className="text-xs text-ink-500">Clear the search to change the order.</p>
+      {orderable && filtering && visible.length > 0 && (
+        <p className="text-xs text-ink-500">Clear the search and filters to change the order.</p>
       )}
     </div>
   );

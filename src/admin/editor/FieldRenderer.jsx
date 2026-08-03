@@ -95,14 +95,22 @@ const WiringValue = ({ field, value }) => (
   <div className="space-y-2">
     <div className="rounded-xl border border-cream-300 bg-cream-200/60 px-3.5 py-2.5">
       <span className="font-mono text-sm break-all text-ink-700">
-        {value == null || value === '' ? '—' : Array.isArray(value) ? JSON.stringify(value) : String(value)}
+        {value == null || value === ''
+          ? '—'
+          : typeof value === 'boolean'
+            ? value
+              ? 'Yes'
+              : 'No'
+            : Array.isArray(value)
+              ? JSON.stringify(value)
+              : String(value)}
       </span>
     </div>
     <WarningNote>{field.warning}</WarningNote>
   </div>
 );
 
-export default function FieldRenderer({ field, path, value, onChange, errors, setError, linkTargets }) {
+export default function FieldRenderer({ field, path, value, onChange, errors, setError, linkTargets, onSiblingChange }) {
   const domId = fieldDomId(path);
   const inputId = `${domId}-input`;
   const error = errors?.[path] || null;
@@ -161,6 +169,7 @@ export default function FieldRenderer({ field, path, value, onChange, errors, se
         errors={errors}
         setError={setError}
         linkTargets={linkTargets}
+        onSiblingChange={onSiblingChange}
       />
 
       {error && (

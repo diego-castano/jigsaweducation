@@ -70,6 +70,7 @@ export default async function CollectionListPage({ params }) {
     title: doc[schema.titleField] || `Untitled ${schema.itemLabel}`,
     hasDraft: row.draft != null && Object.keys(row.draft).length > 0,
     hidden: row.status === 'hidden',
+    needsReview: Boolean(doc.needsReview),
     publicHref: schema.itemRoute ? schema.itemRoute.replace(':slug', row.slug) : null,
     columns: columnFields.map((field) => ({
       name: field.name,

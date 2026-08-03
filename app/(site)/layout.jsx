@@ -21,6 +21,20 @@ const organisationSchema = (settings) => ({
   description: settings.description,
   sameAs: [settings.linkedin],
   vatID: settings.vatNumber,
+  // Company registrations, machine-readable — the footer's legalLine carries
+  // the same facts as prose.
+  identifier: [
+    settings.ukCompanyNumber && {
+      '@type': 'PropertyValue',
+      name: 'UK company number',
+      value: settings.ukCompanyNumber
+    },
+    settings.zambiaCompanyNumber && {
+      '@type': 'PropertyValue',
+      name: 'Zambia company number',
+      value: settings.zambiaCompanyNumber
+    }
+  ].filter(Boolean),
   address: (settings.offices || []).map((o) => ({
     '@type': 'PostalAddress',
     streetAddress: (o.address || []).slice(0, -1).join(', '),

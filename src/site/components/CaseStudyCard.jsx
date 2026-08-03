@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Icon from '../../components/Icon';
+import { CLASSIFICATION_LABELS } from '../../lib/labels';
 import SmartImage from './SmartImage';
 import { altFor, objectPositionFor } from '../../lib/media-meta';
 
@@ -49,13 +50,13 @@ export default function CaseStudyCard({ study, mediaMeta }) {
         <dl className="mt-5 pt-5 border-t border-cream-300 space-y-2 text-xs">
           {study.partners?.length > 0 && (
             <div className="flex gap-2">
-              <dt className="text-ink-500 shrink-0 w-16">Partners</dt>
+              <dt className="text-ink-500 shrink-0 w-16">{CLASSIFICATION_LABELS.partners}</dt>
               <dd className="text-ink-700">{study.partners.join(', ')}</dd>
             </div>
           )}
           {study.service && (
             <div className="flex gap-2">
-              <dt className="text-ink-500 shrink-0 w-16">Service</dt>
+              <dt className="text-ink-500 shrink-0 w-16">{CLASSIFICATION_LABELS.service}</dt>
               <dd className="text-ink-700">{study.service}</dd>
             </div>
           )}

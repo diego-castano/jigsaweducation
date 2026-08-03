@@ -437,6 +437,7 @@ export const COLLECTIONS = [
         name: 'pdf',
         label: 'PDF',
         type: 'file',
+        sizeField: 'fileSize',
         help: 'The document itself, from the media library.'
       },
       {
@@ -744,6 +745,7 @@ export const COLLECTIONS = [
         name: 'file',
         label: 'PDF',
         type: 'file',
+        sizeField: 'fileSize',
         nullable: true,
         help: 'The policy document. Leave empty while it is still awaited.'
       },

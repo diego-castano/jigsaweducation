@@ -1,5 +1,6 @@
 'use client';
 
+import { facetLabel } from '../../lib/labels';
 import { useEffect, useRef, useState } from 'react';
 import Icon from '../../components/Icon';
 
@@ -145,7 +146,7 @@ export default function FilterBar({
         {Object.entries(facets).map(([key, options]) => (
           <Dropdown
             key={key}
-            label={key.charAt(0).toUpperCase() + key.slice(1)}
+            label={facetLabel(key)}
             options={options}
             selected={selected[key] || []}
             onToggle={(value) => onToggle(key, value)}

@@ -370,6 +370,7 @@ export default function SchemaForm({
                     errors={errors}
                     setError={setError}
                     linkTargets={linkTargets}
+                    onSiblingChange={handleFieldChange}
                   />
                 ))}
               </div>

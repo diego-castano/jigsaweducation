@@ -189,7 +189,9 @@ const SITE_SETTINGS = {
           name: 'socialEnterprise',
           label: 'Certified Social Enterprise',
           type: 'boolean',
-          seed: LEGAL.socialEnterprise
+          seed: LEGAL.socialEnterprise,
+          warning:
+            'For reference only: the certification wording visitors see lives in the legal sentence below — edit that sentence when the status changes.'
         },
         {
           name: 'ukCompanyNumber',

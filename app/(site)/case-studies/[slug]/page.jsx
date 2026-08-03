@@ -6,6 +6,7 @@ import Icon from '../../../../src/components/Icon';
 import { getCollection, getItem, getSingleton, getMediaMeta } from '../../../../src/lib/content';
 import { publicationsForCaseStudy } from '../../../../src/lib/derive';
 import Prose from '../../../../src/site/components/Prose';
+import { CLASSIFICATION_LABELS, countLabel } from '../../../../src/lib/labels';
 import { altFor, objectPositionFor } from '../../../../src/lib/media-meta';
 
 export async function generateStaticParams() {
@@ -78,7 +79,7 @@ export default async function CaseStudyPage({ params }) {
         <dl className="mt-10 grid sm:grid-cols-3 gap-px bg-cream-300 border border-cream-300 rounded-2xl overflow-hidden">
           <div className="bg-cream-100 p-6">
             <dt className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-3">
-              {study.countries?.length === 1 ? 'Country' : 'Countries'}
+              {countLabel('country', study.countries?.length ?? 0)}
             </dt>
             <dd className="text-navy-900">
               {study.countries?.length ? study.countries.join(', ') : <span className="text-ink-500 italic">Not specified</span>}
@@ -86,13 +87,13 @@ export default async function CaseStudyPage({ params }) {
           </div>
           <div className="bg-cream-100 p-6">
             <dt className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-3">
-              {study.partners?.length === 1 ? 'Partner' : 'Partners'}
+              {countLabel('partner', study.partners?.length ?? 0)}
             </dt>
             <dd className="text-navy-900">{study.partners?.join(', ')}</dd>
           </div>
           <div className="bg-cream-100 p-6">
             <dt className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-3">
-              Method
+              {CLASSIFICATION_LABELS.method}
             </dt>
             <dd className="text-navy-900">
               {study.method}

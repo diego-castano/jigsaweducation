@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import Icon from '../../../components/Icon.jsx';
 import { Button, Input, useToast } from '../../ui.jsx';
 import MediaPicker from '../../media/MediaPicker.jsx';
+import { formatSize } from '../../media/format.js';
 import { listMedia, updateAlt } from '../../../cms/actions/media.js';
 
 // image · file — the stored value is the media URL string ('/media/<key>').
@@ -14,7 +15,7 @@ import { listMedia, updateAlt } from '../../../cms/actions/media.js';
 
 const basename = (url) => String(url || '').split('/').pop() || '';
 
-export default function MediaField({ field, value, onChange, onBlur, error, inputId }) {
+export default function MediaField({ field, value, onChange, onBlur, error, inputId, onSiblingChange }) {
   const isImage = field.type === 'image';
   const toast = useToast();
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -27,6 +28,11 @@ export default function MediaField({ field, value, onChange, onBlur, error, inpu
 
   const select = (media) => {
     onChange(media.url);
+    // A file field can name a sibling that shows the size beside the download
+    // button; picking the file fills it so nobody types "403 KB" by hand.
+    if (field.sizeField && media.size != null) {
+      onSiblingChange?.(field.sizeField, formatSize(media.size));
+    }
     setRecord(media);
     setAlt(media.alt || '');
     setAltOpen(false);

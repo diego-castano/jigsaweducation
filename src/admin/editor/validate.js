@@ -51,7 +51,7 @@ export const countWords = (text) =>
 // the warning shown; every other warning stays on an editable field.
 
 export const isWiringField = (field) =>
-  /^(Map plumbing|A structural route)/.test(field?.warning || '');
+  /^(Map plumbing|A structural route|For reference only)/.test(field?.warning || '');
 
 // --- Validation -------------------------------------------------------------
 // Hard errors (they block Publish): required-and-empty, invalid email,
