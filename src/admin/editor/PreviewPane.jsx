@@ -1,0 +1,306 @@
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Icon from '../../components/Icon.jsx';
+import { IconButton } from '../ui.jsx';
+import SchemaForm from './SchemaForm.jsx';
+
+// The live-preview half of the singleton editor, plus the client wrapper that
+// wires it to SchemaForm. The pane is the real page in an iframe with Next
+// draft mode on (/api/preview). Until the wiring phase teaches the public
+// pages to read drafts, the iframe shows the live page; the reload plumbing
+// is already correct, so drafts appear here the moment wiring lands.
+//
+//   <PreviewPane route lastSavedAt onClose>   the pane itself
+//   <SingletonEditor schema targetKey value draft linkTargets>
+//     owns SchemaForm + PreviewPane: passes onSaved into the form, feeds the
+//     save timestamp into the pane, and manages where the pane lives —
+//     a second grid column from xl: up, a full-screen overlay below.
+
+const STORAGE_KEY = 'jigsaw-admin:preview-open';
+const XL_QUERY = '(min-width: 80rem)'; // Tailwind xl:
+const RELOAD_DELAY_MS = 1200;
+
+const previewUrl = (route) => `/api/preview?to=${encodeURIComponent(route)}`;
+
+const SEGMENT_BASE =
+  'rounded-full px-2.5 py-1 font-mono text-[11px] transition-colors ' +
+  'focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none';
+
+export default function PreviewPane({ route, lastSavedAt = 0, onClose }) {
+  const [device, setDevice] = useState('desktop');
+  const [fading, setFading] = useState(false);
+
+  const frameRef = useRef(null);
+  const scrollRef = useRef(null);
+  const fadeGuardRef = useRef(null);
+
+  // Reload the framed page in place: remember its scroll position, dim it,
+  // reload the window, then restore scroll once the fresh document lands.
+  // Same-origin, so contentWindow is reachable; every touch is guarded
+  // anyway in case the editor navigated the frame somewhere unexpected.
+  const reload = useCallback(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    try {
+      scrollRef.current = frame.contentWindow.scrollY;
+    } catch {
+      scrollRef.current = null;
+    }
+    setFading(true);
+    // A reload that never completes must not leave the pane dimmed forever.
+    clearTimeout(fadeGuardRef.current);
+    fadeGuardRef.current = setTimeout(() => setFading(false), 6000);
+    try {
+      frame.contentWindow.location.reload();
+    } catch {
+      frame.src = previewUrl(route);
+    }
+  }, [route]);
+
+  const handleLoad = useCallback(() => {
+    const frame = frameRef.current;
+    if (frame && scrollRef.current != null) {
+      try {
+        frame.contentWindow.scrollTo(0, scrollRef.current);
+      } catch {
+        // Cross-origin or torn-down frame: the fade still clears below.
+      }
+      scrollRef.current = null;
+    }
+    clearTimeout(fadeGuardRef.current);
+    setFading(false);
+  }, []);
+
+  // 1.2s after the LAST successful autosave: each new save timestamp clears
+  // the previous timer, so a burst of saves triggers a single reload.
+  useEffect(() => {
+    if (!lastSavedAt) return undefined;
+    const timer = setTimeout(reload, RELOAD_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [lastSavedAt, reload]);
+
+  useEffect(() => () => clearTimeout(fadeGuardRef.current), []);
+
+  return (
+    <section
+      aria-label="Live page preview"
+      className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-cream-200 bg-cream-100 shadow-sm"
+    >
+      <header className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 border-b border-cream-200 px-3 py-2">
+        <span className="min-w-0 flex-1 basis-28 truncate font-mono text-xs text-ink-600" title={route}>
+          {route}
+        </span>
+
+        <div
+          role="group"
+          aria-label="Preview width"
+          className="flex items-center gap-0.5 rounded-full border border-cream-300 bg-cream-50 p-0.5"
+        >
+          <button
+            type="button"
+            aria-pressed={device === 'desktop'}
+            onClick={() => setDevice('desktop')}
+            className={
+              SEGMENT_BASE +
+              (device === 'desktop'
+                ? ' bg-navy-900 text-cream-100'
+                : ' text-ink-600 hover:text-navy-900')
+            }
+          >
+            Desktop
+          </button>
+          <button
+            type="button"
+            aria-pressed={device === 'phone'}
+            onClick={() => setDevice('phone')}
+            className={
+              SEGMENT_BASE +
+              (device === 'phone'
+                ? ' bg-navy-900 text-cream-100'
+                : ' text-ink-600 hover:text-navy-900')
+            }
+          >
+            390px
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={reload}
+          className="tactile rounded-full px-2.5 py-1 text-xs font-bold text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+        >
+          Refresh
+        </button>
+
+        <a
+          href={previewUrl(route)}
+          target="_blank"
+          rel="noopener"
+          className="tactile inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+        >
+          Open
+          <Icon name="arrow-up-right" size={12} />
+        </a>
+
+        {onClose && <IconButton icon="x" label="Close the preview" size="sm" onClick={onClose} />}
+      </header>
+
+      <div className="min-h-0 flex-1 bg-cream-200/60">
+        <div
+          className={
+            device === 'phone' ? 'flex h-full justify-center overflow-hidden px-4 py-4' : 'h-full'
+          }
+        >
+          <div
+            className={
+              device === 'phone'
+                ? 'h-full w-[390px] max-w-full overflow-hidden rounded-2xl border border-cream-300 bg-white shadow-md'
+                : 'h-full w-full bg-white'
+            }
+          >
+            <iframe
+              ref={frameRef}
+              src={previewUrl(route)}
+              title={`Preview of ${route}`}
+              onLoad={handleLoad}
+              className={
+                'h-full w-full border-0 bg-white motion-safe:transition-opacity motion-safe:duration-300 ' +
+                (fading ? 'opacity-40' : 'opacity-100')
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// The client wrapper the singleton page renders. Owns the save timestamp the
+// pane reloads on, and the pane's two lives: a persistent second column at
+// xl: (open state remembered in localStorage) and a full-screen overlay
+// below xl: behind the action bar's Preview button.
+export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }) {
+  const route = schema.route;
+
+  const [paneOpen, setPaneOpen] = useState(true);
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState(0);
+  const overlayRef = useRef(null);
+  const returnFocusRef = useRef(null);
+
+  const handleSaved = useCallback(() => setLastSavedAt(Date.now()), []);
+
+  // Hydrate the remembered state after mount — the server render cannot read
+  // localStorage, so it always paints the default (open) two-pane layout.
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(STORAGE_KEY) === 'closed') setPaneOpen(false);
+    } catch {
+      // Storage blocked: the pane just defaults to open each visit.
+    }
+  }, []);
+
+  const persistPane = (open) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, open ? 'open' : 'closed');
+    } catch {
+      // Ignore: preference simply is not remembered.
+    }
+  };
+
+  const togglePreview = useCallback(() => {
+    if (window.matchMedia(XL_QUERY).matches) {
+      setPaneOpen((current) => {
+        persistPane(!current);
+        return !current;
+      });
+    } else {
+      returnFocusRef.current = document.activeElement;
+      setOverlayOpen(true);
+    }
+  }, []);
+
+  const closePane = useCallback(() => {
+    if (window.matchMedia(XL_QUERY).matches) {
+      setPaneOpen(false);
+      persistPane(false);
+    }
+    setOverlayOpen(false);
+  }, []);
+
+  // Overlay behaviour below xl:: lock the page scroll, close on Escape,
+  // dissolve into the two-pane layout if the window grows past xl:.
+  useEffect(() => {
+    if (!overlayOpen) return undefined;
+
+    overlayRef.current?.focus();
+
+    const media = window.matchMedia(XL_QUERY);
+    const onMediaChange = () => {
+      if (media.matches) setOverlayOpen(false);
+    };
+    media.addEventListener('change', onMediaChange);
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOverlayOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      media.removeEventListener('change', onMediaChange);
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      const back = returnFocusRef.current;
+      if (back && typeof back.focus === 'function') back.focus();
+    };
+  }, [overlayOpen]);
+
+  const form = (
+    <SchemaForm
+      schema={schema}
+      targetType="singleton"
+      targetKey={targetKey}
+      value={value}
+      draft={draft}
+      linkTargets={linkTargets}
+      onSaved={route ? handleSaved : undefined}
+      onTogglePreview={route ? togglePreview : undefined}
+    />
+  );
+
+  // Singletons without a public route (settings groups) get no preview pane.
+  if (!route) return form;
+
+  const paneVisible = paneOpen || overlayOpen;
+
+  return (
+    <div
+      className={
+        paneOpen ? 'xl:grid xl:grid-cols-[minmax(480px,1fr)_minmax(0,1fr)] xl:items-start xl:gap-6' : ''
+      }
+    >
+      <div className="min-w-0">{form}</div>
+
+      {paneVisible && (
+        <div
+          ref={overlayRef}
+          tabIndex={-1}
+          role={overlayOpen ? 'dialog' : undefined}
+          aria-modal={overlayOpen ? 'true' : undefined}
+          aria-label={overlayOpen ? 'Live page preview' : undefined}
+          className={
+            overlayOpen
+              ? 'fixed inset-0 z-50 flex flex-col bg-navy-900/50 p-3 backdrop-blur-sm outline-none sm:p-6'
+              : 'hidden xl:sticky xl:top-24 xl:block xl:h-[calc(100dvh-8rem)]'
+          }
+        >
+          <PreviewPane route={route} lastSavedAt={lastSavedAt} onClose={closePane} />
+        </div>
+      )}
+    </div>
+  );
+}
