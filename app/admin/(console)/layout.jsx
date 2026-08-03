@@ -6,11 +6,7 @@
 import { requireAdmin } from '../../../src/lib/auth';
 import { query } from '../../../src/lib/db';
 import { NAV_GROUPS, SEGMENT_LABELS } from '../../../src/admin/shell/nav';
-import Sidebar from '../../../src/admin/shell/Sidebar';
-import TopBar from '../../../src/admin/shell/TopBar';
-import MobileShell from '../../../src/admin/shell/MobileShell';
-import ReviewModeBanner from '../../../src/admin/shell/ReviewModeBanner';
-import VersionWatcher from '../../../src/admin/shell/VersionWatcher';
+import ConsoleFrame from '../../../src/admin/shell/ConsoleFrame';
 import { ToastProvider } from '../../../src/admin/ui';
 
 export const dynamic = 'force-dynamic';
@@ -51,33 +47,17 @@ export default async function ConsoleLayout({ children }) {
   return (
     <ToastProvider>
       {/* One scroll container: only <main> scrolls, so the sidebar, top bar
-          and review banner hold still and the console reads as an app. */}
-      <div className="flex h-dvh flex-col overflow-hidden bg-cream-50">
-        <a
-          href="#admin-main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-navy-900 focus:px-5 focus:py-2.5 focus:text-sm focus:font-bold focus:text-cream-50"
-        >
-          Skip to content
-        </a>
-
-        <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] lg:block">
-          <Sidebar groups={NAV_GROUPS} />
-        </aside>
-
-        <MobileShell groups={NAV_GROUPS} session={session} draftCount={draftCount} />
-
-        <div className="flex min-h-0 flex-1 flex-col lg:pl-[260px]">
-          <TopBar session={session} draftCount={draftCount} labels={SEGMENT_LABELS} />
-          {reviewOn && <ReviewModeBanner />}
-          <main
-            id="admin-main"
-            className="admin-scroll flex-1 overflow-y-auto px-4 py-6 sm:px-8 lg:py-10"
-          >
-            {children}
-          </main>
-          <VersionWatcher />
-        </div>
-      </div>
+          and review banner hold still and the console reads as an app.
+          ConsoleFrame owns the collapsible sidebar widths client-side. */}
+      <ConsoleFrame
+        groups={NAV_GROUPS}
+        session={session}
+        draftCount={draftCount}
+        labels={SEGMENT_LABELS}
+        reviewOn={reviewOn}
+      >
+        {children}
+      </ConsoleFrame>
     </ToastProvider>
   );
 }

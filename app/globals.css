@@ -184,6 +184,54 @@ html {
   text-underline-offset: 2px;
 }
 
+/* Console micro-motion: things appear, they do not pop. All three collapse
+   to nothing under prefers-reduced-motion via the motion-safe gate at the
+   call sites. */
+@keyframes preview-pane-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes overlay-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.preview-pane-enter {
+  animation: preview-pane-in 0.3s var(--ease-emphasized) both;
+}
+.overlay-backdrop-enter {
+  animation: overlay-backdrop-in 0.2s ease-out both;
+}
+.overlay-panel-enter {
+  animation: overlay-panel-in 0.28s var(--ease-emphasized) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .preview-pane-enter,
+  .overlay-backdrop-enter,
+  .overlay-panel-enter {
+    animation: none;
+  }
+}
+
 /* The navy sidebar needs its own thumb colour to stay quiet on dark. */
 .bg-navy-900 .admin-scroll,
 .admin-scroll.on-navy {

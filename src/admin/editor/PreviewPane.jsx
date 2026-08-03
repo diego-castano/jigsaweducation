@@ -350,11 +350,13 @@ export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }
           aria-label={overlayOpen ? 'Live page preview' : undefined}
           className={
             overlayOpen
-              ? 'fixed inset-0 z-50 flex flex-col bg-navy-900/50 p-3 backdrop-blur-sm outline-none sm:p-6'
-              : 'hidden xl:sticky xl:top-2 xl:block xl:h-[calc(100dvh-7rem)]'
+              ? 'overlay-backdrop-enter fixed inset-0 z-50 flex flex-col bg-navy-900/50 p-3 backdrop-blur-sm outline-none sm:p-6'
+              : 'preview-pane-enter hidden xl:sticky xl:top-2 xl:block xl:h-[calc(100dvh-7rem)]'
           }
         >
-          <PreviewPane route={route} lastSavedAt={lastSavedAt} onClose={closePane} />
+          <div className={overlayOpen ? 'overlay-panel-enter flex min-h-0 flex-1 flex-col' : 'h-full'}>
+            <PreviewPane route={route} lastSavedAt={lastSavedAt} onClose={closePane} />
+          </div>
         </div>
       )}
     </div>

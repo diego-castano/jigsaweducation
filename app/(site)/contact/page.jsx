@@ -3,14 +3,11 @@ import MailingListForm from '../../../src/site/components/MailingListForm';
 import LocatorMap from '../../../src/site/components/LocatorMap';
 import ContactEmails from '../../../src/site/components/contact/ContactEmails';
 import { getSingleton } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-contact');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/contact' }
-  };
+  return pageMetadata(page, { canonical: '/contact' });
 }
 
 export default async function ContactPage() {

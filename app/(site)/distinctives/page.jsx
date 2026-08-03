@@ -6,6 +6,7 @@ import Placeholder from '../../../src/site/components/Placeholder';
 import Reveal from '../../../src/site/components/Reveal';
 import CountUp from '../../../src/site/components/distinctives/CountUp';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import { getTestimonial } from '../../../src/lib/derive';
 import Prose from '../../../src/site/components/Prose';
 import { isPlaceholder } from '../../../src/data/placeholder';
@@ -21,11 +22,7 @@ const StoryBody = ({ text }) =>
 
 export async function generateMetadata() {
   const page = await getSingleton('page-distinctives');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/distinctives' }
-  };
+  return pageMetadata(page, { canonical: '/distinctives' });
 }
 
 // Text alternates side down the column so the five rows never settle into a

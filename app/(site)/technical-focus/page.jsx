@@ -3,15 +3,12 @@ import Placeholder from '../../../src/site/components/Placeholder';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import FocusMosaic from '../../../src/site/components/technical-focus/FocusMosaic';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import { caseStudiesByTopic } from '../../../src/lib/derive';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-technical-focus');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/technical-focus' }
-  };
+  return pageMetadata(page, { canonical: '/technical-focus' });
 }
 
 export default async function TechnicalFocusPage() {

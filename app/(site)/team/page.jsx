@@ -5,14 +5,11 @@ import Reveal from '../../../src/site/components/Reveal';
 import TeamCard from '../../../src/site/components/TeamCard';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import { getCollection, getSingleton } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-team');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/team' }
-  };
+  return pageMetadata(page, { canonical: '/team' });
 }
 
 // The client's paragraph is stored as two fields: introLead carries everything

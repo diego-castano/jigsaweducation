@@ -27,7 +27,8 @@ const REVIEW_NOTE_HELP =
 const seoSection = ({ title, titleHelp, description, descriptionHelp }) => ({
   id: 'seo',
   title: 'SEO',
-  description: 'How this page appears in search results and the browser tab.',
+  description:
+    'How this page appears in search results, the browser tab and social shares. The preview below updates as you type.',
   fields: [
     {
       name: 'title',
@@ -47,6 +48,23 @@ const seoSection = ({ title, titleHelp, description, descriptionHelp }) => ({
         descriptionHelp ||
         'The sentence search engines show under the title. Aim for one or two plain sentences.',
       ...(description !== undefined ? { seed: description } : { nullable: true })
+    },
+    {
+      name: 'ogImage',
+      label: 'Share image',
+      type: 'image',
+      nullable: true,
+      seed: null,
+      help:
+        'Shown when this page is shared on LinkedIn or social media. Leave empty to use the site-wide Jigsaw card. Landscape works best, roughly 1200 × 630.'
+    },
+    {
+      name: 'noIndex',
+      label: 'Hide from search engines',
+      type: 'boolean',
+      seed: false,
+      help:
+        'Asks Google and others not to list this page, and drops it from the sitemap. Leave off for normal pages.'
     }
   ]
 });

@@ -2,14 +2,11 @@ import PageHero from '../../../src/site/components/PageHero';
 import Section from '../../../src/site/components/Section';
 import Icon from '../../../src/components/Icon';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-policies');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/policies' }
-  };
+  return pageMetadata(page, { canonical: '/policies' });
 }
 
 function PolicyRow({ policy, ui }) {

@@ -4,15 +4,12 @@ import Section from '../../../src/site/components/Section';
 import MailingListForm from '../../../src/site/components/MailingListForm';
 import Icon from '../../../src/components/Icon';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import Prose from '../../../src/site/components/Prose';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-work-for-us');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/work-for-us' }
-  };
+  return pageMetadata(page, { canonical: '/work-for-us' });
 }
 
 // The client's sentence carries its two links on their own phrases — "contact

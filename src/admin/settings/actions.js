@@ -39,6 +39,50 @@ export async function createAdminUser(formData) {
   return { ok: true, email };
 }
 
+export async function updateAdminUser(id, formData) {
+  const session = await requireAdmin();
+
+  const name = String(formData.get('name') || '').trim();
+  const email = String(formData.get('email') || '').trim().toLowerCase();
+  const password = String(formData.get('password') || '');
+
+  if (!name) return { error: 'The account needs a name.' };
+  if (!EMAIL_PATTERN.test(email)) return { error: 'That does not look like an email address.' };
+  if (password && password.length < 10) {
+    return { error: 'A new password needs at least 10 characters.' };
+  }
+
+  try {
+    if (password) {
+      const hash = await hashPassword(password);
+      const { rowCount } = await query(
+        'update admin_users set name = $2, email = $3, password_hash = $4 where id = $1',
+        [id, name, email, hash]
+      );
+      if (rowCount === 0) return { error: 'That account no longer exists.' };
+    } else {
+      const { rowCount } = await query(
+        'update admin_users set name = $2, email = $3 where id = $1',
+        [id, name, email]
+      );
+      if (rowCount === 0) return { error: 'That account no longer exists.' };
+    }
+  } catch (error) {
+    if (error?.code === '23505') {
+      return { error: 'Another account already uses that email address.' };
+    }
+    console.error('updateAdminUser: update failed.', error);
+    return { error: 'The account could not be updated. Try again.' };
+  }
+  revalidatePath('/admin/settings');
+  return {
+    ok: true,
+    // Editing your own email here leaves the signed-in session showing the
+    // old address until the next sign-in; the caller mentions it.
+    selfEmailChanged: String(id) === String(session.id) && email !== session.email
+  };
+}
+
 export async function deleteAdminUser(id) {
   const session = await requireAdmin();
 

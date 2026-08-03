@@ -29,8 +29,22 @@ export const NAV_GROUPS = [
     id: 'top',
     items: [{ label: 'Dashboard', href: '/admin', icon: 'home', exact: true }]
   },
-  { id: 'pages', label: 'Pages', collapsible: true, items: pageEntries },
-  { id: 'content', label: 'Content', collapsible: true, items: collectionEntries },
+  {
+    id: 'pages',
+    label: 'Pages',
+    collapsible: true,
+    icon: 'file-text',
+    accent: 'sea',
+    items: pageEntries
+  },
+  {
+    id: 'content',
+    label: 'Content',
+    collapsible: true,
+    icon: 'book-open',
+    accent: 'orange',
+    items: collectionEntries
+  },
   {
     id: 'library',
     items: [

@@ -5,15 +5,12 @@ import Placeholder from '../../../src/site/components/Placeholder';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import ServiceIndex from '../../../src/site/components/services/ServiceIndex';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import { caseStudiesByService } from '../../../src/lib/derive';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-services');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/services' }
-  };
+  return pageMetadata(page, { canonical: '/services' });
 }
 
 export default async function ServicesPage() {

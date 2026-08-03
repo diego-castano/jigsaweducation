@@ -81,7 +81,7 @@ export default async function CollectionListPage({ params }) {
   const titleField = schema.fields.find((field) => field.name === schema.titleField);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="space-y-6">
       <header className="reveal flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <div className="flex min-w-0 items-baseline gap-3">
           <h1 className="font-display display-s text-3xl text-navy-900">{schema.title}</h1>

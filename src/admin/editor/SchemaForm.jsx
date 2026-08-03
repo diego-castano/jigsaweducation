@@ -33,6 +33,47 @@ const AUTOSAVE_MS = 800;
 const timeNow = () =>
   new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
+// Live "how it looks on Google" card inside every SEO section. Approximate
+// on purpose (Google renders however it likes) but honest about the two
+// levers the editor controls: title and description, cut where Google cuts.
+function SerpPreview({ schema, doc }) {
+  const isHome = schema?.key === 'page-home';
+  const rawTitle = String(doc?.title || '').trim();
+  const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} — Jigsaw`) : 'Untitled page';
+  const description = String(doc?.description || '').trim();
+  const path = schema?.route && schema.route !== '/' ? schema.route : '';
+
+  return (
+    <div className="mt-6 rounded-xl border border-cream-300 bg-white p-4">
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+        Search preview
+      </p>
+      <div className="mt-3">
+        <p className="flex items-center gap-1.5 text-[13px] text-ink-700">
+          <span className="grid size-6 place-items-center rounded-full bg-cream-200 font-display text-[11px] text-navy-900">
+            J
+          </span>
+          <span className="leading-tight">
+            jigsaweducation.org
+            <span className="block text-xs text-ink-500">
+              www.jigsaweducation.org{path}
+            </span>
+          </span>
+        </p>
+        <p className="mt-1.5 truncate text-xl leading-snug text-[#1a0dab]">{title}</p>
+        <p className="mt-1 line-clamp-2 text-sm leading-normal text-ink-700">
+          {description || 'No description yet — search engines will pick their own text.'}
+        </p>
+      </div>
+      {doc?.noIndex && (
+        <p className="mt-3 rounded-lg bg-warning-50 px-3 py-2 text-xs text-warning-700">
+          Hidden from search engines: this page will not appear in results at all.
+        </p>
+      )}
+    </div>
+  );
+}
+
 // The autosave voice. Everything saves by itself; this chip is how the
 // editor KNOWS it did — so it speaks in full states, tinted and iconed,
 // never just a coloured dot.
@@ -275,6 +316,15 @@ export default function SchemaForm({
                 <li key={section.id}>
                   <a
                     href={`#sec-${section.id}`}
+                    onClick={(event) => {
+                      // Animated glide instead of the browser's hard jump —
+                      // unless the user asked for reduced motion.
+                      event.preventDefault();
+                      const target = document.getElementById(`sec-${section.id}`);
+                      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                      target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+                      window.history.replaceState(null, '', `#sec-${section.id}`);
+                    }}
                     aria-current={active ? 'true' : undefined}
                     className={
                       '-ml-px block border-l-2 py-1.5 pl-3 text-sm transition-colors ' +
@@ -300,7 +350,7 @@ export default function SchemaForm({
               key={section.id}
               id={`sec-${section.id}`}
               aria-labelledby={`sec-${section.id}-h`}
-              className="scroll-mt-24 rounded-2xl border border-cream-200 bg-cream-100 p-6 shadow-xs sm:p-8"
+              className="scroll-mt-4 rounded-2xl border border-cream-200 bg-cream-100 p-6 shadow-xs sm:p-8"
             >
               <h2 id={`sec-${section.id}-h`} className="font-display text-xl text-ink-900">
                 {section.title}
@@ -308,6 +358,7 @@ export default function SchemaForm({
               {section.description && (
                 <p className="mt-1.5 text-sm text-ink-600">{section.description}</p>
               )}
+              {section.id === 'seo' && <SerpPreview schema={schema} doc={doc} />}
               <div className="mt-7 space-y-8">
                 {section.fields.map((field) => (
                   <FieldRenderer

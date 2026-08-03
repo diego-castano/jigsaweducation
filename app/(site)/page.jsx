@@ -8,15 +8,11 @@ import Placeholder from '../../src/site/components/Placeholder';
 import Reveal from '../../src/site/components/Reveal';
 import Icon from '../../src/components/Icon';
 import { getSingleton, getCollection } from '../../src/lib/content';
+import { pageMetadata } from '../../src/lib/page-metadata';
 
 export async function generateMetadata() {
-  const home = await getSingleton('page-home');
-  return {
-    // absolute, or the root layout's "%s — Jigsaw" template appends a second one.
-    title: { absolute: home.title },
-    description: home.description,
-    alternates: { canonical: '/' }
-  };
+  const page = await getSingleton('page-home');
+  return pageMetadata(page, { canonical: '/', absoluteTitle: true });
 }
 
 // Sentence 1 carries the headline. Splitting on the phrase rather than

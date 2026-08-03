@@ -3,15 +3,12 @@ import Section from '../../../src/site/components/Section';
 import CaseStudyBrowser from '../../../src/site/components/CaseStudyBrowser';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import { getCollection, getSingleton } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import { caseStudyFacets } from '../../../src/lib/derive';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-case-studies');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/case-studies' }
-  };
+  return pageMetadata(page, { canonical: '/case-studies' });
 }
 
 export default async function CaseStudiesPage() {

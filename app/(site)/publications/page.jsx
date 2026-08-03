@@ -4,15 +4,12 @@ import PublicationBrowser from '../../../src/site/components/PublicationBrowser'
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import Icon from '../../../src/components/Icon';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import { pageMetadata } from '../../../src/lib/page-metadata';
 import { publicationFacets } from '../../../src/lib/derive';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-publications');
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: '/publications' }
-  };
+  return pageMetadata(page, { canonical: '/publications' });
 }
 
 export default async function PublicationsPage() {
