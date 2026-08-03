@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Icon from '../../components/Icon';
 import SmartImage from './SmartImage';
+import { altFor, objectPositionFor } from '../../lib/media-meta';
 
 // Site modules 03 feedback, applied:
 //   "How can we ensure the colour filter is consistent?"
@@ -23,7 +24,7 @@ import SmartImage from './SmartImage';
 // <Reveal as="li"> so the entrance stagger has an element of its own. The
 // stretched link still resolves against this div, which is the nearest
 // positioned ancestor.
-export default function TeamCard({ person }) {
+export default function TeamCard({ person, mediaMeta }) {
   const initials = person.name
     .split(' ')
     .map((n) => n[0])
@@ -47,7 +48,8 @@ export default function TeamCard({ person }) {
           <>
             <SmartImage
               src={person.photo}
-              alt=""
+              alt={altFor(mediaMeta, person.photo)}
+              objectPosition={objectPositionFor(mediaMeta, person.photo)}
               className="absolute inset-0 w-full h-full"
               imgClassName="object-cover grayscale-[0.55] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0 group-focus-within:grayscale-0 group-hover:scale-[1.02]"
             />

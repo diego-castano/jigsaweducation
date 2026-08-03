@@ -3,7 +3,7 @@ import Section from '../../../src/site/components/Section';
 import PublicationBrowser from '../../../src/site/components/PublicationBrowser';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import Icon from '../../../src/components/Icon';
-import { getSingleton, getCollection } from '../../../src/lib/content';
+import { getSingleton, getCollection, getMediaMeta } from '../../../src/lib/content';
 import { pageMetadata } from '../../../src/lib/page-metadata';
 import { publicationFacets } from '../../../src/lib/derive';
 
@@ -13,7 +13,8 @@ export async function generateMetadata() {
 }
 
 export default async function PublicationsPage() {
-  const [page, settings, ui, publications] = await Promise.all([
+  const [mediaMeta, page, settings, ui, publications] = await Promise.all([
+    getMediaMeta(),
     getSingleton('page-publications'),
     getSingleton('site-settings'),
     getSingleton('ui-strings'),

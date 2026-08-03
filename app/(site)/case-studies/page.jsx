@@ -2,7 +2,7 @@ import PageHero from '../../../src/site/components/PageHero';
 import Section from '../../../src/site/components/Section';
 import CaseStudyBrowser from '../../../src/site/components/CaseStudyBrowser';
 import CrossLinks from '../../../src/site/components/CrossLinks';
-import { getCollection, getSingleton } from '../../../src/lib/content';
+import { getCollection, getSingleton, getMediaMeta } from '../../../src/lib/content';
 import { pageMetadata } from '../../../src/lib/page-metadata';
 import { caseStudyFacets } from '../../../src/lib/derive';
 
@@ -12,7 +12,8 @@ export async function generateMetadata() {
 }
 
 export default async function CaseStudiesPage() {
-  const [page, studies, ui] = await Promise.all([
+  const [mediaMeta, page, studies, ui] = await Promise.all([
+    getMediaMeta(),
     getSingleton('page-case-studies'),
     getCollection('case-studies'),
     getSingleton('ui-strings')
@@ -26,7 +27,7 @@ export default async function CaseStudiesPage() {
       <PageHero kicker={page.kicker} title={page.heading} lede={page.lede} />
 
       <Section tone="sunken">
-        <CaseStudyBrowser studies={studies} facets={caseStudyFacets(studies)} ui={ui} />
+        <CaseStudyBrowser studies={studies} facets={caseStudyFacets(studies)} mediaMeta={mediaMeta} ui={ui} />
       </Section>
 
       <Section className="pt-0">

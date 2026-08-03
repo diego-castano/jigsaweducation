@@ -149,3 +149,37 @@ export async function getItem(collection, slug) {
     );
   }
 }
+
+// --- Media metadata ---------------------------------------------------------
+// The library's alt text and focal point, keyed by the /media/ URL content
+// stores. Components that render CMS images look their URL up here, so alt
+// text written once in the library applies everywhere, and the focal point
+// steers object-position wherever the image is cropped. Cached under the
+// content tag: setFocalPoint/updateAlt revalidate it.
+
+export async function getMediaMeta() {
+  try {
+    return await unstable_cache(
+      async () => {
+        const { rows } = await query(
+          "select key, alt, focal_x, focal_y from media where alt <> '' or focal_x is not null"
+        );
+        return Object.fromEntries(
+          rows.map((row) => [
+            `/media/${row.key}`,
+            {
+              alt: row.alt || '',
+              focalX: row.focal_x,
+              focalY: row.focal_y
+            }
+          ])
+        );
+      },
+      ['media-meta'],
+      { tags: ['content', 'content:media'] }
+    )();
+  } catch (error) {
+    console.error('content: media metadata unavailable, rendering without it.', error);
+    return {};
+  }
+}

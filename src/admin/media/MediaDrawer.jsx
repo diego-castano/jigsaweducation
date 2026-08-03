@@ -8,7 +8,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Icon from '../../components/Icon.jsx';
 import { Button, IconButton, Spinner, Textarea, useConfirm, useToast } from '../ui.jsx';
-import { deleteMedia, getMediaUsage, updateAlt } from '../../cms/actions/media.js';
+import { deleteMedia, getMediaUsage, setFocalPoint, updateAlt } from '../../cms/actions/media.js';
 import { getCollectionSchema, getSingletonSchema } from '../../cms/schema.js';
 import { fileExt, formatDate, formatSize, isImageMime } from './format.js';
 
@@ -29,6 +29,9 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
   const [alt, setAlt] = useState(item.alt || '');
   const [altStatus, setAltStatus] = useState('idle'); // idle | saving | saved
   const [deleting, setDeleting] = useState(false);
+  const [focal, setFocal] = useState(
+    item.focal_x != null ? { x: item.focal_x, y: item.focal_y } : null
+  );
 
   const image = isImageMime(item.mime);
 
@@ -36,8 +39,31 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
   useEffect(() => {
     setAlt(item.alt || '');
     setAltStatus('idle');
+    setFocal(item.focal_x != null ? { x: item.focal_x, y: item.focal_y } : null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.id]);
+
+  // Focal point: click the preview to mark the part of the image that must
+  // stay in frame wherever the site crops it. Optimistic; a failed save
+  // reverts and says so.
+  const applyFocal = async (next) => {
+    const previous = focal;
+    setFocal(next);
+    const result = await setFocalPoint(item.id, next?.x ?? null, next?.y ?? null);
+    if (result?.error) {
+      setFocal(previous);
+      toast.error(result.error);
+    } else {
+      toast.success(next ? 'Focal point saved — crops now keep it in frame.' : 'Focal point cleared.');
+    }
+  };
+
+  const onPreviewClick = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    applyFocal({ x: Math.min(1, Math.max(0, x)), y: Math.min(1, Math.max(0, y)) });
+  };
 
   // "Where it's used" loads on open. Delete stays locked until it answers.
   useEffect(() => {
@@ -196,11 +222,43 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
         <div className="flex-1 space-y-6 overflow-y-auto overscroll-contain px-5 py-5">
           {/* Preview */}
           {image ? (
-            <img
-              src={item.url}
-              alt={alt || ''}
-              className="max-h-72 w-full rounded-xl border border-cream-200 bg-cream-200 object-contain"
-            />
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={onPreviewClick}
+                title="Click to set the focal point"
+                aria-label="Set the focal point by clicking the important part of the image"
+                className="relative block w-full cursor-crosshair overflow-hidden rounded-xl border border-cream-200 bg-cream-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              >
+                <img src={item.url} alt={alt || ''} className="max-h-72 w-full object-contain" />
+                {focal && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center"
+                    style={{ left: `${focal.x * 100}%`, top: `${focal.y * 100}%` }}
+                  >
+                    <span className="absolute inset-0 rounded-full border-2 border-white shadow-md" />
+                    <span className="size-1.5 rounded-full bg-orange-500" />
+                  </span>
+                )}
+              </button>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs text-ink-600">
+                  {focal
+                    ? 'Crops on the site keep the marked point in frame.'
+                    : 'Click the important part of the image so crops never cut it off.'}
+                </p>
+                {focal && (
+                  <button
+                    type="button"
+                    onClick={() => applyFocal(null)}
+                    className="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                  >
+                    Reset to centre
+                  </button>
+                )}
+              </div>
+            </div>
           ) : (
             <a
               href={item.url}

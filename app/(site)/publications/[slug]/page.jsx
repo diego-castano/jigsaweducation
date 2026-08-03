@@ -4,7 +4,7 @@ import Section from '../../../../src/site/components/Section';
 import Placeholder from '../../../../src/site/components/Placeholder';
 import PublicationCard from '../../../../src/site/components/PublicationCard';
 import Icon from '../../../../src/components/Icon';
-import { getSingleton, getCollection, getItem } from '../../../../src/lib/content';
+import { getSingleton, getCollection, getItem, getMediaMeta } from '../../../../src/lib/content';
 import Prose from '../../../../src/site/components/Prose';
 import { isPlaceholder } from '../../../../src/data/placeholder';
 
@@ -30,7 +30,8 @@ export async function generateMetadata({ params }) {
 // plus the metadata below.
 export default async function PublicationPage({ params }) {
   const { slug } = await params;
-  const [pub, site, ui, publications] = await Promise.all([
+  const [mediaMeta, pub, site, ui, publications] = await Promise.all([
+    getMediaMeta(),
     getItem('publications', slug),
     getSingleton('site-settings'),
     getSingleton('ui-strings'),
@@ -110,7 +111,11 @@ export default async function PublicationPage({ params }) {
                 >
                   <Icon name="download" size={16} />
                   {pub.external ? ui.viewPublicationLabel : ui.downloadPdfLabel}
-                  {pub.fileSize && <span className="font-normal opacity-80">({pub.fileSize})</span>}
+                  {pub.fileSize && (
+                    <span className="font-normal opacity-80">
+                      ({ui.pdfSizeTemplate.replace('{size}', pub.fileSize)})
+                    </span>
+                  )}
                 </a>
               )}
               {study && (
@@ -147,7 +152,7 @@ export default async function PublicationPage({ params }) {
           </h2>
           <ul className="grid lg:grid-cols-2 gap-5">
             {related.map((p) => (
-              <PublicationCard key={p.slug} pub={p} ui={ui} />
+              <PublicationCard key={p.slug} pub={p} ui={ui} mediaMeta={mediaMeta} />
             ))}
           </ul>
         </Section>

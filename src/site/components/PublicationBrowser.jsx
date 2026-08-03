@@ -8,7 +8,7 @@ import Icon from '../../components/Icon';
 // Filters are the three the July brief names: region/country, method/service,
 // topic specialism. The March call's "year, type, language" set was superseded.
 // Year still appears on the tile, it just is not a facet.
-export default function PublicationBrowser({ publications, facets, perPage = 8, ui = {} }) {
+export default function PublicationBrowser({ publications, facets, perPage = 8, ui = {}, mediaMeta }) {
   const {
     publicationSearchPlaceholder = 'Search publications…',
     sortRecent = 'Most recent',
@@ -110,7 +110,7 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
         <>
           <ul className="grid lg:grid-cols-2 gap-5 mt-8">
             {visible.map((pub) => (
-              <PublicationCard key={pub.slug} pub={pub} ui={ui} />
+              <PublicationCard key={pub.slug} pub={pub} ui={ui} mediaMeta={mediaMeta} />
             ))}
           </ul>
 

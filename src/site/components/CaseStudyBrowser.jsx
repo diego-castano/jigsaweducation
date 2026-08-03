@@ -12,15 +12,13 @@ import Icon from '../../components/Icon';
 // `ui` is the ui-strings singleton passed down from the server page. Every
 // string destructures with the byte-exact default it replaced, so a missing
 // document (or a page that never passes the prop) renders today's chrome.
-export default function CaseStudyBrowser({ studies, facets, ui = {} }) {
+export default function CaseStudyBrowser({ studies, facets, ui = {}, mediaMeta }) {
   const {
     caseStudySearchPlaceholder = 'Search case studies, partners or countries…',
     sortAZ = 'A–Z',
     sortZA = 'Z–A',
     emptyStateTitle = 'Nothing matches those filters',
-    clearAllFilters = 'Clear all filters',
-    resultCountTemplate,
-    resultCountAllTemplate
+    clearAllFilters = 'Clear all filters'
   } = ui;
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState({ country: [], service: [], topic: [] });
@@ -77,8 +75,7 @@ export default function CaseStudyBrowser({ studies, facets, ui = {} }) {
         resultCount={results.length}
         totalCount={studies.length}
         noun={results.length === 1 ? 'case study' : 'case studies'}
-        resultCountTemplate={resultCountTemplate}
-        resultCountAllTemplate={resultCountAllTemplate}
+        ui={ui}
         sort={sort}
         onSort={setSort}
         sortOptions={[
@@ -90,7 +87,7 @@ export default function CaseStudyBrowser({ studies, facets, ui = {} }) {
       {results.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
           {results.map((study) => (
-            <CaseStudyCard key={study.slug} study={study} />
+            <CaseStudyCard key={study.slug} study={study} mediaMeta={mediaMeta} />
           ))}
         </ul>
       ) : (

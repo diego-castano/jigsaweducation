@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation';
 import Section from '../../../../src/site/components/Section';
 import CaseStudyCard from '../../../../src/site/components/CaseStudyCard';
 import Icon from '../../../../src/components/Icon';
-import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
+import { getCollection, getItem, getSingleton, getMediaMeta } from '../../../../src/lib/content';
 import { publicationsForCaseStudy } from '../../../../src/lib/derive';
 import Prose from '../../../../src/site/components/Prose';
+import { altFor, objectPositionFor } from '../../../../src/lib/media-meta';
 
 export async function generateStaticParams() {
   const studies = await getCollection('case-studies');
@@ -25,7 +26,8 @@ export async function generateMetadata({ params }) {
 
 export default async function CaseStudyPage({ params }) {
   const { slug } = await params;
-  const [study, studies, services, publications, page, settings, ui] = await Promise.all([
+  const [mediaMeta, study, studies, services, publications, page, settings, ui] = await Promise.all([
+    getMediaMeta(),
     getItem('case-studies', slug),
     getCollection('case-studies'),
     getCollection('services'),
@@ -108,7 +110,12 @@ export default async function CaseStudyPage({ params }) {
 
         {study.image && (
           <div className="mt-10 aspect-[21/9] rounded-2xl overflow-hidden bg-cream-200">
-            <img src={study.image} alt="" className="w-full h-full object-cover" />
+            <img
+              src={study.image}
+              alt={altFor(mediaMeta, study.image)}
+              style={{ objectPosition: objectPositionFor(mediaMeta, study.image) }}
+              className="w-full h-full object-cover"
+            />
           </div>
         )}
       </Section>
@@ -131,8 +138,7 @@ export default async function CaseStudyPage({ params }) {
                     <span className="not-italic font-mono text-[10px] uppercase tracking-[0.18em] text-orange-600 block mb-1">
                       {ui.awaitingCopyBadge}
                     </span>
-                    The source page describes a partnership rather than a study, so there was nothing
-                    to restructure here without inventing it.
+                    This section is still awaited from the Jigsaw team.
                   </p>
                 ) : (
                   <Prose text={body} className="text-lg text-ink-800 leading-[1.75]" />
@@ -200,7 +206,7 @@ export default async function CaseStudyPage({ params }) {
           </h2>
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {others.map((o) => (
-              <CaseStudyCard key={o.slug} study={o} />
+              <CaseStudyCard key={o.slug} study={o} mediaMeta={mediaMeta} />
             ))}
           </ul>
         </Section>

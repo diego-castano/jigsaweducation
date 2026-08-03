@@ -28,7 +28,7 @@ function PolicyRow({ policy, ui }) {
         </span>
       ) : (
         <span className="flex items-center gap-2 font-mono text-[11px] text-ink-500 shrink-0">
-          {ui.pdfSizeTemplate.replace('{size}', policy.fileSize)}
+          {policy.fileSize ? ui.pdfSizeTemplate.replace('{size}', policy.fileSize) : 'PDF'}
           <Icon name="download" size={15} />
         </span>
       )}
@@ -124,12 +124,14 @@ export default async function PoliciesPage() {
               </a>
               .
             </p>
-          ) : (
+          ) : settings.showReviewNotes ? (
+            // Review-phase note: without an address the whistleblowing route
+            // is a real gap, but the reminder is for the team, not visitors.
             <p className="text-ink-500 italic border-l-2 border-dashed border-cream-400 pl-3">
               Reporting route to be confirmed by the Jigsaw team. A whistleblowing policy without a
               route to use it does not work.
             </p>
-          )}
+          ) : null}
         </div>
       </Section>
     </>

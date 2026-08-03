@@ -94,6 +94,17 @@ export default async function WorkForUsPage() {
                 {job.description && (
                   <Prose text={job.description} className="mt-3 text-[15px] text-ink-700" />
                 )}
+                {job.applyUrl && (
+                  <a
+                    href={job.applyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors"
+                  >
+                    Apply
+                    <Icon name="arrow-up-right" size={14} />
+                  </a>
+                )}
               </li>
             ))}
           </ul>

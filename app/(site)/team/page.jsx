@@ -4,7 +4,7 @@ import Section from '../../../src/site/components/Section';
 import Reveal from '../../../src/site/components/Reveal';
 import TeamCard from '../../../src/site/components/TeamCard';
 import CrossLinks from '../../../src/site/components/CrossLinks';
-import { getCollection, getSingleton } from '../../../src/lib/content';
+import { getCollection, getSingleton, getMediaMeta } from '../../../src/lib/content';
 import { pageMetadata } from '../../../src/lib/page-metadata';
 
 export async function generateMetadata() {
@@ -33,8 +33,9 @@ export async function generateMetadata() {
 const COLUMN_OFFSET = ['', 'lg:relative lg:top-10', 'lg:relative lg:top-20'];
 
 export default async function TeamPage() {
-  const [page, team, ui] = await Promise.all([
+  const [page, mediaMeta, team, ui] = await Promise.all([
     getSingleton('page-team'),
+    getMediaMeta(),
     getCollection('team'),
     getSingleton('ui-strings')
   ]);
@@ -97,7 +98,7 @@ export default async function TeamPage() {
               delay={(i % 3) * 90}
               className={`flex ${COLUMN_OFFSET[i % 3]}`}
             >
-              <TeamCard person={person} />
+              <TeamCard person={person} mediaMeta={mediaMeta} />
             </Reveal>
           ))}
         </ul>

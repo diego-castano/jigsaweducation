@@ -7,8 +7,9 @@ import PartnerLogoWall from '../../src/site/components/PartnerLogoWall';
 import Placeholder from '../../src/site/components/Placeholder';
 import Reveal from '../../src/site/components/Reveal';
 import Icon from '../../src/components/Icon';
-import { getSingleton, getCollection } from '../../src/lib/content';
+import { getSingleton, getCollection, getMediaMeta } from '../../src/lib/content';
 import { pageMetadata } from '../../src/lib/page-metadata';
+import { altFor, objectPositionFor } from '../../src/lib/media-meta';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-home');
@@ -24,11 +25,12 @@ const ITALIC_PHRASE = 'education research';
 // Four blocks, in the brief's order, and nothing else. The client rejected
 // homepages that "do too much" by name, so extra sections need them to ask.
 export default async function HomePage() {
-  const [home, settings, ui, partners] = await Promise.all([
+  const [home, settings, ui, partners, mediaMeta] = await Promise.all([
     getSingleton('page-home'),
     getSingleton('site-settings'),
     getSingleton('ui-strings'),
-    getCollection('partners')
+    getCollection('partners'),
+    getMediaMeta()
   ]);
 
   const headline = home.headline || '';
@@ -142,7 +144,8 @@ export default async function HomePage() {
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-cream-200">
                   <img
                     src={home.heroPhoto}
-                    alt=""
+                    alt={altFor(mediaMeta, home.heroPhoto)}
+                    style={{ objectPosition: objectPositionFor(mediaMeta, home.heroPhoto) }}
                     decoding="async"
                     fetchPriority="high"
                     className="absolute inset-0 w-full h-full object-cover grayscale-[0.55] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0 group-focus-within:grayscale-0 group-hover:scale-[1.02]"

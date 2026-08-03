@@ -4,6 +4,7 @@
 // failures return { error } because Next masks thrown messages in production.
 
 import { randomBytes } from 'node:crypto';
+import { revalidateTag } from 'next/cache';
 import sharp from 'sharp';
 import { requireAdmin } from '../../lib/auth';
 import { query } from '../../lib/db';
@@ -47,6 +48,8 @@ const toMediaResult = (row) => ({
   width: row.width,
   height: row.height,
   alt: row.alt,
+  focal_x: row.focal_x ?? null,
+  focal_y: row.focal_y ?? null,
   createdAt: row.created_at,
 });
 
@@ -119,7 +122,7 @@ export async function listMedia({ search, type, limit = 50, offset = 0 } = {}) {
 
   params.push(limit, offset);
   const { rows } = await query(
-    `select id, key, filename, mime, size, width, height, alt, created_at,
+    `select id, key, filename, mime, size, width, height, alt, focal_x, focal_y, created_at,
             count(*) over() as total
      from media
      ${where.length ? `where ${where.join(' and ')}` : ''}
@@ -142,7 +145,27 @@ export async function updateAlt(id, alt) {
     [id, alt ?? '']
   );
   if (!rows.length) return { error: 'That file no longer exists.' };
+  // Alt text renders on the public site wherever the image is used.
+  revalidateTag('content:media', 'max');
+  revalidateTag('content', 'max');
   return rows[0];
+}
+
+// The focal point steers object-position wherever the site crops this image.
+// x/y are 0..1 from the top-left; null clears back to centre.
+export async function setFocalPoint(id, x, y) {
+  await requireAdmin();
+
+  const clamp = (v) => (v == null ? null : Math.min(1, Math.max(0, Number(v))));
+  const { rows } = await query(
+    `update media set focal_x = $2, focal_y = $3 where id = $1
+     returning id, focal_x, focal_y`,
+    [id, clamp(x), clamp(y)]
+  );
+  if (!rows.length) return { error: 'That file no longer exists.' };
+  revalidateTag('content:media', 'max');
+  revalidateTag('content', 'max');
+  return { id: rows[0].id, focalX: rows[0].focal_x, focalY: rows[0].focal_y };
 }
 
 export async function deleteMedia(id) {

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Icon from '../../components/Icon';
 import { isPlaceholder } from '../../data/placeholder';
 import SmartImage from './SmartImage';
+import { altFor, objectPositionFor } from '../../lib/media-meta';
 
 // Site modules 02 feedback, applied in full:
 //   "we're wondering about removing the landscape image/icon box, as we're
@@ -22,7 +23,7 @@ const TYPE_STYLE = {
   Resource: { badge: 'bg-success-50 text-success-700', spine: '#E8F5F3', ink: '#14705F' }
 };
 
-export default function PublicationCard({ pub, ui = {} }) {
+export default function PublicationCard({ pub, ui = {}, mediaMeta }) {
   const {
     authorsFallbackShort = 'Authors tbc',
     dateFallbackShort = 'Date tbc',
@@ -43,7 +44,8 @@ export default function PublicationCard({ pub, ui = {} }) {
           {pub.coverImage ? (
             <SmartImage
               src={pub.coverImage}
-              alt=""
+              alt={altFor(mediaMeta, pub.coverImage)}
+              objectPosition={objectPositionFor(mediaMeta, pub.coverImage)}
               className="w-full h-full"
               imgClassName="object-cover"
             />

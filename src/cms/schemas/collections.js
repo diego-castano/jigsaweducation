@@ -443,7 +443,7 @@ export const COLLECTIONS = [
         name: 'fileSize',
         label: 'File size',
         type: 'text',
-        help: 'Filled automatically on upload — no need to touch it.'
+        help: 'The size shown beside the download button, e.g. 1.2 MB. The media library lists each file’s size.'
       },
       {
         name: 'external',
@@ -751,7 +751,7 @@ export const COLLECTIONS = [
         name: 'fileSize',
         label: 'File size',
         type: 'text',
-        help: 'Filled automatically on upload — no need to touch it.'
+        help: 'The size shown beside the download button, e.g. 1.2 MB. The media library lists each file’s size.'
       },
       {
         name: 'awaitingFile',

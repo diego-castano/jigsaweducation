@@ -1,19 +1,21 @@
 import Link from 'next/link';
 import Icon from '../../components/Icon';
 import SmartImage from './SmartImage';
+import { altFor, objectPositionFor } from '../../lib/media-meta';
 
 // Site modules 02 feedback: "Would the publication card design also be used for
 // the case studies, or would that be something different?" → different, and
 // landscape. Publications get a portrait cover; case studies keep the wide
 // field photograph, because that is the asset the client actually has for them.
-export default function CaseStudyCard({ study }) {
+export default function CaseStudyCard({ study, mediaMeta }) {
   return (
     <li className="group relative flex flex-col bg-cream-50 border border-cream-300 rounded-2xl overflow-hidden transition-shadow hover:shadow-md">
       {study.image ? (
         <div className="aspect-[16/9] relative overflow-hidden bg-cream-200">
           <SmartImage
             src={study.image}
-            alt=""
+            alt={altFor(mediaMeta, study.image)}
+            objectPosition={objectPositionFor(mediaMeta, study.image)}
             className="absolute inset-0 w-full h-full"
             imgClassName="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />

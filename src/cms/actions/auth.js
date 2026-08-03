@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 import { query } from '../../lib/db';
 import {
   createSession,
@@ -19,6 +20,40 @@ const SAFE_FROM = /^\/admin(\/|\?|$)/;
 // have accounts. Any well-formed hash works; the compare always fails.
 const DECOY_HASH = '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4J/HS.iK2W';
 
+// Login rate limiting: a sliding 15-minute window per address+email pair,
+// kept in process memory. The site runs as one Railway instance, so this
+// covers the real attack surface without another table; a restart clearing
+// the counters costs nothing but a briefly shorter memory.
+const ATTEMPT_WINDOW_MS = 15 * 60 * 1000;
+const ATTEMPT_LIMIT = 5;
+const attempts = new Map(); // key -> [timestamps]
+
+const clientKey = async (email) => {
+  const requestHeaders = await headers();
+  const forwarded = requestHeaders.get('x-forwarded-for') || 'local';
+  const ip = forwarded.split(',')[0].trim();
+  return `${ip}|${email}`;
+};
+
+const tooManyAttempts = (key) => {
+  const now = Date.now();
+  const recent = (attempts.get(key) || []).filter((t) => now - t < ATTEMPT_WINDOW_MS);
+  attempts.set(key, recent);
+  // Opportunistic cleanup so the map never grows unbounded.
+  if (attempts.size > 500) {
+    for (const [k, list] of attempts) {
+      if (list.every((t) => now - t >= ATTEMPT_WINDOW_MS)) attempts.delete(k);
+    }
+  }
+  return recent.length >= ATTEMPT_LIMIT;
+};
+
+const recordFailure = (key) => {
+  const list = attempts.get(key) || [];
+  list.push(Date.now());
+  attempts.set(key, list);
+};
+
 export async function login(formData) {
   const email = String(formData.get('email') ?? '').trim().toLowerCase();
   const password = String(formData.get('password') ?? '');
@@ -26,6 +61,13 @@ export async function login(formData) {
 
   if (!email || !password) {
     return { error: 'Enter your email address and password.' };
+  }
+
+  const key = await clientKey(email);
+  if (tooManyAttempts(key)) {
+    return {
+      error: 'Too many attempts. Wait fifteen minutes and try again.'
+    };
   }
 
   const { rows } = await query(
@@ -36,9 +78,11 @@ export async function login(formData) {
   const valid = await verifyPassword(password, user?.password_hash ?? DECOY_HASH);
 
   if (!user || !valid) {
+    recordFailure(key);
     return { error: 'That email address and password do not match our records.' };
   }
 
+  attempts.delete(key);
   await createSession(user);
   await query('update admin_users set last_login_at = now() where id = $1', [
     user.id

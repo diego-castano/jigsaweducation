@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Section from '../../../../src/site/components/Section';
 import Icon from '../../../../src/components/Icon';
-import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
+import { getCollection, getItem, getSingleton, getMediaMeta } from '../../../../src/lib/content';
 import Prose from '../../../../src/site/components/Prose';
 import { proseToText } from '../../../../src/lib/rich-text';
+import { altFor, objectPositionFor } from '../../../../src/lib/media-meta';
 
 export async function generateStaticParams() {
   const team = await getCollection('team');
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }) {
 
 export default async function TeamMemberPage({ params }) {
   const { slug } = await params;
-  const [person, site, ui] = await Promise.all([
+  const [mediaMeta, person, site, ui] = await Promise.all([
+    getMediaMeta(),
     getItem('team', slug),
     getSingleton('site-settings'),
     getSingleton('ui-strings')
@@ -77,7 +79,8 @@ export default async function TeamMemberPage({ params }) {
               {person.photo ? (
                 <img
                   src={person.photo}
-                  alt={person.name}
+                  alt={altFor(mediaMeta, person.photo, person.name)}
+                  style={{ objectPosition: objectPositionFor(mediaMeta, person.photo) }}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (

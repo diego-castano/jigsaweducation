@@ -19,6 +19,9 @@ export default function SmartImage({
   imgClassName = '',
   loading = 'lazy',
   decoding = 'async',
+  // CSS object-position (e.g. '30% 20%') from the media library's focal
+  // point, so crops keep the subject in frame.
+  objectPosition,
   ...rest
 }) {
   const [status, setStatus] = useState('loading'); // 'loading' | 'loaded' | 'error'
@@ -59,6 +62,7 @@ export default function SmartImage({
             onLoad={() => setStatus('loaded')}
             onError={() => setStatus('error')}
             className={`w-full h-full ${imgClassName}`}
+            style={objectPosition ? { objectPosition } : undefined}
             {...rest}
           />
         </span>

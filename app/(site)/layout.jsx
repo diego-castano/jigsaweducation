@@ -30,6 +30,15 @@ const organisationSchema = (settings) => ({
   email: settings.offices?.[0]?.email
 });
 
+// The tracking singleton's default share image (when set) beats the generated
+// Jigsaw card for every site page; pages with their own share image override
+// further down the tree.
+export async function generateMetadata() {
+  const tracking = await getSingleton('tracking');
+  if (!tracking.ogImage) return {};
+  return { openGraph: { images: [{ url: tracking.ogImage }] } };
+}
+
 export default async function SiteLayout({ children }) {
   const [settings, ui] = await Promise.all([
     getSingleton('site-settings'),
