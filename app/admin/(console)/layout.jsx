@@ -10,6 +10,7 @@ import Sidebar from '../../../src/admin/shell/Sidebar';
 import TopBar from '../../../src/admin/shell/TopBar';
 import MobileShell from '../../../src/admin/shell/MobileShell';
 import ReviewModeBanner from '../../../src/admin/shell/ReviewModeBanner';
+import VersionWatcher from '../../../src/admin/shell/VersionWatcher';
 import { ToastProvider } from '../../../src/admin/ui';
 
 export const dynamic = 'force-dynamic';
@@ -74,6 +75,7 @@ export default async function ConsoleLayout({ children }) {
           >
             {children}
           </main>
+          <VersionWatcher />
         </div>
       </div>
     </ToastProvider>

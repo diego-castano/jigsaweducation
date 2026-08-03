@@ -10,6 +10,7 @@ import { getSingletonSchema, singletonSeedDoc } from '../../../../src/cms/schema
 import SchemaForm from '../../../../src/admin/editor/SchemaForm.jsx';
 import SettingsTabs from '../../../../src/admin/settings/SettingsTabs.jsx';
 import AccountForms from '../../../../src/admin/settings/AccountForms.jsx';
+import UsersPanel from '../../../../src/admin/settings/UsersPanel.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,6 +23,7 @@ const TABS = [
   { id: 'organisation', label: 'Organisation', key: 'site-settings' },
   { id: 'site-text', label: 'Site text', key: 'ui-strings' },
   { id: 'seo', label: 'SEO & tracking', key: 'tracking' },
+  { id: 'users', label: 'Users', key: null },
   { id: 'account', label: 'Account', key: null }
 ];
 
@@ -39,6 +41,25 @@ export default async function SettingsPage({ searchParams }) {
     [SINGLETON_KEYS]
   );
   const byKey = new Map(rows.map((row) => [row.key, row]));
+
+  let users = [];
+  if (active === 'users') {
+    const result = await query(
+      'select id, email, name, last_login_at from admin_users order by created_at asc'
+    );
+    users = result.rows.map((row) => ({
+      id: row.id,
+      email: row.email,
+      name: row.name,
+      lastLogin: row.last_login_at
+        ? new Date(row.last_login_at).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          })
+        : null
+    }));
+  }
 
   const editorPropsFor = (key) => {
     const schema = getSingletonSchema(key);
@@ -96,6 +117,8 @@ export default async function SettingsPage({ searchParams }) {
             {...editorPropsFor('tracking')}
           />
         )}
+
+        {active === 'users' && <UsersPanel users={users} sessionId={session.id} />}
 
         {active === 'account' && <AccountForms email={session.email} />}
       </div>

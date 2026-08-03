@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { discardDraft, publishContent, saveDraft } from '../../cms/actions/content.js';
-import { Button, useConfirm, useToast } from '../ui.jsx';
+import { Button, Spinner, useConfirm, useToast } from '../ui.jsx';
+import Icon from '../../components/Icon.jsx';
 import useScrollSpy from '../../hooks/useScrollSpy.js';
 import FieldRenderer from './FieldRenderer.jsx';
 import { collectErrors, fieldDomId, getPath, setPath, topKeyOf } from './validate.js';
@@ -32,31 +33,40 @@ const AUTOSAVE_MS = 800;
 const timeNow = () =>
   new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
+// The autosave voice. Everything saves by itself; this chip is how the
+// editor KNOWS it did — so it speaks in full states, tinted and iconed,
+// never just a coloured dot.
 function StatusPill({ status, draftExists }) {
-  let dot = 'bg-ink-500';
-  let label = draftExists ? 'Draft saved' : 'Published';
-  let pulse = false;
+  let chip = 'bg-cream-200 text-ink-700';
+  let icon = <Icon name="check" size={13} className="shrink-0" />;
+  let label = 'Published — up to date';
+
   if (status.state === 'saving') {
-    dot = 'bg-sea-500';
+    chip = 'bg-sea-100 text-sea-700';
+    icon = <Spinner size={13} className="shrink-0" />;
     label = 'Saving…';
-    pulse = true;
   } else if (status.state === 'saved') {
-    dot = 'bg-success-500';
-    label = `Draft saved ${status.at}`;
+    chip = 'bg-success-50 text-success-700';
+    icon = <Icon name="check-circle" size={13} className="shrink-0" />;
+    label = `All changes saved ${status.at}`;
   } else if (status.state === 'error') {
-    dot = 'bg-error-500';
-    label = 'Not saved — retrying';
+    chip = 'bg-error-50 text-error-700';
+    icon = <Icon name="alert" size={13} className="shrink-0" />;
+    label = 'Not saved — check your connection and type again';
   } else if (draftExists) {
-    dot = 'bg-warning-500';
+    chip = 'bg-warning-50 text-warning-700';
+    icon = <Icon name="edit" size={13} className="shrink-0" />;
+    label = 'Draft saved — not published yet';
   }
+
   return (
     <span
       role="status"
       aria-live="polite"
-      className="inline-flex items-center gap-2 font-mono text-xs text-ink-700"
+      className={`inline-flex min-w-0 items-center gap-1.5 rounded-full px-3 py-1.5 font-mono text-xs ${chip}`}
     >
-      <span className={`size-2 rounded-full ${dot} ${pulse ? 'motion-safe:animate-pulse' : ''}`} />
-      {label}
+      {icon}
+      <span className="truncate">{label}</span>
     </span>
   );
 }
