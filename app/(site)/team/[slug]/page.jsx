@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Section from '../../../../src/site/components/Section';
 import Icon from '../../../../src/components/Icon';
 import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
+import Prose from '../../../../src/site/components/Prose';
+import { proseToText } from '../../../../src/lib/rich-text';
 
 export async function generateStaticParams() {
   const team = await getCollection('team');
@@ -18,7 +20,7 @@ export async function generateMetadata({ params }) {
     title: `${person.name}, ${person.role}`,
     // First two sentences of the bio, so each of the 18 pages carries a real
     // description. The live site has none on any of its 34 pages.
-    description: person.bio.replace(/\s+/g, ' ').split('. ').slice(0, 2).join('. ') + '.',
+    description: proseToText(person.bio).replace(/\s+/g, ' ').split('. ').slice(0, 2).join('. ') + '.',
     alternates: { canonical: `/team/${person.slug}` }
   };
 }
@@ -142,11 +144,7 @@ export default async function TeamMemberPage({ params }) {
               {person.name}
             </h1>
 
-            <div className="prose-jigsaw mt-8 text-lg text-ink-800 max-w-2xl">
-              {person.bio.split('\n\n').map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
+            <Prose text={person.bio} className="prose-jigsaw mt-8 text-lg text-ink-800 max-w-2xl" />
           </div>
         </div>
       </Section>

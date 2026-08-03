@@ -251,11 +251,12 @@ export default function SchemaForm({
   const activeSection = useScrollSpy(showSectionNav ? sectionIds : []);
 
   return (
-    <div className={showSectionNav ? 'lg:flex lg:items-start lg:gap-8' : ''}>
+    <div>
+      <div className={showSectionNav ? 'lg:flex lg:items-start lg:gap-8' : ''}>
       {showSectionNav && (
         <nav
           aria-label="Sections on this page"
-          className="sticky top-24 hidden w-44 shrink-0 self-start lg:block"
+          className="sticky top-2 hidden w-44 shrink-0 self-start lg:block"
         >
           <ul className="space-y-0.5 border-l border-cream-300">
             {sections.map((section) => {
@@ -283,21 +284,21 @@ export default function SchemaForm({
       )}
 
       <div className="min-w-0 flex-1">
-        <div className="space-y-6">
+        <div className="space-y-8">
           {sections.map((section) => (
             <section
               key={section.id}
               id={`sec-${section.id}`}
               aria-labelledby={`sec-${section.id}-h`}
-              className="scroll-mt-24 rounded-2xl border border-cream-200 bg-cream-100 p-5 shadow-xs sm:p-7"
+              className="scroll-mt-24 rounded-2xl border border-cream-200 bg-cream-100 p-6 shadow-xs sm:p-8"
             >
               <h2 id={`sec-${section.id}-h`} className="font-display text-xl text-ink-900">
                 {section.title}
               </h2>
               {section.description && (
-                <p className="mt-1 text-sm text-ink-600">{section.description}</p>
+                <p className="mt-1.5 text-sm text-ink-600">{section.description}</p>
               )}
-              <div className="mt-5 space-y-6">
+              <div className="mt-7 space-y-8">
                 {section.fields.map((field) => (
                   <FieldRenderer
                     key={field.name}
@@ -314,8 +315,12 @@ export default function SchemaForm({
             </section>
           ))}
         </div>
+      </div>
+      </div>
 
-        <div className="sticky bottom-0 z-20 mt-6 -mx-1 pb-2">
+      {/* Full form width — under the section rail as well, so the buttons
+          never fight the fields for room. */}
+      <div className="sticky bottom-0 z-20 mt-6 -mx-1 pb-2">
           <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-cream-200 bg-cream-100/85 p-2.5 shadow-md backdrop-blur">
             <StatusPill status={status} draftExists={draftExists} />
             <span className="flex-1" />
@@ -336,7 +341,6 @@ export default function SchemaForm({
             >
               Publish
             </Button>
-          </div>
         </div>
       </div>
     </div>

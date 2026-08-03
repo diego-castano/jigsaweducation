@@ -33,8 +33,16 @@ export const setPath = (doc, name, value) => {
 
 // --- Text metrics -----------------------------------------------------------
 
+// Rich text stores HTML; every metric and emptiness check must look at the
+// words, not the markup.
+export const stripTags = (text) =>
+  String(text || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+
 export const countWords = (text) =>
-  String(text || '').trim().split(/\s+/).filter(Boolean).length;
+  stripTags(text).split(/\s+/).filter(Boolean).length;
 
 // --- Read-only wiring convention -------------------------------------------
 // Some schema fields carry a `warning` that describes locked plumbing rather
@@ -57,6 +65,8 @@ export const isEmptyValue = (field, value) => {
   if (field.type === 'number') return value === '' || value == null;
   if (field.type === 'country') return !value.id;
   if (field.type === 'list') return !Array.isArray(value) || value.length === 0;
+  // An empty rich-text document is markup with no words ('<p></p>').
+  if (field.type === 'richtext') return stripTags(value) === '';
   return String(value).trim() === '';
 };
 

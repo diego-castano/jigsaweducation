@@ -28,6 +28,7 @@ const XL_QUERY = '(min-width: 80rem)'; // Tailwind xl:
 export default function ItemEditor({
   meta, // { key, title, itemLabel, route, itemRoute, titleField }
   fields,
+  sections = null, // pre-resolved editor sections; null → one Details card
   itemId,
   slug,
   status: initialStatus,
@@ -209,7 +210,7 @@ export default function ItemEditor({
         <div className="min-w-0" onInput={handleFormInput}>
           <SchemaForm
             schema={{ title: `this ${meta.itemLabel}`, fields }}
-            sections={[{ id: 'details', title: 'Details', fields }]}
+            sections={sections || [{ id: 'details', title: 'Details', fields }]}
             targetType={meta.key}
             targetKey={itemId}
             value={value}

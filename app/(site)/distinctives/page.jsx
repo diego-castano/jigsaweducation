@@ -7,6 +7,17 @@ import Reveal from '../../../src/site/components/Reveal';
 import CountUp from '../../../src/site/components/distinctives/CountUp';
 import { getSingleton, getCollection } from '../../../src/lib/content';
 import { getTestimonial } from '../../../src/lib/derive';
+import Prose from '../../../src/site/components/Prose';
+import { isPlaceholder } from '../../../src/data/placeholder';
+
+// The story stays a visible placeholder until real copy lands; once written
+// (possibly formatted in the console) it renders as prose.
+const StoryBody = ({ text }) =>
+  isPlaceholder(text) ? (
+    <Placeholder className="mt-6 text-lg text-ink-700 leading-relaxed">{text}</Placeholder>
+  ) : (
+    <Prose text={text} className="mt-6 text-lg text-ink-700 leading-relaxed" />
+  );
 
 export async function generateMetadata() {
   const page = await getSingleton('page-distinctives');
@@ -305,9 +316,7 @@ export default async function DistinctivesPage() {
               <h2 className="font-display display-m text-3xl sm:text-4xl lg:text-5xl text-navy-900 leading-[1.05]">
                 {page.storyHeading}
               </h2>
-              <Placeholder className="mt-6 text-lg text-ink-700 leading-relaxed">
-                {page.storyBody}
-              </Placeholder>
+              <StoryBody text={page.storyBody} />
             </Reveal>
 
             {showReviewNotes && page.foundingDateNote && (

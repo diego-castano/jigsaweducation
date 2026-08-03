@@ -30,6 +30,9 @@
 //   text       single line
 //   textarea   multi-paragraph prose; blank line = paragraph break (matches
 //              how src/data stores bios and section bodies)
+//   richtext   formatted prose edited WYSIWYG (bold, italic, links, lists);
+//              stored as HTML once formatted — plain seeded text stays plain
+//              until edited, and the site's <Prose> renderer accepts both
 //   image      media-library picker (upload or choose); value is a URL string
 //   file       media-library picker for documents (PDF); value is a URL string
 //   link       internal route or external URL; admin renders a picker, value
@@ -69,8 +72,8 @@
 // }
 
 export const FIELD_TYPES = [
-  'text', 'textarea', 'image', 'file', 'link', 'email', 'url', 'number',
-  'boolean', 'select', 'icon', 'country', 'list'
+  'text', 'textarea', 'richtext', 'image', 'file', 'link', 'email', 'url',
+  'number', 'boolean', 'select', 'icon', 'country', 'list'
 ];
 
 import { PAGE_SINGLETONS } from './schemas/pages.js';

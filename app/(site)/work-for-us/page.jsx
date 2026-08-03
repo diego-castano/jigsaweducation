@@ -4,6 +4,7 @@ import Section from '../../../src/site/components/Section';
 import MailingListForm from '../../../src/site/components/MailingListForm';
 import Icon from '../../../src/components/Icon';
 import { getSingleton, getCollection } from '../../../src/lib/content';
+import Prose from '../../../src/site/components/Prose';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-work-for-us');
@@ -93,6 +94,9 @@ export default async function WorkForUsPage() {
               >
                 <h3 className="font-display text-xl text-navy-900">{job.title}</h3>
                 <p className="text-sm text-ink-600 mt-2">{job.location}</p>
+                {job.description && (
+                  <Prose text={job.description} className="mt-3 text-[15px] text-ink-700" />
+                )}
               </li>
             ))}
           </ul>

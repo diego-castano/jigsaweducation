@@ -3,6 +3,7 @@
 import Icon from '../../components/Icon.jsx';
 import TextField from './fields/TextField.jsx';
 import TextareaField from './fields/TextareaField.jsx';
+import RichTextField from './fields/RichTextField.jsx';
 import SelectField from './fields/SelectField.jsx';
 import IconField from './fields/IconField.jsx';
 import BooleanField from './fields/BooleanField.jsx';
@@ -32,6 +33,7 @@ const INPUT_COMPONENTS = {
   url: TextField,
   number: TextField,
   textarea: TextareaField,
+  richtext: RichTextField,
   select: SelectField,
   icon: IconField,
   boolean: BooleanField,
@@ -131,7 +133,7 @@ export default function FieldRenderer({ field, path, value, onChange, errors, se
   if (!Control) return null;
 
   return (
-    <div id={domId} className="flex flex-col gap-1.5">
+    <div id={domId} className="flex flex-col gap-2">
       {!isBoolean && (
         <div className="flex items-baseline justify-between gap-3">
           <label htmlFor={inputId} className="text-sm font-semibold text-ink-800">

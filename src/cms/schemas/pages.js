@@ -560,7 +560,7 @@ export const PAGE_SINGLETONS = [
           {
             name: 'storyBody',
             label: 'Story',
-            type: 'textarea',
+            type: 'richtext',
             help:
               'The origin story carried over from the retired About page. Still awaited — note the founding date (2009, 2013 or 15 years ago) is unresolved.',
             seed: OUR_STORY.body

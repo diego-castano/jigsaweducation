@@ -5,6 +5,8 @@ import Placeholder from '../../../../src/site/components/Placeholder';
 import PublicationCard from '../../../../src/site/components/PublicationCard';
 import Icon from '../../../../src/components/Icon';
 import { getSingleton, getCollection, getItem } from '../../../../src/lib/content';
+import Prose from '../../../../src/site/components/Prose';
+import { isPlaceholder } from '../../../../src/data/placeholder';
 
 export async function generateStaticParams() {
   const publications = await getCollection('publications');
@@ -92,7 +94,11 @@ export default async function PublicationPage({ params }) {
             </p>
 
             <h2 className="font-display text-2xl text-navy-900 mt-12 mb-4">{ui.abstractHeading}</h2>
-            <Placeholder className="text-lg text-ink-800 leading-[1.75]">{pub.abstract}</Placeholder>
+            {isPlaceholder(pub.abstract) ? (
+              <Placeholder className="text-lg text-ink-800 leading-[1.75]">{pub.abstract}</Placeholder>
+            ) : (
+              <Prose text={pub.abstract} className="text-lg text-ink-800 leading-[1.75]" />
+            )}
 
             <div className="flex flex-wrap gap-3 mt-10">
               {pub.pdf && (

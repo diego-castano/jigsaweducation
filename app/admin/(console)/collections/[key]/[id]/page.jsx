@@ -118,6 +118,23 @@ export default async function CollectionItemPage({ params }) {
   if (!row) notFound();
 
   const fields = withLiveOptions(schema.fields, live);
+
+  // Long forms group into the sections the schema declares; anything not
+  // listed falls into a trailing group, so a new field never disappears.
+  let sections = null;
+  if (schema.editorSections) {
+    const byName = new Map(fields.map((field) => [field.name, field]));
+    sections = schema.editorSections.map((section) => ({
+      id: section.id,
+      title: section.title,
+      description: section.description,
+      fields: section.fields.map((name) => byName.get(name)).filter(Boolean)
+    }));
+    const listed = new Set(schema.editorSections.flatMap((section) => section.fields));
+    const leftover = fields.filter((field) => !listed.has(field.name));
+    if (leftover.length > 0) sections.push({ id: 'other', title: 'Other', fields: leftover });
+  }
+
   const value = withDefaults(schema.fields, row.data);
   const draft = row.draft && Object.keys(row.draft).length > 0 ? row.draft : null;
   const mergedTitle = { ...value, ...(draft || {}) }[schema.titleField];
@@ -134,6 +151,7 @@ export default async function CollectionItemPage({ params }) {
           titleField: schema.titleField
         }}
         fields={fields}
+        sections={sections}
         itemId={row.id}
         slug={row.slug}
         status={row.status}

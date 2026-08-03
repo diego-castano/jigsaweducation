@@ -5,6 +5,7 @@ import CaseStudyCard from '../../../../src/site/components/CaseStudyCard';
 import Icon from '../../../../src/components/Icon';
 import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
 import { publicationsForCaseStudy } from '../../../../src/lib/derive';
+import Prose from '../../../../src/site/components/Prose';
 
 export async function generateStaticParams() {
   const studies = await getCollection('case-studies');
@@ -134,7 +135,7 @@ export default async function CaseStudyPage({ params }) {
                     to restructure here without inventing it.
                   </p>
                 ) : (
-                  <p className="text-lg text-ink-800 leading-[1.75]">{body}</p>
+                  <Prose text={body} className="text-lg text-ink-800 leading-[1.75]" />
                 )}
               </div>
             );

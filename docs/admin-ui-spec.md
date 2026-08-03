@@ -91,6 +91,12 @@ Field components (one per schema type):
 - `text`, `email`, `url`, `number` → Input variants with validation.
 - `textarea` → auto-grow, paragraph hint ("Blank line starts a new
   paragraph"), live word count when `maxWords`.
+- `richtext` → TipTap WYSIWYG limited to what the site renders: paragraphs,
+  bold, italic, links, the two list kinds. Stores HTML once formatted;
+  plain seeded text opens converted and only becomes HTML when edited. The
+  site renders through `<Prose>` (sanitised server-side, `src/lib/rich-text.js`).
+  Long collection forms group via `editorSections` in the schema, which also
+  brings the scrollspy rail.
 - `select` → styled listbox; with `allowCustom` a combobox with an "Add
   '<value>'" row.
 - `icon` → popover grid of the site's 54 icons (rendered live via `Icon`),

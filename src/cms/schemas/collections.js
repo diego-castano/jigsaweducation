@@ -54,6 +54,12 @@ export const COLLECTIONS = [
     titleField: 'name',
     listColumns: ['role', 'country'],
     slugFrom: 'name',
+    editorSections: [
+      { id: 'profile', title: 'Profile', fields: ['name', 'role', 'country', 'photo'] },
+      { id: 'bio', title: 'Bio', fields: ['bio'] },
+      { id: 'links', title: 'Links', fields: ['linkedin', 'orcid'] },
+      { id: 'workflow', title: 'Workflow', fields: ['needsReview'] }
+    ],
     // `bioWordCount` in the seed data is derived from `bio`; the save path
     // recomputes it rather than exposing it as a field.
     fields: [
@@ -83,13 +89,11 @@ export const COLLECTIONS = [
       {
         name: 'bio',
         label: 'Bio',
-        type: 'textarea',
+        type: 'richtext',
         required: true,
         maxWords: 150,
         verbatim: true,
-        help:
-          'The person’s own words, 150 words at most. A blank line starts a ' +
-          'new paragraph.'
+        help: 'The person’s own words, 150 words at most.'
       },
       {
         name: 'photo',
@@ -136,6 +140,37 @@ export const COLLECTIONS = [
     titleField: 'title',
     listColumns: ['service', 'method'],
     slugFrom: 'title',
+    // How the editor groups this form; names refer to fields below.
+    editorSections: [
+      {
+        id: 'basics',
+        title: 'The study',
+        description: 'Everything the summary box and the filters read.',
+        fields: ['title', 'countries', 'partners', 'service', 'topics', 'method']
+      },
+      {
+        id: 'card',
+        title: 'Card',
+        description: 'How the study appears on the case studies page.',
+        fields: ['summary', 'image']
+      },
+      {
+        id: 'body',
+        title: 'The four sections',
+        description: 'The fixed structure every case study page follows.',
+        fields: [
+          'sections.criticalQuestion',
+          'sections.collaboration',
+          'sections.buildingEvidence',
+          'sections.pathwaysToUptake'
+        ]
+      },
+      {
+        id: 'linksAndWorkflow',
+        title: 'Links & workflow',
+        fields: ['links', 'sourceUrl', 'isDerived']
+      }
+    ],
     fields: [
       {
         name: 'title',
@@ -206,7 +241,7 @@ export const COLLECTIONS = [
       {
         name: 'sections.criticalQuestion',
         label: 'The critical question',
-        type: 'textarea',
+        type: 'richtext',
         help:
           'Three sentences at most — the gap or problem the study set out to ' +
           'answer.'
@@ -214,7 +249,7 @@ export const COLLECTIONS = [
       {
         name: 'sections.collaboration',
         label: 'Collaboration',
-        type: 'textarea',
+        type: 'richtext',
         help:
           'Three sentences at most — who commissioned the work and who we ' +
           'delivered it with.'
@@ -222,13 +257,13 @@ export const COLLECTIONS = [
       {
         name: 'sections.buildingEvidence',
         label: 'Building evidence',
-        type: 'textarea',
+        type: 'richtext',
         help: 'Three to five sentences — the design, the data and the scale.'
       },
       {
         name: 'sections.pathwaysToUptake',
         label: 'Pathways to evidence uptake',
-        type: 'textarea',
+        type: 'richtext',
         help:
           'Two or three sentences — what was published and how the findings ' +
           'get used.'
@@ -287,6 +322,30 @@ export const COLLECTIONS = [
     titleField: 'title',
     listColumns: ['type', 'year'],
     slugFrom: 'title',
+    editorSections: [
+      {
+        id: 'basics',
+        title: 'The publication',
+        fields: ['type', 'title', 'authors', 'date', 'year']
+      },
+      {
+        id: 'classification',
+        title: 'Classification',
+        description: 'These values feed the library filters.',
+        fields: ['region', 'countries', 'method', 'topic']
+      },
+      { id: 'text', title: 'Summary & abstract', fields: ['summary', 'abstract'] },
+      {
+        id: 'file',
+        title: 'File & cover',
+        fields: ['pdf', 'fileSize', 'external', 'coverImage']
+      },
+      {
+        id: 'connections',
+        title: 'Connections & workflow',
+        fields: ['caseStudySlug', 'needsReview']
+      }
+    ],
     fields: [
       {
         name: 'type',
@@ -371,7 +430,7 @@ export const COLLECTIONS = [
       {
         name: 'abstract',
         label: 'Abstract',
-        type: 'textarea',
+        type: 'richtext',
         help: 'The fuller abstract shown on the publication’s own page.'
       },
       {
@@ -647,9 +706,8 @@ export const COLLECTIONS = [
       {
         name: 'description',
         label: 'Description',
-        type: 'textarea',
-        help:
-          'The vacancy text. A blank line starts a new paragraph.'
+        type: 'richtext',
+        help: 'The vacancy text.'
       },
       {
         name: 'applyUrl',
