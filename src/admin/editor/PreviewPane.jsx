@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Icon from '../../components/Icon.jsx';
-import { IconButton } from '../ui.jsx';
+import { Button, IconButton } from '../ui.jsx';
 import SchemaForm from './SchemaForm.jsx';
 
 // The live-preview half of the singleton editor, plus the client wrapper that
@@ -322,7 +322,24 @@ export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }
         paneOpen ? 'xl:grid xl:grid-cols-[minmax(480px,1fr)_minmax(0,1fr)] xl:items-start xl:gap-6' : ''
       }
     >
-      <div className="min-w-0">{form}</div>
+      <div className="min-w-0">
+        {/* The toggle lives at the top of the form as well as in the action
+            bar, so hiding the preview to work full-width is always one
+            visible click away. */}
+        <div className="mb-4 flex justify-end">
+          <Button
+            variant="secondary"
+            size="sm"
+            icon="eye"
+            onClick={togglePreview}
+            aria-pressed={paneOpen}
+          >
+            <span className="xl:hidden">Preview</span>
+            <span className="hidden xl:inline">{paneOpen ? 'Hide preview' : 'Show preview'}</span>
+          </Button>
+        </div>
+        {form}
+      </div>
 
       {paneVisible && (
         <div

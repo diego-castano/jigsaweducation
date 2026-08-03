@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   DndContext,
   KeyboardSensor,
@@ -19,33 +20,42 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Icon from '../../components/Icon.jsx';
-import { Badge, EmptyState, SearchInput, useToast } from '../ui.jsx';
-import { reorderItems } from '../../cms/actions/content.js';
+import { Badge, EmptyState, IconButton, SearchInput, useConfirm, useToast } from '../ui.jsx';
+import { deleteItem, duplicateItem, reorderItems } from '../../cms/actions/content.js';
 
 // The collection list body: client-side search, one row per item, and — when
 // the schema says order matters — drag handles that persist the new order
 // through reorderItems the moment the row is dropped. A failed save puts the
 // old order straight back and says so; the button never dies silently.
 //
+// Each row carries its own actions (edit, duplicate, view, delete), so the
+// everyday moves happen from the list without opening the editor. On fine
+// pointers they fade in on hover or focus; on touch they are always there.
+//
 // Row shape (built by the server page): { id, slug, title, hasDraft, hidden,
-// columns: [{ name, type, value }] }.
+// publicHref, columns: [{ name, type, value }] }.
 
-function Row({ row, collection, orderable, draggable }) {
+function Row({ row, collection, orderable, draggable, busy, onDuplicate, onDelete }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: row.id,
     disabled: !draggable,
   });
+
+  // Below lg the actions are always visible (touch has no hover); from lg
+  // they fade in on hover or keyboard focus, keeping the rows quiet.
+  const actionReveal =
+    'transition-opacity lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100';
 
   return (
     <li
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={
-        'relative bg-cream-100 transition-colors hover:bg-cream-50 focus-within:bg-cream-50 ' +
+        'group relative bg-cream-100 transition-colors hover:bg-cream-50 focus-within:bg-cream-50 ' +
         (isDragging ? 'z-10 shadow-md' : '')
       }
     >
-      <div className="flex items-center gap-3 px-4 py-3.5">
+      <div className="flex items-center gap-3 px-4 py-3">
         {orderable && (
           <button
             type="button"
@@ -72,7 +82,7 @@ function Row({ row, collection, orderable, draggable }) {
         </div>
 
         {row.columns.length > 0 && (
-          <div className="hidden shrink-0 items-center gap-4 md:flex">
+          <div className="hidden shrink-0 items-center gap-4 lg:flex">
             {row.columns.map((column) =>
               column.value === '' ? null : column.type === 'icon' ? (
                 <Icon
@@ -94,7 +104,43 @@ function Row({ row, collection, orderable, draggable }) {
         <div className="flex shrink-0 items-center gap-2">
           {row.hasDraft && <Badge tone="amber">Draft edits</Badge>}
           {row.hidden && <Badge>Hidden</Badge>}
-          <Icon name="chevron-right" size={16} className="text-ink-400" aria-hidden="true" />
+
+          {/* The action cluster sits above the row's stretched edit link. */}
+          <div className={`relative z-10 flex items-center gap-0.5 ${actionReveal}`}>
+            <Link
+              href={`/admin/collections/${collection}/${row.id}`}
+              aria-label={`Edit “${row.title}”`}
+              className="grid place-items-center rounded-lg p-1.5 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+            >
+              <Icon name="edit" size={16} />
+            </Link>
+            <IconButton
+              icon="copy"
+              label={`Duplicate “${row.title}”`}
+              size="sm"
+              disabled={busy}
+              onClick={() => onDuplicate(row)}
+            />
+            {row.publicHref && !row.hidden && (
+              <a
+                href={row.publicHref}
+                target="_blank"
+                rel="noopener"
+                aria-label={`View “${row.title}” on the site`}
+                className="grid place-items-center rounded-lg p-1.5 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+              >
+                <Icon name="external" size={16} />
+              </a>
+            )}
+            <IconButton
+              icon="trash"
+              label={`Delete “${row.title}”`}
+              size="sm"
+              variant="danger"
+              disabled={busy}
+              onClick={() => onDelete(row)}
+            />
+          </div>
         </div>
       </div>
     </li>
@@ -103,6 +149,9 @@ function Row({ row, collection, orderable, draggable }) {
 
 export default function SortableList({ collection, itemLabel, orderable, rows }) {
   const toast = useToast();
+  const confirm = useConfirm();
+  const router = useRouter();
+  const [busyId, setBusyId] = useState(null);
 
   // Local order so a drop lands instantly; reset whenever the server sends a
   // fresh list (a revisit, or router.refresh from elsewhere on the page).
@@ -132,6 +181,43 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
   // Reordering a filtered subset would scramble the hidden rows, so dragging
   // pauses while a search is active.
   const draggable = orderable && !needle && items.length > 1;
+
+  const handleDuplicate = async (row) => {
+    setBusyId(row.id);
+    try {
+      const result = await duplicateItem(collection, row.id);
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success(`Duplicated — “${row.title} (copy)” was created hidden, ready to edit.`);
+        router.refresh();
+      }
+    } catch {
+      toast.error('The duplicate could not be created. Nothing changed — try again.');
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleDelete = async (row) => {
+    const ok = await confirm({
+      title: `Delete “${row.title}”?`,
+      body: `The ${itemLabel} comes off the site straight away. A snapshot is kept in the revision history.`,
+      confirmLabel: 'Delete',
+    });
+    if (!ok) return;
+    setBusyId(row.id);
+    try {
+      await deleteItem(collection, row.id);
+      setItems((current) => current.filter((item) => item.id !== row.id));
+      toast.success(`Deleted “${row.title}”.`);
+      router.refresh();
+    } catch {
+      toast.error('The delete did not go through. Nothing changed — try again.');
+    } finally {
+      setBusyId(null);
+    }
+  };
 
   const onDragEnd = async ({ active, over }) => {
     if (!over || active.id === over.id) return;
@@ -192,6 +278,9 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
                   collection={collection}
                   orderable={orderable}
                   draggable={draggable}
+                  busy={busyId === row.id}
+                  onDuplicate={handleDuplicate}
+                  onDelete={handleDelete}
                 />
               ))}
             </ul>

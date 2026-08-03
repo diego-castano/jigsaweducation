@@ -135,6 +135,44 @@ export async function createItem(collection, fields = {}) {
   return { ok: true, id: rows[0].id, slug: rows[0].slug };
 }
 
+export async function duplicateItem(collection, id) {
+  await requireAdmin();
+  const schema = assertCollection(collection);
+
+  const { rows: source } = await query(
+    'select slug, data, draft from collection_items where collection = $1 and id = $2',
+    [collection, id]
+  );
+  if (!source.length) return { error: 'That item no longer exists.' };
+
+  // The copy is what the editor currently sees: draft merged over data. It
+  // starts hidden with no draft of its own, titled "… (copy)" so the two
+  // never read as the same item in a list.
+  const doc = { ...(source[0].data || {}), ...(source[0].draft || {}) };
+  if (typeof doc[schema.titleField] === 'string' && doc[schema.titleField]) {
+    doc[schema.titleField] = `${doc[schema.titleField]} (copy)`;
+  }
+
+  const base = `${source[0].slug}-copy`;
+  const { rows: existing } = await query(
+    'select slug from collection_items where collection = $1 and (slug = $2 or slug like $3)',
+    [collection, base, `${base}-%`]
+  );
+  const taken = new Set(existing.map((row) => row.slug));
+  let slug = base;
+  for (let n = 2; taken.has(slug); n += 1) slug = `${base}-${n}`;
+
+  const { rows } = await query(
+    `insert into collection_items (collection, slug, data, sort, status)
+     values ($1, $2, $3::jsonb,
+             (select coalesce(max(sort), -1) + 1 from collection_items where collection = $1),
+             'hidden')
+     returning id, slug`,
+    [collection, slug, JSON.stringify(doc)]
+  );
+  return { ok: true, id: rows[0].id, slug: rows[0].slug };
+}
+
 export async function deleteItem(collection, id) {
   const session = await requireAdmin();
   assertCollection(collection);

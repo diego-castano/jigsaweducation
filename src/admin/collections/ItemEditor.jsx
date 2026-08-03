@@ -161,7 +161,7 @@ export default function ItemEditor({
           <h1 className="min-w-0 font-display display-s text-3xl break-words text-navy-900">
             {title}
           </h1>
-          <div className="flex shrink-0 flex-wrap items-center gap-4">
+          <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2">
             <StatusSwitch
               collection={meta.key}
               id={itemId}
@@ -173,6 +173,18 @@ export default function ItemEditor({
             {status === 'hidden' && (
               <Button size="sm" onClick={publishAndShow} loading={goingLive}>
                 Publish and make visible
+              </Button>
+            )}
+            {previewRoute && (
+              <Button
+                variant="secondary"
+                size="sm"
+                icon="eye"
+                onClick={togglePreview}
+                aria-pressed={paneOpen}
+              >
+                <span className="xl:hidden">Preview</span>
+                <span className="hidden xl:inline">{paneOpen ? 'Hide preview' : 'Show preview'}</span>
               </Button>
             )}
           </div>
@@ -225,7 +237,7 @@ export default function ItemEditor({
             className={
               overlayOpen
                 ? 'fixed inset-0 z-50 flex flex-col bg-navy-900/50 p-3 backdrop-blur-sm outline-none sm:p-6'
-                : 'hidden xl:sticky xl:top-24 xl:block xl:h-[calc(100dvh-8rem)]'
+                : 'hidden xl:sticky xl:top-2 xl:block xl:h-[calc(100dvh-7rem)]'
             }
           >
             <PreviewPane route={previewRoute} lastSavedAt={lastSavedAt} onClose={closePane} />
