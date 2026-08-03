@@ -5,6 +5,90 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-08-03 — The backend session: the CMS, end to end
+
+Three commits, `f4f60d8..d136c85`. The site went from hardcoded `src/data/*`
+to a full content backend with a branded admin console, in one session.
+`src/data/*` survives as the seed/fallback source only — the database is
+the live contract now.
+
+### Foundation (`f4f60d8`)
+
+- **Postgres** (Railway `JigsawDB`): six tables — `singletons` (14 docs:
+  one per page + site-settings, ui-strings, tracking), `collection_items`
+  (10 collections, 108 items), `media`, `admin_users`, `revisions`,
+  `subscribers`. jsonb documents, no ORM.
+- **Schemas as the contract**: `src/cms/schemas/*` declares every editable
+  field — labels and help text written for a non-technical editor, verbatim
+  flags on client-supplied copy, warnings on the substring-anchored fields
+  (home H1 "education research", Distinctives ¶3 link phrases). Seeds are
+  byte-exact: data-file copy imported, JSX-hardcoded strings duplicated
+  literally. 266 mapped entries (`docs/content-map.txt`), coverage-checked.
+- `scripts/migrate.mjs` + `scripts/seed.mjs`: idempotent, proven by running
+  twice; seed never overwrites live edits (`ON CONFLICT DO NOTHING`).
+- **Auth**: bcrypt + jose HS256 session cookie (7 days), middleware guard
+  on `/admin/*`. Single admin user seeded from env.
+- **Media**: uploads to the Railway bucket (private objects), served via
+  `/media/[...key]` with immutable caching; sharp reads dimensions.
+- **Draft/publish**: edits autosave to `draft`; publish snapshots the old
+  `data` into `revisions`, folds the draft in, and revalidates by tag.
+  Loaders (`src/lib/content.js`) are draft-aware under `draftMode` and fall
+  back to the seeds on DB failure — an outage degrades, never 500s.
+
+### Admin console (`bd13c75`)
+
+`/admin` — the site's own design system recomposed: navy sidebar, Literata
+headings, orange actions, mono statuses. One generic editor engine renders
+any schema: 800ms autosave (changed keys only), publish gate, revision
+history, dnd-kit list reordering, media picker (never a raw URL input),
+icon grid, country combobox (generated world-atlas list, string ISO ids),
+link picker over real routes. Singleton editors pair the form with a live
+preview iframe (draft mode, 390px toggle). Collections: search, reorder,
+add-as-hidden, status switch, danger zone. Media library with drag-drop
+multi-upload, alt text, usage check before delete. Settings tabs on the
+same engine + account forms + subscribers table with CSV export.
+Playwright-verified against the live DB, including the mobile pass.
+
+### Wiring (`d136c85`)
+
+Every public page reads the database. Verified **byte-identical** to the
+pre-wiring production HTML across all 14 routes (structural extract + full
+visible-text diff). `src/lib/derive.js` recomputes facets/joins from
+fetched arrays (relations.js logic, parameterised). The mailing-list form
+is real: subscribers land in Postgres, messages are editable, source
+recorded per page. The six review-phase internal notes now hang off
+**Settings → Review mode** — launch day is a toggle, not a code change.
+Publish → tag revalidation regenerates static pages in seconds (proven:
+edit → preview shows draft while public shows published → publish → public
+updates → revert).
+
+### Operational notes
+
+- Local dev needs `.env.local` (gitignored): DATABASE_URL, S3_*,
+  SESSION_SECRET, ADMIN_EMAIL/ADMIN_PASSWORD. Production reads the same
+  names from Railway service variables (already set on `jigsaweducation`).
+- Local and production share the one Railway Postgres — a local publish IS
+  a production publish.
+- Direct SQL edits stay invisible until a tag revalidation or clean deploy
+  (`unstable_cache` persists in `.next/cache`); edits through the admin
+  always revalidate.
+- `middleware.js` → `proxy.js` rename pending on a future Next major
+  (deprecation warning only).
+
+## Still open (updated)
+
+**Waiting on the client** (unchanged, but now client-serviceable in the
+admin): every `[tbc]` copy slot, partner SVGs, policy PDFs, publication
+covers/dates/authors, country list, founding-date decision, citation URL,
+log-frame links, wordmark (upload slot exists in Settings → Organisation).
+
+**Before launch:** switch off Settings → Review mode; migrate legacy
+Hubble S3 assets into the media library (re-upload through the admin);
+Mailchimp stays optional — subscribers are already captured in-house with
+CSV export.
+
+---
+
 ## 2026-07-26 — The build session: migration → full site → refinement → audits
 
 Ten commits, `5253f28..3ce6199`. The repo went from a Vite single-page design
