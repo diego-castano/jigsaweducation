@@ -5,50 +5,22 @@ import CrossLinks from '../../../src/site/components/CrossLinks';
 import Placeholder from '../../../src/site/components/Placeholder';
 import Reveal from '../../../src/site/components/Reveal';
 import CountUp from '../../../src/site/components/distinctives/CountUp';
-import { placeholder } from '../../../src/data/placeholder';
-import {
-  DISTINCTIVES,
-  DISTINCTIVES_INTRO,
-  DISTINCTIVES_PREAMBLE,
-  DISTINCTIVES_STATS_CITATION,
-  OUR_STORY
-} from '../../../src/data/distinctives';
-import { DISTINCTIVES_TESTIMONIAL } from '../../../src/data/testimonials';
+import { getSingleton, getCollection } from '../../../src/lib/content';
+import { getTestimonial } from '../../../src/lib/derive';
 
-export const metadata = {
-  title: 'Distinctives',
-  description:
-    'What you should experience when you work with Jigsaw: evidence uptake, combining global and national, mixed methods research, real partnership, and positive disruption.',
-  alternates: { canonical: '/distinctives' }
-};
-
-// The three figures the client's own copy leads with. Pulling them out of the
-// paragraph is the one place on this site where a number deserves display size:
-// they are the argument for the whole practice existing. The unit sits outside
-// <CountUp> because that component owns its node's textContent.
-const CRISIS_STATS = [
-  {
-    value: 80,
-    unit: '%',
-    label: 'of children aged 10 in the lowest income countries cannot read a simple text'
-  },
-  { value: 250, unit: 'm', label: 'children never go to school' },
-  { value: 260, unit: 'm', label: 'children cannot learn because of crisis and conflict' }
-];
+export async function generateMetadata() {
+  const page = await getSingleton('page-distinctives');
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: '/distinctives' }
+  };
+}
 
 // Text alternates side down the column so the five rows never settle into a
 // list. Strict alternation keeps it under the two-consecutive limit; the
 // watermark numeral always takes the opposite edge and is cropped by it.
 const ROW_SIDES = ['left', 'right', 'left', 'right', 'left'];
-
-// Three milestone slots stand in until the client settles the founding date.
-// The rail is real even while the years are not, so the section reads as a
-// timeline in review rather than as a gap.
-const STORY_MILESTONES = [
-  placeholder('first milestone: the founding year and what Jigsaw set out to do'),
-  placeholder('second milestone: the point at which the team or country footprint changed'),
-  placeholder('third milestone: where the practice stands today')
-];
 
 // Sets one phrase of a client paragraph in italic without altering a character
 // of it: the string is split on an exact substring and rejoined around an <em>.
@@ -134,8 +106,20 @@ function DistinctiveRow({ index, side, title, summary }) {
   );
 }
 
-export default function DistinctivesPage() {
-  const [introOne, introTwo, introThree] = DISTINCTIVES_INTRO;
+export default async function DistinctivesPage() {
+  const [page, settings, ui, distinctives, testimonials] = await Promise.all([
+    getSingleton('page-distinctives'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings'),
+    getCollection('distinctives'),
+    getCollection('testimonials')
+  ]);
+
+  const { introOne, introTwo, introThree } = page;
+  const crisisStats = page.crisisStats || [];
+  const storyMilestones = page.storyMilestones || [];
+  const showReviewNotes = Boolean(settings.showReviewNotes);
+  const testimonial = getTestimonial(testimonials, page.testimonialSlug);
 
   return (
     <>
@@ -154,7 +138,7 @@ export default function DistinctivesPage() {
             <div className="lg:col-span-7">
               <Reveal>
                 <h1 className="font-display display-xl text-5xl sm:text-6xl lg:text-[86px] text-navy-900 leading-[0.95]">
-                  Distinctives
+                  {page.heading}
                 </h1>
               </Reveal>
               <Reveal delay={90}>
@@ -179,7 +163,7 @@ export default function DistinctivesPage() {
       <section className="bg-navy-900 text-cream-50">
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 py-14 lg:py-20">
           <ul className="grid sm:grid-cols-3 gap-y-10">
-            {CRISIS_STATS.map((stat, i) => (
+            {crisisStats.map((stat, i) => (
               <Reveal
                 as="li"
                 key={stat.value}
@@ -202,21 +186,23 @@ export default function DistinctivesPage() {
             ))}
           </ul>
 
-          <p className="mt-12 pt-5 border-t border-navy-800 font-mono text-[11px] leading-relaxed tracking-[0.04em] text-navy-200">
-            {DISTINCTIVES_STATS_CITATION ? (
-              <>
-                Source:{' '}
-                <a
-                  className="link-sweep focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 rounded-sm"
-                  href={DISTINCTIVES_STATS_CITATION}
-                >
-                  {DISTINCTIVES_STATS_CITATION}
-                </a>
-              </>
-            ) : (
-              'Citation URL to come from the Jigsaw team. Figures should not publish unsourced.'
-            )}
-          </p>
+          {(page.statsCitation || showReviewNotes) && (
+            <p className="mt-12 pt-5 border-t border-navy-800 font-mono text-[11px] leading-relaxed tracking-[0.04em] text-navy-200">
+              {page.statsCitation ? (
+                <>
+                  Source:{' '}
+                  <a
+                    className="link-sweep focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 rounded-sm"
+                    href={page.statsCitation}
+                  >
+                    {page.statsCitation}
+                  </a>
+                </>
+              ) : (
+                'Citation URL to come from the Jigsaw team. Figures should not publish unsourced.'
+              )}
+            </p>
+          )}
         </div>
       </section>
 
@@ -243,7 +229,7 @@ export default function DistinctivesPage() {
           </Reveal>
           <Reveal delay={120} className="mt-10 lg:mt-14 lg:columns-2 lg:gap-14">
             <p className="text-base lg:text-[17px] text-ink-700 leading-relaxed">
-              {DISTINCTIVES_PREAMBLE}
+              {page.preamble}
             </p>
           </Reveal>
         </div>
@@ -256,14 +242,14 @@ export default function DistinctivesPage() {
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-16 lg:pt-24">
           <Reveal>
             <h2 className="font-display display-m text-3xl sm:text-4xl lg:text-5xl text-navy-900 leading-[1.05]">
-              What you should experience
+              {page.rowsHeading}
             </h2>
           </Reveal>
         </div>
 
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 mt-10 lg:mt-14">
           <ol>
-            {DISTINCTIVES.slice(0, 3).map((d, i) => (
+            {distinctives.slice(0, 3).map((d, i) => (
               <DistinctiveRow
                 key={d.slug}
                 index={i}
@@ -275,12 +261,12 @@ export default function DistinctivesPage() {
           </ol>
         </div>
 
-        {DISTINCTIVES_TESTIMONIAL && (
+        {testimonial && (
           <figure className="bg-cream-200 border-y border-cream-300 py-16 lg:py-24">
             <blockquote className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
               <Reveal>
                 <p className="font-display display-s italic text-2xl sm:text-3xl lg:text-[40px] text-navy-900 leading-[1.22] max-w-[30ch] sm:max-w-[40ch] lg:max-w-[46ch]">
-                  {DISTINCTIVES_TESTIMONIAL.quote}
+                  {testimonial.quote}
                 </p>
               </Reveal>
             </blockquote>
@@ -289,14 +275,14 @@ export default function DistinctivesPage() {
                 className="inline-block align-middle w-8 h-px bg-orange-500 mr-3"
                 aria-hidden="true"
               />
-              {DISTINCTIVES_TESTIMONIAL.attribution}
+              {testimonial.attribution}
             </figcaption>
           </figure>
         )}
 
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
           <ol start={4}>
-            {DISTINCTIVES.slice(3).map((d, i) => (
+            {distinctives.slice(3).map((d, i) => (
               <DistinctiveRow
                 key={d.slug}
                 index={i + 3}
@@ -317,19 +303,17 @@ export default function DistinctivesPage() {
           <div className="lg:col-span-5">
             <Reveal>
               <h2 className="font-display display-m text-3xl sm:text-4xl lg:text-5xl text-navy-900 leading-[1.05]">
-                {OUR_STORY.heading}
+                {page.storyHeading}
               </h2>
               <Placeholder className="mt-6 text-lg text-ink-700 leading-relaxed">
-                {OUR_STORY.body}
+                {page.storyBody}
               </Placeholder>
             </Reveal>
 
-            {OUR_STORY.needsClientConfirmation && (
+            {showReviewNotes && page.foundingDateNote && (
               <Reveal delay={120}>
                 <p className="mt-8 pt-5 border-t border-cream-300 font-mono text-[11px] leading-relaxed text-ink-500">
-                  Founding date unresolved: the live site says over the last decade, the Decade in
-                  Review covers 2013 to 2023, the July brief says 15 years, and company 06844615
-                  dates to roughly 2009. One date needs choosing before this section publishes.
+                  {page.foundingDateNote}
                 </p>
               </Reveal>
             )}
@@ -343,7 +327,7 @@ export default function DistinctivesPage() {
               aria-hidden="true"
             />
             <ol>
-              {STORY_MILESTONES.map((milestone, i) => (
+              {storyMilestones.map((milestone, i) => (
                 <Reveal
                   as="li"
                   key={i}
@@ -355,10 +339,10 @@ export default function DistinctivesPage() {
                     aria-hidden="true"
                   />
                   <span className="inline-block font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 border-b border-dashed border-cream-400 pb-px">
-                    Year tbc
+                    {milestone.year || 'Year tbc'}
                   </span>
                   <Placeholder className="mt-3 text-base text-ink-700 leading-relaxed max-w-[52ch]">
-                    {milestone}
+                    {milestone.text}
                   </Placeholder>
                 </Reveal>
               ))}
@@ -368,7 +352,7 @@ export default function DistinctivesPage() {
       </Section>
 
       <Section>
-        <CrossLinks hrefs={['/services', '/technical-focus', '/team']} />
+        <CrossLinks hrefs={['/services', '/technical-focus', '/team']} ui={ui} />
       </Section>
     </>
   );

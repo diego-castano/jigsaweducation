@@ -8,7 +8,20 @@ import Icon from '../../components/Icon';
 // The live site puts 17 case studies in one alphabetical grid with no filter,
 // no taxonomy and no dates, so "show me your EdTech work in East Africa" is
 // unanswerable. This is the fix.
-export default function CaseStudyBrowser({ studies, facets }) {
+//
+// `ui` is the ui-strings singleton passed down from the server page. Every
+// string destructures with the byte-exact default it replaced, so a missing
+// document (or a page that never passes the prop) renders today's chrome.
+export default function CaseStudyBrowser({ studies, facets, ui = {} }) {
+  const {
+    caseStudySearchPlaceholder = 'Search case studies, partners or countries…',
+    sortAZ = 'A–Z',
+    sortZA = 'Z–A',
+    emptyStateTitle = 'Nothing matches those filters',
+    clearAllFilters = 'Clear all filters',
+    resultCountTemplate,
+    resultCountAllTemplate
+  } = ui;
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState({ country: [], service: [], topic: [] });
   const [sort, setSort] = useState('az');
@@ -60,15 +73,17 @@ export default function CaseStudyBrowser({ studies, facets }) {
         onClear={clear}
         search={search}
         onSearch={setSearch}
-        searchPlaceholder="Search case studies, partners or countries…"
+        searchPlaceholder={caseStudySearchPlaceholder}
         resultCount={results.length}
         totalCount={studies.length}
         noun={results.length === 1 ? 'case study' : 'case studies'}
+        resultCountTemplate={resultCountTemplate}
+        resultCountAllTemplate={resultCountAllTemplate}
         sort={sort}
         onSort={setSort}
         sortOptions={[
-          { value: 'az', label: 'A–Z' },
-          { value: 'za', label: 'Z–A' }
+          { value: 'az', label: sortAZ },
+          { value: 'za', label: sortZA }
         ]}
       />
 
@@ -81,13 +96,13 @@ export default function CaseStudyBrowser({ studies, facets }) {
       ) : (
         <div className="mt-12 text-center py-16 border border-dashed border-cream-400 rounded-2xl">
           <Icon name="search" size={28} className="text-cream-400 mx-auto mb-4" />
-          <p className="font-display text-xl text-navy-900">Nothing matches those filters</p>
+          <p className="font-display text-xl text-navy-900">{emptyStateTitle}</p>
           <button
             type="button"
             onClick={clear}
             className="mt-4 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
           >
-            Clear all filters
+            {clearAllFilters}
           </button>
         </div>
       )}

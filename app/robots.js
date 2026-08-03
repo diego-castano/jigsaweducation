@@ -1,6 +1,7 @@
-import { SITE } from '../src/data/site';
+import { getSingleton } from '../src/lib/content';
 
-export default function robots() {
+export default async function robots() {
+  const settings = await getSingleton('site-settings');
   return {
     rules: [
       {
@@ -11,6 +12,6 @@ export default function robots() {
         disallow: ['/design-system']
       }
     ],
-    sitemap: `${SITE.url}/sitemap.xml`
+    sitemap: `${settings.url}/sitemap.xml`
   };
 }

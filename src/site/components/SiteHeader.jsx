@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import SiteLogo from './SiteLogo';
 import Icon from '../../components/Icon';
 import { useMobileNav } from './MobileNavContext';
-import { MAIN_NAV, FOOTER_NAV, OFFICES } from '../../data/site';
 
 // Seven items, no dropdowns, logo returns home — exactly as the brief asks.
 //
@@ -17,7 +16,37 @@ import { MAIN_NAV, FOOTER_NAV, OFFICES } from '../../data/site';
 //   drives the same drawer as the hamburger.
 // - The drawer traps focus while open, restores it on close, and closes on a
 //   rightward swipe as well as Escape and the overlay.
-export default function SiteHeader() {
+//
+// Nav lists, offices and the wordmark arrive as plain props from the server
+// layout — this is a client component, so it cannot call the content loaders
+// itself. The defaults mirror the seed so a missing prop never blanks the
+// chrome.
+const DEFAULT_MAIN_NAV = [
+  { href: '/services', label: 'Services' },
+  { href: '/technical-focus', label: 'Technical focus' },
+  { href: '/distinctives', label: 'Distinctives' },
+  { href: '/team', label: 'Team' },
+  { href: '/case-studies', label: 'Case studies' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/contact', label: 'Contact' }
+];
+
+const DEFAULT_FOOTER_NAV = [
+  { href: '/policies', label: 'Policies' },
+  { href: '/work-for-us', label: 'Work for us' }
+];
+
+const DEFAULT_OFFICES = [
+  { id: 'uk', email: 'info@jigsaweducation.org' },
+  { id: 'zm', email: 'zambiateam@jigsaweducation.org' }
+];
+
+export default function SiteHeader({
+  mainNav = DEFAULT_MAIN_NAV,
+  footerNav = DEFAULT_FOOTER_NAV,
+  offices = DEFAULT_OFFICES,
+  wordmarkSrc = null
+}) {
   const pathname = usePathname();
   const { menuOpen, setMenuOpen } = useMobileNav();
   const [scrolled, setScrolled] = useState(false);
@@ -127,11 +156,11 @@ export default function SiteHeader() {
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <div className="flex items-center justify-between h-20 gap-6">
-            <SiteLogo size={40} />
+            <SiteLogo size={40} wordmarkSrc={wordmarkSrc} />
 
             <nav aria-label="Main" className="hidden lg:block">
               <ul className="flex items-center gap-1">
-                {MAIN_NAV.map((item) => {
+                {mainNav.map((item) => {
                   const active = isActive(item.href);
                   return (
                     <li key={item.href}>
@@ -200,7 +229,7 @@ export default function SiteHeader() {
           aria-label="Menu"
         >
           <div className="flex items-center justify-between h-20 px-6 border-b border-cream-300 shrink-0">
-            <SiteLogo size={36} />
+            <SiteLogo size={36} wordmarkSrc={wordmarkSrc} />
             <button
               ref={closeBtnRef}
               type="button"
@@ -217,7 +246,7 @@ export default function SiteHeader() {
             style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
           >
             <ul className="space-y-1">
-              {MAIN_NAV.map((item) => {
+              {mainNav.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <li key={item.href}>
@@ -245,7 +274,7 @@ export default function SiteHeader() {
             {/* The drawer is the whole site map, the way an app drawer is:
                 the two footer-only routes and both mailboxes ride along. */}
             <ul className="mt-6 pt-6 border-t border-cream-300 space-y-1">
-              {FOOTER_NAV.map((item) => (
+              {footerNav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -257,7 +286,7 @@ export default function SiteHeader() {
               ))}
             </ul>
             <ul className="mt-6 pt-6 border-t border-cream-300 space-y-1">
-              {OFFICES.map((office) => (
+              {offices.map((office) => (
                 <li key={office.id}>
                   <a
                     href={`mailto:${office.email}`}

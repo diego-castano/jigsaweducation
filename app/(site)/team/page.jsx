@@ -4,30 +4,25 @@ import Section from '../../../src/site/components/Section';
 import Reveal from '../../../src/site/components/Reveal';
 import TeamCard from '../../../src/site/components/TeamCard';
 import CrossLinks from '../../../src/site/components/CrossLinks';
-import { TEAM } from '../../../src/data/team';
+import { getCollection, getSingleton } from '../../../src/lib/content';
 
-export const metadata = {
-  title: 'Team',
-  description:
-    'A group of mixed-method education applied researchers with backgrounds as teachers, education implementers, NGO workers and academics, based mostly in London and Lusaka.',
-  alternates: { canonical: '/team' }
-};
+export async function generateMetadata() {
+  const page = await getSingleton('page-team');
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: '/team' }
+  };
+}
 
-// Client's final copy, supplied in the brief. Verbatim, and it stays that way.
-const INTRO =
-  'We are a group of mixed-method education applied researchers. Our team has diverse professional backgrounds, made up of former teachers, education implementers, NGO workers, and academics. We are united by our shared drive to strengthen education in the world’s most challenging contexts. All the work that we do to build and use evidence in education is founded on the skills and expertise of our team. Most of us are based in London or Lusaka. In addition to our core staff team shown here, Jigsaw also works with a trusted group of contractors and advisers.';
-
-// The closing sentence is about people who are not in the grid, so reading it
-// above eighteen faces sets up an expectation the grid then contradicts. It
-// moves to the band under the grid and carries the two links that sentence
-// implies. The split is by exact substring: no character of the client's
-// paragraph is rewritten, and if the sentence ever changes upstream the page
-// falls back to printing the paragraph whole.
-const CONTRACTORS_SENTENCE =
-  'In addition to our core staff team shown here, Jigsaw also works with a trusted group of contractors and advisers.';
-const splitAt = INTRO.indexOf(CONTRACTORS_SENTENCE);
-const INTRO_LEAD = splitAt === -1 ? INTRO : INTRO.slice(0, splitAt).trimEnd();
-const INTRO_TAIL = splitAt === -1 ? null : CONTRACTORS_SENTENCE;
+// The client's paragraph is stored as two fields: introLead carries everything
+// up to the closing sentence, and contractorsSentence carries that sentence on
+// its own. Joined with a single space they reassemble the verbatim paragraph
+// from the brief. The closing sentence is about people who are not in the
+// grid, so reading it above eighteen faces sets up an expectation the grid
+// then contradicts — it renders in the band under the grid instead, carrying
+// the two links that sentence implies. If the sentence field is ever emptied,
+// the band simply disappears rather than printing a blank.
 
 // Soft masonry. Three columns on large screens, each one dropped a little
 // further than the last so eighteen portraits stop reading as a spreadsheet.
@@ -40,7 +35,15 @@ const INTRO_TAIL = splitAt === -1 ? null : CONTRACTORS_SENTENCE;
 // flex containers so every card fills the height of its row.
 const COLUMN_OFFSET = ['', 'lg:relative lg:top-10', 'lg:relative lg:top-20'];
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const [page, team, ui] = await Promise.all([
+    getSingleton('page-team'),
+    getCollection('team'),
+    getSingleton('ui-strings')
+  ]);
+
+  const introTail = page.contractorsSentence || null;
+
   return (
     <>
       {/* Opener. Two columns settling on a shared baseline: the name of the
@@ -66,19 +69,19 @@ export default function TeamPage() {
             <div className="lg:col-span-5">
               <Reveal>
                 <h1 className="font-display display-xl text-5xl leading-[0.95] text-navy-900 sm:text-6xl lg:text-[76px]">
-                  Team
+                  {page.heading}
                 </h1>
               </Reveal>
               <Reveal delay={140}>
                 <p className="mt-7 border-t border-cream-300 pt-5 font-mono text-[11px] leading-relaxed tracking-[0.08em] text-ink-600">
-                  {`${TEAM.length} researchers · London & Lusaka`}
+                  {`${team.length} ${page.statSuffix}`}
                 </p>
               </Reveal>
             </div>
 
             <Reveal delay={70} className="lg:col-span-6 lg:col-start-7 lg:self-end">
               <p className="max-w-[54ch] text-lg leading-[1.5] text-ink-700 sm:text-xl lg:text-[22px]">
-                {INTRO_LEAD}
+                {page.introLead}
               </p>
             </Reveal>
           </div>
@@ -90,7 +93,7 @@ export default function TeamPage() {
             heading in the document, so none of them are headings at all. Here
             each person's name is an h2 inside a real list. */}
         <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-6 sm:gap-y-12 md:grid-cols-3 lg:gap-x-8 lg:pb-20">
-          {TEAM.map((person, i) => (
+          {team.map((person, i) => (
             <Reveal
               as="li"
               key={person.slug}
@@ -107,7 +110,7 @@ export default function TeamPage() {
           out of the intro rather than duplicated, and it earns its place here
           by pointing at the two routes a reader wants next. Hairline above,
           no panel: the band is a row in the same stack as CrossLinks. */}
-      {INTRO_TAIL && (
+      {introTail && (
         <section className="border-t border-cream-300">
           {/* The sweep belongs to the words but has to answer to the whole
               link, otherwise it stays dark when the pointer or the keyboard
@@ -123,7 +126,7 @@ export default function TeamPage() {
             <div className="grid gap-y-7 lg:grid-cols-12 lg:items-center lg:gap-x-12">
               <Reveal className="lg:col-span-7">
                 <p className="max-w-[56ch] text-lg leading-relaxed text-ink-700 lg:text-xl">
-                  {INTRO_TAIL}
+                  {introTail}
                 </p>
               </Reveal>
 
@@ -137,7 +140,7 @@ export default function TeamPage() {
                 >
                   {/* The sweep sits on the words, not on the whole flex box,
                       so the rule stops where the sentence stops. */}
-                  <span className="link-sweep">Work with us</span>
+                  <span className="link-sweep">{page.workWithUsLabel}</span>
                   <Icon
                     name="arrow-up-right"
                     size={20}
@@ -148,7 +151,7 @@ export default function TeamPage() {
                   href="/contact"
                   className="team-band-link group inline-flex items-center gap-2 py-1.5 rounded-sm font-display text-xl text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 lg:text-2xl"
                 >
-                  <span className="link-sweep">Talk to the team</span>
+                  <span className="link-sweep">{page.talkToTeamLabel}</span>
                   <Icon
                     name="arrow-up-right"
                     size={20}
@@ -162,7 +165,7 @@ export default function TeamPage() {
       )}
 
       <Section className="pt-0">
-        <CrossLinks hrefs={['/services', '/technical-focus', '/case-studies']} />
+        <CrossLinks hrefs={['/services', '/technical-focus', '/case-studies']} ui={ui} />
       </Section>
     </>
   );

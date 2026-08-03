@@ -29,8 +29,9 @@ const assertCollection = (collection) => {
 };
 
 const revalidateContent = (key) => {
-  revalidateTag('content');
-  revalidateTag(`content:${key}`);
+  // 'max' = expire now everywhere; Next 16 deprecates the one-argument form.
+  revalidateTag('content', 'max');
+  revalidateTag(`content:${key}`, 'max');
 };
 
 export async function saveDraft(type, key, patch) {

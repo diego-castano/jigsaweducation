@@ -1,23 +1,18 @@
 import PageHero from '../../../src/site/components/PageHero';
 import Section from '../../../src/site/components/Section';
 import Icon from '../../../src/components/Icon';
-import {
-  POLICIES,
-  ADDITIONAL_POLICIES,
-  POLICIES_INTRO,
-  STANDARDS,
-  STANDARDS_INTRO,
-  CONCERNS_CONTACT
-} from '../../../src/data/policies';
+import { getSingleton, getCollection } from '../../../src/lib/content';
 
-export const metadata = {
-  title: 'Policies',
-  description:
-    'Jigsaw’s publicly available policies covering privacy, whistleblowing, ethics, data protection, cybersecurity and safeguarding, plus the standards we commit to.',
-  alternates: { canonical: '/policies' }
-};
+export async function generateMetadata() {
+  const page = await getSingleton('page-policies');
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: '/policies' }
+  };
+}
 
-function PolicyRow({ policy }) {
+function PolicyRow({ policy, ui }) {
   const content = (
     <>
       <span className="flex items-center gap-3 min-w-0">
@@ -32,11 +27,11 @@ function PolicyRow({ policy }) {
       </span>
       {policy.awaitingFile ? (
         <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-orange-600 shrink-0">
-          Awaiting document
+          {ui.awaitingDocumentBadge}
         </span>
       ) : (
         <span className="flex items-center gap-2 font-mono text-[11px] text-ink-500 shrink-0">
-          PDF · {policy.fileSize}
+          {ui.pdfSizeTemplate.replace('{size}', policy.fileSize)}
           <Icon name="download" size={15} />
         </span>
       )}
@@ -63,38 +58,48 @@ function PolicyRow({ policy }) {
   );
 }
 
-export default function PoliciesPage() {
+export default async function PoliciesPage() {
+  const [page, settings, ui, policies] = await Promise.all([
+    getSingleton('page-policies'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings'),
+    getCollection('policies')
+  ]);
+
+  const core = policies.filter((p) => p.group === 'core');
+  const additional = policies.filter((p) => p.group === 'additional');
+
   return (
     <>
-      <PageHero kicker="Governance" title="Policies" lede={POLICIES_INTRO} />
+      <PageHero kicker={page.kicker} title={page.heading} lede={page.lede} />
 
       <Section width="narrow">
         <ul className="border border-cream-300 rounded-2xl overflow-hidden">
-          {POLICIES.map((p) => (
-            <PolicyRow key={p.slug} policy={p} />
+          {core.map((p) => (
+            <PolicyRow key={p.slug} policy={p} ui={ui} />
           ))}
         </ul>
 
-        <p className="mt-4 text-sm text-ink-600">
-          None of the six policies above are published on the current site. The documents need to
-          come from the Jigsaw team before this page goes live.
-        </p>
+        {settings.showReviewNotes && page.pendingNote && (
+          <p className="mt-4 text-sm text-ink-600">{page.pendingNote}</p>
+        )}
 
-        <h2 className="font-display text-2xl text-navy-900 mt-14 mb-5">Also published</h2>
-        <p className="text-sm text-ink-600 mb-5">
-          These two are live on the current site but are not in the new brief&rsquo;s list. Carried
-          over rather than dropped, since they are real published commitments.
-        </p>
+        <h2 className="font-display text-2xl text-navy-900 mt-14 mb-5">
+          {page.alsoPublishedHeading}
+        </h2>
+        {settings.showReviewNotes && page.carriedOverNote && (
+          <p className="text-sm text-ink-600 mb-5">{page.carriedOverNote}</p>
+        )}
         <ul className="border border-cream-300 rounded-2xl overflow-hidden">
-          {ADDITIONAL_POLICIES.map((p) => (
-            <PolicyRow key={p.slug} policy={p} />
+          {additional.map((p) => (
+            <PolicyRow key={p.slug} policy={p} ui={ui} />
           ))}
         </ul>
 
-        <h2 className="font-display text-2xl text-navy-900 mt-14 mb-5">Standards we commit to</h2>
-        <p className="text-ink-700 mb-5">{STANDARDS_INTRO}</p>
+        <h2 className="font-display text-2xl text-navy-900 mt-14 mb-5">{page.standardsHeading}</h2>
+        <p className="text-ink-700 mb-5">{page.standardsIntro}</p>
         <ul className="space-y-3">
-          {STANDARDS.map((s) => (
+          {page.standards.map((s) => (
             <li key={s.title}>
               <a
                 href={s.url}
@@ -110,15 +115,15 @@ export default function PoliciesPage() {
         </ul>
 
         <div className="mt-14 bg-cream-100 border border-cream-300 rounded-2xl p-6">
-          <h2 className="font-display text-xl text-navy-900 mb-2">Reporting a concern</h2>
-          {CONCERNS_CONTACT ? (
+          <h2 className="font-display text-xl text-navy-900 mb-2">{page.concernsHeading}</h2>
+          {page.concernsContact ? (
             <p className="text-ink-700">
               To report any concerns about Jigsaw&rsquo;s work please contact{' '}
               <a
-                href={`mailto:${CONCERNS_CONTACT}`}
+                href={`mailto:${page.concernsContact}`}
                 className="text-sea-700 hover:text-orange-600 underline underline-offset-4"
               >
-                {CONCERNS_CONTACT}
+                {page.concernsContact}
               </a>
               .
             </p>

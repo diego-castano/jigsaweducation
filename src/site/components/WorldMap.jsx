@@ -4,7 +4,6 @@ import { useMemo, useState, useId } from 'react';
 import { geoPath, geoNaturalEarth1 } from 'd3-geo';
 import { feature } from 'topojson-client';
 import topology from 'world-atlas/countries-110m.json';
-import { MAP_COUNTRIES } from '../../data/home';
 
 // Built from world-atlas TopoJSON with d3-geo rather than a tile provider.
 // No API key, no runtime request to a third party, no cookie-consent problem —
@@ -22,13 +21,20 @@ const projection = geoNaturalEarth1()
 
 const toPath = geoPath(projection);
 
-export default function WorldMap() {
+// `countries` rows are { name, id, office } with STRING ids — the numeric
+// ISO 3166-1 codes world-atlas keys its features on. A row with a wrong id
+// simply never matches a shape, so it silently drops off the map.
+export default function WorldMap({
+  countries = [],
+  legendOffices = 'Our offices',
+  legendWorked = 'Where we have worked'
+}) {
   const titleId = useId();
   const [hovered, setHovered] = useState(null);
 
   const { shapes, highlighted } = useMemo(() => {
     const collection = feature(topology, topology.objects.countries);
-    const lookup = new Map(MAP_COUNTRIES.map((c) => [c.id, c]));
+    const lookup = new Map(countries.map((c) => [c.id, c]));
     return {
       shapes: collection.features.map((f) => ({
         key: f.id ?? f.properties.name,
@@ -36,9 +42,9 @@ export default function WorldMap() {
         name: f.properties.name,
         match: lookup.get(f.id) || null
       })),
-      highlighted: MAP_COUNTRIES
+      highlighted: countries
     };
-  }, []);
+  }, [countries]);
 
   const activeName = hovered?.match?.name || hovered?.name || null;
 
@@ -93,10 +99,10 @@ export default function WorldMap() {
           fixed place instead of floating over the coastline. */}
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 pt-4 border-t border-cream-300 text-xs text-ink-600">
         <span className="inline-flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-orange-500" /> Our offices
+          <span className="w-2.5 h-2.5 rounded-sm bg-orange-500" />{` ${legendOffices}`}
         </span>
         <span className="inline-flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-sm bg-sea-500" /> Where we have worked
+          <span className="w-2.5 h-2.5 rounded-sm bg-sea-500" />{` ${legendWorked}`}
         </span>
         <span
           role="status"

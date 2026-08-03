@@ -3,20 +3,29 @@ import Section from '../../../src/site/components/Section';
 import PublicationBrowser from '../../../src/site/components/PublicationBrowser';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import Icon from '../../../src/components/Icon';
-import { PUBLICATIONS, PUBLICATIONS_INTRO } from '../../../src/data/publications';
-import { publicationFacets } from '../../../src/data/relations';
+import { getSingleton, getCollection } from '../../../src/lib/content';
+import { publicationFacets } from '../../../src/lib/derive';
 
-export const metadata = {
-  title: 'Publications',
-  description:
-    'The Jigsaw evidence library: learning briefs, research reports, policy briefs and annual reviews authored or co-authored by our team. All free to download.',
-  alternates: { canonical: '/publications' }
-};
+export async function generateMetadata() {
+  const page = await getSingleton('page-publications');
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: '/publications' }
+  };
+}
 
-export default function PublicationsPage() {
+export default async function PublicationsPage() {
+  const [page, settings, ui, publications] = await Promise.all([
+    getSingleton('page-publications'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings'),
+    getCollection('publications')
+  ]);
+
   return (
     <>
-      <PageHero kicker="Evidence library" title="Publications" lede={PUBLICATIONS_INTRO} />
+      <PageHero kicker={page.kicker} title={page.heading} lede={page.intro} />
 
       {/* Site templates 02 feedback: "The publication cards are sitting on top
           of the same cream colour. Can the background box be lighter, so that
@@ -25,21 +34,25 @@ export default function PublicationsPage() {
           cards lighter than cream-50 would have meant pure white, which is not
           in the palette. */}
       <Section tone="sunken">
-        <PublicationBrowser publications={PUBLICATIONS} facets={publicationFacets()} />
+        <PublicationBrowser
+          publications={publications}
+          facets={publicationFacets(publications)}
+          perPage={page.itemsPerPage}
+          ui={ui}
+        />
 
-        <p className="mt-10 flex items-start gap-2.5 text-sm text-ink-600 bg-cream-100 border border-cream-300 rounded-xl p-4 max-w-3xl">
-          <Icon name="info" size={16} className="mt-0.5 shrink-0 text-sea-600" />
-          <span>
-            These {PUBLICATIONS.length}{' '}
-            outputs are what is public on the current site. The full library is expected to run to
-            roughly 100 entries, fed from the team&rsquo;s log frame. Dates, authors and abstracts
-            are missing from every publication today and will need filling before launch.
-          </span>
-        </p>
+        {settings.showReviewNotes && page.libraryNote && (
+          <p className="mt-10 flex items-start gap-2.5 text-sm text-ink-600 bg-cream-100 border border-cream-300 rounded-xl p-4 max-w-3xl">
+            <Icon name="info" size={16} className="mt-0.5 shrink-0 text-sea-600" />
+            <span>
+              These {publications.length} {page.libraryNote}
+            </span>
+          </p>
+        )}
       </Section>
 
       <Section className="pt-0">
-        <CrossLinks hrefs={['/case-studies', '/technical-focus', '/team']} />
+        <CrossLinks hrefs={['/case-studies', '/technical-focus', '/team']} ui={ui} />
       </Section>
     </>
   );

@@ -3,18 +3,35 @@ import SiteHeader from '../src/site/components/SiteHeader';
 import { MobileNavProvider } from '../src/site/components/MobileNavContext';
 import SiteFooter from '../src/site/components/SiteFooter';
 import Icon from '../src/components/Icon';
+import { getSingleton } from '../src/lib/content';
 
-export const metadata = {
-  title: 'Page not found',
-  robots: { index: false, follow: true }
-};
+export async function generateMetadata() {
+  const page = await getSingleton('page-not-found');
+  return {
+    title: page.title,
+    ...(page.description ? { description: page.description } : {}),
+    robots: { index: false, follow: true }
+  };
+}
 
 // Lives at the root rather than inside the (site) group so it also catches
-// unmatched URLs outside it. Carries the chrome itself for that reason.
-export default function NotFound() {
+// unmatched URLs outside it. Carries the chrome itself for that reason, so it
+// fetches the chrome's settings itself too.
+export default async function NotFound() {
+  const [page, settings, ui] = await Promise.all([
+    getSingleton('page-not-found'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings')
+  ]);
+
   return (
     <MobileNavProvider>
-      <SiteHeader />
+      <SiteHeader
+        mainNav={settings.mainNav}
+        footerNav={settings.footerNav}
+        offices={settings.offices}
+        wordmarkSrc={settings.logoWordmark}
+      />
       <main id="main">
         <section className="relative overflow-hidden">
           <span
@@ -27,41 +44,49 @@ export default function NotFound() {
               className="font-display text-7xl sm:text-8xl text-cream-400 leading-none"
               style={{ fontVariationSettings: "'opsz' 72" }}
             >
-              404
+              {page.numeral}
             </p>
             <h1 className="font-display display-m text-3xl sm:text-4xl lg:text-5xl text-navy-900 mt-6 leading-tight">
-              We can&rsquo;t find that piece.
+              {page.heading}
             </h1>
-            <p className="mt-5 text-lg text-ink-700">
-              The page you were looking for has moved or never existed. The links below cover most
-              of what is here.
-            </p>
+            <p className="mt-5 text-lg text-ink-700">{page.lede}</p>
 
             <div className="flex flex-wrap justify-center gap-3 mt-10">
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors"
               >
-                Back to home
+                {page.ctaHomeLabel}
                 <Icon name="arrow-right" size={16} />
               </Link>
               <Link
                 href="/publications"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-sea-500 text-sea-700 hover:bg-sea-50 rounded-full text-sm font-bold transition-colors"
               >
-                Evidence library
+                {page.ctaLibraryLabel}
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-cream-400 text-ink-700 hover:bg-cream-100 rounded-full text-sm font-bold transition-colors"
               >
-                Contact us
+                {page.ctaContactLabel}
               </Link>
             </div>
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter
+        mainNav={settings.mainNav}
+        footerNav={settings.footerNav}
+        offices={settings.offices}
+        legalLine={settings.legalLine}
+        exploreHeading={settings.footerExploreHeading}
+        moreHeading={settings.footerMoreHeading}
+        tagline={settings.tagline}
+        linkedin={settings.linkedin}
+        wordmarkSrc={settings.logoWordmark}
+        ui={ui}
+      />
     </MobileNavProvider>
   );
 }

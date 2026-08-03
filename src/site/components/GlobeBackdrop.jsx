@@ -15,10 +15,18 @@ import createGlobe from 'cobe';
 // - The canvas fades in over 1.2s so it never pops.
 const SIZE = 820;
 
-const LONDON = [51.5449, -0.2405];
-const LUSAKA = [-15.3875, 28.3228];
+// Fallback matching site-settings offices (London, Lusaka) so a missing prop
+// still renders the two markers. [lon, lat], same order as the settings store.
+const DEFAULT_OFFICE_COORDS = [
+  [-0.2405, 51.5449],
+  [28.3228, -15.3875]
+];
 
-export default function GlobeBackdrop({ className = '', parallax = 0 }) {
+export default function GlobeBackdrop({
+  className = '',
+  parallax = 0,
+  officeCoords = DEFAULT_OFFICE_COORDS
+}) {
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
   const [ready, setReady] = useState(false);
@@ -50,6 +58,13 @@ export default function GlobeBackdrop({ className = '', parallax = 0 }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Site settings store office coords as [lon, lat] (the GeoJSON
+    // convention); cobe wants [lat, lon]. This is the ONE place the axes
+    // flip — everywhere else keeps the settings order.
+    const locations = (officeCoords || [])
+      .filter((pair) => Array.isArray(pair) && pair.length === 2)
+      .map(([lon, lat]) => [lat, lon]);
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Start facing Europe/Africa so both markers are in view on load.
@@ -84,11 +99,9 @@ export default function GlobeBackdrop({ className = '', parallax = 0 }) {
       glowColor: [0.992, 0.98, 0.957], // cream-50 — the glow dissolves into the page
       markerColor: [1, 0.47, 0.086], // orange-500
       opacity: 0.9,
-      markers: [
-        { location: LONDON, size: 0.06 },
-        { location: LUSAKA, size: 0.06 }
-      ],
-      arcs: [{ from: LONDON, to: LUSAKA }],
+      markers: locations.map((location) => ({ location, size: 0.06 })),
+      arcs:
+        locations.length >= 2 ? [{ from: locations[0], to: locations[1] }] : [],
       arcColor: [0.25, 0.49, 0.61], // sea-500
       arcWidth: 0.4,
       arcHeight: 0.35,
@@ -105,6 +118,9 @@ export default function GlobeBackdrop({ className = '', parallax = 0 }) {
       io.disconnect();
       globe.destroy();
     };
+    // Built once per mount on purpose: officeCoords comes from a server page
+    // and never changes within a pageview, and rebuilding the WebGL scene on a
+    // prop identity change would flash the backdrop.
   }, []);
 
   return (

@@ -7,34 +7,53 @@ import PartnerLogoWall from '../../src/site/components/PartnerLogoWall';
 import Placeholder from '../../src/site/components/Placeholder';
 import Reveal from '../../src/site/components/Reveal';
 import Icon from '../../src/components/Icon';
-import { CORE_SENTENCES, MAP_SUMMARY, MAP_COUNTRIES } from '../../src/data/home';
-import { PARTNERS_INTRO } from '../../src/data/partners';
-import { TRACK_RECORD } from '../../src/data/site';
+import { getSingleton, getCollection } from '../../src/lib/content';
 
-export const metadata = {
-  // absolute, or the root layout's "%s — Jigsaw" template appends a second one.
-  title: { absolute: 'Jigsaw — Rigorous evidence for lasting change in education' },
-  description:
-    'Jigsaw is an education research practice. We work globally and focus on countries with the biggest education challenges, building and using evidence to improve learning and strengthen education systems.',
-  alternates: { canonical: '/' }
-};
-
-// The hero photo is the client's own, from the Voices of Refugee Youth study
-// (co-researchers running a participatory activity, 2019). Photo policy: no
-// stock, no invented imagery, so the one image on this page is one we can name.
-const HERO_PHOTO =
-  'https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/image_asset/file/44/tile_fill_Dubai_Cares_-_ecubed_-_2019_-_participatory_activity.JPG';
-const HERO_PHOTO_HREF = '/case-studies/voices-of-refugee-youth';
+export async function generateMetadata() {
+  const home = await getSingleton('page-home');
+  return {
+    // absolute, or the root layout's "%s — Jigsaw" template appends a second one.
+    title: { absolute: home.title },
+    description: home.description,
+    alternates: { canonical: '/' }
+  };
+}
 
 // Sentence 1 carries the headline. Splitting on the phrase rather than
-// retyping it keeps the client's copy verbatim and in one place.
-const [LEAD_SENTENCE, ...SUPPORTING_SENTENCES] = CORE_SENTENCES;
+// retyping it keeps the client's copy verbatim and in one place. If an edit
+// ever loses the phrase, the headline renders whole and unstyled — no crash,
+// no stray "undefined" on the end.
 const ITALIC_PHRASE = 'education research';
-const [LEAD_BEFORE, LEAD_AFTER] = LEAD_SENTENCE.split(ITALIC_PHRASE);
 
 // Four blocks, in the brief's order, and nothing else. The client rejected
 // homepages that "do too much" by name, so extra sections need them to ask.
-export default function HomePage() {
+export default async function HomePage() {
+  const [home, settings, ui, partners] = await Promise.all([
+    getSingleton('page-home'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings'),
+    getCollection('partners')
+  ]);
+
+  const headline = home.headline || '';
+  const hasItalicPhrase = headline.includes(ITALIC_PHRASE);
+  const [leadBefore, leadAfter] = hasItalicPhrase
+    ? headline.split(ITALIC_PHRASE)
+    : [headline, ''];
+
+  const supportingSentences = (home.supportingSentences || []).map((row) => row.text);
+
+  // The document stores { country: { name, id }, office } rows; the map wants
+  // flat { name, id, office } with STRING ids — world-atlas keys on them, and
+  // a row without an id can never match, so it drops here rather than there.
+  const mapCountries = (home.mapCountries || [])
+    .filter((row) => row?.country?.id)
+    .map(({ country, office }) => ({
+      name: country.name,
+      id: String(country.id),
+      office: Boolean(office)
+    }));
+
   return (
     <>
       {/* Blocks 1 and 2 share one positioning context so the globe can live
@@ -51,6 +70,7 @@ export default function HomePage() {
             crest visible into the band without ever sitting under words. */}
         <GlobeBackdrop
           parallax={0.22}
+          officeCoords={(settings.offices || []).map((office) => office.coords)}
           className="absolute top-[440px] -left-72 z-0 hidden lg:block opacity-[0.5] [mask-image:linear-gradient(to_bottom,black_32%,transparent_72%)]"
         />
 
@@ -70,15 +90,21 @@ export default function HomePage() {
             {/* Left: the words */}
             <div className="lg:col-span-7">
               <h1 className="font-display display-xl text-navy-900 text-[2.5rem] sm:text-[3.5rem] lg:text-[4.25rem] leading-[1.1] pb-1">
-                {LEAD_BEFORE}
-                <em className="italic">{ITALIC_PHRASE}</em>
-                {LEAD_AFTER}
+                {hasItalicPhrase ? (
+                  <>
+                    {leadBefore}
+                    <em className="italic">{ITALIC_PHRASE}</em>
+                    {leadAfter}
+                  </>
+                ) : (
+                  headline
+                )}
               </h1>
 
               {/* Sentences 2 to 4 as three measured lines, not a paragraph
                   stack. Hairline above each, staggered in. */}
               <div className="mt-10 lg:mt-12 max-w-xl">
-                {SUPPORTING_SENTENCES.map((sentence, i) => (
+                {supportingSentences.map((sentence, i) => (
                   <Reveal
                     key={sentence}
                     as="p"
@@ -95,7 +121,7 @@ export default function HomePage() {
                   href="/case-studies"
                   className="tactile group inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
                 >
-                  See our work
+                  {home.primaryCtaLabel}
                   <Icon
                     name="arrow-right"
                     size={16}
@@ -106,7 +132,7 @@ export default function HomePage() {
                   href="/publications"
                   className="link-sweep inline-block py-3 text-sm font-bold text-sea-700 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
                 >
-                  Evidence library
+                  {home.secondaryCtaLabel}
                 </Link>
               </div>
             </div>
@@ -114,12 +140,12 @@ export default function HomePage() {
             {/* Right: the client's own field photo, duotone until you touch it */}
             <Reveal delay={220} className="lg:col-span-5 lg:pt-2">
               <Link
-                href={HERO_PHOTO_HREF}
+                href={home.heroPhotoLink}
                 className="group block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50"
               >
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-cream-200">
                   <img
-                    src={HERO_PHOTO}
+                    src={home.heroPhoto}
                     alt=""
                     decoding="async"
                     fetchPriority="high"
@@ -132,19 +158,23 @@ export default function HomePage() {
                 </div>
                 <span className="flex items-start gap-2 mt-4 text-sm text-ink-600 group-hover:text-navy-900 transition-colors">
                   <span className="link-sweep">
-                    Voices of Refugee Youth, Pakistan and Rwanda
+                    {home.heroPhotoCredit}
                   </span>
                   <Icon name="arrow-up-right" size={14} className="mt-1 shrink-0" />
                 </span>
               </Link>
 
-              {/* Clay's quiet stat line: one mono row, not a badge strip. */}
+              {/* Clay's quiet stat line: one mono row, not a badge strip.
+                  Figures come from Settings → Organisation; the unit words
+                  after them belong to this page. */}
+              {/* The labels join their figures inside one expression so the
+                  server HTML keeps the exact text nodes the static page had. */}
               <p className="mt-6 pt-4 border-t border-cream-300 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500">
-                {TRACK_RECORD.years} years
+                {settings.years}{` ${home.statYearsLabel}`}
                 <span className="text-cream-400 px-2" aria-hidden="true">/</span>
-                {TRACK_RECORD.assignments}+ assignments
+                {settings.assignments}{`+ ${home.statAssignmentsLabel}`}
                 <span className="text-cream-400 px-2" aria-hidden="true">/</span>
-                {TRACK_RECORD.organisations}+ organisations
+                {settings.organisations}{`+ ${home.statOrganisationsLabel}`}
               </p>
             </Reveal>
           </div>
@@ -153,7 +183,7 @@ export default function HomePage() {
 
         {/* 2. Three ways in — z-10 so the columns ride above the globe */}
         <Section className="relative z-10">
-          <SignpostTrio />
+          <SignpostTrio signposts={home.signposts} readMore={ui.readMore} />
         </Section>
       </div>
 
@@ -161,14 +191,18 @@ export default function HomePage() {
       <Section tone="sunken">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-10 lg:gap-16 items-center">
           <Reveal className="order-2 lg:order-1">
-            <WorldMap />
+            <WorldMap
+              countries={mapCountries}
+              legendOffices={home.legendOfficesLabel}
+              legendWorked={home.legendWorkedLabel}
+            />
           </Reveal>
           <div className="order-1 lg:order-2">
-            <SectionHeading title="Global reach, local evidence" />
-            <Placeholder className="mt-5 text-ink-700 leading-relaxed">{MAP_SUMMARY}</Placeholder>
+            <SectionHeading title={home.mapHeading} />
+            <Placeholder className="mt-5 text-ink-700 leading-relaxed">{home.mapSummary}</Placeholder>
             <p className="mt-8 pt-4 border-t border-cream-300 font-mono text-[11px] leading-relaxed text-ink-500">
-              <span className="text-navy-900">{MAP_COUNTRIES.length} countries shown.</span> Drawn
-              from our published case studies and not yet complete.
+              <span className="text-navy-900">{mapCountries.length} countries shown.</span>
+              {` ${home.mapNote}`}
             </p>
           </div>
         </div>
@@ -180,14 +214,17 @@ export default function HomePage() {
       <Section>
         <div className="grid lg:grid-cols-12 gap-y-6 lg:gap-x-12 items-start">
           <div className="lg:col-span-5">
-            <SectionHeading kicker="Who we work with" title="Partners in building evidence" />
+            <SectionHeading kicker={home.partnersKicker} title={home.partnersHeading} />
           </div>
           <p className="lg:col-span-6 lg:col-start-7 text-lg text-ink-700 leading-relaxed lg:pt-9">
-            {PARTNERS_INTRO}
+            {home.partnersIntro}
           </p>
         </div>
         <div className="mt-12">
-          <PartnerLogoWall />
+          <PartnerLogoWall
+            partners={partners}
+            pendingNote={settings.showReviewNotes ? home.partnerWallNote : null}
+          />
         </div>
       </Section>
     </>

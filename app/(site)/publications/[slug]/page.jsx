@@ -4,17 +4,16 @@ import Section from '../../../../src/site/components/Section';
 import Placeholder from '../../../../src/site/components/Placeholder';
 import PublicationCard from '../../../../src/site/components/PublicationCard';
 import Icon from '../../../../src/components/Icon';
-import { PUBLICATIONS } from '../../../../src/data/publications';
-import { caseStudyBySlug } from '../../../../src/data/relations';
-import { SITE } from '../../../../src/data/site';
+import { getSingleton, getCollection, getItem } from '../../../../src/lib/content';
 
-export function generateStaticParams() {
-  return PUBLICATIONS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const publications = await getCollection('publications');
+  return publications.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const pub = PUBLICATIONS.find((p) => p.slug === slug);
+  const pub = await getItem('publications', slug);
   if (!pub) return {};
   return {
     title: pub.title,
@@ -29,19 +28,24 @@ export async function generateMetadata({ params }) {
 // plus the metadata below.
 export default async function PublicationPage({ params }) {
   const { slug } = await params;
-  const pub = PUBLICATIONS.find((p) => p.slug === slug);
+  const [pub, site, ui, publications] = await Promise.all([
+    getItem('publications', slug),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings'),
+    getCollection('publications')
+  ]);
   if (!pub) notFound();
 
-  const study = pub.caseStudySlug ? caseStudyBySlug(pub.caseStudySlug) : null;
-  const related = PUBLICATIONS.filter((p) => p.slug !== pub.slug && p.type === pub.type).slice(0, 2);
+  const study = pub.caseStudySlug ? await getItem('case-studies', pub.caseStudySlug) : null;
+  const related = publications.filter((p) => p.slug !== pub.slug && p.type === pub.type).slice(0, 2);
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ScholarlyArticle',
     headline: pub.title,
     ...(pub.date ? { datePublished: pub.date } : {}),
-    publisher: { '@type': 'Organization', name: SITE.legalName, url: SITE.url },
-    url: `${SITE.url}/publications/${pub.slug}`,
+    publisher: { '@type': 'Organization', name: site.legalName, url: site.url },
+    url: `${site.url}/publications/${pub.slug}`,
     isAccessibleForFree: true
   };
 
@@ -68,7 +72,7 @@ export default async function PublicationPage({ params }) {
             className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
-            Evidence library
+            {ui.breadcrumbPublications}
           </Link>
         </nav>
 
@@ -82,12 +86,12 @@ export default async function PublicationPage({ params }) {
             </h1>
 
             <p className="mt-5 font-mono text-sm text-ink-600">
-              {pub.authors || <span className="italic">Authors to be confirmed</span>}
+              {pub.authors || <span className="italic">{ui.authorsFallback}</span>}
               {' · '}
-              {pub.date || <span className="italic">date to be confirmed</span>}
+              {pub.date || <span className="italic">{ui.dateFallback}</span>}
             </p>
 
-            <h2 className="font-display text-2xl text-navy-900 mt-12 mb-4">Abstract</h2>
+            <h2 className="font-display text-2xl text-navy-900 mt-12 mb-4">{ui.abstractHeading}</h2>
             <Placeholder className="text-lg text-ink-800 leading-[1.75]">{pub.abstract}</Placeholder>
 
             <div className="flex flex-wrap gap-3 mt-10">
@@ -99,7 +103,7 @@ export default async function PublicationPage({ params }) {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors"
                 >
                   <Icon name="download" size={16} />
-                  {pub.external ? 'View publication' : 'Download PDF'}
+                  {pub.external ? ui.viewPublicationLabel : ui.downloadPdfLabel}
                   {pub.fileSize && <span className="font-normal opacity-80">({pub.fileSize})</span>}
                 </a>
               )}
@@ -108,7 +112,7 @@ export default async function PublicationPage({ params }) {
                   href={`/case-studies/${study.slug}`}
                   className="inline-flex items-center gap-2 px-6 py-3 border border-sea-500 text-sea-700 hover:bg-sea-50 rounded-full text-sm font-bold transition-colors"
                 >
-                  Read more about this study
+                  {ui.readMoreAboutStudy}
                   <Icon name="arrow-right" size={16} />
                 </Link>
               )}
@@ -133,11 +137,11 @@ export default async function PublicationPage({ params }) {
       {related.length > 0 && (
         <Section tone="sunken">
           <h2 className="font-display text-2xl sm:text-3xl text-navy-900 mb-8">
-            More {pub.type.toLowerCase()}s
+            {ui.morePublicationsTemplate.replace('{type}', pub.type.toLowerCase())}
           </h2>
           <ul className="grid lg:grid-cols-2 gap-5">
             {related.map((p) => (
-              <PublicationCard key={p.slug} pub={p} />
+              <PublicationCard key={p.slug} pub={p} ui={ui} />
             ))}
           </ul>
         </Section>

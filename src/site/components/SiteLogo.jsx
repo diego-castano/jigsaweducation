@@ -11,11 +11,10 @@ import Link from 'next/link';
 //
 // So the wordmark below is set in Lato, the brand's own body typeface, NOT in
 // Literata. That respects the instruction (no heading font) without leaving the
-// header as a bare orange circle. When the official wordmark arrives, set
-// WORDMARK_SRC and the component renders the real asset instead — one line.
-const WORDMARK_SRC = null;
-
-export default function SiteLogo({ size = 40, reversed = false, href = '/' }) {
+// header as a bare orange circle. When the official wordmark arrives, upload
+// it as the "Logo wordmark" in Site settings — it reaches here as the
+// `wordmarkSrc` prop and the component renders the real asset instead.
+export default function SiteLogo({ size = 40, reversed = false, href = '/', wordmarkSrc = null }) {
   const label = 'Jigsaw Education Evidence — home';
 
   return (
@@ -47,8 +46,8 @@ export default function SiteLogo({ size = 40, reversed = false, href = '/' }) {
         />
       </span>
 
-      {WORDMARK_SRC ? (
-        <img src={WORDMARK_SRC} alt="Jigsaw" style={{ height: size * 0.5 }} />
+      {wordmarkSrc ? (
+        <img src={wordmarkSrc} alt="Jigsaw" style={{ height: size * 0.5 }} />
       ) : (
         <span className="leading-none">
           <span

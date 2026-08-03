@@ -2,16 +2,16 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Section from '../../../../src/site/components/Section';
 import Icon from '../../../../src/components/Icon';
-import { TEAM } from '../../../../src/data/team';
-import { SITE } from '../../../../src/data/site';
+import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
 
-export function generateStaticParams() {
-  return TEAM.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const team = await getCollection('team');
+  return team.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const person = TEAM.find((p) => p.slug === slug);
+  const person = await getItem('team', slug);
   if (!person) return {};
 
   return {
@@ -25,7 +25,11 @@ export async function generateMetadata({ params }) {
 
 export default async function TeamMemberPage({ params }) {
   const { slug } = await params;
-  const person = TEAM.find((p) => p.slug === slug);
+  const [person, site, ui] = await Promise.all([
+    getItem('team', slug),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings')
+  ]);
   if (!person) notFound();
 
   const initials = person.name
@@ -39,8 +43,8 @@ export default async function TeamMemberPage({ params }) {
     '@type': 'Person',
     name: person.name,
     jobTitle: person.role,
-    worksFor: { '@type': 'Organization', name: SITE.legalName, url: SITE.url },
-    url: `${SITE.url}/team/${person.slug}`,
+    worksFor: { '@type': 'Organization', name: site.legalName, url: site.url },
+    url: `${site.url}/team/${person.slug}`,
     ...(person.linkedin || person.orcid
       ? { sameAs: [person.linkedin, person.orcid].filter(Boolean) }
       : {}),
@@ -61,7 +65,7 @@ export default async function TeamMemberPage({ params }) {
             className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
-            All team
+            {ui.breadcrumbTeam}
           </Link>
         </nav>
 

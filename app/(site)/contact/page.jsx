@@ -2,16 +2,25 @@ import Reveal from '../../../src/site/components/Reveal';
 import MailingListForm from '../../../src/site/components/MailingListForm';
 import LocatorMap from '../../../src/site/components/LocatorMap';
 import ContactEmails from '../../../src/site/components/contact/ContactEmails';
-import { OFFICES } from '../../../src/data/site';
+import { getSingleton } from '../../../src/lib/content';
 
-export const metadata = {
-  title: 'Contact',
-  description:
-    'Get in touch with Jigsaw about building and using evidence for education. Offices in London, United Kingdom and Lusaka, Zambia.',
-  alternates: { canonical: '/contact' }
-};
+export async function generateMetadata() {
+  const page = await getSingleton('page-contact');
+  return {
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: '/contact' }
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [page, settings, ui] = await Promise.all([
+    getSingleton('page-contact'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings')
+  ]);
+  const offices = settings.offices;
+
   return (
     <>
       {/* Opener kept deliberately short. There is no contact form on this site
@@ -35,14 +44,13 @@ export default function ContactPage() {
           <div className="grid gap-y-7 lg:grid-cols-12 lg:items-end lg:gap-x-12">
             <Reveal className="lg:col-span-4">
               <h1 className="font-display display-xl text-5xl leading-[0.95] text-navy-900 sm:text-6xl lg:text-[68px]">
-                Contact
+                {page.heading}
               </h1>
             </Reveal>
 
             <Reveal delay={90} className="lg:col-span-7 lg:col-start-6 lg:self-end">
               <p className="max-w-[46ch] text-xl leading-[1.35] text-ink-800 sm:text-2xl lg:text-[26px]">
-                Get in touch with us to talk about building and using evidence for education in your
-                work.
+                {page.lede}
               </p>
             </Reveal>
           </div>
@@ -57,12 +65,18 @@ export default function ContactPage() {
           <div className="grid gap-y-6 lg:grid-cols-12 lg:items-center lg:gap-x-12">
             <Reveal className="lg:col-span-6">
               <p className="max-w-[44ch] text-lg leading-relaxed text-ink-800">
-                Sign up here if you would like to receive occasional updates about Jigsaw&rsquo;s
-                work.
+                {page.signupText}
               </p>
             </Reveal>
             <Reveal delay={110} className="lg:col-span-5 lg:col-start-8">
-              <MailingListForm />
+              <MailingListForm
+                source="contact"
+                emailPlaceholder={ui.emailPlaceholder}
+                signupButton={ui.signupButton}
+                signupErrorEmpty={ui.signupErrorEmpty}
+                signupErrorInvalid={ui.signupErrorInvalid}
+                signupSuccess={ui.signupSuccess}
+              />
             </Reveal>
           </div>
         </div>
@@ -72,7 +86,7 @@ export default function ContactPage() {
           are "deliberately side-by-side so that there is no hierarchy", and the
           client's own headings frame each by scope of work rather than by
           headquarters and branch. */}
-      <ContactEmails offices={OFFICES} />
+      <ContactEmails offices={offices} />
 
       {/* Postal detail, one surface step down. The locator maps stay because a
           server-rendered country plate beats an iframe that would set
@@ -83,12 +97,12 @@ export default function ContactPage() {
         <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
           <Reveal>
             <h2 className="font-display display-m text-3xl leading-[1.05] text-navy-900 sm:text-4xl lg:text-[44px]">
-              Two offices, one team
+              {page.officesHeading}
             </h2>
           </Reveal>
 
           <ul className="mt-10 grid gap-y-0 lg:mt-14 lg:grid-cols-2 lg:gap-x-12">
-            {OFFICES.map((office, i) => (
+            {offices.map((office, i) => (
               <Reveal
                 as="li"
                 key={office.id}

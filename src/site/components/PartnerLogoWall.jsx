@@ -1,6 +1,5 @@
-import { PARTNERS } from '../../data/partners';
-
-// Eighteen organisations, in the client's specified order.
+// The partner organisations, in the client's specified order — the list
+// arrives ordered from the partners collection.
 //
 // ASSET GAP: no individual logos exist. The live site renders the whole wall as
 // one composite PNG with alt="", so every partner name is invisible to both
@@ -23,8 +22,6 @@ const MASK_CSS = `
   .jw-marquee-dupe { display: none; }
 }
 `;
-
-const ROWS = [PARTNERS.slice(0, 9), PARTNERS.slice(9)];
 
 function Plate({ partner, duplicate = false }) {
   return (
@@ -49,13 +46,18 @@ function Plate({ partner, duplicate = false }) {
   );
 }
 
-export default function PartnerLogoWall() {
+export default function PartnerLogoWall({ partners = [], pendingNote = null }) {
+  // Two near-equal bands however long the list grows: a hardcoded slice at 9
+  // unbalanced the marquees the moment the collection passed 18 entries.
+  const splitAt = Math.ceil(partners.length / 2);
+  const rows = [partners.slice(0, splitAt), partners.slice(splitAt)];
+
   return (
     <div>
       <style href="jw-partner-marquee" precedence="default" dangerouslySetInnerHTML={{ __html: MASK_CSS }} />
 
       <div className="border-t border-b border-cream-300 py-6 space-y-2">
-        {ROWS.map((row, rowIndex) => (
+        {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
             className="marquee jw-marquee-mask"
@@ -81,14 +83,18 @@ export default function PartnerLogoWall() {
 
       {/* The list that actually gets read out and indexed. */}
       <ul className="sr-only">
-        {PARTNERS.map((p) => (
+        {partners.map((p) => (
           <li key={p.name}>{p.full}</li>
         ))}
       </ul>
 
-      <p className="mt-5 font-mono text-[11px] leading-relaxed text-ink-500">
-        Names are set in type while the partner logo files are pending.
-      </p>
+      {/* Review-phase note: the page only passes it while Site settings has
+          "Show review notes" switched on. */}
+      {pendingNote && (
+        <p className="mt-5 font-mono text-[11px] leading-relaxed text-ink-500">
+          {pendingNote}
+        </p>
+      )}
     </div>
   );
 }

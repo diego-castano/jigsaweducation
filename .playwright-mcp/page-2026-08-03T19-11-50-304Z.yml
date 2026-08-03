@@ -1,0 +1,194 @@
+- generic [ref=f49e1]:
+  - link "Skip to content" [ref=f49e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f49e3]:
+    - generic [ref=f49e5]:
+      - link "Jigsaw Education Evidence — home" [ref=f49e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f49e8]:
+          - generic [ref=f49e9]: Jigsaw
+          - generic [ref=f49e10]: Education Evidence
+      - button "Open menu" [ref=f49e11]
+  - generic:
+    - dialog "Menu":
+      - generic:
+        - link "Jigsaw Education Evidence — home":
+          - /url: /
+          - generic:
+            - generic: Jigsaw
+            - generic: Education Evidence
+        - button "Close menu"
+      - navigation "Main, mobile":
+        - list:
+          - listitem:
+            - link "Services":
+              - /url: /services
+          - listitem:
+            - link "Technical focus":
+              - /url: /technical-focus
+          - listitem:
+            - link "Distinctives":
+              - /url: /distinctives
+          - listitem:
+            - link "Team":
+              - /url: /team
+          - listitem:
+            - link "Case studies":
+              - /url: /case-studies
+          - listitem:
+            - link "Publications":
+              - /url: /publications
+          - listitem:
+            - link "Contact":
+              - /url: /contact
+        - list:
+          - listitem:
+            - link "Policies":
+              - /url: /policies
+          - listitem:
+            - link "Work for us":
+              - /url: /work-for-us
+        - list:
+          - listitem:
+            - link "info@jigsaweducation.org":
+              - /url: mailto:info@jigsaweducation.org
+          - listitem:
+            - link "zambiateam@jigsaweducation.org":
+              - /url: mailto:zambiateam@jigsaweducation.org
+  - generic [ref=f49e14]:
+    - main [ref=f49e15]:
+      - generic [ref=f49e16]:
+        - generic [ref=f49e19]:
+          - heading "Contact" [level=1] [ref=f49e21]
+          - paragraph [ref=f49e23]: Get in touch with us to talk about building and using evidence for education in your work.
+        - generic [ref=f49e26]:
+          - paragraph [ref=f49e28]: Sign up here if you would like to receive occasional updates about Jigsaw’s work.
+          - generic [ref=f49e30]:
+            - generic [ref=f49e31]:
+              - generic [ref=f49e32]: Email address
+              - textbox "Email address" [ref=f49e33]:
+                - /placeholder: your@email.com
+                - text: wiring-e2e-test@example.com
+              - button "Sign up" [active] [ref=f49e34]
+            - status [ref=f49e177]: Thank you. You are on the list.
+        - list [ref=f49e37]:
+          - listitem [ref=f49e38]:
+            - heading "To contact us about our global work" [level=2] [ref=f49e39]
+            - link [ref=f49e40] [cursor=pointer]:
+              - /url: mailto:info@jigsaweducation.org
+          - listitem [ref=f49e44]:
+            - heading "To contact us about our work in Zambia" [level=2] [ref=f49e45]
+            - link [ref=f49e46] [cursor=pointer]:
+              - /url: mailto:zambiateam@jigsaweducation.org
+        - generic [ref=f49e51]:
+          - heading "Two offices, one team" [level=2] [ref=f49e53]
+          - list [ref=f49e54]:
+            - listitem [ref=f49e55]:
+              - generic [ref=f49e56]:
+                - img "Map showing London, United Kingdom" [ref=f49e58]
+                - generic [ref=f49e63]:
+                  - heading "Jigsaw" [level=3] [ref=f49e64]
+                  - paragraph [ref=f49e65]: Office address
+                  - generic [ref=f49e66]:
+                    - generic [ref=f49e67]: The Lighthouse
+                    - generic [ref=f49e68]: 60-62 High Street
+                    - generic [ref=f49e69]: London NW10 4LL
+                    - generic [ref=f49e70]: United Kingdom
+            - listitem [ref=f49e71]:
+              - generic [ref=f49e72]:
+                - img "Map showing Lusaka, Zambia" [ref=f49e74]
+                - generic [ref=f49e79]:
+                  - heading "Jigsaw Zambia" [level=3] [ref=f49e80]
+                  - paragraph [ref=f49e81]: Registered address
+                  - generic [ref=f49e82]:
+                    - generic [ref=f49e83]: Plot No. 4, Mwaleshi Road
+                    - generic [ref=f49e84]: Olympia Park
+                    - generic [ref=f49e85]: Lusaka
+                    - generic [ref=f49e86]: Zambia
+    - contentinfo [ref=f49e87]:
+      - generic [ref=f49e88]:
+        - generic [ref=f49e89]:
+          - generic [ref=f49e90]:
+            - link "Jigsaw Education Evidence — home" [ref=f49e92] [cursor=pointer]:
+              - /url: /
+              - generic [ref=f49e94]:
+                - generic [ref=f49e95]: Jigsaw
+                - generic [ref=f49e96]: Education Evidence
+            - paragraph [ref=f49e97]: Rigorous evidence for lasting change in education
+          - link "in LinkedIn" [ref=f49e98] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/jigsaw-education-org/
+            - generic [ref=f49e99]: in
+            - generic [ref=f49e101]: LinkedIn
+        - generic [ref=f49e102]:
+          - navigation "Footer" [ref=f49e103]:
+            - heading "Explore" [level=2] [ref=f49e104]
+            - list [ref=f49e105]:
+              - listitem [ref=f49e106]:
+                - link "Services" [ref=f49e107] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=f49e108]:
+                - link "Technical focus" [ref=f49e109] [cursor=pointer]:
+                  - /url: /technical-focus
+              - listitem [ref=f49e110]:
+                - link "Distinctives" [ref=f49e111] [cursor=pointer]:
+                  - /url: /distinctives
+              - listitem [ref=f49e112]:
+                - link "Team" [ref=f49e113] [cursor=pointer]:
+                  - /url: /team
+              - listitem [ref=f49e114]:
+                - link "Case studies" [ref=f49e115] [cursor=pointer]:
+                  - /url: /case-studies
+              - listitem [ref=f49e116]:
+                - link "Publications" [ref=f49e117] [cursor=pointer]:
+                  - /url: /publications
+              - listitem [ref=f49e118]:
+                - link "Contact" [ref=f49e119] [cursor=pointer]:
+                  - /url: /contact
+          - navigation "Legal and careers" [ref=f49e120]:
+            - heading "More" [level=2] [ref=f49e121]
+            - list [ref=f49e122]:
+              - listitem [ref=f49e123]:
+                - link "Policies" [ref=f49e124] [cursor=pointer]:
+                  - /url: /policies
+              - listitem [ref=f49e125]:
+                - link "Work for us" [ref=f49e126] [cursor=pointer]:
+                  - /url: /work-for-us
+          - generic [ref=f49e127]:
+            - heading "London" [level=2] [ref=f49e128]
+            - generic [ref=f49e129]:
+              - generic [ref=f49e130]: Jigsaw
+              - generic [ref=f49e131]: United Kingdom
+              - link "info@jigsaweducation.org" [ref=f49e132] [cursor=pointer]:
+                - /url: mailto:info@jigsaweducation.org
+          - generic [ref=f49e133]:
+            - heading "Lusaka" [level=2] [ref=f49e134]
+            - generic [ref=f49e135]:
+              - generic [ref=f49e136]: Jigsaw Zambia
+              - generic [ref=f49e137]: Zambia
+              - link "zambiateam@jigsaweducation.org" [ref=f49e138] [cursor=pointer]:
+                - /url: mailto:zambiateam@jigsaweducation.org
+        - generic [ref=f49e139]:
+          - paragraph [ref=f49e140]: Jigsaw Education Evidence Ltd. is a certified Social Enterprise and a company registered in England and Wales (company number 06844615 and VAT number GB173850004) and Zambia (company number 120251030229).
+          - generic [ref=f49e141]:
+            - paragraph [ref=f49e142]: © 2026
+            - link "Back to top" [ref=f49e143] [cursor=pointer]:
+              - /url: "#main"
+  - navigation "Quick navigation" [ref=f49e144]:
+    - list [ref=f49e145]:
+      - listitem [ref=f49e146]:
+        - link "Home" [ref=f49e147] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=f49e152]:
+        - link "Services" [ref=f49e153] [cursor=pointer]:
+          - /url: /services
+      - listitem [ref=f49e158]:
+        - link "Work" [ref=f49e159] [cursor=pointer]:
+          - /url: /case-studies
+      - listitem [ref=f49e164]:
+        - link "Library" [ref=f49e165] [cursor=pointer]:
+          - /url: /publications
+      - listitem [ref=f49e170]:
+        - button "Open menu" [ref=f49e171]:
+          - generic [ref=f49e172]: Menu
+  - button
+  - alert [ref=f49e176]

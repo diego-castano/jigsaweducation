@@ -11,7 +11,7 @@ import ServiceRow from './ServiceRow';
 // synthesis is a real address: case-study pages link their method straight to
 // the service it names, per the brief's "linked to service page". On arrival
 // the hash's row opens and scrolls into place under the sticky header.
-export default function ServiceIndex({ services }) {
+export default function ServiceIndex({ services, relatedCaseStudiesHeading, relatedCaseStudiesEmpty }) {
   const [openSlug, setOpenSlug] = useState(services[0]?.slug ?? null);
 
   useEffect(() => {
@@ -37,6 +37,8 @@ export default function ServiceIndex({ services }) {
           delay={i * 60}
           open={openSlug === service.slug}
           onToggle={() => setOpenSlug((current) => (current === service.slug ? null : service.slug))}
+          relatedCaseStudiesHeading={relatedCaseStudiesHeading}
+          relatedCaseStudiesEmpty={relatedCaseStudiesEmpty}
         />
       ))}
     </ul>

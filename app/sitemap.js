@@ -1,12 +1,16 @@
-import { SITE } from '../src/data/site';
-import { TEAM } from '../src/data/team';
-import { CASE_STUDIES } from '../src/data/case-studies';
-import { PUBLICATIONS } from '../src/data/publications';
+import { getSingleton, getCollection } from '../src/lib/content';
 
 // The current site has no sitemap at all — jigsaweducation.org/sitemap.xml
-// returns 404 and robots.txt is a single "#". Generated here so it can never
-// drift from the routes that actually exist.
-export default function sitemap() {
+// returns 404 and robots.txt is a single "#". Generated here from the live
+// collections so it can never drift from the routes that actually exist.
+export default async function sitemap() {
+  const [settings, team, caseStudies, publications] = await Promise.all([
+    getSingleton('site-settings'),
+    getCollection('team'),
+    getCollection('case-studies'),
+    getCollection('publications')
+  ]);
+
   const staticRoutes = [
     { path: '', priority: 1.0, changeFrequency: 'monthly' },
     { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
@@ -22,22 +26,22 @@ export default function sitemap() {
 
   return [
     ...staticRoutes.map((r) => ({
-      url: `${SITE.url}${r.path}`,
+      url: `${settings.url}${r.path}`,
       changeFrequency: r.changeFrequency,
       priority: r.priority
     })),
-    ...TEAM.map((p) => ({
-      url: `${SITE.url}/team/${p.slug}`,
+    ...team.map((p) => ({
+      url: `${settings.url}/team/${p.slug}`,
       changeFrequency: 'yearly',
       priority: 0.6
     })),
-    ...CASE_STUDIES.map((c) => ({
-      url: `${SITE.url}/case-studies/${c.slug}`,
+    ...caseStudies.map((c) => ({
+      url: `${settings.url}/case-studies/${c.slug}`,
       changeFrequency: 'yearly',
       priority: 0.7
     })),
-    ...PUBLICATIONS.map((p) => ({
-      url: `${SITE.url}/publications/${p.slug}`,
+    ...publications.map((p) => ({
+      url: `${settings.url}/publications/${p.slug}`,
       changeFrequency: 'yearly',
       priority: 0.7
     }))

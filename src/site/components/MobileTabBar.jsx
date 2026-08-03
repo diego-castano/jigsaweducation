@@ -12,6 +12,9 @@ import { useMobileNav } from './MobileNavContext';
 // they inherit currentColor for the active state, which a raster glyph never
 // could — and the active slot carries the same orange top bar the desktop
 // nav underlines with, so the two systems read as one.
+// The routes, icons and five-slot count are structural; only the labels are
+// editable, arriving as the `tabs` prop (a list of { label } rows from Site
+// settings) merged over these defaults by position.
 const TABS = [
   { href: '/', label: 'Home', icon: 'home', exact: true },
   { href: '/services', label: 'Services', icon: 'compass' },
@@ -46,9 +49,11 @@ function Slot({ active, icon, label, children }) {
   );
 }
 
-export default function MobileTabBar() {
+export default function MobileTabBar({ tabs, menuLabel = 'Menu' }) {
   const pathname = usePathname();
   const { menuOpen, setMenuOpen } = useMobileNav();
+
+  const slots = TABS.map((tab, i) => ({ ...tab, label: tabs?.[i]?.label || tab.label }));
 
   const isActive = (tab) =>
     tab.exact ? pathname === tab.href : pathname === tab.href || pathname.startsWith(tab.href + '/');
@@ -60,7 +65,7 @@ export default function MobileTabBar() {
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <ul className="grid grid-cols-5 max-w-lg mx-auto">
-        {TABS.map((tab) => {
+        {slots.map((tab) => {
           const active = isActive(tab);
           return (
             <li key={tab.href} className="flex">
@@ -83,7 +88,7 @@ export default function MobileTabBar() {
             aria-controls="mobile-drawer"
             className="tactile flex w-full min-h-14 items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500"
           >
-            <Slot active={menuOpen} icon="menu" label="Menu" />
+            <Slot active={menuOpen} icon="menu" label={menuLabel} />
           </button>
         </li>
       </ul>

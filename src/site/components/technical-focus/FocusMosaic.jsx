@@ -51,7 +51,12 @@ const BAND_ORDER_LG = [
 const PANEL_ID = 'technical-focus-detail';
 const tileId = (i) => `technical-focus-tile-${i}`;
 
-export default function FocusMosaic({ areas }) {
+export default function FocusMosaic({
+  areas,
+  relatedCaseStudiesHeading = 'Related case studies',
+  relatedCaseStudiesEmpty = 'No published case studies tagged to this area yet.',
+  closeTitleTemplate = 'Close {title}'
+}) {
   // `shown` keeps the last opened area mounted so the collapse animates out
   // with its own content instead of emptying first.
   const [state, setState] = useState({ active: null, shown: 0 });
@@ -139,14 +144,26 @@ export default function FocusMosaic({ areas }) {
         ].join(' ')}
       >
         <div>
-          <FocusDetail area={area} onClose={closeAndRefocus} />
+          <FocusDetail
+            area={area}
+            onClose={closeAndRefocus}
+            relatedCaseStudiesHeading={relatedCaseStudiesHeading}
+            relatedCaseStudiesEmpty={relatedCaseStudiesEmpty}
+            closeTitleTemplate={closeTitleTemplate}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-function FocusDetail({ area, onClose }) {
+function FocusDetail({
+  area,
+  onClose,
+  relatedCaseStudiesHeading,
+  relatedCaseStudiesEmpty,
+  closeTitleTemplate
+}) {
   const hasCaseStudies = area.caseStudies.length > 0;
 
   return (
@@ -156,7 +173,7 @@ function FocusDetail({ area, onClose }) {
         onClick={onClose}
         className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-ink-600 transition-colors hover:bg-cream-300 hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
       >
-        <Icon name="x" size={16} title={`Close ${area.title}`} />
+        <Icon name="x" size={16} title={closeTitleTemplate.replace('{title}', area.title)} />
       </button>
 
       <div className="lg:grid lg:grid-cols-12 lg:gap-10">
@@ -185,7 +202,7 @@ function FocusDetail({ area, onClose }) {
 
         <div className="mt-8 border-t border-cream-300 pt-8 lg:col-span-7 lg:col-start-6 lg:mt-0 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-700">
-            Related case studies
+            {relatedCaseStudiesHeading}
           </p>
 
           {hasCaseStudies ? (
@@ -208,7 +225,7 @@ function FocusDetail({ area, onClose }) {
             </ul>
           ) : (
             <p className="mt-5 text-sm italic text-ink-700">
-              No published case studies tagged to this area yet.
+              {relatedCaseStudiesEmpty}
             </p>
           )}
         </div>

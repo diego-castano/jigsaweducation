@@ -3,18 +3,17 @@ import { notFound } from 'next/navigation';
 import Section from '../../../../src/site/components/Section';
 import CaseStudyCard from '../../../../src/site/components/CaseStudyCard';
 import Icon from '../../../../src/components/Icon';
-import { CASE_STUDIES } from '../../../../src/data/case-studies';
-import { SERVICES } from '../../../../src/data/services';
-import { publicationsForCaseStudy } from '../../../../src/data/relations';
-import { SITE } from '../../../../src/data/site';
+import { getCollection, getItem, getSingleton } from '../../../../src/lib/content';
+import { publicationsForCaseStudy } from '../../../../src/lib/derive';
 
-export function generateStaticParams() {
-  return CASE_STUDIES.map((c) => ({ slug: c.slug }));
+export async function generateStaticParams() {
+  const studies = await getCollection('case-studies');
+  return studies.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const study = CASE_STUDIES.find((c) => c.slug === slug);
+  const study = await getItem('case-studies', slug);
   if (!study) return {};
   return {
     title: study.title,
@@ -23,25 +22,35 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// The brief fixes the same four sections on every case study page, in this
-// order, so a reader who has seen one knows where to look on all of them.
-const SECTION_ORDER = [
-  { key: 'criticalQuestion', label: 'The critical question' },
-  { key: 'collaboration', label: 'Collaboration' },
-  { key: 'buildingEvidence', label: 'Building evidence' },
-  { key: 'pathwaysToUptake', label: 'Pathways to evidence uptake' }
-];
-
 export default async function CaseStudyPage({ params }) {
   const { slug } = await params;
-  const study = CASE_STUDIES.find((c) => c.slug === slug);
+  const [study, studies, services, publications, page, settings, ui] = await Promise.all([
+    getItem('case-studies', slug),
+    getCollection('case-studies'),
+    getCollection('services'),
+    getCollection('publications'),
+    getSingleton('page-case-studies'),
+    getSingleton('site-settings'),
+    getSingleton('ui-strings')
+  ]);
   if (!study) notFound();
 
-  const service = SERVICES.find((s) => s.title === study.service);
-  const relatedPublications = publicationsForCaseStudy(study.slug);
-  const others = CASE_STUDIES.filter(
-    (c) => c.slug !== study.slug && c.topics?.some((t) => study.topics?.includes(t))
-  ).slice(0, 3);
+  const showReviewNotes = Boolean(settings.showReviewNotes);
+  const service = services.find((s) => s.title === study.service);
+  const relatedPublications = publicationsForCaseStudy(publications, study.slug);
+  const others = studies
+    .filter((c) => c.slug !== study.slug && c.topics?.some((t) => study.topics?.includes(t)))
+    .slice(0, 3);
+
+  // The brief fixes the same four sections on every case study page, in this
+  // order, so a reader who has seen one knows where to look on all of them.
+  // The order and keys are structural; only the headings are editable.
+  const sectionOrder = [
+    { key: 'criticalQuestion', label: ui.sectionCriticalQuestion },
+    { key: 'collaboration', label: ui.sectionCollaboration },
+    { key: 'buildingEvidence', label: ui.sectionBuildingEvidence },
+    { key: 'pathwaysToUptake', label: ui.sectionPathwaysToUptake }
+  ];
 
   return (
     <>
@@ -52,7 +61,7 @@ export default async function CaseStudyPage({ params }) {
             className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
-            All case studies
+            {ui.breadcrumbCaseStudies}
           </Link>
         </nav>
 
@@ -105,17 +114,21 @@ export default async function CaseStudyPage({ params }) {
 
       <Section width="narrow">
         <div className="space-y-12">
-          {SECTION_ORDER.map(({ key, label }) => {
+          {sectionOrder.map(({ key, label }) => {
             const body = study.sections?.[key];
             if (!body) return null;
+            // '[tbc]' marks copy still awaited from the team. The placeholder
+            // box is a review-phase note: it shows only while review notes are
+            // on, and the section vanishes entirely once they are off.
             const missing = body === '[tbc]';
+            if (missing && !showReviewNotes) return null;
             return (
               <div key={key}>
                 <h2 className="font-display text-2xl sm:text-3xl text-navy-900 mb-4">{label}</h2>
                 {missing ? (
                   <p className="border border-dashed border-cream-400 bg-cream-100/60 rounded-xl px-4 py-3 text-ink-500 italic">
                     <span className="not-italic font-mono text-[10px] uppercase tracking-[0.18em] text-orange-600 block mb-1">
-                      Awaiting copy
+                      {ui.awaitingCopyBadge}
                     </span>
                     The source page describes a partnership rather than a study, so there was nothing
                     to restructure here without inventing it.
@@ -128,21 +141,17 @@ export default async function CaseStudyPage({ params }) {
           })}
         </div>
 
-        {study.isDerived && (
+        {showReviewNotes && study.isDerived && (
           <p className="mt-12 flex items-start gap-2.5 text-sm text-ink-600 bg-cream-100 border border-cream-300 rounded-xl p-4">
             <Icon name="info" size={16} className="mt-0.5 shrink-0 text-sea-600" />
-            <span>
-              Draft. This text was restructured from Jigsaw&rsquo;s existing case study into the
-              four-section format the new brief specifies. It needs the team&rsquo;s approval before
-              it publishes.
-            </span>
+            <span>{page.draftNotice}</span>
           </p>
         )}
 
         {study.links?.length > 0 && (
           <div className="mt-12 pt-8 border-t border-cream-300">
             <h2 className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-4">
-              Find out more
+              {ui.findOutMoreHeading}
             </h2>
             <ul className="space-y-2">
               {study.links.map((l) => (
@@ -165,7 +174,7 @@ export default async function CaseStudyPage({ params }) {
         {relatedPublications.length > 0 && (
           <div className="mt-10">
             <h2 className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-4">
-              Publications from this study
+              {ui.publicationsFromStudyHeading}
             </h2>
             <ul className="space-y-2">
               {relatedPublications.map((p) => (
@@ -185,7 +194,9 @@ export default async function CaseStudyPage({ params }) {
 
       {others.length > 0 && (
         <Section tone="sunken">
-          <h2 className="font-display text-2xl sm:text-3xl text-navy-900 mb-8">Related work</h2>
+          <h2 className="font-display text-2xl sm:text-3xl text-navy-900 mb-8">
+            {ui.relatedWorkHeading}
+          </h2>
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {others.map((o) => (
               <CaseStudyCard key={o.slug} study={o} />

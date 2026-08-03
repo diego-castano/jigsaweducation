@@ -99,11 +99,26 @@ export default function FilterBar({
   noun = 'results',
   sort,
   onSort,
-  sortOptions
+  sortOptions,
+  ui = {}
 }) {
+  const {
+    clearAll = 'Clear all',
+    sortLabel = 'Sort',
+    resultCountTemplate = '{count} of {total} {noun}',
+    resultCountAllTemplate = '{count} {noun}'
+  } = ui;
+
   const activeChips = Object.entries(selected).flatMap(([key, values]) =>
     values.map((value) => ({ key, value }))
   );
+
+  // The count itself stays a bold span inside the editable template, so the
+  // template splits around {count} rather than interpolating it as text.
+  const countLine = (resultCount === totalCount ? resultCountAllTemplate : resultCountTemplate)
+    .replace('{total}', totalCount)
+    .replace('{noun}', noun);
+  const [countBefore, countAfter = ''] = countLine.split('{count}');
 
   return (
     <div>
@@ -157,7 +172,7 @@ export default function FilterBar({
             onClick={onClear}
             className="text-xs text-ink-600 hover:text-orange-600 underline underline-offset-4 ml-1 py-2.5 sm:py-0"
           >
-            Clear all
+            {clearAll}
           </button>
         </div>
       )}
@@ -166,15 +181,15 @@ export default function FilterBar({
         {/* This is a real h2, not a paragraph: it labels the results list and
             keeps the page from jumping h1 → h3 straight into the cards. */}
         <h2 className="text-sm font-normal text-ink-700" role="status" aria-live="polite">
+          {countBefore}
           <span className="font-bold text-navy-900">{resultCount}</span>
-          {resultCount === totalCount ? ' ' : ` of ${totalCount} `}
-          {noun}
+          {countAfter}
         </h2>
 
         {sortOptions && (
           <div className="flex items-center gap-2">
             <label htmlFor="sort" className="text-sm text-ink-600">
-              Sort
+              {sortLabel}
             </label>
             <select
               id="sort"

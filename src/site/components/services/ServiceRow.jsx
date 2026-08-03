@@ -15,7 +15,15 @@ import Reveal from '../Reveal';
 // takes the collapsed content out of both the tab order and the accessibility
 // tree. No role="region" on the panel: six of them would flood the landmark
 // list, which the ARIA authoring practices warn against at this count.
-export default function ServiceRow({ service, index, open, onToggle, delay = 0 }) {
+export default function ServiceRow({
+  service,
+  index,
+  open,
+  onToggle,
+  delay = 0,
+  relatedCaseStudiesHeading = 'Related case studies',
+  relatedCaseStudiesEmpty = 'No published case studies tagged to this area yet.'
+}) {
   const panelId = useId();
   const buttonId = useId();
 
@@ -97,7 +105,7 @@ export default function ServiceRow({ service, index, open, onToggle, delay = 0 }
 
                 {caseStudies.length > 0 ? (
                   <div className="mt-8 border-t border-cream-300 pt-6">
-                    <p className="mb-2 text-[13px] text-ink-500">Related case studies</p>
+                    <p className="mb-2 text-[13px] text-ink-500">{relatedCaseStudiesHeading}</p>
                     <ul className="grid gap-x-10 sm:grid-cols-2">
                       {caseStudies.map((cs) => (
                         <li key={cs.slug}>
@@ -120,7 +128,7 @@ export default function ServiceRow({ service, index, open, onToggle, delay = 0 }
                   </div>
                 ) : (
                   <p className="mt-8 border-t border-cream-300 pt-6 text-sm italic text-ink-500">
-                    No published case studies tagged to this area yet.
+                    {relatedCaseStudiesEmpty}
                   </p>
                 )}
               </div>

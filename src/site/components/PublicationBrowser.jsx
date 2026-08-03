@@ -5,12 +5,22 @@ import FilterBar from './FilterBar';
 import PublicationCard from './PublicationCard';
 import Icon from '../../components/Icon';
 
-const PER_PAGE = 8;
-
 // Filters are the three the July brief names: region/country, method/service,
 // topic specialism. The March call's "year, type, language" set was superseded.
 // Year still appears on the tile, it just is not a facet.
-export default function PublicationBrowser({ publications, facets }) {
+export default function PublicationBrowser({ publications, facets, perPage = 8, ui = {} }) {
+  const {
+    publicationSearchPlaceholder = 'Search publications…',
+    sortRecent = 'Most recent',
+    sortOldest = 'Oldest',
+    sortAZ = 'A–Z',
+    emptyStateTitle = 'Nothing matches those filters',
+    clearAllFilters = 'Clear all filters',
+    paginationPrevious = 'Previous',
+    paginationNext = 'Next'
+  } = ui;
+  const pageSize = Number(perPage) > 0 ? Number(perPage) : 8;
+
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState({
     region: [],
@@ -63,9 +73,9 @@ export default function PublicationBrowser({ publications, facets }) {
     });
   }, [publications, search, selected, sort]);
 
-  const pageCount = Math.max(1, Math.ceil(results.length / PER_PAGE));
+  const pageCount = Math.max(1, Math.ceil(results.length / pageSize));
   const current = Math.min(page, pageCount);
-  const visible = results.slice((current - 1) * PER_PAGE, current * PER_PAGE);
+  const visible = results.slice((current - 1) * pageSize, current * pageSize);
 
   return (
     <div>
@@ -79,7 +89,7 @@ export default function PublicationBrowser({ publications, facets }) {
           setSearch(v);
           setPage(1);
         }}
-        searchPlaceholder="Search publications…"
+        searchPlaceholder={publicationSearchPlaceholder}
         resultCount={results.length}
         totalCount={publications.length}
         noun={results.length === 1 ? 'publication' : 'publications'}
@@ -89,17 +99,18 @@ export default function PublicationBrowser({ publications, facets }) {
           setPage(1);
         }}
         sortOptions={[
-          { value: 'recent', label: 'Most recent' },
-          { value: 'oldest', label: 'Oldest' },
-          { value: 'az', label: 'A–Z' }
+          { value: 'recent', label: sortRecent },
+          { value: 'oldest', label: sortOldest },
+          { value: 'az', label: sortAZ }
         ]}
+        ui={ui}
       />
 
       {visible.length > 0 ? (
         <>
           <ul className="grid lg:grid-cols-2 gap-5 mt-8">
             {visible.map((pub) => (
-              <PublicationCard key={pub.slug} pub={pub} />
+              <PublicationCard key={pub.slug} pub={pub} ui={ui} />
             ))}
           </ul>
 
@@ -111,7 +122,7 @@ export default function PublicationBrowser({ publications, facets }) {
                 disabled={current === 1}
                 className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >
-                Previous
+                {paginationPrevious}
               </button>
               {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
                 <button
@@ -134,7 +145,7 @@ export default function PublicationBrowser({ publications, facets }) {
                 disabled={current === pageCount}
                 className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >
-                Next
+                {paginationNext}
               </button>
             </nav>
           )}
@@ -142,13 +153,13 @@ export default function PublicationBrowser({ publications, facets }) {
       ) : (
         <div className="mt-12 text-center py-16 border border-dashed border-cream-400 rounded-2xl">
           <Icon name="search" size={28} className="text-cream-400 mx-auto mb-4" />
-          <p className="font-display text-xl text-navy-900">Nothing matches those filters</p>
+          <p className="font-display text-xl text-navy-900">{emptyStateTitle}</p>
           <button
             type="button"
             onClick={clear}
             className="mt-4 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
           >
-            Clear all filters
+            {clearAllFilters}
           </button>
         </div>
       )}

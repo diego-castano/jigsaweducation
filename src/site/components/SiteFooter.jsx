@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import FooterTopBand from './FooterSignup';
-import { MAIN_NAV, FOOTER_NAV, OFFICES, LEGAL } from '../../data/site';
 
 // The footer is the close of the site, not an afterthought: three bands on
 // navy-900, hairline-divided.
 //   1. Logo + LinkedIn beside the mailing-list capture (the client's
-//      Mailchimp ask — MailingListForm handles validation and stubs the
-//      submit itself, this component just places it).
+//      Mailchimp ask — MailingListForm handles validation and submission
+//      itself, this component just places it).
 //   2. A content map: four columns on one grid, every seam a hairline, every
 //      column starting on the same line. Explore runs two deep so seven links
 //      stop dragging that column twice the height of its neighbours, which is
@@ -14,6 +13,44 @@ import { MAIN_NAV, FOOTER_NAV, OFFICES, LEGAL } from '../../data/site';
 //   3. The legal line, copyright and a quiet "back to top" link.
 // No dropdowns anywhere in the header means this is the only way onward (or
 // back) from the bottom of a long page.
+//
+// Everything editable arrives as props from the server layout; the defaults
+// mirror the seed so a missing prop never blanks the footer.
+
+const DEFAULT_MAIN_NAV = [
+  { href: '/services', label: 'Services' },
+  { href: '/technical-focus', label: 'Technical focus' },
+  { href: '/distinctives', label: 'Distinctives' },
+  { href: '/team', label: 'Team' },
+  { href: '/case-studies', label: 'Case studies' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/contact', label: 'Contact' }
+];
+
+const DEFAULT_FOOTER_NAV = [
+  { href: '/policies', label: 'Policies' },
+  { href: '/work-for-us', label: 'Work for us' }
+];
+
+const DEFAULT_OFFICES = [
+  {
+    id: 'uk',
+    org: 'Jigsaw',
+    city: 'London',
+    country: 'United Kingdom',
+    email: 'info@jigsaweducation.org'
+  },
+  {
+    id: 'zm',
+    org: 'Jigsaw Zambia',
+    city: 'Lusaka',
+    country: 'Zambia',
+    email: 'zambiateam@jigsaweducation.org'
+  }
+];
+
+const DEFAULT_LEGAL_LINE =
+  'Jigsaw Education Evidence Ltd. is a certified Social Enterprise and a company registered in England and Wales (company number 06844615 and VAT number GB173850004) and Zambia (company number 120251030229).';
 
 // One label style for all four columns. Identical size, tracking and margin is
 // the whole trick: the columns only share a start line if their headings do.
@@ -24,7 +61,18 @@ const LABEL = 'font-body text-[10px] uppercase tracking-[0.2em] text-cream-400 f
 const SEAM =
   'mt-9 pt-9 border-t border-navy-800 lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-navy-800 lg:pl-8';
 
-export default function SiteFooter() {
+export default function SiteFooter({
+  mainNav = DEFAULT_MAIN_NAV,
+  footerNav = DEFAULT_FOOTER_NAV,
+  offices = DEFAULT_OFFICES,
+  legalLine = DEFAULT_LEGAL_LINE,
+  exploreHeading = 'Explore',
+  moreHeading = 'More',
+  tagline,
+  linkedin,
+  wordmarkSrc = null,
+  ui
+}) {
   const year = new Date().getFullYear();
 
   return (
@@ -37,20 +85,32 @@ export default function SiteFooter() {
             on pages that carry their own signup (Contact, Work for us) it
             recomposes as one full-width identity row instead of leaving a
             seven-column hole. */}
-        <FooterTopBand />
+        <FooterTopBand
+          tagline={tagline}
+          linkedin={linkedin}
+          wordmarkSrc={wordmarkSrc}
+          linkedinLabel={ui?.linkedinLabel}
+          signupHeading={ui?.signupHeading}
+          signupBlurb={ui?.signupBlurb}
+          emailPlaceholder={ui?.emailPlaceholder}
+          signupButton={ui?.signupButton}
+          signupErrorEmpty={ui?.signupErrorEmpty}
+          signupErrorInvalid={ui?.signupErrorInvalid}
+          signupSuccess={ui?.signupSuccess}
+        />
 
         {/* Four columns, one grid. Cells stretch so every hairline runs the
             full height of the band; the content still starts at the top of
             each cell, which is the alignment the band was missing. */}
         <div className="border-t border-navy-800 py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
           <nav aria-label="Footer" className="lg:col-span-4">
-            <h2 className={LABEL}>Explore</h2>
+            <h2 className={LABEL}>{exploreHeading}</h2>
             {/* Seven links in one column ran twice the height of everything
                 beside it. Two CSS columns flow them 4 + 3 and the band levels
                 out. `columns` keeps reading order down then across, which a
                 two-track grid would not. */}
             <ul className="text-sm lg:columns-2 lg:gap-x-6">
-              {MAIN_NAV.map((item) => (
+              {mainNav.map((item) => (
                 <li key={item.href} className="mb-1.5 break-inside-avoid last:mb-0">
                   <Link
                     href={item.href}
@@ -64,9 +124,9 @@ export default function SiteFooter() {
           </nav>
 
           <nav aria-label="Legal and careers" className={`lg:col-span-2 ${SEAM}`}>
-            <h2 className={LABEL}>More</h2>
+            <h2 className={LABEL}>{moreHeading}</h2>
             <ul className="space-y-1.5 text-sm">
-              {FOOTER_NAV.map((item) => (
+              {footerNav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -83,7 +143,7 @@ export default function SiteFooter() {
               one, so all four labels sit on the same line. The city carries
               the label because it is what a reader scans for; <address> takes
               flow content but not headings, so the h2 stays outside it. */}
-          {OFFICES.map((office) => (
+          {offices.map((office) => (
             <div key={office.id} className={`lg:col-span-3 ${SEAM}`}>
               <h2 className={LABEL}>{office.city}</h2>
               <address className="not-italic">
@@ -108,7 +168,7 @@ export default function SiteFooter() {
           className="border-t border-navy-800 py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
           style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
         >
-          <p className="text-xs text-cream-400 leading-relaxed max-w-3xl">{LEGAL.line}</p>
+          <p className="text-xs text-cream-400 leading-relaxed max-w-3xl">{legalLine}</p>
           <div className="flex items-center gap-6 shrink-0">
             <p className="text-xs text-cream-400">© {year}</p>
             <a href="#main" className="link-sweep inline-block py-2.5 text-xs text-cream-300 hover:text-orange-400 transition-colors">

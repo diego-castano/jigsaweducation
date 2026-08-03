@@ -15,16 +15,24 @@ const ALL = {
 
 // Redesigned as a "Continue" band: stacked full-width rows rather than three
 // boxes, so the end of every page reads as one more navigation move instead
-// of a wall of cards. Same props API — six pages import this unchanged.
-export default function CrossLinks({ hrefs }) {
-  const items = hrefs.map((href) => ({ href, ...ALL[href] })).filter((item) => item.title);
+// of a wall of cards. Same props API, plus an optional `ui` prop — the
+// ui-strings doc from getSingleton('ui-strings') — so labels, blurbs and the
+// kicker become editable. The internal map above stays as the fallback.
+export default function CrossLinks({ hrefs, ui }) {
+  const rows = Array.isArray(ui?.crossLinks) ? ui.crossLinks : null;
+  const lookup = (href) => {
+    const row = rows?.find((r) => r.route === href);
+    return row?.title ? { title: row.title, blurb: row.blurb } : ALL[href] || {};
+  };
+  const kicker = ui?.continueKicker || 'Continue';
+  const items = hrefs.map((href) => ({ href, ...lookup(href) })).filter((item) => item.title);
 
   if (items.length === 0) return null;
 
   return (
     <nav aria-label="Continue reading" className="border-t border-cream-300 pt-10">
       <p className="text-[11px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-2">
-        Continue
+        {kicker}
       </p>
       <ul>
         {items.map((item) => (

@@ -22,7 +22,13 @@ const TYPE_STYLE = {
   Resource: { badge: 'bg-success-50 text-success-700', spine: '#E8F5F3', ink: '#14705F' }
 };
 
-export default function PublicationCard({ pub }) {
+export default function PublicationCard({ pub, ui = {} }) {
+  const {
+    authorsFallbackShort = 'Authors tbc',
+    dateFallbackShort = 'Date tbc',
+    awaitingCopyBadge = 'Awaiting copy',
+    pdfSizeTemplate = 'PDF · {size}'
+  } = ui;
   const style = TYPE_STYLE[pub.type] || TYPE_STYLE['Research Report'];
 
   return (
@@ -90,7 +96,7 @@ export default function PublicationCard({ pub }) {
           >
             {isPlaceholder(pub.summary) && (
               <span className="not-italic font-mono text-[10px] uppercase tracking-[0.15em] text-orange-600 mr-2">
-                Awaiting copy
+                {awaitingCopyBadge}
               </span>
             )}
             {pub.summary}
@@ -104,9 +110,15 @@ export default function PublicationCard({ pub }) {
         )}
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-4 font-mono text-[11px] text-ink-500">
-          {pub.authors ? <span>{pub.authors}</span> : <span className="italic">Authors tbc</span>}
-          {pub.date ? <span>{pub.date}</span> : <span className="italic">Date tbc</span>}
-          {pub.fileSize && <span className="ml-auto">PDF · {pub.fileSize}</span>}
+          {pub.authors ? (
+            <span>{pub.authors}</span>
+          ) : (
+            <span className="italic">{authorsFallbackShort}</span>
+          )}
+          {pub.date ? <span>{pub.date}</span> : <span className="italic">{dateFallbackShort}</span>}
+          {pub.fileSize && (
+            <span className="ml-auto">{pdfSizeTemplate.replace('{size}', pub.fileSize)}</span>
+          )}
         </div>
       </div>
 

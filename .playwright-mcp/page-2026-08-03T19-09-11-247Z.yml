@@ -1,0 +1,21 @@
+- generic [ref=f39e1]:
+  - main [ref=f39e2]:
+    - generic [ref=f39e3]:
+      - link "Jigsaw Education Evidence — home" [ref=f39e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f39e7]:
+          - generic [ref=f39e8]: Jigsaw
+          - generic [ref=f39e9]: Education Evidence
+      - generic [ref=f39e10]:
+        - heading "Sign in" [level=1] [ref=f39e11]
+        - paragraph [ref=f39e12]: The Jigsaw content console. Changes you make here publish to the public site.
+        - generic [ref=f39e13]:
+          - generic [ref=f39e14]:
+            - generic [ref=f39e15]: Email address
+            - textbox "Email address" [active] [ref=f39e16]
+          - generic [ref=f39e17]:
+            - generic [ref=f39e18]: Password
+            - textbox "Password" [ref=f39e19]
+          - button "Sign in" [ref=f39e20]
+      - paragraph [ref=f39e21]: Accounts are created by invitation. If you need access, ask your administrator.
+  - alert [ref=f39e22]
