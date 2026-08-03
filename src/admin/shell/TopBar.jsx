@@ -52,7 +52,7 @@ export default function TopBar({ session, draftCount = 0, labels = {} }) {
   const initial = (session?.name || session?.email || '?').trim().charAt(0).toUpperCase();
 
   return (
-    <header className="sticky top-0 z-30 hidden lg:flex h-16 items-center justify-between gap-6 border-b border-cream-200 bg-cream-50/90 px-8 backdrop-blur-md">
+    <header className="z-30 hidden lg:flex h-16 shrink-0 items-center justify-between gap-6 border-b border-cream-200 bg-cream-50 px-8">
       <nav aria-label="Breadcrumb" className="min-w-0">
         <ol className="flex items-center gap-1.5 font-mono text-xs text-ink-600">
           {crumbs.map((crumb, index) => {

@@ -8,7 +8,6 @@ import { requireAdmin } from '../../../../src/lib/auth';
 import { query } from '../../../../src/lib/db';
 import { getSingletonSchema, singletonSeedDoc } from '../../../../src/cms/schema';
 import SchemaForm from '../../../../src/admin/editor/SchemaForm.jsx';
-import { SingletonEditor } from '../../../../src/admin/editor/PreviewPane.jsx';
 import SettingsTabs from '../../../../src/admin/settings/SettingsTabs.jsx';
 import AccountForms from '../../../../src/admin/settings/AccountForms.jsx';
 
@@ -70,20 +69,14 @@ export default async function SettingsPage({ searchParams }) {
 
       <div className="reveal reveal-2 mt-6">
         {active === 'organisation' && (
-          // site-settings declares route: null; the spec gives this one tab a
-          // live preview of the home page, so the pane targets '/' here.
-          (() => {
-            const { schema, value, draft } = editorPropsFor('site-settings');
-            return (
-              <SingletonEditor
-                key="site-settings"
-                schema={{ ...schema, route: '/' }}
-                targetKey="site-settings"
-                value={value}
-                draft={draft}
-              />
-            );
-          })()
+          // Settings are facts, not layout: no preview pane here. Page
+          // editors keep the live preview; this tab is just the form.
+          <SchemaForm
+            key="site-settings"
+            targetType="singleton"
+            targetKey="site-settings"
+            {...editorPropsFor('site-settings')}
+          />
         )}
 
         {active === 'site-text' && (

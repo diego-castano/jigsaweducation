@@ -38,8 +38,10 @@ export default async function RootLayout({ children }) {
   const headSnippet = (tracking.headSnippet || '').trim();
   const bodySnippet = (tracking.bodySnippet || '').trim();
 
+  // data-scroll-behavior tells Next the smooth scrolling in globals.css is
+  // deliberate, so router navigations opt out without a console warning.
   return (
-    <html lang="en-GB">
+    <html lang="en-GB" data-scroll-behavior="smooth">
       <body>
         {headSnippet ? (
           <div hidden dangerouslySetInnerHTML={{ __html: headSnippet }} />

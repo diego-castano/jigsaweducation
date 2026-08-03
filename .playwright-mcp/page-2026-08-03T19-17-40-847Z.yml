@@ -1,0 +1,288 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e22]: Dashboard — Jigsaw
+  - generic [ref=e23]:
+    - link "Skip to content" [ref=e24] [cursor=pointer]:
+      - /url: "#admin-main"
+    - complementary [ref=e25]:
+      - generic [ref=e26]:
+        - link "Console Jigsaw" [ref=e27] [cursor=pointer]:
+          - /url: /admin
+          - generic [ref=e29]:
+            - generic [ref=e30]: Console
+            - generic [ref=e31]: Jigsaw
+        - navigation "Console" [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - paragraph [ref=e35]: Pages
+              - list [ref=e36]:
+                - listitem [ref=e37]:
+                  - link "Home" [ref=e38] [cursor=pointer]:
+                    - /url: /admin/pages/page-home
+                - listitem [ref=e42]:
+                  - link "Services" [ref=e43] [cursor=pointer]:
+                    - /url: /admin/pages/page-services
+                - listitem [ref=e47]:
+                  - link "Technical focus" [ref=e48] [cursor=pointer]:
+                    - /url: /admin/pages/page-technical-focus
+                - listitem [ref=e52]:
+                  - link "Distinctives" [ref=e53] [cursor=pointer]:
+                    - /url: /admin/pages/page-distinctives
+                - listitem [ref=e57]:
+                  - link "Team" [ref=e58] [cursor=pointer]:
+                    - /url: /admin/pages/page-team
+                - listitem [ref=e62]:
+                  - link "Case studies" [ref=e63] [cursor=pointer]:
+                    - /url: /admin/pages/page-case-studies
+                - listitem [ref=e67]:
+                  - link "Publications" [ref=e68] [cursor=pointer]:
+                    - /url: /admin/pages/page-publications
+                - listitem [ref=e72]:
+                  - link "Contact" [ref=e73] [cursor=pointer]:
+                    - /url: /admin/pages/page-contact
+                - listitem [ref=e77]:
+                  - link "Policies" [ref=e78] [cursor=pointer]:
+                    - /url: /admin/pages/page-policies
+                - listitem [ref=e82]:
+                  - link "Work for us" [ref=e83] [cursor=pointer]:
+                    - /url: /admin/pages/page-work-for-us
+                - listitem [ref=e87]:
+                  - link "Page not found" [ref=e88] [cursor=pointer]:
+                    - /url: /admin/pages/page-not-found
+            - generic [ref=e92]:
+              - paragraph [ref=e93]: Content
+              - list [ref=e94]:
+                - listitem [ref=e95]:
+                  - link "Team" [ref=e96] [cursor=pointer]:
+                    - /url: /admin/collections/team
+                - listitem [ref=e100]:
+                  - link "Case studies" [ref=e101] [cursor=pointer]:
+                    - /url: /admin/collections/case-studies
+                - listitem [ref=e105]:
+                  - link "Publications" [ref=e106] [cursor=pointer]:
+                    - /url: /admin/collections/publications
+                - listitem [ref=e110]:
+                  - link "Services" [ref=e111] [cursor=pointer]:
+                    - /url: /admin/collections/services
+                - listitem [ref=e115]:
+                  - link "Technical focus" [ref=e116] [cursor=pointer]:
+                    - /url: /admin/collections/technical-focus
+                - listitem [ref=e120]:
+                  - link "Distinctives" [ref=e121] [cursor=pointer]:
+                    - /url: /admin/collections/distinctives
+                - listitem [ref=e125]:
+                  - link "Partners" [ref=e126] [cursor=pointer]:
+                    - /url: /admin/collections/partners
+                - listitem [ref=e130]:
+                  - link "Testimonials" [ref=e131] [cursor=pointer]:
+                    - /url: /admin/collections/testimonials
+                - listitem [ref=e135]:
+                  - link "Work for us" [ref=e136] [cursor=pointer]:
+                    - /url: /admin/collections/jobs
+                - listitem [ref=e140]:
+                  - link "Policies" [ref=e141] [cursor=pointer]:
+                    - /url: /admin/collections/policies
+            - generic [ref=e145]:
+              - paragraph [ref=e146]: Library
+              - list [ref=e147]:
+                - listitem [ref=e148]:
+                  - link "Media" [ref=e149] [cursor=pointer]:
+                    - /url: /admin/media
+                - listitem [ref=e153]:
+                  - link "Subscribers" [ref=e154] [cursor=pointer]:
+                    - /url: /admin/subscribers
+            - generic [ref=e158]:
+              - paragraph [ref=e159]: Manage
+              - list [ref=e160]:
+                - listitem [ref=e161]:
+                  - link "Settings" [ref=e162] [cursor=pointer]:
+                    - /url: /admin/settings
+        - link "View site" [ref=e167] [cursor=pointer]:
+          - /url: /
+    - generic [ref=e170]:
+      - banner [ref=e171]:
+        - navigation "Breadcrumb" [ref=e172]:
+          - list [ref=e173]:
+            - listitem [ref=e174]:
+              - generic [ref=e175]: Console
+        - generic [ref=e176]:
+          - link "View site" [ref=e177] [cursor=pointer]:
+            - /url: /
+          - button "Account menu" [ref=e181]: A
+      - status [ref=e182]:
+        - paragraph [ref=e185]:
+          - text: Review mode is on — internal notes are visible on the public site.
+          - link "Turn it off in Settings" [ref=e186] [cursor=pointer]:
+            - /url: /admin/settings
+      - main [ref=e187]:
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - paragraph [ref=e190]: Monday, 3 August 2026
+            - heading "Good evening, Admin" [level=1] [ref=e191]
+            - paragraph [ref=e192]: Everything on the public site is edited from here. Changes stay as drafts until you publish them.
+          - status [ref=e194]:
+            - generic [ref=e198]:
+              - paragraph [ref=e199]: Review mode is on
+              - paragraph [ref=e200]: Internal review notes are visible on the public site. Switch them off before launch.
+            - link "Open settings" [ref=e201] [cursor=pointer]:
+              - /url: /admin/settings
+          - region [ref=e204]:
+            - heading "Pages" [level=2] [ref=e205]
+            - generic [ref=e206]:
+              - generic [ref=e207]:
+                - generic [ref=e211]:
+                  - link "Home" [ref=e212] [cursor=pointer]:
+                    - /url: /admin/pages/page-home
+                  - paragraph [ref=e213]: /
+                - link "View Home on the site (opens in a new tab)" [ref=e215] [cursor=pointer]:
+                  - /url: /
+              - generic [ref=e218]:
+                - generic [ref=e222]:
+                  - link "Services" [ref=e223] [cursor=pointer]:
+                    - /url: /admin/pages/page-services
+                  - paragraph [ref=e224]: /services
+                - link "View Services on the site (opens in a new tab)" [ref=e226] [cursor=pointer]:
+                  - /url: /services
+              - generic [ref=e229]:
+                - generic [ref=e233]:
+                  - link "Technical focus" [ref=e234] [cursor=pointer]:
+                    - /url: /admin/pages/page-technical-focus
+                  - paragraph [ref=e235]: /technical-focus
+                - link "View Technical focus on the site (opens in a new tab)" [ref=e237] [cursor=pointer]:
+                  - /url: /technical-focus
+              - generic [ref=e240]:
+                - generic [ref=e244]:
+                  - link "Distinctives" [ref=e245] [cursor=pointer]:
+                    - /url: /admin/pages/page-distinctives
+                  - paragraph [ref=e246]: /distinctives
+                - link "View Distinctives on the site (opens in a new tab)" [ref=e248] [cursor=pointer]:
+                  - /url: /distinctives
+              - generic [ref=e251]:
+                - generic [ref=e255]:
+                  - link "Team" [ref=e256] [cursor=pointer]:
+                    - /url: /admin/pages/page-team
+                  - paragraph [ref=e257]: /team
+                - link "View Team on the site (opens in a new tab)" [ref=e259] [cursor=pointer]:
+                  - /url: /team
+              - generic [ref=e262]:
+                - generic [ref=e266]:
+                  - link "Case studies" [ref=e267] [cursor=pointer]:
+                    - /url: /admin/pages/page-case-studies
+                  - paragraph [ref=e268]: /case-studies
+                - link "View Case studies on the site (opens in a new tab)" [ref=e270] [cursor=pointer]:
+                  - /url: /case-studies
+              - generic [ref=e273]:
+                - generic [ref=e277]:
+                  - link "Publications" [ref=e278] [cursor=pointer]:
+                    - /url: /admin/pages/page-publications
+                  - paragraph [ref=e279]: /publications
+                - link "View Publications on the site (opens in a new tab)" [ref=e281] [cursor=pointer]:
+                  - /url: /publications
+              - generic [ref=e284]:
+                - generic [ref=e288]:
+                  - link "Contact" [ref=e289] [cursor=pointer]:
+                    - /url: /admin/pages/page-contact
+                  - paragraph [ref=e290]: /contact
+                - link "View Contact on the site (opens in a new tab)" [ref=e292] [cursor=pointer]:
+                  - /url: /contact
+              - generic [ref=e295]:
+                - generic [ref=e299]:
+                  - link "Policies" [ref=e300] [cursor=pointer]:
+                    - /url: /admin/pages/page-policies
+                  - paragraph [ref=e301]: /policies
+                - link "View Policies on the site (opens in a new tab)" [ref=e303] [cursor=pointer]:
+                  - /url: /policies
+              - generic [ref=e306]:
+                - generic [ref=e310]:
+                  - link "Work for us" [ref=e311] [cursor=pointer]:
+                    - /url: /admin/pages/page-work-for-us
+                  - paragraph [ref=e312]: /work-for-us
+                - link "View Work for us on the site (opens in a new tab)" [ref=e314] [cursor=pointer]:
+                  - /url: /work-for-us
+              - generic [ref=e317]:
+                - generic [ref=e321]:
+                  - link "Page not found" [ref=e322] [cursor=pointer]:
+                    - /url: /admin/pages/page-not-found
+                  - paragraph [ref=e323]: /404
+                - link "View Page not found on the site (opens in a new tab)" [ref=e325] [cursor=pointer]:
+                  - /url: /404
+          - region [ref=e328]:
+            - heading "Content" [level=2] [ref=e329]
+            - generic [ref=e330]:
+              - link [ref=e331] [cursor=pointer]:
+                - /url: /admin/collections/team
+                - paragraph [ref=e335]: "18"
+                - paragraph [ref=e336]: Team
+              - link [ref=e337] [cursor=pointer]:
+                - /url: /admin/collections/case-studies
+                - paragraph [ref=e341]: "17"
+                - paragraph [ref=e342]: Case studies
+              - link [ref=e343] [cursor=pointer]:
+                - /url: /admin/collections/publications
+                - paragraph [ref=e347]: "10"
+                - paragraph [ref=e348]: Publications
+              - link [ref=e349] [cursor=pointer]:
+                - /url: /admin/collections/services
+                - paragraph [ref=e353]: "6"
+                - paragraph [ref=e354]: Services
+              - link [ref=e355] [cursor=pointer]:
+                - /url: /admin/collections/technical-focus
+                - paragraph [ref=e359]: "8"
+                - paragraph [ref=e360]: Technical focus
+              - link [ref=e361] [cursor=pointer]:
+                - /url: /admin/collections/distinctives
+                - paragraph [ref=e365]: "5"
+                - paragraph [ref=e366]: Distinctives
+              - link [ref=e367] [cursor=pointer]:
+                - /url: /admin/collections/partners
+                - paragraph [ref=e371]: "18"
+                - paragraph [ref=e372]: Partners
+              - link [ref=e373] [cursor=pointer]:
+                - /url: /admin/collections/testimonials
+                - paragraph [ref=e377]: "1"
+                - paragraph [ref=e378]: Testimonials
+              - link [ref=e379] [cursor=pointer]:
+                - /url: /admin/collections/jobs
+                - paragraph [ref=e383]: "0"
+                - paragraph [ref=e384]: Work for us
+              - link [ref=e385] [cursor=pointer]:
+                - /url: /admin/collections/policies
+                - paragraph [ref=e389]: "8"
+                - paragraph [ref=e390]: Policies
+          - region [ref=e391]:
+            - heading "Recent changes" [level=2] [ref=e392]
+            - list [ref=e394]:
+              - listitem [ref=e395]:
+                - link "Home Page · published by diegothx@me.com 6 minutes ago" [ref=e396] [cursor=pointer]:
+                  - /url: /admin/pages/page-home
+                  - generic [ref=e400]:
+                    - generic [ref=e401]: Home
+                    - generic [ref=e402]: Page · published by diegothx@me.com
+                  - generic [ref=e403]: 6 minutes ago
+              - listitem [ref=e404]:
+                - link "Home Page · published by diegothx@me.com 7 minutes ago" [ref=e405] [cursor=pointer]:
+                  - /url: /admin/pages/page-home
+                  - generic [ref=e409]:
+                    - generic [ref=e410]: Home
+                    - generic [ref=e411]: Page · published by diegothx@me.com
+                  - generic [ref=e412]: 7 minutes ago
+              - listitem [ref=e413]:
+                - link "Removed team member Team · published by diegothx@me.com 41 minutes ago" [ref=e414] [cursor=pointer]:
+                  - /url: /admin/collections/team
+                  - generic [ref=e418]:
+                    - generic [ref=e419]: Removed team member
+                    - generic [ref=e420]: Team · published by diegothx@me.com
+                  - generic [ref=e421]: 41 minutes ago
+              - listitem [ref=e422]:
+                - link "Home Page · published by diegothx@me.com 45 minutes ago" [ref=e423] [cursor=pointer]:
+                  - /url: /admin/pages/page-home
+                  - generic [ref=e427]:
+                    - generic [ref=e428]: Home
+                    - generic [ref=e429]: Page · published by diegothx@me.com
+                  - generic [ref=e430]: 45 minutes ago
+              - listitem [ref=e431]:
+                - link "Home Page · published by diegothx@me.com 47 minutes ago" [ref=e432] [cursor=pointer]:
+                  - /url: /admin/pages/page-home
+                  - generic [ref=e436]:
+                    - generic [ref=e437]: Home
+                    - generic [ref=e438]: Page · published by diegothx@me.com
+                  - generic [ref=e439]: 47 minutes ago

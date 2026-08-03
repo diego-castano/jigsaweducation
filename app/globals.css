@@ -130,6 +130,34 @@ html {
      comes from .tactile and the components' own hover/active states instead. */
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Console scroll containers: a quiet thin scrollbar instead of the browser
+   default, and instant (not smooth) programmatic scrolling — the admin's
+   scrollspy and section anchors feel laggy under smooth behaviour. */
+.admin-scroll {
+  scroll-behavior: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-cream-400) transparent;
+}
+.admin-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-scroll::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: var(--color-cream-400);
+}
+.admin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* The navy sidebar needs its own thumb colour to stay quiet on dark. */
+.bg-navy-900 .admin-scroll,
+.admin-scroll.on-navy {
+  scrollbar-color: var(--color-navy-700) transparent;
+}
+.bg-navy-900 .admin-scroll::-webkit-scrollbar-thumb,
+.admin-scroll.on-navy::-webkit-scrollbar-thumb {
+  background: var(--color-navy-700);
+}
 body {
   background: #FDFAF4;
   color: #1A1A17;

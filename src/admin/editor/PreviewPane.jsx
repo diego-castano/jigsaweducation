@@ -21,6 +21,12 @@ const STORAGE_KEY = 'jigsaw-admin:preview-open';
 const XL_QUERY = '(min-width: 80rem)'; // Tailwind xl:
 const RELOAD_DELAY_MS = 1200;
 
+// The pane column is ~600-700px wide, so an unscaled iframe shows the site's
+// tablet layout while claiming to be "Desktop". Instead the frame renders at
+// a real viewport width and scales down to fit the pane, like a monitor seen
+// from further away.
+const DEVICE_WIDTHS = { desktop: 1440, phone: 390 };
+
 const previewUrl = (route) => `/api/preview?to=${encodeURIComponent(route)}`;
 
 const SEGMENT_BASE =
@@ -30,10 +36,24 @@ const SEGMENT_BASE =
 export default function PreviewPane({ route, lastSavedAt = 0, onClose }) {
   const [device, setDevice] = useState('desktop');
   const [fading, setFading] = useState(false);
+  const [stage, setStage] = useState({ width: 0, height: 0 });
 
   const frameRef = useRef(null);
+  const stageRef = useRef(null);
   const scrollRef = useRef(null);
   const fadeGuardRef = useRef(null);
+
+  // Track the stage size so the scaled frame always fits it exactly.
+  useEffect(() => {
+    const stageEl = stageRef.current;
+    if (!stageEl) return undefined;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setStage({ width, height });
+    });
+    observer.observe(stageEl);
+    return () => observer.disconnect();
+  }, []);
 
   // Reload the framed page in place: remember its scroll position, dim it,
   // reload the window, then restore scroll once the fresh document lands.
@@ -121,7 +141,7 @@ export default function PreviewPane({ route, lastSavedAt = 0, onClose }) {
                 : ' text-ink-600 hover:text-navy-900')
             }
           >
-            390px
+            Phone
           </button>
         </div>
 
@@ -146,32 +166,51 @@ export default function PreviewPane({ route, lastSavedAt = 0, onClose }) {
         {onClose && <IconButton icon="x" label="Close the preview" size="sm" onClick={onClose} />}
       </header>
 
-      <div className="min-h-0 flex-1 bg-cream-200/60">
-        <div
-          className={
-            device === 'phone' ? 'flex h-full justify-center overflow-hidden px-4 py-4' : 'h-full'
-          }
-        >
-          <div
-            className={
-              device === 'phone'
-                ? 'h-full w-[390px] max-w-full overflow-hidden rounded-2xl border border-cream-300 bg-white shadow-md'
-                : 'h-full w-full bg-white'
-            }
-          >
-            <iframe
-              ref={frameRef}
-              src={previewUrl(route)}
-              title={`Preview of ${route}`}
-              onLoad={handleLoad}
-              className={
-                'h-full w-full border-0 bg-white motion-safe:transition-opacity motion-safe:duration-300 ' +
-                (fading ? 'opacity-40' : 'opacity-100')
-              }
-            />
+      {(() => {
+        const viewportWidth = DEVICE_WIDTHS[device];
+        const pad = device === 'phone' ? 16 : 12;
+        const availableWidth = Math.max(stage.width - pad * 2, 0);
+        const availableHeight = Math.max(stage.height - pad * 2, 0);
+        // The iframe always renders at the full device width; the box shrinks
+        // it to fit the pane. scale 1 means the pane is wider than the device.
+        const scale = availableWidth > 0 ? Math.min(1, availableWidth / viewportWidth) : 1;
+        const frameHeight = scale > 0 ? availableHeight / scale : availableHeight;
+
+        return (
+          <div ref={stageRef} className="min-h-0 flex-1 overflow-hidden bg-cream-200/60">
+            {stage.width > 0 && (
+              <div className="flex h-full items-start justify-center" style={{ padding: pad }}>
+                <div
+                  className={
+                    'overflow-hidden bg-white ' +
+                    (device === 'phone'
+                      ? 'rounded-2xl border border-cream-300 shadow-md'
+                      : 'rounded-lg border border-cream-300 shadow-sm')
+                  }
+                  style={{ width: viewportWidth * scale, height: availableHeight }}
+                >
+                  <iframe
+                    ref={frameRef}
+                    src={previewUrl(route)}
+                    title={`Preview of ${route}`}
+                    onLoad={handleLoad}
+                    className={
+                      'border-0 bg-white motion-safe:transition-opacity motion-safe:duration-300 ' +
+                      (fading ? 'opacity-40' : 'opacity-100')
+                    }
+                    style={{
+                      width: viewportWidth,
+                      height: frameHeight,
+                      transform: `scale(${scale})`,
+                      transformOrigin: 'top left'
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </div>
+        );
+      })()}
     </section>
   );
 }
@@ -295,7 +334,7 @@ export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }
           className={
             overlayOpen
               ? 'fixed inset-0 z-50 flex flex-col bg-navy-900/50 p-3 backdrop-blur-sm outline-none sm:p-6'
-              : 'hidden xl:sticky xl:top-24 xl:block xl:h-[calc(100dvh-8rem)]'
+              : 'hidden xl:sticky xl:top-2 xl:block xl:h-[calc(100dvh-7rem)]'
           }
         >
           <PreviewPane route={route} lastSavedAt={lastSavedAt} onClose={closePane} />

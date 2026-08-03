@@ -21,21 +21,23 @@ const collectionEntries = COLLECTIONS.map((c) => ({
 }));
 
 // site-settings, ui-strings and tracking fold into the single Settings link.
+// Pages and Content are collapsible: with 21 entries between them, showing
+// everything at once buried the four utility links. Text-only rows inside
+// the disclosures keep the icon set for the top level.
 export const NAV_GROUPS = [
-  { id: 'pages', label: 'Pages', items: pageEntries },
-  { id: 'content', label: 'Content', items: collectionEntries },
+  {
+    id: 'top',
+    items: [{ label: 'Dashboard', href: '/admin', icon: 'home', exact: true }]
+  },
+  { id: 'pages', label: 'Pages', collapsible: true, items: pageEntries },
+  { id: 'content', label: 'Content', collapsible: true, items: collectionEntries },
   {
     id: 'library',
-    label: 'Library',
     items: [
       { label: 'Media', href: '/admin/media', icon: 'layers' },
-      { label: 'Subscribers', href: '/admin/subscribers', icon: 'send' }
+      { label: 'Subscribers', href: '/admin/subscribers', icon: 'send' },
+      { label: 'Settings', href: '/admin/settings', icon: 'settings' }
     ]
-  },
-  {
-    id: 'settings',
-    label: 'Manage',
-    items: [{ label: 'Settings', href: '/admin/settings', icon: 'settings' }]
   }
 ];
 

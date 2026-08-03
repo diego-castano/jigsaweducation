@@ -1,0 +1,342 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - link "Skip to content" [ref=f4e3] [cursor=pointer]:
+      - /url: "#admin-main"
+    - complementary [ref=f4e4]:
+      - generic [ref=f4e5]:
+        - link "Console Jigsaw" [ref=f4e6] [cursor=pointer]:
+          - /url: /admin
+          - generic [ref=f4e8]:
+            - generic [ref=f4e9]: Console
+            - generic [ref=f4e10]: Jigsaw
+        - navigation "Console" [ref=f4e11]:
+          - generic [ref=f4e12]:
+            - list [ref=f4e13]:
+              - listitem [ref=f4e14]:
+                - link "Dashboard" [ref=f4e15] [cursor=pointer]:
+                  - /url: /admin
+            - generic [ref=f4e19]:
+              - button "Pages" [expanded] [ref=f4e20]
+              - list [ref=f4e25]:
+                - listitem [ref=f4e26]:
+                  - link "Home" [ref=f4e27] [cursor=pointer]:
+                    - /url: /admin/pages/page-home
+                - listitem [ref=f4e30]:
+                  - link "Services" [ref=f4e31] [cursor=pointer]:
+                    - /url: /admin/pages/page-services
+                - listitem [ref=f4e33]:
+                  - link "Technical focus" [ref=f4e34] [cursor=pointer]:
+                    - /url: /admin/pages/page-technical-focus
+                - listitem [ref=f4e36]:
+                  - link "Distinctives" [ref=f4e37] [cursor=pointer]:
+                    - /url: /admin/pages/page-distinctives
+                - listitem [ref=f4e39]:
+                  - link "Team" [ref=f4e40] [cursor=pointer]:
+                    - /url: /admin/pages/page-team
+                - listitem [ref=f4e42]:
+                  - link "Case studies" [ref=f4e43] [cursor=pointer]:
+                    - /url: /admin/pages/page-case-studies
+                - listitem [ref=f4e45]:
+                  - link "Publications" [ref=f4e46] [cursor=pointer]:
+                    - /url: /admin/pages/page-publications
+                - listitem [ref=f4e48]:
+                  - link "Contact" [ref=f4e49] [cursor=pointer]:
+                    - /url: /admin/pages/page-contact
+                - listitem [ref=f4e51]:
+                  - link "Policies" [ref=f4e52] [cursor=pointer]:
+                    - /url: /admin/pages/page-policies
+                - listitem [ref=f4e54]:
+                  - link "Work for us" [ref=f4e55] [cursor=pointer]:
+                    - /url: /admin/pages/page-work-for-us
+                - listitem [ref=f4e57]:
+                  - link "Page not found" [ref=f4e58] [cursor=pointer]:
+                    - /url: /admin/pages/page-not-found
+            - button "Content" [ref=f4e61]
+            - list [ref=f4e66]:
+              - listitem [ref=f4e67]:
+                - link "Media" [ref=f4e68] [cursor=pointer]:
+                  - /url: /admin/media
+              - listitem [ref=f4e72]:
+                - link "Subscribers" [ref=f4e73] [cursor=pointer]:
+                  - /url: /admin/subscribers
+              - listitem [ref=f4e77]:
+                - link "Settings" [ref=f4e78] [cursor=pointer]:
+                  - /url: /admin/settings
+        - link "View site" [ref=f4e83] [cursor=pointer]:
+          - /url: /
+    - generic [ref=f4e86]:
+      - banner [ref=f4e87]:
+        - navigation "Breadcrumb" [ref=f4e88]:
+          - list [ref=f4e89]:
+            - listitem [ref=f4e90]:
+              - link "Console" [ref=f4e91] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f4e92]:
+              - generic [ref=f4e93]: /
+              - link "Pages" [ref=f4e94] [cursor=pointer]:
+                - /url: /admin/pages
+            - listitem [ref=f4e95]:
+              - generic [ref=f4e96]: /
+              - generic [ref=f4e97]: Home
+        - generic [ref=f4e98]:
+          - link "View site" [ref=f4e99] [cursor=pointer]:
+            - /url: /
+          - button "Account menu" [ref=f4e103]: A
+      - status [ref=f4e104]:
+        - paragraph [ref=f4e107]:
+          - text: "Review mode: visitors can see the team’s internal notes on the site."
+          - link "About review mode" [ref=f4e108] [cursor=pointer]:
+            - /url: /admin/settings
+      - main [ref=f4e109]:
+        - generic [ref=f4e110]:
+          - generic [ref=f4e111]:
+            - generic [ref=f4e112]:
+              - generic [ref=f4e113]:
+                - heading "Home" [level=1] [ref=f4e114]
+                - generic [ref=f4e115]: /
+              - paragraph [ref=f4e116]: "The front page: four core sentences, three signposts, the map and the partner wall."
+            - link "View page" [ref=f4e117] [cursor=pointer]:
+              - /url: /
+          - generic [ref=f4e121]:
+            - generic [ref=f4e123]:
+              - navigation "Sections on this page" [ref=f4e124]:
+                - list [ref=f4e125]:
+                  - listitem [ref=f4e126]:
+                    - link "Opening" [ref=f4e127] [cursor=pointer]:
+                      - /url: "#sec-hero"
+                  - listitem [ref=f4e128]:
+                    - link "Three ways in" [ref=f4e129] [cursor=pointer]:
+                      - /url: "#sec-signposts"
+                  - listitem [ref=f4e130]:
+                    - link "Where we work" [ref=f4e131] [cursor=pointer]:
+                      - /url: "#sec-map"
+                  - listitem [ref=f4e132]:
+                    - link "Who we work with" [ref=f4e133] [cursor=pointer]:
+                      - /url: "#sec-partners"
+                  - listitem [ref=f4e134]:
+                    - link "SEO" [ref=f4e135] [cursor=pointer]:
+                      - /url: "#sec-seo"
+              - generic [ref=f4e136]:
+                - generic [ref=f4e137]:
+                  - region [ref=f4e138]:
+                    - heading "Opening" [level=2] [ref=f4e139]
+                    - paragraph [ref=f4e140]: The four core sentences, the field photo and the two buttons.
+                    - generic [ref=f4e141]:
+                      - generic [ref=f4e142]:
+                        - generic [ref=f4e143]: Headline (first core sentence)*
+                        - generic [ref=f4e145]: Client copy — supplied word-for-word
+                        - textbox "Headline (first core sentence)" [ref=f4e148]: Jigsaw is an education research practice.
+                        - paragraph [ref=f4e152]: The headline must contain the exact phrase “education research” — the page finds that phrase inside the sentence to set it in italics. Reword or remove the phrase and the headline styling breaks.
+                        - paragraph [ref=f4e153]: The first of the four core sentences from the brief; it is the large headline.
+                      - generic [ref=f4e154]:
+                        - generic [ref=f4e155]: Supporting sentences
+                        - generic [ref=f4e157]: Client copy — supplied word-for-word
+                        - list [ref=f4e161]:
+                          - listitem [ref=f4e162]:
+                            - button "We work globally and focus on countries with the biggest education challenges." [ref=f4e165]
+                          - listitem [ref=f4e169]:
+                            - button "We build and use evidence to improve learning and strengthen education systems." [ref=f4e172]
+                          - listitem [ref=f4e176]:
+                            - button "Our offices are in London and Lusaka." [ref=f4e179]
+                        - paragraph [ref=f4e183]: Core sentences two to four, shown as three ruled lines under the headline.
+                      - generic [ref=f4e184]:
+                        - generic [ref=f4e185]: Orange button label*
+                        - textbox "Orange button label" [ref=f4e187]: See our work
+                        - paragraph [ref=f4e188]: The main button under the sentences. It always opens the Case studies page.
+                      - generic [ref=f4e189]:
+                        - generic [ref=f4e190]: Text link label*
+                        - textbox "Text link label" [ref=f4e192]: Evidence library
+                        - paragraph [ref=f4e193]: The quieter link beside the button. It always opens the Publications page.
+                      - generic [ref=f4e194]:
+                        - generic [ref=f4e195]: Hero photograph*
+                        - button "Replace" [ref=f4e200]
+                        - paragraph [ref=f4e201]: The photo on the right of the opening. Jigsaw’s own photographs only — no stock imagery and no AI-generated people; identifiable faces need written consent.
+                      - generic [ref=f4e202]:
+                        - generic [ref=f4e203]: Photo links to
+                        - generic [ref=f4e205]:
+                          - radiogroup "Photo links to — link type" [ref=f4e206]:
+                            - radio "Page on this site" [checked] [ref=f4e207]
+                            - radio "External URL" [ref=f4e208]
+                          - combobox "Photo links to" [ref=f4e210]:
+                            - generic [ref=f4e211]:
+                              - generic [ref=f4e212]: "Case studies · Dubai Cares and UNHCR: Voices of Refugee Youth"
+                              - generic [ref=f4e213]: /case-studies/voices-of-refugee-youth
+                        - paragraph [ref=f4e216]: The case study the photo opens when clicked.
+                      - generic [ref=f4e217]:
+                        - generic [ref=f4e218]: Photo caption
+                        - textbox "Photo caption" [ref=f4e220]: Voices of Refugee Youth, Pakistan and Rwanda
+                        - paragraph [ref=f4e221]: The one-line credit under the photo, naming the study it comes from.
+                      - generic [ref=f4e222]:
+                        - generic [ref=f4e223]: Stat line — years label
+                        - textbox "Stat line — years label" [ref=f4e225]: years
+                        - paragraph [ref=f4e226]: The word after the years figure in the small line under the photo. The figures themselves live in Settings → Organisation.
+                      - generic [ref=f4e227]:
+                        - generic [ref=f4e228]: Stat line — assignments label
+                        - textbox "Stat line — assignments label" [ref=f4e230]: assignments
+                        - paragraph [ref=f4e231]: The word after the assignments figure.
+                      - generic [ref=f4e232]:
+                        - generic [ref=f4e233]: Stat line — organisations label
+                        - textbox "Stat line — organisations label" [ref=f4e235]: organisations
+                        - paragraph [ref=f4e236]: The word after the organisations figure.
+                  - region [ref=f4e237]:
+                    - heading "Three ways in" [level=2] [ref=f4e238]
+                    - paragraph [ref=f4e239]: The three boxes pointing at Services, Technical focus and Distinctives.
+                    - generic [ref=f4e241]:
+                      - generic [ref=f4e242]: Signpost boxes
+                      - list [ref=f4e245]:
+                        - listitem [ref=f4e246]:
+                          - button "Services" [ref=f4e249]
+                        - listitem [ref=f4e253]:
+                          - button "Technical focus" [ref=f4e256]
+                        - listitem [ref=f4e260]:
+                          - button "Distinctives" [ref=f4e263]
+                      - paragraph [ref=f4e267]: The three boxes in the brief’s order. Titles and destinations are fixed by the brief; the summaries are still awaited from the Jigsaw team.
+                  - region [ref=f4e268]:
+                    - heading "Where we work" [level=2] [ref=f4e269]
+                    - paragraph [ref=f4e270]: The world map, its summary sentence and the country list behind it.
+                    - generic [ref=f4e271]:
+                      - generic [ref=f4e272]:
+                        - generic [ref=f4e273]: Section heading*
+                        - textbox "Section heading" [ref=f4e275]: Global reach, local evidence
+                      - generic [ref=f4e276]:
+                        - generic [ref=f4e277]: Summary beside the map
+                        - generic [ref=f4e279]:
+                          - textbox "Summary beside the map" [ref=f4e280]: Placeholder — summary sentence for the global map. Copy to come from the Jigsaw team.
+                          - paragraph [ref=f4e281]: Blank line starts a new paragraph.
+                        - paragraph [ref=f4e282]: A short paragraph about where Jigsaw works. Still awaited from the Jigsaw team.
+                      - generic [ref=f4e283]:
+                        - generic [ref=f4e284]: Note under the summary
+                        - textbox "Note under the summary" [ref=f4e286]: Drawn from our published case studies and not yet complete.
+                        - paragraph [ref=f4e287]: Follows the automatic “(number) countries shown.” count — the count itself comes from the country list below and cannot be typed.
+                      - generic [ref=f4e288]:
+                        - generic [ref=f4e289]: Countries on the map
+                        - generic [ref=f4e291]:
+                          - list [ref=f4e292]:
+                            - listitem [ref=f4e293]:
+                              - generic [ref=f4e295]:
+                                - button "Reorder this Country" [ref=f4e296]
+                                - button "United Kingdom" [ref=f4e299]
+                                - button "Remove United Kingdom" [ref=f4e303]
+                            - listitem [ref=f4e306]:
+                              - generic [ref=f4e308]:
+                                - button "Reorder this Country" [ref=f4e309]
+                                - button "Zambia" [ref=f4e312]
+                                - button "Remove Zambia" [ref=f4e316]
+                            - listitem [ref=f4e319]:
+                              - generic [ref=f4e321]:
+                                - button "Reorder this Country" [ref=f4e322]
+                                - button "Afghanistan" [ref=f4e325]
+                                - button "Remove Afghanistan" [ref=f4e329]
+                            - listitem [ref=f4e332]:
+                              - generic [ref=f4e334]:
+                                - button "Reorder this Country" [ref=f4e335]
+                                - button "Bangladesh" [ref=f4e338]
+                                - button "Remove Bangladesh" [ref=f4e342]
+                            - listitem [ref=f4e345]:
+                              - generic [ref=f4e347]:
+                                - button "Reorder this Country" [ref=f4e348]
+                                - button "Egypt" [ref=f4e351]
+                                - button "Remove Egypt" [ref=f4e355]
+                            - listitem [ref=f4e358]:
+                              - generic [ref=f4e360]:
+                                - button "Reorder this Country" [ref=f4e361]
+                                - button "Jordan" [ref=f4e364]
+                                - button "Remove Jordan" [ref=f4e368]
+                            - listitem [ref=f4e371]:
+                              - generic [ref=f4e373]:
+                                - button "Reorder this Country" [ref=f4e374]
+                                - button "Kenya" [ref=f4e377]
+                                - button "Remove Kenya" [ref=f4e381]
+                            - listitem [ref=f4e384]:
+                              - generic [ref=f4e386]:
+                                - button "Reorder this Country" [ref=f4e387]
+                                - button "Lebanon" [ref=f4e390]
+                                - button "Remove Lebanon" [ref=f4e394]
+                            - listitem [ref=f4e397]:
+                              - generic [ref=f4e399]:
+                                - button "Reorder this Country" [ref=f4e400]
+                                - button "Pakistan" [ref=f4e403]
+                                - button "Remove Pakistan" [ref=f4e407]
+                            - listitem [ref=f4e410]:
+                              - generic [ref=f4e412]:
+                                - button "Reorder this Country" [ref=f4e413]
+                                - button "Rwanda" [ref=f4e416]
+                                - button "Remove Rwanda" [ref=f4e420]
+                            - listitem [ref=f4e423]:
+                              - generic [ref=f4e425]:
+                                - button "Reorder this Country" [ref=f4e426]
+                                - button "Türkiye" [ref=f4e429]
+                                - button "Remove Türkiye" [ref=f4e433]
+                            - listitem [ref=f4e436]:
+                              - generic [ref=f4e438]:
+                                - button "Reorder this Country" [ref=f4e439]
+                                - button "Uganda" [ref=f4e442]
+                                - button "Remove Uganda" [ref=f4e446]
+                          - button "Add Country" [ref=f4e449]
+                          - paragraph [ref=f4e452]: This list needs at least 1 Country.
+                        - paragraph [ref=f4e453]: Every country highlighted on the map. Tick “Office” for the two countries with a Jigsaw office — they fill orange instead of blue. The countries-shown count updates from this list.
+                      - generic [ref=f4e454]:
+                        - generic [ref=f4e455]: Legend — offices
+                        - textbox "Legend — offices" [ref=f4e457]: Our offices
+                        - paragraph [ref=f4e458]: The label beside the orange square under the map.
+                      - generic [ref=f4e459]:
+                        - generic [ref=f4e460]: Legend — where we have worked
+                        - textbox "Legend — where we have worked" [ref=f4e462]: Where we have worked
+                        - paragraph [ref=f4e463]: The label beside the blue square under the map.
+                  - region [ref=f4e464]:
+                    - heading "Who we work with" [level=2] [ref=f4e465]
+                    - paragraph [ref=f4e466]: The heading, the client’s paragraph and the logo wall. The eighteen partners themselves are edited under Partners.
+                    - generic [ref=f4e467]:
+                      - generic [ref=f4e468]:
+                        - generic [ref=f4e469]: Kicker
+                        - textbox "Kicker" [ref=f4e471]: Who we work with
+                        - paragraph [ref=f4e472]: The small capitals line above the heading.
+                      - generic [ref=f4e473]:
+                        - generic [ref=f4e474]: Section heading*
+                        - textbox "Section heading" [ref=f4e476]: Partners in building evidence
+                      - generic [ref=f4e477]:
+                        - generic [ref=f4e478]: Partners paragraph
+                        - generic [ref=f4e480]: Client copy — supplied word-for-word
+                        - generic [ref=f4e483]:
+                          - textbox "Partners paragraph" [ref=f4e484]: Over the last 15 years we have completed over 150 assignments for more than 50 leading education organisations. We work in long-term collaboration with bilateral and multilateral donors, international education organisations, private foundations and INGOs. We love working with teams who want to build evidence and put it into action to improve education decision-making.
+                          - paragraph [ref=f4e485]: Blank line starts a new paragraph.
+                        - paragraph [ref=f4e489]: The 15 years, 150 assignments and 50 organisations figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others — and the figures themselves are still under discussion with the client.
+                      - generic [ref=f4e490]:
+                        - generic [ref=f4e491]: Pending-logos note
+                        - textbox "Pending-logos note" [ref=f4e493]: Names are set in type while the partner logo files are pending.
+                        - paragraph [ref=f4e494]: The small line under the logo wall while the partner logo files are pending. Internal review note. It only shows on the public page while “Show review notes” is switched on in Site settings, and it disappears everywhere the moment that switch goes off.
+                  - region [ref=f4e495]:
+                    - heading "SEO" [level=2] [ref=f4e496]
+                    - paragraph [ref=f4e497]: How this page appears in search results and the browser tab.
+                    - generic [ref=f4e498]:
+                      - generic [ref=f4e499]:
+                        - generic [ref=f4e500]:
+                          - generic [ref=f4e501]: Search title*
+                          - generic [ref=f4e502]: 58/60
+                        - textbox "Search title" [ref=f4e503]: Jigsaw — Rigorous evidence for lasting change in education
+                        - paragraph [ref=f4e504]: Used exactly as written — the home page is the one page that does not add the “— Jigsaw” suffix.
+                      - generic [ref=f4e505]:
+                        - generic [ref=f4e506]:
+                          - generic [ref=f4e507]: Search description
+                          - generic [ref=f4e508]: 202/160
+                        - generic [ref=f4e509]:
+                          - textbox "Search description" [ref=f4e510]: Jigsaw is an education research practice. We work globally and focus on countries with the biggest education challenges, building and using evidence to improve learning and strengthen education systems.
+                          - paragraph [ref=f4e511]: Blank line starts a new paragraph.
+                        - paragraph [ref=f4e512]: The sentence search engines show under the title. Aim for one or two plain sentences.
+                - generic [ref=f4e514]:
+                  - status [ref=f4e515]: Published
+                  - button "Preview" [ref=f4e517]
+                  - button "Discard draft" [disabled]
+                  - button "Publish" [disabled]
+            - region "Live page preview" [ref=f4e521]:
+              - generic [ref=f4e522]:
+                - generic / [ref=f4e523]
+                - group "Preview width" [ref=f4e524]:
+                  - button "Desktop" [pressed] [ref=f4e525]
+                  - button "Phone" [ref=f4e526]
+                - button "Refresh" [ref=f4e527]
+                - link "Open" [ref=f4e528] [cursor=pointer]:
+                  - /url: /api/preview?to=%2F
+                - button "Close the preview" [ref=f4e531]
+  - button "Open Next.js Dev Tools" [ref=f4e540] [cursor=pointer]
+  - alert [ref=f4e544]

@@ -1,0 +1,631 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - link "Skip to content" [ref=f1e3] [cursor=pointer]:
+      - /url: "#admin-main"
+    - complementary [ref=f1e4]:
+      - generic [ref=f1e5]:
+        - link "Console Jigsaw" [ref=f1e6] [cursor=pointer]:
+          - /url: /admin
+          - generic [ref=f1e8]:
+            - generic [ref=f1e9]: Console
+            - generic [ref=f1e10]: Jigsaw
+        - navigation "Console" [ref=f1e11]:
+          - generic [ref=f1e12]:
+            - list [ref=f1e13]:
+              - listitem [ref=f1e14]:
+                - link "Dashboard" [ref=f1e15] [cursor=pointer]:
+                  - /url: /admin
+            - generic [ref=f1e19]:
+              - button "Pages" [expanded] [ref=f1e20]
+              - list [ref=f1e25]:
+                - listitem [ref=f1e26]:
+                  - link "Home" [ref=f1e27] [cursor=pointer]:
+                    - /url: /admin/pages/page-home
+                - listitem [ref=f1e30]:
+                  - link "Services" [ref=f1e31] [cursor=pointer]:
+                    - /url: /admin/pages/page-services
+                - listitem [ref=f1e33]:
+                  - link "Technical focus" [ref=f1e34] [cursor=pointer]:
+                    - /url: /admin/pages/page-technical-focus
+                - listitem [ref=f1e36]:
+                  - link "Distinctives" [ref=f1e37] [cursor=pointer]:
+                    - /url: /admin/pages/page-distinctives
+                - listitem [ref=f1e39]:
+                  - link "Team" [ref=f1e40] [cursor=pointer]:
+                    - /url: /admin/pages/page-team
+                - listitem [ref=f1e42]:
+                  - link "Case studies" [ref=f1e43] [cursor=pointer]:
+                    - /url: /admin/pages/page-case-studies
+                - listitem [ref=f1e45]:
+                  - link "Publications" [ref=f1e46] [cursor=pointer]:
+                    - /url: /admin/pages/page-publications
+                - listitem [ref=f1e48]:
+                  - link "Contact" [ref=f1e49] [cursor=pointer]:
+                    - /url: /admin/pages/page-contact
+                - listitem [ref=f1e51]:
+                  - link "Policies" [ref=f1e52] [cursor=pointer]:
+                    - /url: /admin/pages/page-policies
+                - listitem [ref=f1e54]:
+                  - link "Work for us" [ref=f1e55] [cursor=pointer]:
+                    - /url: /admin/pages/page-work-for-us
+                - listitem [ref=f1e57]:
+                  - link "Page not found" [ref=f1e58] [cursor=pointer]:
+                    - /url: /admin/pages/page-not-found
+            - button "Content" [ref=f1e61]
+            - list [ref=f1e66]:
+              - listitem [ref=f1e67]:
+                - link "Media" [ref=f1e68] [cursor=pointer]:
+                  - /url: /admin/media
+              - listitem [ref=f1e72]:
+                - link "Subscribers" [ref=f1e73] [cursor=pointer]:
+                  - /url: /admin/subscribers
+              - listitem [ref=f1e77]:
+                - link "Settings" [ref=f1e78] [cursor=pointer]:
+                  - /url: /admin/settings
+        - link "View site" [ref=f1e83] [cursor=pointer]:
+          - /url: /
+    - generic [ref=f1e86]:
+      - banner [ref=f1e87]:
+        - navigation "Breadcrumb" [ref=f1e88]:
+          - list [ref=f1e89]:
+            - listitem [ref=f1e90]:
+              - link "Console" [ref=f1e91] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f1e92]:
+              - generic [ref=f1e93]: /
+              - link "Pages" [ref=f1e94] [cursor=pointer]:
+                - /url: /admin/pages
+            - listitem [ref=f1e95]:
+              - generic [ref=f1e96]: /
+              - generic [ref=f1e97]: Home
+        - generic [ref=f1e98]:
+          - link "View site" [ref=f1e99] [cursor=pointer]:
+            - /url: /
+          - button "Account menu" [ref=f1e103]: A
+      - status [ref=f1e104]:
+        - paragraph [ref=f1e107]:
+          - text: "Review mode: visitors can see the team’s internal notes on the site."
+          - link "About review mode" [ref=f1e108] [cursor=pointer]:
+            - /url: /admin/settings
+      - main [ref=f1e109]:
+        - generic [ref=f1e110]:
+          - generic [ref=f1e111]:
+            - generic [ref=f1e112]:
+              - generic [ref=f1e113]:
+                - heading "Home" [level=1] [ref=f1e114]
+                - generic [ref=f1e115]: /
+              - paragraph [ref=f1e116]: "The front page: four core sentences, three signposts, the map and the partner wall."
+            - link "View page" [ref=f1e117] [cursor=pointer]:
+              - /url: /
+          - generic [ref=f1e121]:
+            - generic [ref=f1e123]:
+              - navigation "Sections on this page" [ref=f1e124]:
+                - list [ref=f1e125]:
+                  - listitem [ref=f1e126]:
+                    - link "Opening" [ref=f1e127] [cursor=pointer]:
+                      - /url: "#sec-hero"
+                  - listitem [ref=f1e128]:
+                    - link "Three ways in" [ref=f1e129] [cursor=pointer]:
+                      - /url: "#sec-signposts"
+                  - listitem [ref=f1e130]:
+                    - link "Where we work" [ref=f1e131] [cursor=pointer]:
+                      - /url: "#sec-map"
+                  - listitem [ref=f1e132]:
+                    - link "Who we work with" [ref=f1e133] [cursor=pointer]:
+                      - /url: "#sec-partners"
+                  - listitem [ref=f1e134]:
+                    - link "SEO" [ref=f1e135] [cursor=pointer]:
+                      - /url: "#sec-seo"
+              - generic [ref=f1e136]:
+                - generic [ref=f1e137]:
+                  - region [ref=f1e138]:
+                    - heading "Opening" [level=2] [ref=f1e139]
+                    - paragraph [ref=f1e140]: The four core sentences, the field photo and the two buttons.
+                    - generic [ref=f1e141]:
+                      - generic [ref=f1e142]:
+                        - generic [ref=f1e143]: Headline (first core sentence)*
+                        - generic [ref=f1e145]: Client copy — supplied word-for-word
+                        - textbox "Headline (first core sentence)" [ref=f1e148]: Jigsaw is an education research practice.
+                        - paragraph [ref=f1e152]: The headline must contain the exact phrase “education research” — the page finds that phrase inside the sentence to set it in italics. Reword or remove the phrase and the headline styling breaks.
+                        - paragraph [ref=f1e153]: The first of the four core sentences from the brief; it is the large headline.
+                      - generic [ref=f1e154]:
+                        - generic [ref=f1e155]: Supporting sentences
+                        - generic [ref=f1e157]: Client copy — supplied word-for-word
+                        - generic [ref=f1e160]:
+                          - list [ref=f1e161]:
+                            - listitem [ref=f1e162]:
+                              - button "We work globally and focus on countries with the biggest education challenges." [ref=f1e165]
+                            - listitem [ref=f1e169]:
+                              - button "We build and use evidence to improve learning and strengthen education systems." [ref=f1e172]
+                            - listitem [ref=f1e176]:
+                              - button "Our offices are in London and Lusaka." [ref=f1e179]
+                          - status [ref=f1e183]
+                        - paragraph [ref=f1e184]: Core sentences two to four, shown as three ruled lines under the headline.
+                      - generic [ref=f1e185]:
+                        - generic [ref=f1e186]: Orange button label*
+                        - textbox "Orange button label" [ref=f1e188]: See our work
+                        - paragraph [ref=f1e189]: The main button under the sentences. It always opens the Case studies page.
+                      - generic [ref=f1e190]:
+                        - generic [ref=f1e191]: Text link label*
+                        - textbox "Text link label" [ref=f1e193]: Evidence library
+                        - paragraph [ref=f1e194]: The quieter link beside the button. It always opens the Publications page.
+                      - generic [ref=f1e195]:
+                        - generic [ref=f1e196]: Hero photograph*
+                        - button "Replace" [ref=f1e201]
+                        - paragraph [ref=f1e202]: The photo on the right of the opening. Jigsaw’s own photographs only — no stock imagery and no AI-generated people; identifiable faces need written consent.
+                      - generic [ref=f1e203]:
+                        - generic [ref=f1e204]: Photo links to
+                        - generic [ref=f1e206]:
+                          - radiogroup "Photo links to — link type" [ref=f1e207]:
+                            - radio "Page on this site" [checked] [ref=f1e208]
+                            - radio "External URL" [ref=f1e209]
+                          - combobox "Photo links to" [ref=f1e211]:
+                            - generic [ref=f1e212]:
+                              - generic [ref=f1e213]: "Case studies · Dubai Cares and UNHCR: Voices of Refugee Youth"
+                              - generic [ref=f1e214]: /case-studies/voices-of-refugee-youth
+                        - paragraph [ref=f1e217]: The case study the photo opens when clicked.
+                      - generic [ref=f1e218]:
+                        - generic [ref=f1e219]: Photo caption
+                        - textbox "Photo caption" [ref=f1e221]: Voices of Refugee Youth, Pakistan and Rwanda
+                        - paragraph [ref=f1e222]: The one-line credit under the photo, naming the study it comes from.
+                      - generic [ref=f1e223]:
+                        - generic [ref=f1e224]: Stat line — years label
+                        - textbox "Stat line — years label" [ref=f1e226]: years
+                        - paragraph [ref=f1e227]: The word after the years figure in the small line under the photo. The figures themselves live in Settings → Organisation.
+                      - generic [ref=f1e228]:
+                        - generic [ref=f1e229]: Stat line — assignments label
+                        - textbox "Stat line — assignments label" [ref=f1e231]: assignments
+                        - paragraph [ref=f1e232]: The word after the assignments figure.
+                      - generic [ref=f1e233]:
+                        - generic [ref=f1e234]: Stat line — organisations label
+                        - textbox "Stat line — organisations label" [ref=f1e236]: organisations
+                        - paragraph [ref=f1e237]: The word after the organisations figure.
+                  - region [ref=f1e238]:
+                    - heading "Three ways in" [level=2] [ref=f1e239]
+                    - paragraph [ref=f1e240]: The three boxes pointing at Services, Technical focus and Distinctives.
+                    - generic [ref=f1e242]:
+                      - generic [ref=f1e243]: Signpost boxes
+                      - generic [ref=f1e245]:
+                        - list [ref=f1e246]:
+                          - listitem [ref=f1e247]:
+                            - button "Services" [ref=f1e250]
+                          - listitem [ref=f1e254]:
+                            - button "Technical focus" [ref=f1e257]
+                          - listitem [ref=f1e261]:
+                            - button "Distinctives" [ref=f1e264]
+                        - status [ref=f1e268]
+                      - paragraph [ref=f1e269]: The three boxes in the brief’s order. Titles and destinations are fixed by the brief; the summaries are still awaited from the Jigsaw team.
+                  - region [ref=f1e270]:
+                    - heading "Where we work" [level=2] [ref=f1e271]
+                    - paragraph [ref=f1e272]: The world map, its summary sentence and the country list behind it.
+                    - generic [ref=f1e273]:
+                      - generic [ref=f1e274]:
+                        - generic [ref=f1e275]: Section heading*
+                        - textbox "Section heading" [ref=f1e277]: Global reach, local evidence
+                      - generic [ref=f1e278]:
+                        - generic [ref=f1e279]: Summary beside the map
+                        - generic [ref=f1e281]:
+                          - textbox "Summary beside the map" [ref=f1e282]: Placeholder — summary sentence for the global map. Copy to come from the Jigsaw team.
+                          - paragraph [ref=f1e283]: Blank line starts a new paragraph.
+                        - paragraph [ref=f1e284]: A short paragraph about where Jigsaw works. Still awaited from the Jigsaw team.
+                      - generic [ref=f1e285]:
+                        - generic [ref=f1e286]: Note under the summary
+                        - textbox "Note under the summary" [ref=f1e288]: Drawn from our published case studies and not yet complete.
+                        - paragraph [ref=f1e289]: Follows the automatic “(number) countries shown.” count — the count itself comes from the country list below and cannot be typed.
+                      - generic [ref=f1e290]:
+                        - generic [ref=f1e291]: Countries on the map
+                        - generic [ref=f1e293]:
+                          - list [ref=f1e294]:
+                            - listitem [ref=f1e295]:
+                              - generic [ref=f1e297]:
+                                - button "Reorder this Country" [ref=f1e298]
+                                - button "United Kingdom" [ref=f1e301]
+                                - button "Remove United Kingdom" [ref=f1e305]
+                            - listitem [ref=f1e308]:
+                              - generic [ref=f1e310]:
+                                - button "Reorder this Country" [ref=f1e311]
+                                - button "Zambia" [ref=f1e314]
+                                - button "Remove Zambia" [ref=f1e318]
+                            - listitem [ref=f1e321]:
+                              - generic [ref=f1e323]:
+                                - button "Reorder this Country" [ref=f1e324]
+                                - button "Afghanistan" [ref=f1e327]
+                                - button "Remove Afghanistan" [ref=f1e331]
+                            - listitem [ref=f1e334]:
+                              - generic [ref=f1e336]:
+                                - button "Reorder this Country" [ref=f1e337]
+                                - button "Bangladesh" [ref=f1e340]
+                                - button "Remove Bangladesh" [ref=f1e344]
+                            - listitem [ref=f1e347]:
+                              - generic [ref=f1e349]:
+                                - button "Reorder this Country" [ref=f1e350]
+                                - button "Egypt" [ref=f1e353]
+                                - button "Remove Egypt" [ref=f1e357]
+                            - listitem [ref=f1e360]:
+                              - generic [ref=f1e362]:
+                                - button "Reorder this Country" [ref=f1e363]
+                                - button "Jordan" [ref=f1e366]
+                                - button "Remove Jordan" [ref=f1e370]
+                            - listitem [ref=f1e373]:
+                              - generic [ref=f1e375]:
+                                - button "Reorder this Country" [ref=f1e376]
+                                - button "Kenya" [ref=f1e379]
+                                - button "Remove Kenya" [ref=f1e383]
+                            - listitem [ref=f1e386]:
+                              - generic [ref=f1e388]:
+                                - button "Reorder this Country" [ref=f1e389]
+                                - button "Lebanon" [ref=f1e392]
+                                - button "Remove Lebanon" [ref=f1e396]
+                            - listitem [ref=f1e399]:
+                              - generic [ref=f1e401]:
+                                - button "Reorder this Country" [ref=f1e402]
+                                - button "Pakistan" [ref=f1e405]
+                                - button "Remove Pakistan" [ref=f1e409]
+                            - listitem [ref=f1e412]:
+                              - generic [ref=f1e414]:
+                                - button "Reorder this Country" [ref=f1e415]
+                                - button "Rwanda" [ref=f1e418]
+                                - button "Remove Rwanda" [ref=f1e422]
+                            - listitem [ref=f1e425]:
+                              - generic [ref=f1e427]:
+                                - button "Reorder this Country" [ref=f1e428]
+                                - button "Türkiye" [ref=f1e431]
+                                - button "Remove Türkiye" [ref=f1e435]
+                            - listitem [ref=f1e438]:
+                              - generic [ref=f1e440]:
+                                - button "Reorder this Country" [ref=f1e441]
+                                - button "Uganda" [ref=f1e444]
+                                - button "Remove Uganda" [ref=f1e448]
+                          - status [ref=f1e451]
+                          - button "Add Country" [ref=f1e452]
+                          - paragraph [ref=f1e455]: This list needs at least 1 Country.
+                        - paragraph [ref=f1e456]: Every country highlighted on the map. Tick “Office” for the two countries with a Jigsaw office — they fill orange instead of blue. The countries-shown count updates from this list.
+                      - generic [ref=f1e457]:
+                        - generic [ref=f1e458]: Legend — offices
+                        - textbox "Legend — offices" [ref=f1e460]: Our offices
+                        - paragraph [ref=f1e461]: The label beside the orange square under the map.
+                      - generic [ref=f1e462]:
+                        - generic [ref=f1e463]: Legend — where we have worked
+                        - textbox "Legend — where we have worked" [ref=f1e465]: Where we have worked
+                        - paragraph [ref=f1e466]: The label beside the blue square under the map.
+                  - region [ref=f1e467]:
+                    - heading "Who we work with" [level=2] [ref=f1e468]
+                    - paragraph [ref=f1e469]: The heading, the client’s paragraph and the logo wall. The eighteen partners themselves are edited under Partners.
+                    - generic [ref=f1e470]:
+                      - generic [ref=f1e471]:
+                        - generic [ref=f1e472]: Kicker
+                        - textbox "Kicker" [ref=f1e474]: Who we work with
+                        - paragraph [ref=f1e475]: The small capitals line above the heading.
+                      - generic [ref=f1e476]:
+                        - generic [ref=f1e477]: Section heading*
+                        - textbox "Section heading" [ref=f1e479]: Partners in building evidence
+                      - generic [ref=f1e480]:
+                        - generic [ref=f1e481]: Partners paragraph
+                        - generic [ref=f1e483]: Client copy — supplied word-for-word
+                        - generic [ref=f1e486]:
+                          - textbox "Partners paragraph" [ref=f1e487]: Over the last 15 years we have completed over 150 assignments for more than 50 leading education organisations. We work in long-term collaboration with bilateral and multilateral donors, international education organisations, private foundations and INGOs. We love working with teams who want to build evidence and put it into action to improve education decision-making.
+                          - paragraph [ref=f1e488]: Blank line starts a new paragraph.
+                        - paragraph [ref=f1e492]: The 15 years, 150 assignments and 50 organisations figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others — and the figures themselves are still under discussion with the client.
+                      - generic [ref=f1e493]:
+                        - generic [ref=f1e494]: Pending-logos note
+                        - textbox "Pending-logos note" [ref=f1e496]: Names are set in type while the partner logo files are pending.
+                        - paragraph [ref=f1e497]: The small line under the logo wall while the partner logo files are pending. Internal review note. It only shows on the public page while “Show review notes” is switched on in Site settings, and it disappears everywhere the moment that switch goes off.
+                  - region [ref=f1e498]:
+                    - heading "SEO" [level=2] [ref=f1e499]
+                    - paragraph [ref=f1e500]: How this page appears in search results and the browser tab.
+                    - generic [ref=f1e501]:
+                      - generic [ref=f1e502]:
+                        - generic [ref=f1e503]:
+                          - generic [ref=f1e504]: Search title*
+                          - generic [ref=f1e505]: 58/60
+                        - textbox "Search title" [ref=f1e506]: Jigsaw — Rigorous evidence for lasting change in education
+                        - paragraph [ref=f1e507]: Used exactly as written — the home page is the one page that does not add the “— Jigsaw” suffix.
+                      - generic [ref=f1e508]:
+                        - generic [ref=f1e509]:
+                          - generic [ref=f1e510]: Search description
+                          - generic [ref=f1e511]: 202/160
+                        - generic [ref=f1e512]:
+                          - textbox "Search description" [ref=f1e513]: Jigsaw is an education research practice. We work globally and focus on countries with the biggest education challenges, building and using evidence to improve learning and strengthen education systems.
+                          - paragraph [ref=f1e514]: Blank line starts a new paragraph.
+                        - paragraph [ref=f1e515]: The sentence search engines show under the title. Aim for one or two plain sentences.
+                - generic [ref=f1e517]:
+                  - status [ref=f1e518]: Published
+                  - button "Preview" [ref=f1e520]
+                  - button "Discard draft" [disabled]
+                  - button "Publish" [disabled]
+            - region "Live page preview" [ref=f1e524]:
+              - generic [ref=f1e525]:
+                - generic / [ref=f1e526]
+                - group "Preview width" [ref=f1e527]:
+                  - button "Desktop" [pressed] [ref=f1e528]
+                  - button "Phone" [ref=f1e529]
+                - button "Refresh" [ref=f1e530]
+                - link "Open" [ref=f1e531] [cursor=pointer]:
+                  - /url: /api/preview?to=%2F
+                - button "Close the preview" [ref=f1e534]
+              - iframe [ref=f1e540]:
+                - generic [ref=f2e1]:
+                  - link "Skip to content" [ref=f2e2] [cursor=pointer]:
+                    - /url: "#main"
+                  - banner [ref=f2e3]:
+                    - generic [ref=f2e5]:
+                      - link "Jigsaw Education Evidence — home" [ref=f2e6] [cursor=pointer]:
+                        - /url: /
+                        - generic [ref=f2e8]:
+                          - generic [ref=f2e9]: Jigsaw
+                          - generic [ref=f2e10]: Education Evidence
+                      - button "Open menu" [ref=f2e11]
+                  - generic:
+                    - dialog "Menu":
+                      - generic:
+                        - link "Jigsaw Education Evidence — home":
+                          - /url: /
+                          - generic:
+                            - generic: Jigsaw
+                            - generic: Education Evidence
+                        - button "Close menu"
+                      - navigation "Main, mobile":
+                        - list:
+                          - listitem:
+                            - link "Services":
+                              - /url: /services
+                          - listitem:
+                            - link "Technical focus":
+                              - /url: /technical-focus
+                          - listitem:
+                            - link "Distinctives":
+                              - /url: /distinctives
+                          - listitem:
+                            - link "Team":
+                              - /url: /team
+                          - listitem:
+                            - link "Case studies":
+                              - /url: /case-studies
+                          - listitem:
+                            - link "Publications":
+                              - /url: /publications
+                          - listitem:
+                            - link "Contact":
+                              - /url: /contact
+                        - list:
+                          - listitem:
+                            - link "Policies":
+                              - /url: /policies
+                          - listitem:
+                            - link "Work for us":
+                              - /url: /work-for-us
+                        - list:
+                          - listitem:
+                            - link "info@jigsaweducation.org":
+                              - /url: mailto:info@jigsaweducation.org
+                          - listitem:
+                            - link "zambiateam@jigsaweducation.org":
+                              - /url: mailto:zambiateam@jigsaweducation.org
+                  - generic [ref=f2e14]:
+                    - main [ref=f2e15]:
+                      - generic [ref=f2e16]:
+                        - generic [ref=f2e17]:
+                          - generic [ref=f2e21]:
+                            - generic [ref=f2e22]:
+                              - heading [level=1] [ref=f2e23]:
+                                - text: Jigsaw is an
+                                - emphasis [ref=f2e24]: education research
+                                - text: practice.
+                              - generic [ref=f2e25]:
+                                - paragraph [ref=f2e26]: We work globally and focus on countries with the biggest education challenges.
+                                - paragraph [ref=f2e27]: We build and use evidence to improve learning and strengthen education systems.
+                                - paragraph [ref=f2e28]: Our offices are in London and Lusaka.
+                              - generic [ref=f2e29]:
+                                - link "See our work" [ref=f2e30] [cursor=pointer]:
+                                  - /url: /case-studies
+                                - link "Evidence library" [ref=f2e33] [cursor=pointer]:
+                                  - /url: /publications
+                            - generic [ref=f2e34]:
+                              - link "Voices of Refugee Youth, Pakistan and Rwanda" [ref=f2e35] [cursor=pointer]:
+                                - /url: /case-studies/voices-of-refugee-youth
+                              - paragraph [ref=f2e42]: 15 years/150+ assignments/50+ organisations
+                          - list [ref=f2e45]:
+                            - listitem [ref=f2e46]:
+                              - heading "Services" [level=2] [ref=f2e47]
+                              - paragraph [ref=f2e48]: Copy tbcPlaceholder — brief summary of Services for the home page. Copy to come from the Jigsaw team.
+                              - link "Read more about Services" [ref=f2e49] [cursor=pointer]:
+                                - /url: /services
+                                - generic [ref=f2e50]:
+                                  - text: Read more
+                                  - generic [ref=f2e51]: about Services
+                            - listitem [ref=f2e54]:
+                              - heading "Technical focus" [level=2] [ref=f2e55]
+                              - paragraph [ref=f2e56]: Copy tbcPlaceholder — brief summary of Technical focus for the home page. Copy to come from the Jigsaw team.
+                              - link "Read more about Technical focus" [ref=f2e57] [cursor=pointer]:
+                                - /url: /technical-focus
+                                - generic [ref=f2e58]:
+                                  - text: Read more
+                                  - generic [ref=f2e59]: about Technical focus
+                            - listitem [ref=f2e62]:
+                              - heading "Distinctives" [level=2] [ref=f2e63]
+                              - paragraph [ref=f2e64]: Copy tbcPlaceholder — brief summary of Distinctives for the home page. Copy to come from the Jigsaw team.
+                              - link "Read more about Distinctives" [ref=f2e65] [cursor=pointer]:
+                                - /url: /distinctives
+                                - generic [ref=f2e66]:
+                                  - text: Read more
+                                  - generic [ref=f2e67]: about Distinctives
+                              - link "Our story" [ref=f2e70] [cursor=pointer]:
+                                - /url: /distinctives#our-story
+                        - generic [ref=f2e76]:
+                          - generic [ref=f2e78]:
+                            - 'img "World map highlighting 12 countries where Jigsaw has worked: United Kingdom, Zambia, Afghanistan, Bangladesh, Egypt, Jordan, Kenya, Lebanon, Pakistan, Rwanda, Türkiye, Uganda." [ref=f2e79]'
+                            - generic [ref=f2e258]:
+                              - generic [ref=f2e259]: Our offices
+                              - generic [ref=f2e261]: Where we have worked
+                              - status
+                          - generic [ref=f2e263]:
+                            - heading "Global reach, local evidence" [level=2] [ref=f2e265]
+                            - paragraph [ref=f2e266]: Copy tbcPlaceholder — summary sentence for the global map. Copy to come from the Jigsaw team.
+                            - paragraph [ref=f2e267]:
+                              - generic [ref=f2e268]: 12 countries shown.
+                              - text: Drawn from our published case studies and not yet complete.
+                        - generic [ref=f2e270]:
+                          - generic [ref=f2e271]:
+                            - generic [ref=f2e273]:
+                              - paragraph [ref=f2e274]: Who we work with
+                              - heading "Partners in building evidence" [level=2] [ref=f2e275]
+                            - paragraph [ref=f2e276]: Over the last 15 years we have completed over 150 assignments for more than 50 leading education organisations. We work in long-term collaboration with bilateral and multilateral donors, international education organisations, private foundations and INGOs. We love working with teams who want to build evidence and put it into action to improve education decision-making.
+                          - generic [ref=f2e278]:
+                            - generic [ref=f2e279]:
+                              - generic [ref=f2e281]:
+                                - generic [ref=f2e282]: UNICEF
+                                - generic [ref=f2e284]: UNHCR
+                                - generic [ref=f2e286]: UNESCO
+                                - generic [ref=f2e288]: World Bank
+                                - generic [ref=f2e290]: FCDO
+                                - generic [ref=f2e292]: GPE
+                                - generic [ref=f2e294]: GIZ
+                                - generic [ref=f2e296]: IDRC
+                                - generic [ref=f2e298]: European Commission
+                                - generic [ref=f2e300]: UNICEF
+                                - generic [ref=f2e302]: UNHCR
+                                - generic [ref=f2e304]: UNESCO
+                                - generic [ref=f2e306]: World Bank
+                                - generic [ref=f2e308]: FCDO
+                                - generic [ref=f2e310]: GPE
+                                - generic [ref=f2e312]: GIZ
+                                - generic [ref=f2e314]: IDRC
+                                - generic [ref=f2e316]: European Commission
+                              - generic [ref=f2e319]:
+                                - generic [ref=f2e320]: Plan
+                                - generic [ref=f2e322]: Hempel Foundation
+                                - generic [ref=f2e324]: War Child
+                                - generic [ref=f2e326]: Aga Khan Foundation
+                                - generic [ref=f2e328]: Enabel
+                                - generic [ref=f2e330]: Dubai Cares
+                                - generic [ref=f2e332]: Porticus
+                                - generic [ref=f2e334]: MBRGI
+                                - generic [ref=f2e336]: VVOB
+                                - generic [ref=f2e338]: Plan
+                                - generic [ref=f2e340]: Hempel Foundation
+                                - generic [ref=f2e342]: War Child
+                                - generic [ref=f2e344]: Aga Khan Foundation
+                                - generic [ref=f2e346]: Enabel
+                                - generic [ref=f2e348]: Dubai Cares
+                                - generic [ref=f2e350]: Porticus
+                                - generic [ref=f2e352]: MBRGI
+                                - generic [ref=f2e354]: VVOB
+                            - list [ref=f2e356]:
+                              - listitem [ref=f2e357]: United Nations Children’s Fund
+                              - listitem [ref=f2e358]: United Nations High Commissioner for Refugees
+                              - listitem [ref=f2e359]: United Nations Educational, Scientific and Cultural Organization
+                              - listitem [ref=f2e360]: The World Bank
+                              - listitem [ref=f2e361]: Foreign, Commonwealth & Development Office
+                              - listitem [ref=f2e362]: Global Partnership for Education
+                              - listitem [ref=f2e363]: Deutsche Gesellschaft für Internationale Zusammenarbeit
+                              - listitem [ref=f2e364]: International Development Research Centre
+                              - listitem [ref=f2e365]: European Commission
+                              - listitem [ref=f2e366]: Plan International
+                              - listitem [ref=f2e367]: Hempel Foundation
+                              - listitem [ref=f2e368]: War Child
+                              - listitem [ref=f2e369]: Aga Khan Foundation
+                              - listitem [ref=f2e370]: Enabel — Belgian Development Agency
+                              - listitem [ref=f2e371]: Dubai Cares
+                              - listitem [ref=f2e372]: Porticus
+                              - listitem [ref=f2e373]: Mohammed Bin Rashid Al Maktoum Global Initiatives
+                              - listitem [ref=f2e374]: VVOB — Education for Development
+                            - paragraph [ref=f2e375]: Names are set in type while the partner logo files are pending.
+                    - contentinfo [ref=f2e376]:
+                      - generic [ref=f2e377]:
+                        - generic [ref=f2e378]:
+                          - generic [ref=f2e379]:
+                            - generic [ref=f2e380]:
+                              - link "Jigsaw Education Evidence — home" [ref=f2e382] [cursor=pointer]:
+                                - /url: /
+                                - generic [ref=f2e384]:
+                                  - generic [ref=f2e385]: Jigsaw
+                                  - generic [ref=f2e386]: Education Evidence
+                              - paragraph [ref=f2e387]: Rigorous evidence for lasting change in education
+                            - link "in LinkedIn" [ref=f2e389] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/jigsaw-education-org/
+                              - generic [ref=f2e390]: in
+                              - generic [ref=f2e392]: LinkedIn
+                          - generic [ref=f2e393]:
+                            - heading "Occasional updates about our work" [level=2] [ref=f2e394]
+                            - paragraph [ref=f2e395]: New case studies and publications, a few times a year. Nothing more frequent than that.
+                            - generic [ref=f2e398]:
+                              - generic [ref=f2e399]: Email address
+                              - textbox "Email address" [ref=f2e400]:
+                                - /placeholder: your@email.com
+                              - button "Sign up" [ref=f2e401]
+                        - generic [ref=f2e402]:
+                          - navigation "Footer" [ref=f2e403]:
+                            - heading "Explore" [level=2] [ref=f2e404]
+                            - list [ref=f2e405]:
+                              - listitem [ref=f2e406]:
+                                - link "Services" [ref=f2e407] [cursor=pointer]:
+                                  - /url: /services
+                              - listitem [ref=f2e408]:
+                                - link "Technical focus" [ref=f2e409] [cursor=pointer]:
+                                  - /url: /technical-focus
+                              - listitem [ref=f2e410]:
+                                - link "Distinctives" [ref=f2e411] [cursor=pointer]:
+                                  - /url: /distinctives
+                              - listitem [ref=f2e412]:
+                                - link "Team" [ref=f2e413] [cursor=pointer]:
+                                  - /url: /team
+                              - listitem [ref=f2e414]:
+                                - link "Case studies" [ref=f2e415] [cursor=pointer]:
+                                  - /url: /case-studies
+                              - listitem [ref=f2e416]:
+                                - link "Publications" [ref=f2e417] [cursor=pointer]:
+                                  - /url: /publications
+                              - listitem [ref=f2e418]:
+                                - link "Contact" [ref=f2e419] [cursor=pointer]:
+                                  - /url: /contact
+                          - navigation "Legal and careers" [ref=f2e420]:
+                            - heading "More" [level=2] [ref=f2e421]
+                            - list [ref=f2e422]:
+                              - listitem [ref=f2e423]:
+                                - link "Policies" [ref=f2e424] [cursor=pointer]:
+                                  - /url: /policies
+                              - listitem [ref=f2e425]:
+                                - link "Work for us" [ref=f2e426] [cursor=pointer]:
+                                  - /url: /work-for-us
+                          - generic [ref=f2e427]:
+                            - heading "London" [level=2] [ref=f2e428]
+                            - generic [ref=f2e429]:
+                              - generic [ref=f2e430]: Jigsaw
+                              - generic [ref=f2e431]: United Kingdom
+                              - link "info@jigsaweducation.org" [ref=f2e432] [cursor=pointer]:
+                                - /url: mailto:info@jigsaweducation.org
+                          - generic [ref=f2e433]:
+                            - heading "Lusaka" [level=2] [ref=f2e434]
+                            - generic [ref=f2e435]:
+                              - generic [ref=f2e436]: Jigsaw Zambia
+                              - generic [ref=f2e437]: Zambia
+                              - link "zambiateam@jigsaweducation.org" [ref=f2e438] [cursor=pointer]:
+                                - /url: mailto:zambiateam@jigsaweducation.org
+                        - generic [ref=f2e439]:
+                          - paragraph [ref=f2e440]: Jigsaw Education Evidence Ltd. is a certified Social Enterprise and a company registered in England and Wales (company number 06844615 and VAT number GB173850004) and Zambia (company number 120251030229).
+                          - generic [ref=f2e441]:
+                            - paragraph [ref=f2e442]: © 2026
+                            - link "Back to top" [ref=f2e443] [cursor=pointer]:
+                              - /url: "#main"
+                  - navigation "Quick navigation" [ref=f2e444]:
+                    - list [ref=f2e445]:
+                      - listitem [ref=f2e446]:
+                        - link "Home" [ref=f2e447] [cursor=pointer]:
+                          - /url: /
+                      - listitem [ref=f2e453]:
+                        - link "Services" [ref=f2e454] [cursor=pointer]:
+                          - /url: /services
+                      - listitem [ref=f2e459]:
+                        - link "Work" [ref=f2e460] [cursor=pointer]:
+                          - /url: /case-studies
+                      - listitem [ref=f2e465]:
+                        - link "Library" [ref=f2e466] [cursor=pointer]:
+                          - /url: /publications
+                      - listitem [ref=f2e471]:
+                        - button "Open menu" [ref=f2e472]:
+                          - generic [ref=f2e473]: Menu
+                  - button
+                  - button "Open Next.js Dev Tools" [ref=f2e482] [cursor=pointer]
+                  - alert [ref=f2e486]
+  - button "Open Next.js Dev Tools" [ref=f1e546] [cursor=pointer]
+  - alert [ref=f1e550]

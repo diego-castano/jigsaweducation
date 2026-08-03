@@ -316,7 +316,7 @@ export default function SchemaForm({
         </div>
 
         <div className="sticky bottom-0 z-20 mt-6 -mx-1 pb-2">
-          <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-cream-200 bg-cream-100/85 p-3 shadow-md backdrop-blur">
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-cream-200 bg-cream-100/85 p-2.5 shadow-md backdrop-blur">
             <StatusPill status={status} draftExists={draftExists} />
             <span className="flex-1" />
             {onTogglePreview && (
@@ -325,7 +325,7 @@ export default function SchemaForm({
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={handleDiscard} disabled={!draftExists}>
-              Discard draft
+              Discard
             </Button>
             <Button
               variant="primary"
