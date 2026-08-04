@@ -66,7 +66,7 @@ export default async function TeamMemberPage({ params }) {
         <nav aria-label="Breadcrumb" className="mb-10">
           <Link
             href="/team"
-            className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
+            className="inline-flex items-center gap-2 py-2 -my-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
             {ui.breadcrumbTeam}
@@ -111,7 +111,7 @@ export default async function TeamMemberPage({ params }) {
                         href={person.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sea-700 hover:text-orange-600 transition-colors"
+                        className="inline-flex items-center gap-2 py-2 -my-2 text-sea-700 hover:text-orange-600 transition-colors"
                       >
                         <Icon name="external" size={15} />
                         LinkedIn
@@ -127,7 +127,7 @@ export default async function TeamMemberPage({ params }) {
                         href={person.orcid}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sea-700 hover:text-orange-600 transition-colors"
+                        className="inline-flex items-center gap-2 py-2 -my-2 text-sea-700 hover:text-orange-600 transition-colors"
                       >
                         <Icon name="external" size={15} />
                         ORCID

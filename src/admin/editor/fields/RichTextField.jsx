@@ -32,7 +32,7 @@ const toEditorHtml = (value) => {
 // icons reads worse than words — so the toolbar is typographic: B, I, Link,
 // the two list kinds. Same convention as classic word processors.
 const BUTTON_BASE =
-  'grid h-8 min-w-8 place-items-center rounded-lg px-1.5 text-[13px] transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none disabled:opacity-35';
+  'grid h-8 min-w-8 place-items-center rounded-lg px-1.5 text-[13px] pointer-coarse:h-11 pointer-coarse:min-w-11 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none disabled:opacity-35';
 
 function ToolButton({ label, children, active, disabled, onClick }) {
   return (

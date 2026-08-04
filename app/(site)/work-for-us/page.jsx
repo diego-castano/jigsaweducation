@@ -24,7 +24,7 @@ const INTEREST_LINKS = [
       <Link
         key={key}
         href="/contact"
-        className="text-sea-700 hover:text-orange-600 underline underline-offset-4"
+        className="py-1 text-sea-700 hover:text-orange-600 underline underline-offset-4"
       >
         contact us
       </Link>
@@ -36,7 +36,7 @@ const INTEREST_LINKS = [
       <a
         key={key}
         href="#signup"
-        className="text-sea-700 hover:text-orange-600 underline underline-offset-4"
+        className="py-1 text-sea-700 hover:text-orange-600 underline underline-offset-4"
       >
         sign-up
       </a>

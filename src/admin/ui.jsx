@@ -87,6 +87,8 @@ export function Button({
       disabled={disabled || loading}
       className={cx(
         'tactile inline-flex items-center justify-center rounded-full transition-colors',
+        // iPads and other touch screens get comfortable 44px targets.
+        'pointer-coarse:min-h-11',
         'disabled:opacity-60 disabled:pointer-events-none',
         FOCUS_RING,
         BUTTON_VARIANTS[variant] || BUTTON_VARIANTS.primary,
@@ -116,7 +118,9 @@ export function IconButton({
   className = '',
   ...rest
 }) {
-  const pad = size === 'sm' ? 'p-1.5' : size === 'lg' ? 'p-3' : 'p-2';
+  const pad =
+    (size === 'sm' ? 'p-1.5' : size === 'lg' ? 'p-3' : 'p-2') +
+    ' pointer-coarse:min-h-11 pointer-coarse:min-w-11';
   const glyph = size === 'sm' ? 16 : size === 'lg' ? 22 : 18;
   const look =
     variant === 'danger'
@@ -133,6 +137,8 @@ export function IconButton({
       disabled={disabled}
       className={cx(
         'tactile inline-flex items-center justify-center rounded-full transition-colors',
+        // iPads and other touch screens get comfortable 44px targets.
+        'pointer-coarse:min-h-11',
         'disabled:opacity-50 disabled:pointer-events-none',
         FOCUS_RING,
         pad,
@@ -692,6 +698,7 @@ export function Tabs({ tabs, active, onChange, label = 'Sections', className = '
             onClick={() => onChange?.(tab.id)}
             onKeyDown={(e) => onKeyDown(e, index)}
             className={cx(
+              'pointer-coarse:min-h-11',
               'relative shrink-0 px-4 py-2.5 text-sm rounded-t-lg transition-colors',
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset',
               selected

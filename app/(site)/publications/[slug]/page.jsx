@@ -73,7 +73,7 @@ export default async function PublicationPage({ params }) {
         <nav aria-label="Breadcrumb" className="mb-10">
           <Link
             href="/publications"
-            className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
+            className="inline-flex items-center gap-2 py-2 -my-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
             {ui.breadcrumbPublications}
@@ -151,7 +151,7 @@ export default async function PublicationPage({ params }) {
           <h2 className="font-display text-2xl sm:text-3xl text-navy-900 mb-8">
             {ui.morePublicationsTemplate.replace('{type}', pub.type.toLowerCase())}
           </h2>
-          <ul className="grid lg:grid-cols-2 gap-5">
+          <ul className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {related.map((p) => (
               <PublicationCard key={p.slug} pub={p} ui={ui} mediaMeta={mediaMeta} />
             ))}

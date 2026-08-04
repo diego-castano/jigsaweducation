@@ -62,7 +62,7 @@ export default async function CaseStudyPage({ params }) {
         <nav aria-label="Breadcrumb" className="mb-10">
           <Link
             href="/case-studies"
-            className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
+            className="inline-flex items-center gap-2 py-2 -my-2 text-sm text-ink-600 hover:text-orange-600 transition-colors"
           >
             <Icon name="chevron-left" size={16} />
             {ui.breadcrumbCaseStudies}
@@ -100,7 +100,7 @@ export default async function CaseStudyPage({ params }) {
               {service && (
                 <Link
                   href={`/services#${service.slug}`}
-                  className="block mt-2 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
+                  className="inline-block mt-1 py-1.5 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
                 >
                   {service.title}
                 </Link>

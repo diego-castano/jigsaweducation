@@ -85,7 +85,7 @@ export default function CaseStudyBrowser({ studies, facets, ui = {}, mediaMeta }
       />
 
       {results.length > 0 ? (
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
           {results.map((study) => (
             <CaseStudyCard key={study.slug} study={study} mediaMeta={mediaMeta} />
           ))}

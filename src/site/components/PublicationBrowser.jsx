@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import FilterBar from './FilterBar';
 import PublicationCard from './PublicationCard';
 import Icon from '../../components/Icon';
@@ -31,6 +31,26 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
   });
   const [sort, setSort] = useState('recent');
   const [page, setPage] = useState(1);
+  const listRef = useRef(null);
+  const scrollOnNextPage = useRef(false);
+
+  // Pagination on a phone leaves the reader stranded at the foot of the old
+  // page, so a page change also walks them back to the top of the list.
+  // The scroll waits for the re-render (a shorter page 2 would otherwise
+  // clamp it mid-flight) and teleports when the OS asks for reduced motion.
+  const goToPage = (n) => {
+    setPage((p) => {
+      if (n !== p) scrollOnNextPage.current = true;
+      return n;
+    });
+  };
+
+  useEffect(() => {
+    if (!scrollOnNextPage.current) return;
+    scrollOnNextPage.current = false;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    listRef.current?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }, [page]);
 
   const toggle = (key, value) => {
     setPage(1);
@@ -108,7 +128,7 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
 
       {visible.length > 0 ? (
         <>
-          <ul className="grid lg:grid-cols-2 gap-5 mt-8">
+          <ul ref={listRef} className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-8 scroll-mt-24">
             {visible.map((pub) => (
               <PublicationCard key={pub.slug} pub={pub} ui={ui} mediaMeta={mediaMeta} />
             ))}
@@ -118,7 +138,7 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
             <nav aria-label="Pagination" className="flex items-center justify-center gap-2 mt-10">
               <button
                 type="button"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                onClick={() => goToPage(Math.max(1, current - 1))}
                 disabled={current === 1}
                 className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >
@@ -128,7 +148,7 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
                 <button
                   key={n}
                   type="button"
-                  onClick={() => setPage(n)}
+                  onClick={() => goToPage(n)}
                   aria-current={n === current ? 'page' : undefined}
                   className={`tactile min-w-11 h-11 rounded-full text-sm transition-colors ${
                     n === current
@@ -141,7 +161,7 @@ export default function PublicationBrowser({ publications, facets, perPage = 8, 
               ))}
               <button
                 type="button"
-                onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                onClick={() => goToPage(Math.min(pageCount, current + 1))}
                 disabled={current === pageCount}
                 className="tactile h-11 px-5 rounded-full border border-cream-300 text-sm text-ink-700 hover:border-cream-400 disabled:opacity-40 disabled:hover:border-cream-300 transition-colors"
               >

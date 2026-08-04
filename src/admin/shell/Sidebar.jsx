@@ -265,7 +265,7 @@ export default function Sidebar({ groups, collapsed = false, onToggleCollapsed, 
                           <Link
                             href={item.href}
                             aria-current={active ? 'page' : undefined}
-                            className={`relative block rounded-md py-1.5 pl-3 pr-2 text-[13px] leading-snug transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset ${
+                            className={`relative block rounded-md py-1.5 pointer-coarse:py-2.5 pl-3 pr-2 text-[13px] leading-snug transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset ${
                               active
                                 ? `font-bold ${accent.activeText}`
                                 : 'text-cream-200 hover:bg-navy-800/60 hover:text-cream-50'

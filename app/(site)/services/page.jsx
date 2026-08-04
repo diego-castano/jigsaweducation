@@ -74,11 +74,11 @@ export default async function ServicesPage() {
             </p>
             <p className="mt-3 text-sm text-ink-600">
               See also{' '}
-              <Link href="/technical-focus" className="link-sweep text-sea-700 hover:text-orange-600">
+              <Link href="/technical-focus" className="link-sweep py-1 text-sea-700 hover:text-orange-600">
                 {page.seeAlsoFirstLabel}
               </Link>{' '}
               and{' '}
-              <Link href="/team" className="link-sweep text-sea-700 hover:text-orange-600">
+              <Link href="/team" className="link-sweep py-1 text-sea-700 hover:text-orange-600">
                 {page.seeAlsoSecondLabel}
               </Link>
               .

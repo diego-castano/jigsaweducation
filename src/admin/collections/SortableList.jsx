@@ -63,7 +63,7 @@ function Row({ row, collection, orderable, draggable, busy, onDuplicate, onDelet
             {...listeners}
             disabled={!draggable}
             aria-label={`Reorder “${row.title}”`}
-            className="relative z-10 grid size-8 shrink-0 cursor-grab touch-none place-items-center rounded-lg text-ink-500 hover:bg-cream-200 hover:text-ink-700 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none active:cursor-grabbing disabled:cursor-default disabled:opacity-40"
+            className="relative z-10 grid size-8 pointer-coarse:size-11 shrink-0 cursor-grab touch-none place-items-center rounded-lg text-ink-500 hover:bg-cream-200 hover:text-ink-700 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none active:cursor-grabbing disabled:cursor-default disabled:opacity-40"
           >
             <Icon name="menu" size={16} />
           </button>
@@ -111,7 +111,7 @@ function Row({ row, collection, orderable, draggable, busy, onDuplicate, onDelet
             <Link
               href={`/admin/collections/${collection}/${row.id}`}
               aria-label={`Edit “${row.title}”`}
-              className="grid place-items-center rounded-lg p-1.5 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+              className="grid place-items-center rounded-lg p-1.5 pointer-coarse:min-h-11 pointer-coarse:min-w-11 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
             >
               <Icon name="edit" size={16} />
             </Link>
@@ -128,7 +128,7 @@ function Row({ row, collection, orderable, draggable, busy, onDuplicate, onDelet
                 target="_blank"
                 rel="noopener"
                 aria-label={`View “${row.title}” on the site`}
-                className="grid place-items-center rounded-lg p-1.5 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+                className="grid place-items-center rounded-lg p-1.5 pointer-coarse:min-h-11 pointer-coarse:min-w-11 text-ink-600 transition-colors hover:bg-cream-200 hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
               >
                 <Icon name="external" size={16} />
               </a>
