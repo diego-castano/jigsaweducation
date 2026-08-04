@@ -6,7 +6,7 @@ import { SESSION_COOKIE, verifySessionToken } from './src/lib/auth';
 // bites. This is the outer gate only — every admin server action re-verifies
 // the session itself via requireAdmin().
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname, search } = request.nextUrl;
 
   if (pathname === '/admin/login') return NextResponse.next();

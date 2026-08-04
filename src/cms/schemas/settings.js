@@ -700,6 +700,15 @@ const TRACKING = {
           help: 'Paste the exact snippet your analytics provider gives you. It loads at the very start of the page for every visitor. Note: search-console verification meta tags do not work here — ask your developer for those.'
         },
         {
+          name: 'googleVerification',
+          label: 'Google verification code',
+          type: 'text',
+          nullable: true,
+          seed: '',
+          help:
+            'From Google Search Console, when it asks you to verify ownership with an HTML tag: paste only the content value (the long code), not the whole tag.'
+        },
+        {
           name: 'bodySnippet',
           label: 'Body snippet',
           type: 'textarea',

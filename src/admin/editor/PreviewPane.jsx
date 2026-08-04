@@ -219,7 +219,7 @@ export default function PreviewPane({ route, lastSavedAt = 0, onClose }) {
 // pane reloads on, and the pane's two lives: a persistent second column at
 // xl: (open state remembered in localStorage) and a full-screen overlay
 // below xl: behind the action bar's Preview button.
-export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }) {
+export function SingletonEditor({ schema, targetKey, value, draft, linkTargets, brand }) {
   const route = schema.route;
 
   const [paneOpen, setPaneOpen] = useState(true);
@@ -306,6 +306,7 @@ export function SingletonEditor({ schema, targetKey, value, draft, linkTargets }
       value={value}
       draft={draft}
       linkTargets={linkTargets}
+      brand={brand}
       onSaved={route ? handleSaved : undefined}
       onTogglePreview={route ? togglePreview : undefined}
     />

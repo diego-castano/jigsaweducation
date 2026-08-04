@@ -5,7 +5,7 @@
 // admin_users table is accounts, not content — both live here beside the
 // pages that use them.
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { hashPassword, requireAdmin } from '../../lib/auth.js';
 import { query } from '../../lib/db.js';
 
@@ -117,5 +117,16 @@ export async function deleteSubscriber(id) {
     return { error: 'The subscriber could not be removed. Try again.' };
   }
   revalidatePath('/admin/subscribers');
+  return { ok: true };
+}
+
+
+// The escape hatch for anything changed outside the console (a script, a
+// direct database edit): rebuilds every cached page from the database now.
+// Harmless to press at any time.
+export async function refreshSiteCache() {
+  await requireAdmin();
+  revalidateTag('content', 'max');
+  revalidateTag('content:media', 'max');
   return { ok: true };
 }

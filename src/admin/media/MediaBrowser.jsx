@@ -6,7 +6,7 @@
 //   select — inside MediaPicker; a tile click (or a finished upload) hands
 //            the media record to `onPick`, filtered by `accept`.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '../../components/Icon.jsx';
 import { Button, EmptyState, SearchInput, Spinner, Tabs, useToast } from '../ui.jsx';
 import { listMedia, uploadMedia } from '../../cms/actions/media.js';
@@ -133,7 +133,9 @@ export default function MediaBrowser({
   initialItems = null,
   initialTotal = 0,
   onPick = null,
-  pageSize = 24
+  pageSize = 24,
+  // URLs the content currently references; enables the Unused tab.
+  usedUrls = null
 }) {
   const manage = mode === 'manage';
   const toast = useToast();
@@ -158,8 +160,12 @@ export default function MediaBrowser({
   const typeFilterRef = useRef(null);
 
   // In select mode the type filter is fixed by `accept`; otherwise the tabs.
-  const typeFilter = accept || (tab === 'all' ? undefined : tab);
+  // The Unused tab fetches every type and filters client-side against the
+  // URLs the content references, so it loads the whole library at once.
+  const unusedTab = tab === 'unused';
+  const typeFilter = accept || (tab === 'all' || unusedTab ? undefined : tab);
   typeFilterRef.current = typeFilter;
+  const usedSet = useMemo(() => new Set(usedUrls || []), [usedUrls]);
 
   // Debounced search: the input is instant, the query trails by 300ms.
   useEffect(() => {
@@ -176,7 +182,7 @@ export default function MediaBrowser({
     }
     const seq = ++seqRef.current;
     setLoading(true);
-    listMedia({ search: search || undefined, type: typeFilter, limit: pageSize, offset: 0 })
+    listMedia({ search: search || undefined, type: typeFilter, limit: unusedTab ? 500 : pageSize, offset: 0 })
       .then((result) => {
         if (seq !== seqRef.current) return;
         setItems(result.items);
@@ -191,7 +197,7 @@ export default function MediaBrowser({
         if (seq === seqRef.current) setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, typeFilter, pageSize]);
+  }, [search, typeFilter, pageSize, unusedTab]);
 
   // Revoke any leftover object URLs when the browser unmounts.
   useEffect(() => {
@@ -325,7 +331,8 @@ export default function MediaBrowser({
 
   const noun = accept === 'pdf' ? 'documents' : accept === 'image' ? 'images' : 'files';
   const filtered = Boolean(search) || tab !== 'all';
-  const showEmpty = !loading && items.length === 0 && uploads.length === 0;
+  const displayItems = tab === 'unused' ? items.filter((i) => !usedSet.has(i.url)) : items;
+  const showEmpty = !loading && displayItems.length === 0 && uploads.length === 0;
   const gridClass = manage
     ? 'grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5'
     : 'grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4';
@@ -369,7 +376,12 @@ export default function MediaBrowser({
 
       {!accept && (
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <Tabs tabs={TABS} active={tab} onChange={setTab} label="File types" />
+          <Tabs
+            tabs={usedUrls ? [...TABS, { id: 'unused', label: 'Unused' }] : TABS}
+            active={tab}
+            onChange={setTab}
+            label="File types"
+          />
           {/* Client-side count: stays right after uploads and deletes, and
               reflects the active tab or search. */}
           <p className="font-mono text-xs text-ink-500" aria-live="polite">
@@ -409,7 +421,9 @@ export default function MediaBrowser({
               body={
                 search
                   ? `No ${noun} match “${search}”. Try different words, or check the other tabs.`
-                  : `There are no ${tab === 'image' ? 'images' : 'documents'} in the library yet.`
+                  : tab === 'unused'
+                    ? 'Every file in the library is used somewhere on the site. Nothing to clean up.'
+                    : `There are no ${tab === 'image' ? 'images' : 'documents'} in the library yet.`
               }
               action={
                 <Button
@@ -443,7 +457,7 @@ export default function MediaBrowser({
                   <UploadTile upload={upload} onDismiss={() => clearUpload(upload.uid)} />
                 </li>
               ))}
-              {items.map((item) => (
+              {displayItems.map((item) => (
                 <li key={item.id}>
                   <Tile
                     item={item}
@@ -454,7 +468,7 @@ export default function MediaBrowser({
               ))}
             </ul>
 
-            {items.length < total && (
+            {tab !== 'unused' && items.length < total && (
               <div className="mt-6 flex flex-col items-center gap-2">
                 <Button variant="secondary" onClick={loadMore} loading={loadingMore}>
                   Load more

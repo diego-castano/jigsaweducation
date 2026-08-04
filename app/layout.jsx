@@ -2,9 +2,15 @@ import './globals.css';
 import { getSingleton } from '../src/lib/content';
 
 export async function generateMetadata() {
-  const settings = await getSingleton('site-settings');
+  const [settings, tracking] = await Promise.all([
+    getSingleton('site-settings'),
+    getSingleton('tracking')
+  ]);
   return {
     metadataBase: new URL(settings.url),
+    ...(tracking.googleVerification
+      ? { verification: { google: tracking.googleVerification.trim() } }
+      : {}),
     title: {
       default: `${settings.name} — ${settings.tagline}`,
       template: `%s — ${settings.name}`

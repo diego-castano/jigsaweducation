@@ -28,8 +28,9 @@ export async function generateMetadata({ params }) {
 const DETAIL_COLLECTIONS = COLLECTIONS.filter((c) => c.itemRoute);
 
 async function editorData(key) {
-  const [singletonResult, itemsResult] = await Promise.all([
+  const [singletonResult, settingsResult, itemsResult] = await Promise.all([
     query('select data, draft from singletons where key = $1', [key]),
+    query("select data ->> 'name' as name, data ->> 'url' as url from singletons where key = 'site-settings'"),
     query(
       `select collection, slug, data from collection_items
         where collection = any($1::text[]) and status = 'published'
@@ -37,7 +38,15 @@ async function editorData(key) {
       [DETAIL_COLLECTIONS.map((c) => c.key)]
     )
   ]);
-  return { row: singletonResult.rows[0] || null, items: itemsResult.rows };
+  const settings = settingsResult.rows[0] || {};
+  return {
+    row: singletonResult.rows[0] || null,
+    items: itemsResult.rows,
+    brand: {
+      name: settings.name || 'Jigsaw',
+      host: String(settings.url || 'https://www.jigsaweducation.org').replace(/^https?:\/\//, '')
+    }
+  };
 }
 
 function buildLinkTargets(items) {
@@ -64,7 +73,7 @@ export default async function SingletonPage({ params }) {
   const schema = getSingletonSchema(key);
   if (!schema) notFound();
 
-  const { row, items } = await editorData(key);
+  const { row, items, brand } = await editorData(key);
 
   // Published document over the schema seed: a page that has never been
   // saved still shows today's live copy in every field.
@@ -106,6 +115,7 @@ export default async function SingletonPage({ params }) {
           value={value}
           draft={draft}
           linkTargets={buildLinkTargets(items)}
+          brand={brand}
         />
       </div>
     </div>

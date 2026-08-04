@@ -36,10 +36,13 @@ const timeNow = () =>
 // Live "how it looks on Google" card inside every SEO section. Approximate
 // on purpose (Google renders however it likes) but honest about the two
 // levers the editor controls: title and description, cut where Google cuts.
-function SerpPreview({ schema, doc }) {
+function SerpPreview({ schema, doc, brand }) {
   const isHome = schema?.key === 'page-home';
+  const orgName = brand?.name || 'Jigsaw';
+  const host = brand?.host || 'www.jigsaweducation.org';
+  const bareHost = host.replace(/^www\./, '');
   const rawTitle = String(doc?.title || '').trim();
-  const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} — Jigsaw`) : 'Untitled page';
+  const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} — ${orgName}`) : 'Untitled page';
   const description = String(doc?.description || '').trim();
   const path = schema?.route && schema.route !== '/' ? schema.route : '';
 
@@ -51,12 +54,13 @@ function SerpPreview({ schema, doc }) {
       <div className="mt-3">
         <p className="flex items-center gap-1.5 text-[13px] text-ink-700">
           <span className="grid size-6 place-items-center rounded-full bg-cream-200 font-display text-[11px] text-navy-900">
-            J
+            {orgName.charAt(0).toUpperCase()}
           </span>
           <span className="leading-tight">
-            jigsaweducation.org
+            {bareHost}
             <span className="block text-xs text-ink-500">
-              www.jigsaweducation.org{path}
+              {host}
+              {path}
             </span>
           </span>
         </p>
@@ -120,6 +124,7 @@ export default function SchemaForm({
   draft,
   sections: sectionsProp,
   linkTargets,
+  brand,
   onTogglePreview,
 }) {
   const router = useRouter();
@@ -358,7 +363,7 @@ export default function SchemaForm({
               {section.description && (
                 <p className="mt-1.5 text-sm text-ink-600">{section.description}</p>
               )}
-              {section.id === 'seo' && <SerpPreview schema={schema} doc={doc} />}
+              {section.id === 'seo' && <SerpPreview schema={schema} doc={doc} brand={brand} />}
               <div className="mt-7 space-y-8">
                 {section.fields.map((field) => (
                   <FieldRenderer

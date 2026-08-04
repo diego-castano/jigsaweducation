@@ -72,8 +72,13 @@ export async function uploadMedia(formData) {
     return { error: 'That file is larger than 25 MB. Compress it and try again.' };
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
+  let buffer = Buffer.from(await file.arrayBuffer());
 
+  // Photos arrive however the camera made them. Anything wider or taller
+  // than the site will ever render gets scaled down and recompressed here,
+  // so a well-meaning 8 MB upload can never slow the public site. GIFs
+  // (animation) and SVGs pass through untouched.
+  const MAX_EDGE = 2400;
   let width = null;
   let height = null;
   if (RASTER_TYPES.has(file.type)) {
@@ -81,6 +86,25 @@ export async function uploadMedia(formData) {
       const meta = await sharp(buffer).metadata();
       width = meta.width ?? null;
       height = meta.height ?? null;
+
+      const resizable = file.type !== 'image/gif';
+      if (resizable && (width > MAX_EDGE || height > MAX_EDGE)) {
+        const pipeline = sharp(buffer).rotate().resize({
+          width: MAX_EDGE,
+          height: MAX_EDGE,
+          fit: 'inside',
+          withoutEnlargement: true
+        });
+        buffer =
+          file.type === 'image/png'
+            ? await pipeline.png({ compressionLevel: 9 }).toBuffer()
+            : file.type === 'image/webp'
+              ? await pipeline.webp({ quality: 82 }).toBuffer()
+              : await pipeline.jpeg({ quality: 82, mozjpeg: true }).toBuffer();
+        const scaled = await sharp(buffer).metadata();
+        width = scaled.width ?? width;
+        height = scaled.height ?? height;
+      }
     } catch {
       return { error: 'That image could not be read. It may be corrupt; re-export it and try again.' };
     }
@@ -98,7 +122,7 @@ export async function uploadMedia(formData) {
     `insert into media (key, filename, mime, size, width, height)
      values ($1, $2, $3, $4, $5, $6)
      returning id, key, filename, mime, size, width, height, alt, created_at`,
-    [key, file.name, file.type, file.size, width, height]
+    [key, file.name, file.type, buffer.length, width, height]
   );
 
   return toMediaResult(rows[0]);

@@ -11,6 +11,7 @@ import SchemaForm from '../../../../src/admin/editor/SchemaForm.jsx';
 import SettingsTabs from '../../../../src/admin/settings/SettingsTabs.jsx';
 import AccountForms from '../../../../src/admin/settings/AccountForms.jsx';
 import UsersPanel from '../../../../src/admin/settings/UsersPanel.jsx';
+import CacheRefresh from '../../../../src/admin/settings/CacheRefresh.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -121,6 +122,10 @@ export default async function SettingsPage({ searchParams }) {
         {active === 'users' && <UsersPanel users={users} sessionId={session.id} />}
 
         {active === 'account' && <AccountForms email={session.email} />}
+      </div>
+
+      <div className="reveal reveal-2">
+        <CacheRefresh />
       </div>
     </div>
   );
