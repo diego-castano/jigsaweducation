@@ -9,7 +9,10 @@ export const TBC = '[tbc]';
 
 // Deliberately not lorem ipsum — naming the missing thing is more useful to the
 // client than Latin. Each string says what belongs there and who owes it.
-export const placeholder = (what) => `Placeholder — ${what}. Copy to come from the Jigsaw team.`;
+export const placeholder = (what) => `Placeholder: ${what}. Copy to come from the Jigsaw team.`;
 
+// The legacy 'Placeholder —' prefix stays matched so content saved under the
+// old convention keeps its chip until it is replaced with real copy.
 export const isPlaceholder = (value) =>
-  typeof value === 'string' && (value === TBC || value.startsWith('Placeholder —'));
+  typeof value === 'string' &&
+  (value === TBC || value.startsWith('Placeholder:') || value.startsWith('Placeholder —'));
