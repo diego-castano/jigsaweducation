@@ -20,29 +20,20 @@ export const metadata = {
 // boundary reports the failure with the navigation still around it.
 async function shellData() {
   try {
-    const [settings, drafts] = await Promise.all([
-      query(
-        `select coalesce((data ->> 'showReviewNotes')::boolean, false) as review_on
-           from singletons where key = 'site-settings'`
-      ),
-      query(
-        `select (select count(*) from singletons where draft is not null)::int
-              + (select count(*) from collection_items where draft is not null)::int
-              as count`
-      )
-    ]);
-    return {
-      reviewOn: Boolean(settings.rows[0]?.review_on),
-      draftCount: drafts.rows[0]?.count ?? 0
-    };
+    const drafts = await query(
+      `select (select count(*) from singletons where draft is not null)::int
+            + (select count(*) from collection_items where draft is not null)::int
+            as count`
+    );
+    return { draftCount: drafts.rows[0]?.count ?? 0 };
   } catch {
-    return { reviewOn: false, draftCount: 0 };
+    return { draftCount: 0 };
   }
 }
 
 export default async function ConsoleLayout({ children }) {
   const session = await requireAdmin();
-  const { reviewOn, draftCount } = await shellData();
+  const { draftCount } = await shellData();
 
   return (
     <ToastProvider>
@@ -54,7 +45,6 @@ export default async function ConsoleLayout({ children }) {
         session={session}
         draftCount={draftCount}
         labels={SEGMENT_LABELS}
-        reviewOn={reviewOn}
       >
         {children}
       </ConsoleFrame>

@@ -8,12 +8,11 @@ import { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import MobileShell from './MobileShell';
-import ReviewModeBanner from './ReviewModeBanner';
 import VersionWatcher from './VersionWatcher';
 
 const STORAGE_KEY = 'jigsaw-admin:nav-collapsed';
 
-export default function ConsoleFrame({ groups, session, draftCount, labels, reviewOn, children }) {
+export default function ConsoleFrame({ groups, session, draftCount, labels, children }) {
   const [collapsed, setCollapsed] = useState(false);
 
   // Server renders expanded; the stored preference lands after mount.
@@ -64,7 +63,6 @@ export default function ConsoleFrame({ groups, session, draftCount, labels, revi
         className={`flex min-h-0 flex-1 flex-col ${contentPad} motion-safe:transition-[padding] motion-safe:duration-300`}
       >
         <TopBar session={session} draftCount={draftCount} labels={labels} />
-        {reviewOn && <ReviewModeBanner />}
         <main
           id="admin-main"
           className="admin-scroll flex-1 overflow-y-auto px-4 py-6 sm:px-8 lg:py-10"
