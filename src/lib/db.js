@@ -9,7 +9,13 @@ const { Pool } = pg;
 let instance = null;
 
 const createPool = () => {
-  const url = process.env.DATABASE_URL;
+  // Railway's private network does not exist while `next build` runs, so
+  // prerender must reach the database over the public proxy or every page
+  // silently bakes from the seed fallback. DATABASE_BUILD_URL (the public
+  // URL) wins during the build phase; runtime keeps the internal one.
+  const building = process.env.NEXT_PHASE === 'phase-production-build';
+  const url =
+    (building && process.env.DATABASE_BUILD_URL) || process.env.DATABASE_URL;
   if (!url) {
     throw new Error('DATABASE_URL is not set');
   }
