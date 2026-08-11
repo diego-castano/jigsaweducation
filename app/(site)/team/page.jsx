@@ -17,7 +17,7 @@ export async function generateMetadata() {
 // its own. Joined with a single space they reassemble the verbatim paragraph
 // from the brief. The closing sentence is about people who are not in the
 // grid, so reading it above eighteen faces sets up an expectation the grid
-// then contradicts — it renders in the band under the grid instead, carrying
+// then contradicts - it renders in the band under the grid instead, carrying
 // the two links that sentence implies. If the sentence field is ever emptied,
 // the band simply disappears rather than printing a blank.
 

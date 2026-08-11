@@ -54,7 +54,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Mailing-list signup, first — the brief lists it as the first element
+      {/* Mailing-list signup, first - the brief lists it as the first element
           of this page's structure. A compact strip rather than a closing band;
           the footer's own signup stands down on this route. */}
       <section className="border-t border-cream-300 bg-cream-100">
@@ -79,7 +79,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* The two mailboxes, side by side and equal — the brief's exact words
+      {/* The two mailboxes, side by side and equal - the brief's exact words
           are "deliberately side-by-side so that there is no hierarchy", and the
           client's own headings frame each by scope of work rather than by
           headquarters and branch. */}

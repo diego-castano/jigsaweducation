@@ -1,6 +1,6 @@
 import { getSingleton, getCollection } from '../src/lib/content';
 
-// The current site has no sitemap at all — jigsaweducation.org/sitemap.xml
+// The current site has no sitemap at all - jigsaweducation.org/sitemap.xml
 // returns 404 and robots.txt is a single "#". Generated here from the live
 // collections so it can never drift from the routes that actually exist.
 export default async function sitemap() {
@@ -24,7 +24,7 @@ export default async function sitemap() {
     { path: '/work-for-us', key: 'page-work-for-us', priority: 0.5, changeFrequency: 'weekly' }
   ];
 
-  // A page hidden from search engines also leaves the sitemap — the two
+  // A page hidden from search engines also leaves the sitemap - the two
   // signals must agree or crawlers get mixed messages.
   const pages = await Promise.all(staticRoutes.map((r) => getSingleton(r.key)));
   const visibleRoutes = staticRoutes.filter((r, i) => !pages[i]?.noIndex);

@@ -1,5 +1,5 @@
 // Which build is serving. The console polls this and offers a reload when
-// the answer changes — Railway stamps every deploy with the commit sha; the
+// the answer changes - Railway stamps every deploy with the commit sha; the
 // process start time is the fallback so the endpoint never lies twice.
 
 export const dynamic = 'force-dynamic';

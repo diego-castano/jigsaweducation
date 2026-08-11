@@ -6,16 +6,16 @@ import Link from 'next/link';
 // than the website heading font." Becky's comment: "Provide logo with the word
 // as PNG SVG."
 //
-// /public/logo.png is 600x150 and contains the J badge alone — the right two
+// /public/logo.png is 600x150 and contains the J badge alone - the right two
 // thirds are empty. There is no wordmark asset anywhere on the live site.
 //
 // So the wordmark below is set in Lato, the brand's own body typeface, NOT in
 // Literata. That respects the instruction (no heading font) without leaving the
 // header as a bare orange circle. When the official wordmark arrives, upload
-// it as the "Logo wordmark" in Site settings — it reaches here as the
+// it as the "Logo wordmark" in Site settings - it reaches here as the
 // `wordmarkSrc` prop and the component renders the real asset instead.
 export default function SiteLogo({ size = 40, reversed = false, href = '/', wordmarkSrc = null }) {
-  const label = 'Jigsaw Education Evidence — home';
+  const label = 'Jigsaw Education Evidence, home';
 
   return (
     <Link

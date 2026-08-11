@@ -24,7 +24,7 @@ const LAYOUT = [
 
 // Written out rather than interpolated so Tailwind's scanner sees them.
 // Tiles take the even slots; the detail band slots into the odd slot right
-// AFTER THE ROW of whichever tile is open — click a first-row tile and the
+// AFTER THE ROW of whichever tile is open - click a first-row tile and the
 // summary unfolds directly under that row, not at the bottom of the mosaic
 // where it lands off-screen. Each breakpoint has its own row shape, so each
 // gets its own order map: 1-col (every tile is a row), 2-col pairs from sm,

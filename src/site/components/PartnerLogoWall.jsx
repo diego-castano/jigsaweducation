@@ -1,4 +1,4 @@
-// The partner organisations, in the client's specified order — the list
+// The partner organisations, in the client's specified order - the list
 // arrives ordered from the partners collection.
 //
 // ASSET GAP: no individual logos exist. The live site renders the whole wall as

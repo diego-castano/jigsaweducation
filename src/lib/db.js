@@ -1,6 +1,6 @@
 // Postgres access for the whole app. One lazy pool: nothing connects at
 // import time, so `next build` and scripts that never touch the database run
-// without DATABASE_URL. Plain pg, no ORM — the store is a document model.
+// without DATABASE_URL. Plain pg, no ORM - the store is a document model.
 
 import pg from 'pg';
 

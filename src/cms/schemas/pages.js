@@ -37,7 +37,7 @@ const seoSection = ({ title, titleHelp, description, descriptionHelp }) => ({
       required: true,
       maxLength: 60,
       // The site really joins titles with an em dash; the help must quote it.
-      help: titleHelp || 'Shown in the browser tab and search results as “(title) — Jigsaw”.',
+      help: titleHelp || 'Shown in the browser tab and search results as “(title) · Jigsaw”.',
       seed: title
     },
     {
@@ -314,7 +314,7 @@ export const PAGE_SINGLETONS = [
         ]
       },
       seoSection({
-        title: 'Jigsaw: Rigorous evidence for lasting change in education',
+        title: 'Jigsaw · Rigorous evidence for lasting change in education',
         titleHelp:
           'Used exactly as written: the home page is the one page that does not add the “Jigsaw” suffix.',
         description:

@@ -1,6 +1,6 @@
 // The classification vocabulary, in one place. Filter dropdowns, card
 // metadata rows and detail-page summary boxes all label the same concepts;
-// deriving every label from this map keeps them identical everywhere —
+// deriving every label from this map keeps them identical everywhere -
 // which is also what search engines should see: one consistent vocabulary.
 
 export const CLASSIFICATION_LABELS = {

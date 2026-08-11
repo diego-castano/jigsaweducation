@@ -303,7 +303,7 @@ export default async function DistinctivesPage() {
         </div>
       </section>
 
-      {/* Our story — the About page content the new sitemap left homeless.
+      {/* Our story - the About page content the new sitemap left homeless.
           Linked from the Home signpost, which is the only route a visitor
           looking for "about us" has left. The #our-story id is load-bearing. */}
       <Section id="our-story" className="scroll-mt-24 border-t border-cream-300">

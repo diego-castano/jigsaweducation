@@ -88,7 +88,7 @@ export default function PublicationCard({ pub, ui = {}, mediaMeta }) {
 
         {/* The brief's own note on the EdTech Hub library: it filters well but
             has "no simple summary sentence". This is that sentence.
-            Compact placeholder styling rather than the full dashed slab — ten
+            Compact placeholder styling rather than the full dashed slab - ten
             of those stacked in a grid would drown the real content. */}
         {pub.summary && (
           <p

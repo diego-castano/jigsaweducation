@@ -8,9 +8,9 @@ import { useMobileNav } from './MobileNavContext';
 // The app-grade bottom navigation, mobile only. Four destinations plus Menu:
 // a tab bar holds four or five slots or it stops being one, so the four
 // most-travelled routes ride here and the Menu slot opens the drawer, which
-// remains the complete site map. Icons come from the site's own SVG set —
+// remains the complete site map. Icons come from the site's own SVG set -
 // they inherit currentColor for the active state, which a raster glyph never
-// could — and the active slot carries the same orange top bar the desktop
+// could - and the active slot carries the same orange top bar the desktop
 // nav underlines with, so the two systems read as one.
 // The routes, icons and five-slot count are structural; only the labels are
 // editable, arriving as the `tabs` prop (a list of { label } rows from Site

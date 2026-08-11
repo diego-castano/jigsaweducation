@@ -734,7 +734,7 @@ const TRACKING = {
           name: 'metaTitleTemplate',
           label: 'Browser title pattern',
           type: 'text',
-          seed: '%s — Jigsaw',
+          seed: '%s · Jigsaw',
           warning:
             'For reference only: the site builds this from the organisation name in Site settings, with %s standing for the page name. Change the organisation name to change it.'
         }

@@ -11,7 +11,7 @@ import createGlobe from 'cobe';
 // Restraint rules:
 // - pointer-events-none and aria-hidden: it is decoration, full stop.
 // - Rotation pauses when the hero scrolls out of view (IO flag), and never
-//   starts under prefers-reduced-motion — the globe still renders, static.
+//   starts under prefers-reduced-motion - the globe still renders, static.
 // - The canvas fades in over 1.2s so it never pops.
 const SIZE = 820;
 
@@ -33,7 +33,7 @@ export default function GlobeBackdrop({
 
   // Parallax: the wrapper drifts down at a fraction of the scroll speed, so
   // the globe recedes slower than the page and stays in view behind the next
-  // section. Direct style writes on rAF — never React state per frame — and
+  // section. Direct style writes on rAF - never React state per frame - and
   // nothing moves under prefers-reduced-motion.
   useEffect(() => {
     if (!parallax) return;
@@ -61,7 +61,7 @@ export default function GlobeBackdrop({
 
     // Site settings store office coords as [lon, lat] (the GeoJSON
     // convention); cobe wants [lat, lon]. This is the ONE place the axes
-    // flip — everywhere else keeps the settings order.
+    // flip - everywhere else keeps the settings order.
     const locations = (officeCoords || [])
       .filter((pair) => Array.isArray(pair) && pair.length === 2)
       .map(([lon, lat]) => [lat, lon]);
@@ -96,7 +96,7 @@ export default function GlobeBackdrop({
       // even when the visible arc is mid-Atlantic.
       mapBaseBrightness: 0.06,
       baseColor: [0.36, 0.55, 0.66], // between sea-400 and sea-500
-      glowColor: [0.992, 0.98, 0.957], // cream-50 — the glow dissolves into the page
+      glowColor: [0.992, 0.98, 0.957], // cream-50 - the glow dissolves into the page
       markerColor: [1, 0.47, 0.086], // orange-500
       opacity: 0.9,
       markers: locations.map((location) => ({ location, size: 0.06 })),

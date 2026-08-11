@@ -2,13 +2,13 @@ import { ImageResponse } from 'next/og';
 import { getSingleton } from '../src/lib/content';
 
 // The current site has no og:image at all, and its og:url is set to the
-// relative path "/pages/home" — so every link shared on LinkedIn, which is the
+// relative path "/pages/home" - so every link shared on LinkedIn, which is the
 // only social platform Jigsaw uses, previews as a bare grey box.
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 // Next only accepts `alt` as a static export, so this mirrors the
-// site-settings seed (`${name} — ${tagline}`) rather than reading it live.
-export const alt = 'Jigsaw — Rigorous evidence for lasting change in education';
+// site-settings seed (`${name} - ${tagline}`) rather than reading it live.
+export const alt = 'Jigsaw · Rigorous evidence for lasting change in education';
 
 export default async function OpengraphImage() {
   const settings = await getSingleton('site-settings');

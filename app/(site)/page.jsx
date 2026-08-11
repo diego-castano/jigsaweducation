@@ -18,7 +18,7 @@ export async function generateMetadata() {
 
 // Sentence 1 carries the headline. Splitting on the phrase rather than
 // retyping it keeps the client's copy verbatim and in one place. If an edit
-// ever loses the phrase, the headline renders whole and unstyled — no crash,
+// ever loses the phrase, the headline renders whole and unstyled - no crash,
 // no stray "undefined" on the end.
 const ITALIC_PHRASE = 'education research';
 
@@ -42,7 +42,7 @@ export default async function HomePage() {
   const supportingSentences = (home.supportingSentences || []).map((row) => row.text);
 
   // The document stores { country: { name, id }, office } rows; the map wants
-  // flat { name, id, office } with STRING ids — world-atlas keys on them, and
+  // flat { name, id, office } with STRING ids - world-atlas keys on them, and
   // a row without an id can never match, so it drops here rather than there.
   const mapCountries = (home.mapCountries || [])
     .filter((row) => row?.country?.id)
@@ -180,7 +180,7 @@ export default async function HomePage() {
         </div>
         </section>
 
-        {/* 2. Three ways in — z-10 so the columns ride above the globe */}
+        {/* 2. Three ways in - z-10 so the columns ride above the globe */}
         <Section className="relative z-10">
           <SignpostTrio signposts={home.signposts} readMore={ui.readMore} />
         </Section>
@@ -208,7 +208,7 @@ export default async function HomePage() {
       </Section>
 
       {/* 4. Who we work with. The page's one kicker is spent here.
-          Two aligned columns: heading left, the client's paragraph right —
+          Two aligned columns: heading left, the client's paragraph right -
           a single left-hung column left half the band empty. */}
       <Section>
         <div className="grid lg:grid-cols-12 gap-y-6 lg:gap-x-12 items-start">

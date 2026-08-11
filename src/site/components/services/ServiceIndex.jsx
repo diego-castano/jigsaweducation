@@ -18,7 +18,7 @@ export default function ServiceIndex({ services, relatedCaseStudiesHeading, rela
     const slug = window.location.hash.slice(1);
     if (!slug || !services.some((s) => s.slug === slug)) return;
     setOpenSlug(slug);
-    // After the .expand-grid transition (500ms) settles — scrolling earlier
+    // After the .expand-grid transition (500ms) settles - scrolling earlier
     // measures the row before the opened panel has pushed the layout, and the
     // browser's own hash scroll has already fought us once by then.
     const t = setTimeout(() => {

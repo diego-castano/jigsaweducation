@@ -1,4 +1,4 @@
-// Renders CMS prose — plain seeded text or console-formatted HTML — with the
+// Renders CMS prose - plain seeded text or console-formatted HTML - with the
 // site's typography. The wrapper takes the caller's text classes; paragraph
 // rhythm, emphasis, links and lists are styled here so every prose field
 // reads the same wherever it lands.

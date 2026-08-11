@@ -10,7 +10,7 @@ import Reveal from '../Reveal';
 // wrapped in the h2, so the service title stays in the document outline and
 // keyboard users get the same affordance as the pointer.
 //
-// The panel is never `hidden` — .expand-grid animates it from 0fr to 1fr — so
+// The panel is never `hidden` - .expand-grid animates it from 0fr to 1fr - so
 // a closed panel would otherwise keep its links in the tab order. `inert`
 // takes the collapsed content out of both the tab order and the accessibility
 // tree. No role="region" on the panel: six of them would flood the landmark
@@ -64,7 +64,7 @@ export default function ServiceRow({
               >
                 {service.title}
               </span>
-              {/* The affordance was a bare chevron in cream-500 — near
+              {/* The affordance was a bare chevron in cream-500 - near
                   invisible, per client feedback. Now a ringed disc that reads
                   as a control at a glance: fills orange when open, darkens on
                   row hover, chevron rotates. */}
@@ -86,7 +86,7 @@ export default function ServiceRow({
           <div inert={!open}>
             <div className="relative grid grid-cols-[2.75rem_1fr] gap-x-4 px-4 pb-10 sm:grid-cols-[5rem_1fr] sm:gap-x-6 sm:px-6 sm:pb-12 lg:grid-cols-[6.5rem_1fr]">
               {/* Ghost glyph: the service icon at watermark weight, anchored to
-                  the bottom-right corner and bleeding past it on purpose — the
+                  the bottom-right corner and bleeding past it on purpose - the
                   .expand-grid child's overflow-hidden does the cropping. Sized
                   and placed so it never sits under the first line of copy. */}
               <span

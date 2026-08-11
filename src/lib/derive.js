@@ -1,7 +1,7 @@
 // Pure derivations over content arrays. The same logic as src/data/relations.js
 // but parameterised: pages fetch collections through src/lib/content.js and
 // pass them in, so these functions never touch the database or the seed files
-// themselves. Cross-references stay derived, not stored twice — a hand-kept
+// themselves. Cross-references stay derived, not stored twice - a hand-kept
 // slug list in three documents would drift the first time someone retags a
 // case study.
 

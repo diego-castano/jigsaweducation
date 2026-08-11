@@ -7,7 +7,7 @@ import SiteLogo from './SiteLogo';
 import Icon from '../../components/Icon';
 import { useMobileNav } from './MobileNavContext';
 
-// Seven items, no dropdowns, logo returns home — exactly as the brief asks.
+// Seven items, no dropdowns, logo returns home - exactly as the brief asks.
 //
 // App behaviours layered on:
 // - The header hides on scroll-down and returns on scroll-up (mobile only),
@@ -18,7 +18,7 @@ import { useMobileNav } from './MobileNavContext';
 //   rightward swipe as well as Escape and the overlay.
 //
 // Nav lists, offices and the wordmark arrive as plain props from the server
-// layout — this is a client component, so it cannot call the content loaders
+// layout - this is a client component, so it cannot call the content loaders
 // itself. The defaults mirror the seed so a missing prop never blanks the
 // chrome.
 const DEFAULT_MAIN_NAV = [
@@ -200,7 +200,7 @@ export default function SiteHeader({
 
       {/* Mobile drawer. A SIBLING of the header on purpose: the header's
           backdrop-blur creates a containing block for fixed descendants, and
-          inside it this fixed inset-0 wrapper measured 80px tall — the whole
+          inside it this fixed inset-0 wrapper measured 80px tall - the whole
           menu rendered clipped into the header strip. */}
       <div
         id="mobile-drawer"

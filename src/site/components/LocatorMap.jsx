@@ -5,7 +5,7 @@ import topology from 'world-atlas/countries-110m.json';
 // A country outline with a pin, rendered from the same TopoJSON the home map
 // uses. Not an embedded Google Map on purpose: an iframe there sets third-party
 // cookies before the visitor has agreed to anything, which is a poor fit for a
-// client whose Policies page leads on data protection — and whose current
+// client whose Policies page leads on data protection - and whose current
 // cookie banner is already opt-out and questionable under UK GDPR.
 //
 // Server-rendered: no JavaScript ships for this.

@@ -4,7 +4,7 @@ import FooterTopBand from './FooterSignup';
 // The footer is the close of the site, not an afterthought: three bands on
 // navy-900, hairline-divided.
 //   1. Logo + LinkedIn beside the mailing-list capture (the client's
-//      Mailchimp ask — MailingListForm handles validation and submission
+//      Mailchimp ask - MailingListForm handles validation and submission
 //      itself, this component just places it).
 //   2. A content map: four columns on one grid, every seam a hairline, every
 //      column starting on the same line. Explore runs two deep so seven links

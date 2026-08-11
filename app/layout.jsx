@@ -12,15 +12,15 @@ export async function generateMetadata() {
       ? { verification: { google: tracking.googleVerification.trim() } }
       : {}),
     title: {
-      default: `${settings.name} — ${settings.tagline}`,
-      template: `%s — ${settings.name}`
+      default: `${settings.name} · ${settings.tagline}`,
+      template: `%s · ${settings.name}`
     },
     description: settings.description,
     openGraph: {
       type: 'website',
       siteName: settings.name,
       locale: 'en_GB',
-      title: `${settings.name} — ${settings.tagline}`,
+      title: `${settings.name} · ${settings.tagline}`,
       description: settings.description
     },
     alternates: { canonical: '/' },
@@ -39,7 +39,7 @@ export const viewport = {
 
 export default async function RootLayout({ children }) {
   // Analytics snippets pasted into the admin. Empty by default, in which case
-  // nothing renders at all — no empty script tags, no wrapper elements.
+  // nothing renders at all - no empty script tags, no wrapper elements.
   const tracking = await getSingleton('tracking');
   const headSnippet = (tracking.headSnippet || '').trim();
   const bodySnippet = (tracking.bodySnippet || '').trim();

@@ -6,7 +6,7 @@ import { feature } from 'topojson-client';
 import topology from 'world-atlas/countries-110m.json';
 
 // Built from world-atlas TopoJSON with d3-geo rather than a tile provider.
-// No API key, no runtime request to a third party, no cookie-consent problem —
+// No API key, no runtime request to a third party, no cookie-consent problem -
 // which matters for a client whose own policies lead on data protection.
 //
 // Natural Earth I projection: it keeps land areas honest without Mercator's
@@ -21,7 +21,7 @@ const projection = geoNaturalEarth1()
 
 const toPath = geoPath(projection);
 
-// `countries` rows are { name, id, office } with STRING ids — the numeric
+// `countries` rows are { name, id, office } with STRING ids - the numeric
 // ISO 3166-1 codes world-atlas keys its features on. A row with a wrong id
 // simply never matches a shape, so it silently drops off the map.
 export default function WorldMap({

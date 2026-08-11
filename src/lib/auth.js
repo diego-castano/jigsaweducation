@@ -4,11 +4,11 @@ import { SignJWT, jwtVerify } from 'jose';
 // Everything above the cookie helpers is pure crypto, so scripts/seed.mjs can
 // import hashPassword without a Next request context. next/headers and
 // next/navigation load lazily inside the functions that need them for the
-// same reason — a top-level import would crash any plain-node caller.
+// same reason - a top-level import would crash any plain-node caller.
 
 export const SESSION_COOKIE = 'jigsaw_admin';
 
-const SESSION_MAX_AGE = 7 * 24 * 60 * 60; // seconds — matches the JWT expiry
+const SESSION_MAX_AGE = 7 * 24 * 60 * 60; // seconds - matches the JWT expiry
 
 function sessionKey() {
   const secret = process.env.SESSION_SECRET;

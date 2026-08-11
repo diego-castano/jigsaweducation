@@ -44,7 +44,7 @@ function SerpPreview({ schema, doc, brand }) {
   const rawTitle = String(doc?.title || '').trim();
   // The site really does join titles with an em dash ('%s \u2014 Jigsaw');
   // the preview must mirror that output exactly.
-  const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} — ${orgName}`) : 'Untitled page';
+  const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} · ${orgName}`) : 'Untitled page';
   const description = String(doc?.description || '').trim();
   const path = schema?.route && schema.route !== '/' ? schema.route : '';
 

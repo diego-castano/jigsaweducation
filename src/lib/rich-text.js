@@ -4,7 +4,7 @@
 // console, after which they hold a small HTML subset (paragraphs, bold,
 // italic, links, lists). Everything that renders such a field goes through
 // here: HTML is sanitised to exactly that subset, plain text is split into
-// paragraphs — so both shapes come out as safe HTML strings.
+// paragraphs - so both shapes come out as safe HTML strings.
 
 import sanitizeHtml from 'sanitize-html';
 

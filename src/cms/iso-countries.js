@@ -1,10 +1,10 @@
 // Every country in world-atlas countries-110m.json, generated from the
-// package in node_modules — the same file the site maps render from, so a
+// package in node_modules - the same file the site maps render from, so a
 // country picked here is guaranteed to exist on the map. The id is the
 // numeric ISO 3166-1 code AS A STRING with zero-padding preserved ('004'),
 // because that is how world-atlas keys its geometries; strip the padding and
 // the country silently drops off the map. Three territories the atlas draws
-// without an ISO id (N. Cyprus, Somaliland, Kosovo) are excluded — they can
+// without an ISO id (N. Cyprus, Somaliland, Kosovo) are excluded - they can
 // never match a map geometry by id.
 //
 // Regenerate by mapping node_modules/world-atlas/countries-110m.json

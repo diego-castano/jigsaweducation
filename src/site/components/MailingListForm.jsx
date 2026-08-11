@@ -8,7 +8,7 @@ import { subscribeToMailingList } from '../../cms/actions/content';
 // table through the subscribeToMailingList server action, tagged with which
 // form it came from (`source`). Validation still happens here first, so an
 // empty or misspelt address never costs a round trip, and the messages are
-// editable interface text passed down as props — the defaults mirror the
+// editable interface text passed down as props - the defaults mirror the
 // ui-strings seed so a missing prop never blanks the form.
 export default function MailingListForm({
   reversed = false,

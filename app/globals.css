@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Self-hosted variable + static fonts (faster than Google Fonts CDN).
-   Literata is imported via opsz.css, not index.css — index.css ships the
+   Literata is imported via opsz.css, not index.css - index.css ships the
    weight axis only, which is why the optical-size rules below were dead
    under Fraunces. This build actually carries opsz 7–72 + wght 200–900. */
 @import "@fontsource-variable/literata/opsz.css";
@@ -88,7 +88,7 @@
 
   /* === TYPOGRAPHY ===
      Literata replaces Fraunces. The client rejected Fraunces over the
-     uppercase J and lowercase f/j — its terminals close in balls and the J
+     uppercase J and lowercase f/j - its terminals close in balls and the J
      ends in a bulbous hook. Literata's J plants on the baseline with a
      blunt terminal, the f closes in a small flag and the j runs straight. */
   --font-display: 'Literata Variable', 'Literata', Georgia, serif;
@@ -132,7 +132,7 @@ html {
 }
 
 /* Console scroll containers: a quiet thin scrollbar instead of the browser
-   default, and instant (not smooth) programmatic scrolling — the admin's
+   default, and instant (not smooth) programmatic scrolling - the admin's
    scrollspy and section anchors feel laggy under smooth behaviour. */
 .admin-scroll {
   scroll-behavior: auto;
@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5 {
 ::-webkit-scrollbar-thumb:hover { background: #9C9583; }
 
 /* Literata optical sizing. The axis tops out at 72, unlike Fraunces' 144,
-   and there is no SOFT or WONK — those were Fraunces-only. */
+   and there is no SOFT or WONK - those were Fraunces-only. */
 .display-xl { font-variation-settings: 'opsz' 72; letter-spacing: -0.03em; }
 .display-l  { font-variation-settings: 'opsz' 60; letter-spacing: -0.025em; }
 .display-m  { font-variation-settings: 'opsz' 48; }
@@ -392,7 +392,7 @@ h1, h2, h3, h4, h5 {
    Shared motion vocabulary so every page moves the same way. All of these
    collapse under prefers-reduced-motion (see the block further down). */
 
-/* Scroll reveal — driven by <Reveal> (src/site/components/Reveal.jsx) */
+/* Scroll reveal - driven by <Reveal> (src/site/components/Reveal.jsx) */
 .rv {
   opacity: 0;
   transform: translateY(22px);
@@ -436,7 +436,7 @@ h1, h2, h3, h4, h5 {
 .expand-grid.open { grid-template-rows: 1fr; }
 .expand-grid > * { overflow: hidden; }
 
-/* Slow marquee — 60s cycle reads premium, faster reads ad banner.
+/* Slow marquee - 60s cycle reads premium, faster reads ad banner.
    ONE marquee on the whole site: the Home partner wall. */
 @keyframes marqueeX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .marquee { overflow: hidden; }
@@ -454,7 +454,7 @@ h1, h2, h3, h4, h5 {
 
 /* Route transition: app/(site)/template.jsx remounts this wrapper on every
    navigation, so page content slides in while the app shell (header, tab
-   bar, footer) holds still. Enter-only, by design — exits need the
+   bar, footer) holds still. Enter-only, by design - exits need the
    experimental View Transitions flag and this reads as intended without it. */
 @keyframes routeEnter {
   from { opacity: 0; transform: translateY(10px); }
@@ -462,7 +462,7 @@ h1, h2, h3, h4, h5 {
 }
 .route-enter { animation: routeEnter 0.3s var(--ease-decelerate); }
 
-/* Skip link — WCAG AA, first focusable element on every page */
+/* Skip link - WCAG AA, first focusable element on every page */
 .skip-link {
   position: absolute; left: 8px; top: -60px;
   background: #1a3340; color: #FDFAF4;
@@ -497,7 +497,7 @@ h1, h2, h3, h4, h5 {
 
 /* === DARK / NAVY THEME (brand-reverse) ===
    Scoped to the design system document only. The public site does not carry
-   a theme toggle — navy stays a section treatment there, not a global mode.
+   a theme toggle - navy stays a section treatment there, not a global mode.
    This remains a set of utility overrides rather than token redefinition;
    it does not react to components built after it. */
 body.theme-dark { background: #1a3340 !important; color: #FAF6EE; }

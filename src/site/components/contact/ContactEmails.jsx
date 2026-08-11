@@ -6,7 +6,7 @@ import Reveal from '../Reveal';
 // a card, it is the page.
 //
 // SIDE BY SIDE, NOT STACKED. The brief's exact words are "deliberately
-// side-by-side so that there is no hierarchy and with similar wording" — the
+// side-by-side so that there is no hierarchy and with similar wording" - the
 // first pass stacked the two rows full-width, which reinstated precisely the
 // reading order the client wants gone. Two equal columns from lg, split by a
 // hairline; below lg they stack because a phone gives no other option, with

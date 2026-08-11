@@ -27,7 +27,7 @@ export default async function PublicationsPage() {
 
       {/* Site templates 02 feedback: "The publication cards are sitting on top
           of the same cream colour. Can the background box be lighter, so that
-          they stand out more on top of it?" — the contrast is inverted instead:
+          they stand out more on top of it?" - the contrast is inverted instead:
           the surface goes one step darker so the cards lift off it. Making the
           cards lighter than cream-50 would have meant pure white, which is not
           in the palette. */}

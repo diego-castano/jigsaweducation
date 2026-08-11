@@ -7,7 +7,7 @@ import Placeholder from './Placeholder';
 
 // The brief asks for "a dropdown/popout from each service which links to
 // relevant case studies". Expanding in place rather than navigating keeps the
-// page short, which the client asked for twice — they marked r4d.org and
+// page short, which the client asked for twice - they marked r4d.org and
 // fab-ai.org down for "pages too long".
 //
 // It is a real <button> driving aria-expanded on a real region, not a div with

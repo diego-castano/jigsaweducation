@@ -6,7 +6,7 @@ import { MobileNavProvider } from '../../src/site/components/MobileNavContext';
 import { getSingleton } from '../../src/lib/content';
 
 // Route group: every public page renders inside this chrome. /design-system
-// sits outside it deliberately — it ships its own sidebar and splash.
+// sits outside it deliberately - it ships its own sidebar and splash.
 
 // Structured data. The live site has none at all, which for an organisation
 // with 18 named researchers and 17 case studies is free visibility left on the
@@ -21,7 +21,7 @@ const organisationSchema = (settings) => ({
   description: settings.description,
   sameAs: [settings.linkedin],
   vatID: settings.vatNumber,
-  // Company registrations, machine-readable — the footer's legalLine carries
+  // Company registrations, machine-readable - the footer's legalLine carries
   // the same facts as prose.
   identifier: [
     settings.ukCompanyNumber && {

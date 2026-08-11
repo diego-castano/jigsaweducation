@@ -12,7 +12,7 @@ export async function generateMetadata() {
   return pageMetadata(page, { canonical: '/work-for-us' });
 }
 
-// The client's sentence carries its two links on their own phrases — "contact
+// The client's sentence carries its two links on their own phrases - "contact
 // us" opens the Contact page and "sign-up" (their hyphen, deliberately kept)
 // jumps to the form below. The phrases are found inside the stored sentence;
 // if an edit removes one, that part simply renders as plain text rather than
@@ -117,7 +117,7 @@ export default async function WorkForUsPage() {
           </div>
         )}
 
-        {/* The client's sentence, verbatim including their "sign-up" hyphen —
+        {/* The client's sentence, verbatim including their "sign-up" hyphen -
             the first pass had quietly rewritten it. Their own phrases carry
             the two links. */}
         <p className="mt-10 text-lg text-ink-700 leading-relaxed">

@@ -7,7 +7,7 @@ import Icon from '../../components/Icon';
 // A real filter, not the cosmetic one from the design system: the dropdowns
 // open, the chips remove, and the counts come from the filtered set.
 //
-// The client's reference feedback was specific — docs.edtechhub.org/lib for
+// The client's reference feedback was specific - docs.edtechhub.org/lib for
 // "clear titles, filtering, functional"; r4d.org/resources marked down for
 // "too many tags". So: few facets, visible active state, nothing decorative.
 

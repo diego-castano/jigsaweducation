@@ -15,8 +15,8 @@ const ALL = {
 
 // Redesigned as a "Continue" band: stacked full-width rows rather than three
 // boxes, so the end of every page reads as one more navigation move instead
-// of a wall of cards. Same props API, plus an optional `ui` prop — the
-// ui-strings doc from getSingleton('ui-strings') — so labels, blurbs and the
+// of a wall of cards. Same props API, plus an optional `ui` prop - the
+// ui-strings doc from getSingleton('ui-strings') - so labels, blurbs and the
 // kicker become editable. The internal map above stays as the fallback.
 export default function CrossLinks({ hrefs, ui }) {
   const rows = Array.isArray(ui?.crossLinks) ? ui.crossLinks : null;
