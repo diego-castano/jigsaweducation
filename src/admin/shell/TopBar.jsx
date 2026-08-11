@@ -12,6 +12,9 @@ import { logout } from '../../cms/actions/auth';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// Group segments have no index route of their own — linking them would 404.
+const UNLINKABLE = new Set(['pages', 'collections']);
+
 function crumbsFor(pathname, labels) {
   const segments = pathname.split('/').filter(Boolean).slice(1); // drop 'admin'
   const crumbs = [{ label: 'Console', href: '/admin' }];
@@ -19,7 +22,7 @@ function crumbsFor(pathname, labels) {
   for (const segment of segments) {
     path += `/${segment}`;
     const label = labels[segment] || (UUID.test(segment) ? 'Item' : segment);
-    crumbs.push({ label, href: path });
+    crumbs.push({ label, href: UNLINKABLE.has(segment) ? null : path });
   }
   return crumbs;
 }
@@ -68,13 +71,15 @@ export default function TopBar({ session, draftCount = 0, labels = {} }) {
                   <span aria-current="page" className="truncate text-navy-900 font-bold">
                     {crumb.label}
                   </span>
-                ) : (
+                ) : crumb.href ? (
                   <Link
                     href={crumb.href}
                     className="truncate rounded-sm transition-colors hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     {crumb.label}
                   </Link>
+                ) : (
+                  <span className="truncate">{crumb.label}</span>
                 )}
               </li>
             );
