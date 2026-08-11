@@ -1,5 +1,5 @@
 // Every repeatable content type on the site, declared per the DSL in
-// src/cms/schema.js. Field shapes mirror src/data/* exactly — the wiring
+// src/cms/schema.js. Field shapes mirror src/data/* exactly - the wiring
 // phase depends on that equivalence, so a field here stores what the data
 // file stores, nothing renamed and nothing restructured.
 //
@@ -30,7 +30,7 @@ const REGIONS = [...new Set(PUBLICATIONS.map((p) => p.region).filter(Boolean))];
 
 // The client's locked photo policy, restated wherever an image is picked.
 const PHOTO_POLICY =
-  'Our own photographs only — no stock imagery and no AI-generated people. ' +
+  'Our own photographs only: no stock imagery and no AI-generated people. ' +
   'Identifiable faces need written consent, with extra care for children.';
 
 const textList = (name, label, itemLabel, help) => ({
@@ -83,7 +83,7 @@ export const COLLECTIONS = [
         type: 'text',
         nullable: true,
         help:
-          'Leave blank unless the person states a base — the card simply omits ' +
+          'Leave blank unless the person states a base: the card simply omits ' +
           'the chip rather than publish a guess about where someone lives.'
       },
       {
@@ -101,7 +101,7 @@ export const COLLECTIONS = [
         type: 'image',
         nullable: true,
         help:
-          `${PHOTO_POLICY} Upload the colour original — the site applies the ` +
+          `${PHOTO_POLICY} Upload the colour original: the site applies the ` +
           'blue treatment itself. Left empty, the card shows an initials tile.'
       },
       {
@@ -179,7 +179,7 @@ export const COLLECTIONS = [
         required: true,
         warning:
           'The web address comes from this title when the study is first ' +
-          'saved and never changes afterwards — publications and other pages ' +
+          'saved and never changes afterwards: publications and other pages ' +
           'link to it by that address.'
       },
       textList(
@@ -202,7 +202,7 @@ export const COLLECTIONS = [
         options: SERVICE_TITLES,
         required: true,
         warning:
-          'Links the study to its box on the Services page — the match is ' +
+          'Links the study to its box on the Services page: the match is ' +
           'word for word, so pick from the list rather than retyping.'
       },
       {
@@ -243,7 +243,7 @@ export const COLLECTIONS = [
         label: 'The critical question',
         type: 'richtext',
         help:
-          'Three sentences at most — the gap or problem the study set out to ' +
+          'Three sentences at most: the gap or problem the study set out to ' +
           'answer.'
       },
       {
@@ -251,21 +251,21 @@ export const COLLECTIONS = [
         label: 'Collaboration',
         type: 'richtext',
         help:
-          'Three sentences at most — who commissioned the work and who we ' +
+          'Three sentences at most: who commissioned the work and who we ' +
           'delivered it with.'
       },
       {
         name: 'sections.buildingEvidence',
         label: 'Building evidence',
         type: 'richtext',
-        help: 'Three to five sentences — the design, the data and the scale.'
+        help: 'Three to five sentences: the design, the data and the scale.'
       },
       {
         name: 'sections.pathwaysToUptake',
         label: 'Pathways to evidence uptake',
         type: 'richtext',
         help:
-          'Two or three sentences — what was published and how the findings ' +
+          'Two or three sentences: what was published and how the findings ' +
           'get used.'
       },
       {
@@ -297,7 +297,7 @@ export const COLLECTIONS = [
         label: 'Source page',
         type: 'url',
         help:
-          'Where this copy came from on the old site — kept for reference in ' +
+          'Where this copy came from on the old site: kept for reference in ' +
           'the admin, never shown on the page.'
       },
       {
@@ -367,7 +367,7 @@ export const COLLECTIONS = [
         type: 'text',
         nullable: true,
         help:
-          'As they should appear on the page. Leave blank until known — the ' +
+          'As they should appear on the page. Leave blank until known: the ' +
           'page simply omits the line.'
       },
       {
@@ -409,7 +409,7 @@ export const COLLECTIONS = [
         nullable: true,
         help:
           'Feeds the Method/service filter. Leave blank when the output has ' +
-          'no research method — an annual report, say.'
+          'no research method: an annual report, say.'
       },
       {
         name: 'topic',
@@ -470,7 +470,7 @@ export const COLLECTIONS = [
         options: CASE_STUDY_SLUGS,
         nullable: true,
         help:
-          'Links the publication to its case study — a “Read more about this ' +
+          'Links the publication to its case study: a “Read more about this ' +
           'study” button appears when set.'
       },
       {
@@ -478,7 +478,7 @@ export const COLLECTIONS = [
         label: 'Needs review',
         type: 'boolean',
         help:
-          'On while a draft classification — usually the method tag — still ' +
+          'On while a draft classification: usually the method tag: still ' +
           'needs the team’s confirmation.'
       }
     ]
@@ -498,7 +498,7 @@ export const COLLECTIONS = [
     // Slugs are locked once created: case studies land on /services#<slug>
     // and the home signposts link the same way. The admin never regenerates
     // an existing slug on rename.
-    // `caseStudySlugs` in the seed data stays but is not editable — the links
+    // `caseStudySlugs` in the seed data stays but is not editable - the links
     // under each service derive from the service field on the case studies.
     fields: [
       {
@@ -567,7 +567,7 @@ export const COLLECTIONS = [
         type: 'image',
         nullable: true,
         help:
-          'The illustrated glyph for the detail band. Object-only artwork — ' +
+          'The illustrated glyph for the detail band. Object-only artwork: ' +
           'the photo policy bars AI-generated people, so no human figures.'
       }
     ]
@@ -593,7 +593,7 @@ export const COLLECTIONS = [
         verbatim: true,
         help:
           'A full sentence, full stop included. The five titles are supplied ' +
-          'word for word — reword only as a deliberate decision.'
+          'word for word: reword only as a deliberate decision.'
       },
       {
         name: 'summary',
@@ -615,7 +615,7 @@ export const COLLECTIONS = [
     titleField: 'name',
     listColumns: ['full'],
     slugFrom: 'name',
-    // The wall order is the client's own fixed sequence — reordering is a
+    // The wall order is the client's own fixed sequence - reordering is a
     // deliberate drag, never an automatic sort.
     fields: [
       {
@@ -664,7 +664,7 @@ export const COLLECTIONS = [
         required: true,
         verbatim: true,
         help:
-          'Real quotes only — never invent praise. Publish nothing the named ' +
+          'Real quotes only: never invent praise. Publish nothing the named ' +
           'organisation has not actually said.'
       },
       {
@@ -760,7 +760,7 @@ export const COLLECTIONS = [
         label: 'Awaiting document',
         type: 'boolean',
         help:
-          'On while no PDF exists yet — the page lists the policy as ' +
+          'On while no PDF exists yet: the page lists the policy as ' +
           'forthcoming rather than hiding it.'
       },
       {
@@ -770,7 +770,7 @@ export const COLLECTIONS = [
         options: ['core', 'additional'],
         help:
           'Core covers the brief’s six policies; additional covers the two ' +
-          'already published — the language and environmental policies.'
+          'already published: the language and environmental policies.'
       }
     ]
   }

@@ -15,7 +15,7 @@ import DangerZone from './DangerZone.jsx';
 // One collection item: header (back link, live title, Visible/Hidden switch),
 // the same SchemaForm engine the pages use, the live preview pane, and the
 // danger-zone footer. Publishing a hidden item deserves a single move, so the
-// header offers "Publish and make visible" — publishContent then
+// header offers "Publish and make visible" - publishContent then
 // setItemStatus, because publish alone never flips visibility.
 //
 // The preview mirrors the singleton editor exactly: a second grid column from
@@ -61,10 +61,10 @@ export default function ItemEditor({
       await publishContent(meta.key, itemId);
       await setItemStatus(meta.key, itemId, 'published');
       setStatus('published');
-      toast.success(`Published and visible — the ${meta.itemLabel} is live on the site.`);
+      toast.success(`Published and visible: the ${meta.itemLabel} is live on the site.`);
       router.refresh();
     } catch {
-      toast.error('That did not go through. Nothing changed — try again.');
+      toast.error('That did not go through. Nothing changed: try again.');
     } finally {
       setGoingLive(false);
     }
@@ -193,7 +193,7 @@ export default function ItemEditor({
 
         {status === 'hidden' && (
           <p className="text-sm text-ink-600">
-            Hidden — visitors cannot see this {meta.itemLabel}. Publish alone keeps it hidden;
+            Hidden: visitors cannot see this {meta.itemLabel}. Publish alone keeps it hidden;
             “Publish and make visible” puts your latest edits live in one go.
           </p>
         )}

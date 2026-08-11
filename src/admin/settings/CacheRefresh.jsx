@@ -18,7 +18,7 @@ export default function CacheRefresh() {
     try {
       const result = await refreshSiteCache();
       if (result?.error) toast.error(result.error);
-      else toast.success('Done — every page now shows the latest content.');
+      else toast.success('Done: every page now shows the latest content.');
     } catch {
       toast.error('The refresh did not go through. Try again.');
     } finally {

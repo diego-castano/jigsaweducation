@@ -11,7 +11,7 @@ import { createItem } from '../../cms/actions/content.js';
 // straight into the new item's editor. Items are created hidden, so nothing
 // half-finished can reach the site.
 //
-// `field` is the schema declaration of the collection's titleField — rendered
+// `field` is the schema declaration of the collection's titleField - rendered
 // through FieldRenderer so its label, help text and any warning (the
 // case-study address lock, say) appear here too.
 
@@ -60,7 +60,7 @@ export default function AddItemModal({ collection, itemLabel, field }) {
     setCreating(true);
     try {
       const created = await createItem(collection, { [field.name]: trimmed });
-      toast.success('Created as hidden — publish when ready.');
+      toast.success('Created as hidden: publish when ready.');
       router.push(`/admin/collections/${collection}/${created.id}`);
       // The modal stays up, spinner running, until the editor route lands.
     } catch {

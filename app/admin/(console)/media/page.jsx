@@ -1,5 +1,5 @@
 // The media library at /admin/media. The first page of tiles renders on the
-// server — straight from Postgres, always fresh — and MediaBrowser takes over
+// server - straight from Postgres, always fresh - and MediaBrowser takes over
 // for tabs, search, uploads, pagination and the detail drawer.
 
 import { requireAdmin } from '../../../../src/lib/auth';

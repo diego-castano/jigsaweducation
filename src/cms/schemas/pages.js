@@ -36,6 +36,7 @@ const seoSection = ({ title, titleHelp, description, descriptionHelp }) => ({
       type: 'text',
       required: true,
       maxLength: 60,
+      // The site really joins titles with an em dash; the help must quote it.
       help: titleHelp || 'Shown in the browser tab and search results as “(title) — Jigsaw”.',
       seed: title
     },
@@ -89,7 +90,7 @@ export const PAGE_SINGLETONS = [
             required: true,
             verbatim: true,
             warning:
-              'The headline must contain the exact phrase “education research” — the page finds that phrase inside the sentence to set it in italics. Reword or remove the phrase and the headline styling breaks.',
+              'The headline must contain the exact phrase “education research”: the page finds that phrase inside the sentence to set it in italics. Reword or remove the phrase and the headline styling breaks.',
             help: 'The first of the four core sentences from the brief; it is the large headline.',
             seed: CORE_SENTENCES[0]
           },
@@ -126,7 +127,7 @@ export const PAGE_SINGLETONS = [
             type: 'image',
             required: true,
             help:
-              'The photo on the right of the opening. Jigsaw’s own photographs only — no stock imagery and no AI-generated people; identifiable faces need written consent.',
+              'The photo on the right of the opening. Jigsaw’s own photographs only: no stock imagery and no AI-generated people; identifiable faces need written consent.',
             seed:
               'https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/image_asset/file/44/tile_fill_Dubai_Cares_-_ecubed_-_2019_-_participatory_activity.JPG'
           },
@@ -146,7 +147,7 @@ export const PAGE_SINGLETONS = [
           },
           {
             name: 'statYearsLabel',
-            label: 'Stat line — years label',
+            label: 'Stat line: years label',
             type: 'text',
             help:
               'The word after the years figure in the small line under the photo. The figures themselves live in Settings → Organisation.',
@@ -154,14 +155,14 @@ export const PAGE_SINGLETONS = [
           },
           {
             name: 'statAssignmentsLabel',
-            label: 'Stat line — assignments label',
+            label: 'Stat line: assignments label',
             type: 'text',
             help: 'The word after the assignments figure.',
             seed: 'assignments'
           },
           {
             name: 'statOrganisationsLabel',
-            label: 'Stat line — organisations label',
+            label: 'Stat line: organisations label',
             type: 'text',
             help: 'The word after the organisations figure.',
             seed: 'organisations'
@@ -232,7 +233,7 @@ export const PAGE_SINGLETONS = [
             label: 'Note under the summary',
             type: 'text',
             help:
-              'Follows the automatic “(number) countries shown.” count — the count itself comes from the country list below and cannot be typed.',
+              'Follows the automatic “(number) countries shown.” count: the count itself comes from the country list below and cannot be typed.',
             seed: 'Drawn from our published case studies and not yet complete.'
           },
           {
@@ -242,14 +243,14 @@ export const PAGE_SINGLETONS = [
             itemLabel: 'Country',
             minItems: 1,
             help:
-              'Every country highlighted on the map. Tick “Office” for the two countries with a Jigsaw office — they fill orange instead of blue. The countries-shown count updates from this list.',
+              'Every country highlighted on the map. Tick “Office” for the two countries with a Jigsaw office: they fill orange instead of blue. The countries-shown count updates from this list.',
             of: [
               {
                 name: 'country',
                 label: 'Country',
                 type: 'country',
                 required: true,
-                help: 'Pick from the list — a mistyped country silently drops off the map.'
+                help: 'Pick from the list: a mistyped country silently drops off the map.'
               },
               { name: 'office', label: 'Office', type: 'boolean' }
             ],
@@ -260,14 +261,14 @@ export const PAGE_SINGLETONS = [
           },
           {
             name: 'legendOfficesLabel',
-            label: 'Legend — offices',
+            label: 'Legend: offices',
             type: 'text',
             help: 'The label beside the orange square under the map.',
             seed: 'Our offices'
           },
           {
             name: 'legendWorkedLabel',
-            label: 'Legend — where we have worked',
+            label: 'Legend: where we have worked',
             type: 'text',
             help: 'The label beside the blue square under the map.',
             seed: 'Where we have worked'
@@ -300,7 +301,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The 15 years, 150 assignments and 50 organisations figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others — and the figures themselves are still under discussion with the client.',
+              'The 15 years, 150 assignments and 50 organisations figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others: and the figures themselves are still under discussion with the client.',
             seed: PARTNERS_INTRO
           },
           {
@@ -313,9 +314,9 @@ export const PAGE_SINGLETONS = [
         ]
       },
       seoSection({
-        title: 'Jigsaw — Rigorous evidence for lasting change in education',
+        title: 'Jigsaw: Rigorous evidence for lasting change in education',
         titleHelp:
-          'Used exactly as written — the home page is the one page that does not add the “— Jigsaw” suffix.',
+          'Used exactly as written: the home page is the one page that does not add the “Jigsaw” suffix.',
         description:
           'Jigsaw is an education research practice. We work globally and focus on countries with the biggest education challenges, building and using evidence to improve learning and strengthen education systems.'
       })
@@ -362,7 +363,7 @@ export const PAGE_SINGLETONS = [
             label: 'See-also link one',
             type: 'text',
             help:
-              'The sentence reads “See also (one) and (two).” — only the two link labels change here. This one opens Technical focus.',
+              'The sentence reads “See also (one) and (two).”: only the two link labels change here. This one opens Technical focus.',
             seed: 'Technical focus'
           },
           {
@@ -379,7 +380,7 @@ export const PAGE_SINGLETONS = [
         description:
           'Large-scale mixed-method studies, design-based and implementation research, research localisation and capacity strengthening, technical assistance and evidence synthesis, strategy and advisory, and embedded learning partnerships.',
         descriptionHelp:
-          'This description lists the six service names — if a service is renamed under Services, rename it here too.'
+          'This description lists the six service names: if a service is renamed under Services, rename it here too.'
       })
     ]
   },
@@ -424,7 +425,7 @@ export const PAGE_SINGLETONS = [
         description:
           'Climate-resilient learning environments, education financing, education in crisis and conflict, education policy and systems, foundational learning, skills and pathways to employment, teacher professional development, and technology and education.',
         descriptionHelp:
-          'This description lists the eight area names — if an area is renamed under Technical focus, rename it here too.'
+          'This description lists the eight area names: if an area is renamed under Technical focus, rename it here too.'
       })
     ]
   },
@@ -460,7 +461,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The 80%, 250 million and 260 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too — the page does not keep them in step.',
+              'The 80%, 250 million and 260 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too: the page does not keep them in step.',
             seed: DISTINCTIVES_INTRO[1]
           }
         ]
@@ -484,7 +485,7 @@ export const PAGE_SINGLETONS = [
                 label: 'Figure',
                 type: 'number',
                 required: true,
-                help: 'The number that counts up — just the digits.'
+                help: 'The number that counts up: just the digits.'
               },
               {
                 name: 'unit',
@@ -510,7 +511,7 @@ export const PAGE_SINGLETONS = [
             type: 'url',
             nullable: true,
             help:
-              'The source for the three figures — still awaited from the Jigsaw team. While it is empty the band prints a note that the figures should not publish unsourced.',
+              'The source for the three figures: still awaited from the Jigsaw team. While it is empty the band prints a note that the figures should not publish unsourced.',
             seed: DISTINCTIVES_STATS_CITATION
           }
         ]
@@ -526,7 +527,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'Three exact phrases in this paragraph must survive any edit: “suite of bespoke services” and “technical areas” become the links to Services and Technical focus, and “bend the curve of progress” is set in italics. The page finds each phrase inside the text — reword one and its link or italic silently disappears with no error.',
+              'Three exact phrases in this paragraph must survive any edit: “suite of bespoke services” and “technical areas” become the links to Services and Technical focus, and “bend the curve of progress” is set in italics. The page finds each phrase inside the text: reword one and its link or italic silently disappears with no error.',
             seed: DISTINCTIVES_INTRO[2]
           },
           {
@@ -550,14 +551,14 @@ export const PAGE_SINGLETONS = [
             required: true,
             seed: 'What you should experience'
           },
-          // The five rows themselves are the Distinctives collection —
+          // The five rows themselves are the Distinctives collection -
           // one source of truth, edited under Content → Distinctives.
           {
             name: 'testimonialSlug',
             label: 'Quote between the rows',
             type: 'text',
             help:
-              'Which testimonial breaks the run between rows three and four — the slug of an entry under Testimonials. Only real quotations from the live site; never invent praise.',
+              'Which testimonial breaks the run between rows three and four: the slug of an entry under Testimonials. Only real quotations from the live site; never invent praise.',
             seed: 'idrc'
           }
         ]
@@ -580,7 +581,7 @@ export const PAGE_SINGLETONS = [
             label: 'Story',
             type: 'richtext',
             help:
-              'The origin story carried over from the retired About page. Still awaited — note the founding date (2009, 2013 or 15 years ago) is unresolved.',
+              'The origin story carried over from the retired About page. Still awaited: note the founding date (2009, 2013 or 15 years ago) is unresolved.',
             seed: OUR_STORY.body
           },
           {
@@ -629,7 +630,7 @@ export const PAGE_SINGLETONS = [
         description:
           'What you should experience when you work with Jigsaw: evidence uptake, combining global and national, mixed methods research, real partnership, and positive disruption.',
         descriptionHelp:
-          'This description names the five distinctives — if one is retitled above, retitle it here too.'
+          'This description names the five distinctives: if one is retitled above, retitle it here too.'
       })
     ]
   },
@@ -666,7 +667,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             help:
-              'The client’s team paragraph, minus its closing sentence — that sentence sits in the band under the grid, and the two fields together are the paragraph word for word.',
+              'The client’s team paragraph, minus its closing sentence: that sentence sits in the band under the grid, and the two fields together are the paragraph word for word.',
             seed:
               'We are a group of mixed-method education applied researchers. Our team has diverse professional backgrounds, made up of former teachers, education implementers, NGO workers, and academics. We are united by our shared drive to strengthen education in the world’s most challenging contexts. All the work that we do to build and use evidence in education is founded on the skills and expertise of our team. Most of us are based in London or Lusaka.'
           }
@@ -880,7 +881,7 @@ export const PAGE_SINGLETONS = [
         id: 'offices',
         title: 'Offices',
         description:
-          'The two offices sit side by side with no hierarchy — that layout is fixed. Their emails and addresses are edited in Settings → Organisation.',
+          'The two offices sit side by side with no hierarchy: that layout is fixed. Their emails and addresses are edited in Settings → Organisation.',
         fields: [
           {
             name: 'officesHeading',
@@ -1011,7 +1012,7 @@ export const PAGE_SINGLETONS = [
             type: 'email',
             nullable: true,
             help:
-              'Where concerns about Jigsaw’s work should be reported — still awaited from the Jigsaw team. While it is empty the card explains that the reporting route is to be confirmed; once filled it reads “To report any concerns about Jigsaw’s work please contact (email)”.',
+              'Where concerns about Jigsaw’s work should be reported: still awaited from the Jigsaw team. While it is empty the card explains that the reporting route is to be confirmed; once filled it reads “To report any concerns about Jigsaw’s work please contact (email)”.',
             seed: CONCERNS_CONTACT
           }
         ]
@@ -1078,7 +1079,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The exact phrases “contact us” and “sign-up” must survive any edit — the page turns them into the links to the Contact page and the sign-up form, and the client’s hyphen in “sign-up” is deliberate (an earlier rewrite was reverted). Reword either phrase and its link silently disappears.',
+              'The exact phrases “contact us” and “sign-up” must survive any edit: the page turns them into the links to the Contact page and the sign-up form, and the client’s hyphen in “sign-up” is deliberate (an earlier rewrite was reverted). Reword either phrase and its link silently disappears.',
             seed: 'If you are interested in working at Jigsaw, please contact us or sign-up to receive updates.'
           }
         ]

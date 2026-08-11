@@ -55,7 +55,7 @@ export const isWiringField = (field) =>
 
 // --- Validation -------------------------------------------------------------
 // Hard errors (they block Publish): required-and-empty, invalid email,
-// invalid absolute URL. maxLength/maxWords are soft caps — counter only.
+// invalid absolute URL. maxLength/maxWords are soft caps - counter only.
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -128,14 +128,14 @@ export const collectErrors = (fields, doc, prefix = '', labelTrail = []) => {
         found.push(
           ...collectErrors(field.of, rowDoc, `${path}.${index}`, [
             ...labelTrail,
-            `${field.label} — ${field.itemLabel || 'row'} ${index + 1}`,
+            `${field.label}: ${field.itemLabel || 'row'} ${index + 1}`,
           ])
         );
       });
     }
 
     const message = validateFieldValue(field, resolved);
-    if (message) found.push({ path, label: trail.join(' — '), message });
+    if (message) found.push({ path, label: trail.join(': '), message });
   });
   return found;
 };

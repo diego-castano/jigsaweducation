@@ -8,7 +8,7 @@ import { deleteItem } from '../../cms/actions/content.js';
 
 // The item editor's footer card: the locked slug, and Delete behind a
 // ConfirmDialog that names the item and mentions the revision snapshot.
-// Slugs never change from the console — other pages link by them.
+// Slugs never change from the console - other pages link by them.
 
 export default function DangerZone({ collection, id, title, itemLabel, slug }) {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function DangerZone({ collection, id, title, itemLabel, slug }) {
             </p>
           </div>
           <p className="max-w-xs text-sm text-ink-600">
-            Slug changes break links — contact your developer.
+            Slug changes break links: contact your developer.
           </p>
         </div>
 

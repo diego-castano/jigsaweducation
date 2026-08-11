@@ -1,7 +1,7 @@
 'use client';
 
 // The per-row delete on /admin/subscribers: ConfirmDialog naming the exact
-// address, then the deleteSubscriber action. Failures surface as a toast —
+// address, then the deleteSubscriber action. Failures surface as a toast -
 // the button never dies silently.
 
 import { useTransition } from 'react';

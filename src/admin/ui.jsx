@@ -1,8 +1,8 @@
 'use client';
 
 // The console UI kit. Single file by design (docs/admin-ui-spec.md): every
-// admin module imports these primitives blindly, so the exported contract —
-// names and props — is fixed. Styling recomposes the site's own theme tokens
+// admin module imports these primitives blindly, so the exported contract -
+// names and props - is fixed. Styling recomposes the site's own theme tokens
 // as a console: cream surfaces, navy chrome, orange actions, error-500 for
 // destruction (never coral), JetBrains Mono for statuses and counts.
 
@@ -334,6 +334,13 @@ export function Modal({ open, onClose, title, footer, size = 'md', children }) {
     setMounted(true);
   }, []);
 
+  // Callers routinely pass an inline onClose, so its identity changes every
+  // render. The trap must NOT re-run for that: re-running moved focus back
+  // to the first focusable on every keystroke, which froze typing inside
+  // modals after one character. Latest handler lives in a ref instead.
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
   // Scroll lock, Escape, and a focus trap: focus moves into the panel on
   // open, Tab cycles inside it, and whoever opened it gets focus back.
   useEffect(() => {
@@ -342,14 +349,19 @@ export function Modal({ open, onClose, title, footer, size = 'md', children }) {
     document.body.style.overflow = 'hidden';
 
     const frame = requestAnimationFrame(() => {
+      // A field beats the close button: whoever opens a modal with an input
+      // came to type into it.
+      const field = panelRef.current?.querySelector(
+        'input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [contenteditable="true"]'
+      );
       const nodes = panelRef.current?.querySelectorAll(FOCUSABLE);
-      (nodes?.[0] || panelRef.current)?.focus?.();
+      (field || nodes?.[0] || panelRef.current)?.focus?.();
     });
 
     const onKey = (e) => {
       if (e.key === 'Escape') {
         e.stopPropagation();
-        onClose?.();
+        onCloseRef.current?.();
         return;
       }
       if (e.key !== 'Tab') return;
@@ -374,7 +386,7 @@ export function Modal({ open, onClose, title, footer, size = 'md', children }) {
       document.body.style.overflow = '';
       previous?.focus?.();
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!mounted || !open) return null;
 
@@ -661,7 +673,7 @@ export function SearchInput({ value, onChange, placeholder = 'Search…', classN
 
 /* -------------------------------------------------------------------- Tabs */
 
-// tabs: [{ id, label, count? }] — count renders mono, per the Look rules.
+// tabs: [{ id, label, count? }] - count renders mono, per the Look rules.
 export function Tabs({ tabs, active, onChange, label = 'Sections', className = '' }) {
   const refs = useRef([]);
 

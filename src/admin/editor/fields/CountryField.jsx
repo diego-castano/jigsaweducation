@@ -6,7 +6,7 @@ import { ISO_COUNTRIES } from '../../../cms/iso-countries.js';
 import usePopover from '../usePopover.js';
 
 // Searchable combobox over the world-atlas country list. Stores { name, id }
-// with the id as a zero-padded string — the map keys on that id, so the
+// with the id as a zero-padded string - the map keys on that id, so the
 // picker is the only way in and the numeric code never leads the UI.
 export default function CountryField({ field, value, onChange, onBlur, error, inputId }) {
   const { open, setOpen, close, rootRef, triggerRef } = usePopover();
@@ -116,7 +116,7 @@ export default function CountryField({ field, value, onChange, onBlur, error, in
           <ul role="listbox" aria-label={field.label} className="max-h-64 overflow-auto overscroll-contain">
             {filtered.length === 0 && (
               <li className="px-3 py-2 text-sm text-ink-500">
-                No country matches — the list uses the map’s own names, e.g. “Türkiye”.
+                No country matches: the list uses the map’s own names, e.g. “Türkiye”.
               </li>
             )}
             {filtered.map((country, index) => {

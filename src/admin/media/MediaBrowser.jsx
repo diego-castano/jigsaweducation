@@ -2,8 +2,8 @@
 
 // The media library browser: tiles, tabs, search, drag-drop upload and
 // "Load more" pagination. Two modes share the one component:
-//   manage — /admin/media; a tile click opens the detail drawer.
-//   select — inside MediaPicker; a tile click (or a finished upload) hands
+//   manage - /admin/media; a tile click opens the detail drawer.
+//   select - inside MediaPicker; a tile click (or a finished upload) hands
 //            the media record to `onPick`, filtered by `accept`.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -27,7 +27,7 @@ const TABS = [
   { id: 'pdf', label: 'Documents' }
 ];
 
-const PHOTO_POLICY = 'Jigsaw’s own photography only — no stock imagery, no AI-generated people.';
+const PHOTO_POLICY = 'Jigsaw’s own photography only: no stock imagery, no AI-generated people.';
 
 let uploadSeq = 0;
 
@@ -272,7 +272,7 @@ export default function MediaBrowser({
       setTotal((t) => t + 1);
     } else {
       toast.success(
-        `Uploaded ${result.filename} — find it under ${isImageMime(result.mime) ? 'Images' : 'Documents'}.`
+        `Uploaded ${result.filename}: find it under ${isImageMime(result.mime) ? 'Images' : 'Documents'}.`
       );
       setTotal((t) => t + 1);
     }

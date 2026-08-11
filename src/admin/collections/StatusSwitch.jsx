@@ -23,7 +23,7 @@ export default function StatusSwitch({ collection, id, title, itemLabel, status,
       const ok = await confirm({
         title: `Hide “${title}”?`,
         body:
-          `It disappears from the public site straight away. Nothing is deleted — ` +
+          `It disappears from the public site straight away. Nothing is deleted: ` +
           `you can make this ${itemLabel} visible again whenever you like.`,
         confirmLabel: 'Hide it',
       });
@@ -36,8 +36,8 @@ export default function StatusSwitch({ collection, id, title, itemLabel, status,
       onChange?.(next);
       toast.success(
         makeVisible
-          ? `Visible — the ${itemLabel} is shown on the site again.`
-          : `Hidden — visitors can no longer see this ${itemLabel}.`
+          ? `Visible: the ${itemLabel} is shown on the site again.`
+          : `Hidden: visitors can no longer see this ${itemLabel}.`
       );
       router.refresh();
     } catch {

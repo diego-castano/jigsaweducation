@@ -2,7 +2,7 @@
 
 // The console below lg: a slim top bar with the menu button, and the Sidebar
 // re-hung as a left drawer. Focus trap, Escape, overlay tap and navigation
-// all close it — the same behaviours as the public site's drawer, mirrored
+// all close it - the same behaviours as the public site's drawer, mirrored
 // (this one slides from the left, where the sidebar lives).
 
 import { useEffect, useRef, useState } from 'react';

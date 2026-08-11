@@ -1,4 +1,4 @@
-// GET /admin/subscribers/export — the mailing list as a CSV attachment.
+// GET /admin/subscribers/export - the mailing list as a CSV attachment.
 // Session-gated like every admin surface: no session redirects to the login
 // page rather than serving an empty file.
 

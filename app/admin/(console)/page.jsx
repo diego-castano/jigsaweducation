@@ -1,6 +1,6 @@
 // The console dashboard: greeting, page cards with draft badges, the content
 // strip with collection counts, and the last eight revisions. Reads Postgres
-// directly — data AND draft columns, always fresh.
+// directly - data AND draft columns, always fresh.
 
 import Link from 'next/link';
 import { requireAdmin } from '../../../src/lib/auth';
@@ -27,7 +27,7 @@ function greetingFor(hour) {
   return 'Good evening';
 }
 
-// "2 hours ago" / "yesterday" — en-GB, coarse on purpose.
+// "2 hours ago" / "yesterday" - en-GB, coarse on purpose.
 function relativeTime(value) {
   const then = new Date(value).getTime();
   if (Number.isNaN(then)) return '';

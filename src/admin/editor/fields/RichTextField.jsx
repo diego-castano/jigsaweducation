@@ -1,6 +1,6 @@
 'use client';
 
-// The WYSIWYG control behind schema type 'richtext' — TipTap with a
+// The WYSIWYG control behind schema type 'richtext' - TipTap with a
 // deliberately small surface: paragraphs, bold, italic, links, and the two
 // list kinds. Anything richer than that has no rendering on the public site,
 // so the toolbar does not offer it.
@@ -29,7 +29,7 @@ const toEditorHtml = (value) => {
 };
 
 // The site's icon set has no bold/italic/list glyphs, and borrowing wrong
-// icons reads worse than words — so the toolbar is typographic: B, I, Link,
+// icons reads worse than words - so the toolbar is typographic: B, I, Link,
 // the two list kinds. Same convention as classic word processors.
 const BUTTON_BASE =
   'grid h-8 min-w-8 place-items-center rounded-lg px-1.5 text-[13px] pointer-coarse:h-11 pointer-coarse:min-w-11 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none disabled:opacity-35';

@@ -242,7 +242,7 @@ export async function restoreRevision(revisionId) {
   const revision = rows[0];
   if (!revision) throw new Error('Revision not found.');
   const json = JSON.stringify(revision.data || {});
-  // A restore lands in the draft for review — never straight onto the live site.
+  // A restore lands in the draft for review - never straight onto the live site.
   if (revision.target_type === 'singleton') {
     await query(
       'update singletons set draft = $2::jsonb, updated_at = now() where key = $1',
@@ -260,7 +260,7 @@ export async function restoreRevision(revisionId) {
 
 // ---------------------------------------------------------------------------
 // Public: the mailing-list form on the footer, contact and work-for-us pages.
-// No auth, no thrown errors — the form shows whatever message comes back.
+// No auth, no thrown errors - the form shows whatever message comes back.
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

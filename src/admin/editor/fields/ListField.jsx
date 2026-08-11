@@ -23,12 +23,12 @@ import FieldRenderer from '../FieldRenderer.jsx';
 import { isBareStringList } from '../validate.js';
 
 // Ordered rows as collapsible cards. Three shapes share this component:
-//   - object rows (case-study links, offices) — each row edits its `of` fields;
+//   - object rows (case-study links, offices) - each row edits its `of` fields;
 //     rows may carry keys the schema never declared (office id/countryId), so
 //     edits MERGE into the existing row object, never rebuild it.
-//   - bare-string rows (countries, topics) — `of` is a single field named
+//   - bare-string rows (countries, topics) - `of` is a single field named
 //     `value` and the stored array holds plain strings.
-//   - fixed lists — edit-only: no add, no remove, no drag.
+//   - fixed lists - edit-only: no add, no remove, no drag.
 
 let keySeq = 0;
 const nextKey = () => `row-${(keySeq += 1)}`;
@@ -89,7 +89,7 @@ export default function ListField({ field, value, onChange, error, errors, setEr
   const fixed = Boolean(field.fixed);
   const confirm = useConfirm();
 
-  // Stable identities for React keys and dnd — regenerated when the array
+  // Stable identities for React keys and dnd - regenerated when the array
   // changes shape under us (a discarded draft resets the whole document).
   const [keys, setKeys] = useState(() => rows.map(nextKey));
   const [expanded, setExpanded] = useState(() => new Set());

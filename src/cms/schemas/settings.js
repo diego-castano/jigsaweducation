@@ -42,7 +42,7 @@ const SITE_SETTINGS = {
           nullable: true,
           seed: null,
           help:
-            'The official wordmark file (SVG or PNG), set in the official logo font — never a web font. Until one is uploaded the site shows the J mark with a stand-in.'
+            'The official wordmark file (SVG or PNG), set in the official logo font: never a web font. Until one is uploaded the site shows the J mark with a stand-in.'
         },
         {
           name: 'tagline',
@@ -191,7 +191,7 @@ const SITE_SETTINGS = {
           type: 'boolean',
           seed: LEGAL.socialEnterprise,
           warning:
-            'For reference only: the certification wording visitors see lives in the legal sentence below — edit that sentence when the status changes.'
+            'For reference only: the certification wording visitors see lives in the legal sentence below: edit that sentence when the status changes.'
         },
         {
           name: 'ukCompanyNumber',
@@ -284,7 +284,7 @@ const SITE_SETTINGS = {
           itemLabel: 'Tab',
           fixed: true,
           help:
-            'The four tabs at the bottom of the screen on phones. Keep labels to one short word — long labels wrap and break the bar.',
+            'The four tabs at the bottom of the screen on phones. Keep labels to one short word: long labels wrap and break the bar.',
           seed: [
             { label: 'Home' },
             { label: 'Services' },
@@ -697,7 +697,7 @@ const TRACKING = {
           type: 'textarea',
           nullable: true,
           seed: '',
-          help: 'Paste the exact snippet your analytics provider gives you. It loads at the very start of the page for every visitor. Note: search-console verification meta tags do not work here — ask your developer for those.'
+          help: 'Paste the exact snippet your analytics provider gives you. It loads at the very start of the page for every visitor. Note: search-console verification meta tags do not work here: ask your developer for those.'
         },
         {
           name: 'googleVerification',

@@ -16,6 +16,10 @@ const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
+  // Inline onClose props change identity per render; the trap must not
+  // re-run for that (re-running yanks focus mid-typing in the alt field).
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
   const toast = useToast();
   const confirm = useConfirm();
   const altId = useId();
@@ -54,7 +58,7 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
       setFocal(previous);
       toast.error(result.error);
     } else {
-      toast.success(next ? 'Focal point saved — crops now keep it in frame.' : 'Focal point cleared.');
+      toast.success(next ? 'Focal point saved: crops now keep it in frame.' : 'Focal point cleared.');
     }
   };
 
@@ -99,7 +103,7 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
       if (confirmOpen.current) return;
       if (event.key === 'Escape') {
         event.stopPropagation();
-        onClose?.();
+        onCloseRef.current?.();
         return;
       }
       if (event.key !== 'Tab') return;
@@ -124,7 +128,7 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
       document.body.style.overflow = '';
       previous?.focus?.();
     };
-  }, [onClose]);
+  }, []);
 
   const saveAlt = async (value) => {
     pendingAlt.current = null;
@@ -160,7 +164,7 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
       await navigator.clipboard.writeText(`${window.location.origin}${item.url}`);
       toast.success('URL copied to the clipboard.');
     } catch {
-      toast.error('Copying failed — use the path shown under the filename.');
+      toast.error('Copying failed: use the path shown under the filename.');
     }
   };
 
@@ -290,7 +294,7 @@ export default function MediaDrawer({ item, onClose, onAltSaved, onDeleted }) {
             ))}
           </dl>
 
-          {/* Alt text — images only, autosaved */}
+          {/* Alt text: images only, autosaved */}
           {image && (
             <section className="space-y-1.5">
               <div className="flex items-center justify-between gap-2">

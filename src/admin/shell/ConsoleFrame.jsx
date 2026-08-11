@@ -1,7 +1,7 @@
 'use client';
 
 // The console's outer frame, client-side so the sidebar can collapse to an
-// icon rail. Everything inside stays server-rendered — this component only
+// icon rail. Everything inside stays server-rendered - this component only
 // owns the collapsed flag and the widths that depend on it.
 
 import { useEffect, useState } from 'react';

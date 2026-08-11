@@ -44,7 +44,7 @@ export default function LinkField({ field, value, onChange, onBlur, error, input
     <div className="space-y-2">
       <div
         role="radiogroup"
-        aria-label={`${field.label} — link type`}
+        aria-label={`${field.label}: link type`}
         className="flex gap-1 rounded-full border border-cream-300 bg-cream-200/60 p-1"
       >
         <button

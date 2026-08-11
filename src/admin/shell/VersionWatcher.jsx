@@ -1,7 +1,7 @@
 'use client';
 
 // Watches /api/version and offers a reload when production moves under the
-// editor's feet — a new deploy while the console is open otherwise means
+// editor's feet - a new deploy while the console is open otherwise means
 // stale forms talking to new actions. Polls every minute and on tab focus;
 // dismissing stands down until the version changes again. Reloading is the
 // editor's choice: drafts autosave, so nothing is lost either way.
@@ -59,7 +59,7 @@ export default function VersionWatcher() {
     >
       <Icon name="rocket" size={18} className="shrink-0 text-orange-400" />
       <p className="min-w-0 flex-1 text-sm">
-        The console has been updated. Reload to pick up the new version — your work is
+        The console has been updated. Reload to pick up the new version: your work is
         already saved.
       </p>
       <button

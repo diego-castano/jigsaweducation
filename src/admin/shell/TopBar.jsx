@@ -1,7 +1,7 @@
 'use client';
 
 // Desktop top bar: mono breadcrumb on the left; draft chip, "View site" and
-// the user menu on the right. Hidden below lg — MobileShell owns that bar.
+// the user menu on the right. Hidden below lg - MobileShell owns that bar.
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import { logout } from '../../cms/actions/auth';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-// Group segments have no index route of their own — linking them would 404.
+// Group segments have no index route of their own - linking them would 404.
 const UNLINKABLE = new Set(['pages', 'collections']);
 
 function crumbsFor(pathname, labels) {

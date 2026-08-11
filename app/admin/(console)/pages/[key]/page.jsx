@@ -1,6 +1,6 @@
 // The singleton page editor: schema-driven form on the left, the live page
-// in a preview pane on the right. Reads Postgres directly — data AND draft
-// columns, always fresh — and merges the published document over the schema
+// in a preview pane on the right. Reads Postgres directly - data AND draft
+// columns, always fresh - and merges the published document over the schema
 // seed so every declared field arrives with a value even before first save.
 
 import { notFound } from 'next/navigation';
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Collections whose items have their own public page — their routes join the
+// Collections whose items have their own public page - their routes join the
 // static page routes as internal link targets. Today: team, case-studies,
 // publications.
 const DETAIL_COLLECTIONS = COLLECTIONS.filter((c) => c.itemRoute);

@@ -1,4 +1,4 @@
-// /admin/settings — URL-addressable tabs over the three settings singletons
+// /admin/settings - URL-addressable tabs over the three settings singletons
 // plus the account forms. Reads data AND draft straight from Postgres (the
 // admin never uses the cached public loaders) and merges the stored document
 // over the schema seeds, so a database row missing a newly declared field

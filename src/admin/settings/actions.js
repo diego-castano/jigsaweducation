@@ -2,7 +2,7 @@
 
 // Settings-module mutations that have no home in src/cms/actions: the
 // subscribers table is not content (no draft, no revisions), and the
-// admin_users table is accounts, not content — both live here beside the
+// admin_users table is accounts, not content - both live here beside the
 // pages that use them.
 
 import { revalidatePath, revalidateTag } from 'next/cache';

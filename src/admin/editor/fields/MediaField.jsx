@@ -7,7 +7,7 @@ import MediaPicker from '../../media/MediaPicker.jsx';
 import { formatSize } from '../../media/format.js';
 import { listMedia, updateAlt } from '../../../cms/actions/media.js';
 
-// image · file — the stored value is the media URL string ('/media/<key>').
+// image · file - the stored value is the media URL string ('/media/<key>').
 // Everything flows through the MediaPicker; there is never a raw URL input.
 // For images the alt text edits in place: selection hands us the full media
 // record, and for values loaded from an existing document the record is

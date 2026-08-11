@@ -15,7 +15,7 @@ import { collectErrors, fieldDomId, getPath, setPath, topKeyOf } from './validat
 //
 // Props:
 //   schema         singleton schema (with .sections) or collection schema
-//   targetType     'singleton' | collection key — first argument to the actions
+//   targetType     'singleton' | collection key - first argument to the actions
 //   targetKey      singleton key | item uuid
 //   value          the published document (data column)
 //   draft          the draft document or null
@@ -42,6 +42,8 @@ function SerpPreview({ schema, doc, brand }) {
   const host = brand?.host || 'www.jigsaweducation.org';
   const bareHost = host.replace(/^www\./, '');
   const rawTitle = String(doc?.title || '').trim();
+  // The site really does join titles with an em dash ('%s \u2014 Jigsaw');
+  // the preview must mirror that output exactly.
   const title = rawTitle ? (isHome ? rawTitle : `${rawTitle} — ${orgName}`) : 'Untitled page';
   const description = String(doc?.description || '').trim();
   const path = schema?.route && schema.route !== '/' ? schema.route : '';
@@ -66,7 +68,7 @@ function SerpPreview({ schema, doc, brand }) {
         </p>
         <p className="mt-1.5 truncate text-xl leading-snug text-[#1a0dab]">{title}</p>
         <p className="mt-1 line-clamp-2 text-sm leading-normal text-ink-700">
-          {description || 'No description yet — search engines will pick their own text.'}
+          {description || 'No description yet: search engines will pick their own text.'}
         </p>
       </div>
       {doc?.noIndex && (
@@ -79,12 +81,12 @@ function SerpPreview({ schema, doc, brand }) {
 }
 
 // The autosave voice. Everything saves by itself; this chip is how the
-// editor KNOWS it did — so it speaks in full states, tinted and iconed,
+// editor KNOWS it did - so it speaks in full states, tinted and iconed,
 // never just a coloured dot.
 function StatusPill({ status, draftExists }) {
   let chip = 'bg-cream-200 text-ink-700';
   let icon = <Icon name="check" size={13} className="shrink-0" />;
-  let label = 'Published — up to date';
+  let label = 'Published: up to date';
 
   if (status.state === 'saving') {
     chip = 'bg-sea-100 text-sea-700';
@@ -97,11 +99,11 @@ function StatusPill({ status, draftExists }) {
   } else if (status.state === 'error') {
     chip = 'bg-error-50 text-error-700';
     icon = <Icon name="alert" size={13} className="shrink-0" />;
-    label = 'Not saved — check your connection and type again';
+    label = 'Not saved: check your connection and type again';
   } else if (draftExists) {
     chip = 'bg-warning-50 text-warning-700';
     icon = <Icon name="edit" size={13} className="shrink-0" />;
-    label = 'Draft saved — not published yet';
+    label = 'Draft saved: not published yet';
   }
 
   return (
@@ -190,7 +192,7 @@ export default function SchemaForm({
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       flush().catch(() => {
-        toast.error('Your latest change could not be saved. It is kept here — check your connection.');
+        toast.error('Your latest change could not be saved. It is kept here: check your connection.');
         // Retry once the queue has settled; pending keys are still queued.
         timerRef.current = setTimeout(() => flush().catch(() => {}), 4000);
       });
@@ -246,7 +248,7 @@ export default function SchemaForm({
         return next;
       });
       const first = found[0];
-      toast.error(`Cannot publish yet — ${first.label}: ${first.message}`);
+      toast.error(`Cannot publish yet: ${first.label}: ${first.message}`);
       // Collapsed list rows with errors expand on the errors update; scroll
       // once that render has landed.
       setTimeout(() => {
@@ -264,10 +266,10 @@ export default function SchemaForm({
       await publishContent(targetType, targetKey);
       setDraftExists(false);
       setStatus({ state: 'idle', at: null });
-      toast.success('Published — the site is live with your changes.');
+      toast.success('Published: the site is live with your changes.');
       router.refresh();
     } catch {
-      toast.error('Publishing failed. Your draft is safe — try again.');
+      toast.error('Publishing failed. Your draft is safe: try again.');
     } finally {
       setPublishing(false);
     }
@@ -322,7 +324,7 @@ export default function SchemaForm({
                   <a
                     href={`#sec-${section.id}`}
                     onClick={(event) => {
-                      // Animated glide instead of the browser's hard jump —
+                      // Animated glide instead of the browser's hard jump -
                       // unless the user asked for reduced motion.
                       event.preventDefault();
                       const target = document.getElementById(`sec-${section.id}`);
@@ -385,7 +387,7 @@ export default function SchemaForm({
       </div>
       </div>
 
-      {/* Full form width — under the section rail as well, so the buttons
+      {/* Full form width: under the section rail as well, so the buttons
           never fight the fields for room. */}
       <div className="sticky bottom-0 z-20 mt-6 -mx-1 pb-2">
           <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-cream-200 bg-cream-100/85 p-2.5 shadow-md backdrop-blur">

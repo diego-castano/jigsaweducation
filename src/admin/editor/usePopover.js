@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 // Shared open/close mechanics for the editor's pickers (select, icon,
 // country, internal-link). Handles outside click, Escape, and returning
-// focus to the trigger — each picker keeps its own list navigation.
+// focus to the trigger - each picker keeps its own list navigation.
 export default function usePopover() {
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);

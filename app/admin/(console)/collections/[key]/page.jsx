@@ -1,5 +1,5 @@
 // The collection list page: every item of one content type with search,
-// status badges and — when the schema says order matters — drag-reorder.
+// status badges and - when the schema says order matters - drag-reorder.
 // Reads Postgres directly: data AND draft columns, always fresh.
 
 import { notFound } from 'next/navigation';
@@ -47,7 +47,7 @@ export default async function CollectionListPage({ params }) {
 
   const merged = rows.map((row) => ({ row, doc: { ...(row.data || {}), ...(row.draft || {}) } }));
 
-  // Orderable collections keep their dragged order; the rest sort themselves —
+  // Orderable collections keep their dragged order; the rest sort themselves -
   // newest year first where a year exists (publications), then by title.
   if (!schema.orderable) {
     const yearOf = (doc) => {

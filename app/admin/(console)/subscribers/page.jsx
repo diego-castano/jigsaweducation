@@ -1,4 +1,4 @@
-// /admin/subscribers — the mailing list, newest first. Count in mono, CSV
+// /admin/subscribers - the mailing list, newest first. Count in mono, CSV
 // export via the sibling route handler, instant search, per-row delete with
 // a confirm naming the exact address. Reads Postgres directly, always fresh.
 
@@ -65,7 +65,7 @@ export default async function SubscribersPage() {
           <EmptyState
             icon="send"
             title="No subscribers yet"
-            body="Every address entered in the mailing-list form — in the site footer and on the Contact and Work for us pages — lands here, ready to download as a CSV."
+            body="Every address entered in the mailing-list form: in the site footer and on the Contact and Work for us pages: lands here, ready to download as a CSV."
           />
         ) : (
           <SubscribersTable subscribers={subscribers} />

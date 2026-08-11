@@ -7,7 +7,7 @@
 // Pages and Content collapse behind disclosures with text-only rows. Each
 // big group has its own accent colour so the eye separates them at a glance:
 // Pages runs sea, Content runs orange. Collapsed to the rail, each group is
-// one icon — pressing it expands the rail with that group open.
+// one icon - pressing it expands the rail with that group open.
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ import Icon from '../../components/Icon';
 
 const STORAGE_KEY = 'jigsaw-admin:nav-open';
 
-// Static class maps — Tailwind needs the full strings in source.
+// Static class maps - Tailwind needs the full strings in source.
 const ACCENTS = {
   sea: {
     label: 'text-sea-300',
@@ -115,7 +115,7 @@ export default function Sidebar({ groups, collapsed = false, onToggleCollapsed, 
                 key={group.id}
                 type="button"
                 title={group.label}
-                aria-label={`${group.label} — expand the menu`}
+                aria-label={`${group.label}: expand the menu`}
                 onClick={() => {
                   setGroup(group, true);
                   onToggleCollapsed?.();
@@ -189,7 +189,7 @@ export default function Sidebar({ groups, collapsed = false, onToggleCollapsed, 
   return (
     <div className={`flex h-full flex-col bg-navy-900 text-cream-100 ${className}`}>
       {/* Mark + label. The badge sits in the leftmost quarter of the source
-          PNG, hence the 4x-wide crop — same trick as SiteLogo. */}
+          PNG, hence the 4x-wide crop: same trick as SiteLogo. */}
       <Link
         href="/admin"
         className="flex items-center gap-3 h-20 px-5 border-b border-navy-800 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset"

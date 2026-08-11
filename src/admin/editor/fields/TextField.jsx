@@ -2,7 +2,7 @@
 
 import { Input } from '../../ui.jsx';
 
-// text · email · url · number — one Input, tuned per type. Numbers come back
+// text · email · url · number - one Input, tuned per type. Numbers come back
 // out of the field as real numbers (or null when cleared) so the stored
 // document matches what src/data kept.
 const TYPE_PROPS = {

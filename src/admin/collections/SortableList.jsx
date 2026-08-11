@@ -20,11 +20,11 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Icon from '../../components/Icon.jsx';
-import { Badge, EmptyState, IconButton, SearchInput, useConfirm, useToast } from '../ui.jsx';
+import { Badge, EmptyState, IconButton, NativeSelect, SearchInput, useConfirm, useToast } from '../ui.jsx';
 import { deleteItem, duplicateItem, reorderItems } from '../../cms/actions/content.js';
 
-// The collection list body: client-side search, one row per item, and — when
-// the schema says order matters — drag handles that persist the new order
+// The collection list body: client-side search, one row per item, and - when
+// the schema says order matters - drag handles that persist the new order
 // through reorderItems the moment the row is dropped. A failed save puts the
 // old order straight back and says so; the button never dies silently.
 //
@@ -165,6 +165,19 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [columnFilters, setColumnFilters] = useState({});
+
+  // Low-cardinality columns (a publication's type, a study's service) become
+  // instant dropdown filters, computed from the rows themselves.
+  const columnFilterDefs = (rows[0]?.columns || [])
+    .filter((column) => column.type !== 'icon')
+    .map((column) => {
+      const values = [...new Set(items.map((row) =>
+        String(row.columns.find((c) => c.name === column.name)?.value || '')
+      ).filter(Boolean))].sort();
+      return { name: column.name, values };
+    })
+    .filter((def) => def.values.length >= 2 && def.values.length <= 12);
 
   // Instant, client-side: the whole collection is already in the row data.
   const FILTERS = [
@@ -182,6 +195,11 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
   const visible = items.filter(
     (row) =>
       activeFilter.match(row) &&
+      Object.entries(columnFilters).every(
+        ([name, wanted]) =>
+          !wanted ||
+          String(row.columns.find((c) => c.name === name)?.value || '') === wanted
+      ) &&
       (!needle ||
         row.title.toLowerCase().includes(needle) ||
         row.slug.toLowerCase().includes(needle) ||
@@ -195,7 +213,8 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
 
   // Reordering a filtered subset would scramble the hidden rows, so dragging
   // pauses while a search or status filter is active.
-  const filtering = Boolean(needle) || statusFilter !== 'all';
+  const filtering =
+    Boolean(needle) || statusFilter !== 'all' || Object.values(columnFilters).some(Boolean);
   const draggable = orderable && !filtering && items.length > 1;
 
   const handleDuplicate = async (row) => {
@@ -205,11 +224,11 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
       if (result?.error) {
         toast.error(result.error);
       } else {
-        toast.success(`Duplicated — “${row.title} (copy)” was created hidden, ready to edit.`);
+        toast.success(`Duplicated: “${row.title} (copy)” was created hidden, ready to edit.`);
         router.refresh();
       }
     } catch {
-      toast.error('The duplicate could not be created. Nothing changed — try again.');
+      toast.error('The duplicate could not be created. Nothing changed: try again.');
     } finally {
       setBusyId(null);
     }
@@ -229,7 +248,7 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
       toast.success(`Deleted “${row.title}”.`);
       router.refresh();
     } catch {
-      toast.error('The delete did not go through. Nothing changed — try again.');
+      toast.error('The delete did not go through. Nothing changed: try again.');
     } finally {
       setBusyId(null);
     }
@@ -245,7 +264,7 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
     setItems(next);
     try {
       await reorderItems(collection, next.map((row) => row.id));
-      toast.success('New order saved — the site follows it straight away.');
+      toast.success('New order saved: the site follows it straight away.');
     } catch {
       setItems(previous);
       toast.error('The new order could not be saved, so it has been put back.');
@@ -297,6 +316,31 @@ export default function SortableList({ collection, itemLabel, orderable, rows })
             );
           })}
         </div>
+
+        {columnFilterDefs.map((def) => (
+          <NativeSelect
+            key={def.name}
+            aria-label={`Filter by ${def.name}`}
+            value={columnFilters[def.name] || ''}
+            onChange={(event) =>
+              setColumnFilters((current) => ({ ...current, [def.name]: event.target.value }))
+            }
+            className="w-auto min-w-36 text-sm"
+          >
+            <option value="">All {def.name === 'type' ? 'types' : def.name + 's'}</option>
+            {def.values.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </NativeSelect>
+        ))}
+
+        {filtering && (
+          <span className="font-mono text-xs text-ink-500">
+            {visible.length} of {items.length}
+          </span>
+        )}
       </div>
 
       {visible.length === 0 ? (

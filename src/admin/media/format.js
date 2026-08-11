@@ -22,7 +22,7 @@ export const isImageMime = (mime) => typeof mime === 'string' && mime.startsWith
 export const acceptAttr = (accept) =>
   accept === 'image' ? IMAGE_MIMES.join(',') : accept === 'pdf' ? PDF_MIME : UPLOADABLE_MIMES.join(',');
 
-// 'annual-report.pdf' -> 'PDF' — for the file plate on document tiles.
+// 'annual-report.pdf' -> 'PDF' - for the file plate on document tiles.
 export const fileExt = (item) => {
   const name = String(item?.filename || '');
   const dot = name.lastIndexOf('.');

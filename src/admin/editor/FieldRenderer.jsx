@@ -20,7 +20,7 @@ import { countWords, fieldDomId, isWiringField, validateFieldValue } from './val
 // Props:
 //   field       the schema field declaration
 //   path        dotted path of this field inside the document (row indexes
-//               included for list rows) — drives error keys and DOM anchors
+//               included for list rows) - drives error keys and DOM anchors
 //   value       current value
 //   onChange    (nextValue) => void
 //   errors      { [path]: message } map owned by the form
@@ -78,7 +78,7 @@ const Counter = ({ field, value }) => {
 const VerbatimChip = () => (
   <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-navy-900 px-2.5 py-1 font-mono text-[11px] leading-none text-cream-100">
     <Icon name="shield" size={11} />
-    Client copy — supplied word-for-word
+    Client copy: supplied word-for-word
   </span>
 );
 
@@ -90,13 +90,13 @@ const WarningNote = ({ children }) => (
 );
 
 // Wiring fields (nav hrefs, office country codes and coordinates) show their
-// value and the reason they are locked — no input at all.
+// value and the reason they are locked - no input at all.
 const WiringValue = ({ field, value }) => (
   <div className="space-y-2">
     <div className="rounded-xl border border-cream-300 bg-cream-200/60 px-3.5 py-2.5">
       <span className="font-mono text-sm break-all text-ink-700">
         {value == null || value === ''
-          ? '—'
+          ? '-'
           : typeof value === 'boolean'
             ? value
               ? 'Yes'
@@ -122,7 +122,7 @@ export default function FieldRenderer({ field, path, value, onChange, errors, se
   };
 
   const handleChange = (next) => {
-    // A visible error clears the moment the value passes again — leaving a
+    // A visible error clears the moment the value passes again - leaving a
     // stale "required" note over a filled field reads as a broken form.
     if (error && !validateFieldValue(field, next)) setError?.(path, null);
     onChange(next);

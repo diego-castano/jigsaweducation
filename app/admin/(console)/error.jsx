@@ -1,7 +1,7 @@
 'use client';
 
 // Route-group error boundary: the shell stays up, the failed screen explains
-// itself and offers a retry — never a dead console.
+// itself and offers a retry - never a dead console.
 
 import { useEffect } from 'react';
 import Icon from '../../../src/components/Icon';
@@ -21,7 +21,7 @@ export default function ConsoleError({ error, reset }) {
         This screen could not load
       </h1>
       <p className="mt-2 text-[15px] leading-relaxed text-ink-600">
-        Nothing has been lost — the public site is unaffected and your drafts are safe.
+        Nothing has been lost: the public site is unaffected and your drafts are safe.
         Try again, and if it keeps happening, contact your developer.
       </p>
       {error?.message && (

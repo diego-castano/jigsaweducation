@@ -1,6 +1,6 @@
 'use client';
 
-// The media picker the editor's image/file fields open. Contract (fixed —
+// The media picker the editor's image/file fields open. Contract (fixed -
 // FieldRenderer imports this blindly):
 //   <MediaPicker open accept ('image'|'pdf') onClose onSelect(mediaRecord)>
 // Same grid and upload as /admin/media, in select mode: clicking a tile or

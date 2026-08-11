@@ -1,6 +1,6 @@
 // Console navigation, derived from the CMS schemas so a new page or
 // collection appears in the sidebar by declaration, never by editing the
-// shell. Plain data — the server layout imports this and hands serialisable
+// shell. Plain data - the server layout imports this and hands serialisable
 // groups to the client components, keeping the schema seeds out of the
 // client bundle.
 

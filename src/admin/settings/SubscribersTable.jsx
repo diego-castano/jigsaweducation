@@ -73,11 +73,11 @@ export default function SubscribersTable({ subscribers }) {
                         {subscriber.source}
                       </Badge>
                     ) : (
-                      <span className="text-ink-500">—</span>
+                      <span className="text-ink-500">-</span>
                     )}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 font-mono text-xs text-ink-600">
-                    {subscriber.signedUp || '—'}
+                    {subscriber.signedUp || '-'}
                   </td>
                   <td className="px-2 py-2 text-right">
                     <SubscriberDelete id={subscriber.id} email={subscriber.email} />

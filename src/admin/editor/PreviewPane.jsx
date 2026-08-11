@@ -14,7 +14,7 @@ import SchemaForm from './SchemaForm.jsx';
 //   <PreviewPane route lastSavedAt onClose>   the pane itself
 //   <SingletonEditor schema targetKey value draft linkTargets>
 //     owns SchemaForm + PreviewPane: passes onSaved into the form, feeds the
-//     save timestamp into the pane, and manages where the pane lives —
+//     save timestamp into the pane, and manages where the pane lives -
 //     a second grid column from xl: up, a full-screen overlay below.
 
 const STORAGE_KEY = 'jigsaw-admin:preview-open';
@@ -230,7 +230,7 @@ export function SingletonEditor({ schema, targetKey, value, draft, linkTargets, 
 
   const handleSaved = useCallback(() => setLastSavedAt(Date.now()), []);
 
-  // Hydrate the remembered state after mount — the server render cannot read
+  // Hydrate the remembered state after mount - the server render cannot read
   // localStorage, so it always paints the default (open) two-pane layout.
   useEffect(() => {
     try {

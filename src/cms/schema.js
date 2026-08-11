@@ -13,7 +13,7 @@
 //   required:  true | false            // default false
 //   maxLength: number                  // soft cap, counter shown in the UI
 //   maxWords:  number                  // soft cap for prose (e.g. 150-word bios)
-//   verbatim:  true                    // client-supplied copy — admin shows a
+//   verbatim:  true                    // client-supplied copy - admin shows a
 //                                      // "supplied word-for-word" notice on edit
 //   warning:   'string'                // amber note, e.g. substring-anchor rules
 //   options:   ['a','b']               // for select
@@ -31,7 +31,7 @@
 //   textarea   multi-paragraph prose; blank line = paragraph break (matches
 //              how src/data stores bios and section bodies)
 //   richtext   formatted prose edited WYSIWYG (bold, italic, links, lists);
-//              stored as HTML once formatted — plain seeded text stays plain
+//              stored as HTML once formatted - plain seeded text stays plain
 //              until edited, and the site's <Prose> renderer accepts both
 //   image      media-library picker (upload or choose); value is a URL string
 //   file       media-library picker for documents (PDF); value is a URL string
@@ -86,7 +86,7 @@ export { COLLECTIONS };
 export const getSingletonSchema = (key) => SINGLETONS.find((s) => s.key === key) || null;
 export const getCollectionSchema = (key) => COLLECTIONS.find((c) => c.key === key) || null;
 
-// Flat field list for a singleton — used by seed and validation.
+// Flat field list for a singleton - used by seed and validation.
 export const singletonFields = (schema) => schema.sections.flatMap((s) => s.fields);
 
 // Build the seed document for a singleton from its declared seed values.

@@ -114,7 +114,7 @@ function EditUserModal({ user, onClose }) {
             </Button>
           </div>
           <p className="text-sm text-ink-600">
-            Setting one signs them out of nothing — they simply use it from their next
+            Setting one signs them out of nothing: they simply use it from their next
             sign-in. Pass it on securely.
           </p>
         </div>
@@ -160,7 +160,7 @@ export default function UsersPanel({ users, sessionId }) {
         setError(result.error);
       } else {
         toast.success(
-          `Account created for ${result.email}. Pass the password on securely — it is not shown again.`
+          `Account created for ${result.email}. Pass the password on securely: it is not shown again.`
         );
         formRef.current.reset();
         setPassword('');
@@ -244,7 +244,7 @@ export default function UsersPanel({ users, sessionId }) {
       <section className="rounded-2xl border border-cream-200 bg-cream-100 p-6 shadow-xs sm:p-8">
         <h2 className="font-display text-xl text-ink-900">Add an account</h2>
         <p className="mt-1.5 text-sm text-ink-600">
-          Set their first password here and pass it on securely — they can change it
+          Set their first password here and pass it on securely: they can change it
           themselves under Settings → Account once signed in.
         </p>
 

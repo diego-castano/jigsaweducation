@@ -1,6 +1,6 @@
 // The console shell: auth gate, navy sidebar, top bars, review-mode banner
 // and the toast/confirm host every module relies on. Reads draft counts and
-// the review switch straight from Postgres — the admin always sees fresh
+// the review switch straight from Postgres - the admin always sees fresh
 // data and draft columns, never the cached public loaders.
 
 import { requireAdmin } from '../../../src/lib/auth';
@@ -16,7 +16,7 @@ export const metadata = {
   robots: { index: false, follow: false }
 };
 
-// The shell must render even when Postgres is down — the page-level error
+// The shell must render even when Postgres is down - the page-level error
 // boundary reports the failure with the navigation still around it.
 async function shellData() {
   try {

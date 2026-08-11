@@ -1,6 +1,6 @@
 // The item editor: the generic SchemaForm over one collection item, with the
 // live preview of its public page and the danger-zone footer. Reads Postgres
-// directly — data AND draft columns, always fresh.
+// directly - data AND draft columns, always fresh.
 
 import { notFound } from 'next/navigation';
 import { requireAdmin } from '../../../../../../src/lib/auth';

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: { absolute: 'Sign in — Jigsaw Console' },
+  title: { absolute: 'Sign in: Jigsaw Console' },
   robots: { index: false, follow: false }
 };
 
