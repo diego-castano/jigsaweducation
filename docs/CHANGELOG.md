@@ -77,14 +77,26 @@ official logo files. Twelve requests, all done.
   colour default now lives in `@layer base`; heading typography stays
   unlayered so reviewed headings keep their look.
 
+### Deployed and tested (`5752eff`, Railway deploy `896df7ea`)
+
+- Service 06 icon switched from `heart` to `handshake` in the production
+  admin after the deploy went live: autosave, publish, revision and tag
+  revalidation all ran, and `/services` served the new icon.
+- End to end on production with Playwright: all 55 sitemap URLs, robots,
+  icon, OG image, media, `/api/version` and the 404 route; admin login and
+  33 admin screens (every page editor, collection and first item). No 5xx
+  anywhere, no console errors, and opening editors sent no writes. The
+  footer signup saved a test address (deleted straight after).
+- Local dev served stale titles from `.next/cache`; production reads fine.
+
 ### Open
 
-- Service 06 icon: switch `heart` to `handshake` in the admin once this
-  deploy is live (older code has no `handshake`).
 - Hero photos: the client's image bank is still outstanding. The three seeds
   are the best field photos in the library, all 600x400; the AKF one is a
-  464KB PNG.
-- The `page-home` search title in the database still contains an em dash.
+  464KB PNG. The `heroPhotos` row is not in the database yet: the seed shows
+  until someone saves the home page.
+- Railway runs Node 20; the AWS SDK warns that releases after January 2027
+  need Node 22 (`nixpacks.toml`).
 
 ---
 
