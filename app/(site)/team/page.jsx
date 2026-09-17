@@ -21,16 +21,18 @@ export async function generateMetadata() {
 // the two links that sentence implies. If the sentence field is ever emptied,
 // the band simply disappears rather than printing a blank.
 
-// Soft masonry. Three columns on large screens, each one dropped a little
-// further than the last so eighteen portraits stop reading as a spreadsheet.
-// The offset is `top`, not margin: margin would grow the grid row and punch a
-// hole under the columns that were not offset, and it is not a transform, so
-// it cannot fight the translate that <Reveal> animates. Column order is the
-// alphabetical order of the array and nothing else: no card is bigger,
-// earlier or brighter than any other, because ranking eighteen colleagues by
-// tile size is an editorial claim nobody asked us to make. The list items are
-// flex containers so every card fills the height of its row.
-const COLUMN_OFFSET = ['', 'lg:relative lg:top-10', 'lg:relative lg:top-20'];
+// Soft masonry. The offset follows the real column count at each breakpoint
+// (4 columns from md, 5 from xl) so the staircase never falls out of step
+// with the grid. The offset is `top`, not margin: margin would grow the grid
+// row and punch a hole under the columns that were not offset, and it is not
+// a transform, so it cannot fight the translate that <Reveal> animates.
+// Column order is the alphabetical order of the array and nothing else: no
+// card is bigger, earlier or brighter than any other, because ranking
+// eighteen colleagues by tile size is an editorial claim nobody asked us to
+// make. The list items are flex containers so every card fills the height of
+// its row.
+const MD_OFFSET = ['md:top-0', 'md:top-3', 'md:top-6', 'md:top-9'];
+const XL_OFFSET = ['xl:top-0', 'xl:top-3', 'xl:top-6', 'xl:top-9', 'xl:top-12'];
 
 export default async function TeamPage() {
   const [page, mediaMeta, team, ui] = await Promise.all([
@@ -90,13 +92,13 @@ export default async function TeamPage() {
         {/* The live site lists all 18 names inside a single <h1> with no other
             heading in the document, so none of them are headings at all. Here
             each person's name is an h2 inside a real list. */}
-        <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-6 sm:gap-y-12 md:grid-cols-3 lg:gap-x-8 lg:pb-20">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-5 md:grid-cols-4 lg:gap-x-6 lg:gap-y-10 lg:pb-20 xl:grid-cols-5">
           {team.map((person, i) => (
             <Reveal
               as="li"
               key={person.slug}
               delay={(i % 3) * 90}
-              className={`flex ${COLUMN_OFFSET[i % 3]}`}
+              className={`flex md:relative ${MD_OFFSET[i % 4]} ${XL_OFFSET[i % 5]}`}
             >
               <TeamCard person={person} mediaMeta={mediaMeta} />
             </Reveal>

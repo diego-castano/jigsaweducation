@@ -53,7 +53,7 @@ export const SERVICES = [
   {
     slug: 'embedded-learning-partnerships',
     title: 'Embedded learning partnerships',
-    icon: 'heart',
+    icon: 'handshake',
     summary: placeholder('summary of embedded learning partnerships'),
     caseStudySlugs: []
   }

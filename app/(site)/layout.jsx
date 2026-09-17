@@ -74,22 +74,18 @@ export default async function SiteLayout({ children }) {
           mainNav={settings.mainNav}
           footerNav={settings.footerNav}
           offices={settings.offices}
-          wordmarkSrc={settings.logoWordmark}
+          logoSrc={settings.logoWordmark}
         />
         {/* The wrapper's bottom padding keeps the footer's legal line clear of
             the fixed tab bar on mobile; from lg the bar is gone and so is it. */}
         <div className="pb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:pb-0">
           <main id="main">{children}</main>
           <SiteFooter
-            mainNav={settings.mainNav}
             footerNav={settings.footerNav}
             offices={settings.offices}
             legalLine={settings.legalLine}
-            exploreHeading={settings.footerExploreHeading}
-            moreHeading={settings.footerMoreHeading}
-            tagline={settings.tagline}
             linkedin={settings.linkedin}
-            wordmarkSrc={settings.logoWordmark}
+            logoSrc={settings.logoWordmark}
             ui={ui}
           />
         </div>

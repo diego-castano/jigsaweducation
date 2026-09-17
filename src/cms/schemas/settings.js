@@ -37,12 +37,12 @@ const SITE_SETTINGS = {
         },
         {
           name: 'logoWordmark',
-          label: 'Logo wordmark',
+          label: 'Logo',
           type: 'image',
           nullable: true,
           seed: null,
           help:
-            'The official wordmark file (SVG or PNG), set in the official logo font: never a web font. Until one is uploaded the site shows the J mark with a stand-in.'
+            'Leave empty to use the official Jigsaw logo (the J mark with the JIGSAW name, supplied September 2026). Upload a file here only to replace that logo everywhere: it must be the full lockup, mark and name together, as a transparent PNG or SVG.'
         },
         {
           name: 'tagline',
@@ -50,7 +50,7 @@ const SITE_SETTINGS = {
           type: 'text',
           verbatim: true,
           seed: SITE.tagline,
-          help: 'One line of voice: the default browser-title suffix and the footer strapline.'
+          help: 'One line of voice, used as the default browser-title suffix.'
         },
         {
           name: 'description',
@@ -264,20 +264,6 @@ const SITE_SETTINGS = {
           ]
         },
         {
-          name: 'footerExploreHeading',
-          label: 'Footer “Explore” column heading',
-          type: 'text',
-          seed: 'Explore',
-          help: 'Heads the footer column that repeats the header navigation.'
-        },
-        {
-          name: 'footerMoreHeading',
-          label: 'Footer “More” column heading',
-          type: 'text',
-          seed: 'More',
-          help: 'Heads the footer column with Policies and Work for us.'
-        },
-        {
           name: 'tabBar',
           label: 'Mobile tab bar',
           type: 'list',
@@ -341,7 +327,7 @@ const UI_STRINGS = {
       ]
     },
     {
-      // Seeds byte-exact from FooterSignup.jsx and MailingListForm.jsx.
+      // Seeds byte-exact from SiteFooter.jsx and MailingListForm.jsx.
       id: 'footer-signup',
       title: 'Footer & signup',
       fields: [

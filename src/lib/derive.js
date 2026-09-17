@@ -45,8 +45,3 @@ export const caseStudyFacets = (caseStudies) => {
 // [tbc] from the client; this is the verifiable floor.
 export const countriesFromCaseStudies = (caseStudies) =>
   uniq((caseStudies || []).flatMap((c) => c.countries || []));
-
-// Database items are addressed by slug; the seed fallback still carries the
-// legacy `id` key on the one existing entry, so both are honoured.
-export const getTestimonial = (testimonials, slug) =>
-  (testimonials || []).find((t) => t.slug === slug || t.id === slug) || null;

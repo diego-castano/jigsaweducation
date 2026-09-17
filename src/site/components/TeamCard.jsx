@@ -50,6 +50,7 @@ export default function TeamCard({ person, mediaMeta }) {
               src={person.photo}
               alt={altFor(mediaMeta, person.photo)}
               objectPosition={objectPositionFor(mediaMeta, person.photo)}
+              sizes="(min-width: 1280px) 20vw, (min-width: 768px) 25vw, 50vw"
               className="absolute inset-0 w-full h-full"
               imgClassName="object-cover grayscale-[0.55] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0 group-focus-within:grayscale-0 group-hover:scale-[1.02]"
             />
@@ -75,9 +76,9 @@ export default function TeamCard({ person, mediaMeta }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5 lg:p-6">
+      <div className="flex flex-1 flex-col p-3.5 lg:p-4">
         <h2
-          className="font-display display-s text-[22px] sm:text-2xl text-navy-900 leading-[1.15]"
+          className="font-display display-s text-[17px] lg:text-lg leading-[1.2] text-navy-900"
         >
           <Link
             href={`/team/${person.slug}`}
@@ -86,12 +87,12 @@ export default function TeamCard({ person, mediaMeta }) {
             {person.name}
           </Link>
         </h2>
-        <p className="mt-2 text-[13px] font-light leading-snug tracking-[0.01em] text-ink-600">
+        <p className="mt-1 text-[12px] font-light leading-snug tracking-[0.01em] text-ink-600">
           {person.role}
         </p>
 
         {hasMeta && (
-          <div className="mt-auto flex items-center gap-3 pt-5 text-ink-500">
+          <div className="mt-auto flex items-center gap-3 pt-2 text-ink-500">
             {person.country && (
               <span className="inline-flex items-center gap-1.5 text-xs">
                 <Icon name="map-pin" size={13} />
@@ -108,7 +109,7 @@ export default function TeamCard({ person, mediaMeta }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${person.name} on LinkedIn`}
-                    className="tactile flex h-10 w-10 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-cream-200 text-[10px] font-bold text-navy-900 transition-colors hover:bg-sea-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    className="tactile flex h-9 w-9 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-cream-200 text-[10px] font-bold text-navy-900 transition-colors hover:bg-sea-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     in
                   </a>
@@ -119,7 +120,7 @@ export default function TeamCard({ person, mediaMeta }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${person.name} on ORCID`}
-                    className="tactile flex h-10 w-10 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-cream-200 text-[9px] font-bold text-navy-900 transition-colors hover:bg-success-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    className="tactile flex h-9 w-9 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-cream-200 text-[9px] font-bold text-navy-900 transition-colors hover:bg-success-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                   >
                     iD
                   </a>

@@ -1,72 +1,35 @@
 import Link from 'next/link';
 
-// AWAITING CLIENT ASSET.
-// Brand 01 feedback: "if we are using the word 'Jigsaw' next to or in lieu of
-// the circular logo, please can we ensure we use the official logo/font, rather
-// than the website heading font." Becky's comment: "Provide logo with the word
-// as PNG SVG."
+// The official Jigsaw logo: the J mark and the JIGSAW name as one image.
+// Design feedback, 15 September 2026: "Could we replace the 'Jigsaw Education
+// Evidence' wording next to our logo with our combined image/word logo?"
 //
-// /public/logo.png is 600x150 and contains the J badge alone - the right two
-// thirds are empty. There is no wordmark asset anywhere on the live site.
+// public/brand/jigsaw-logo.png is the client's transparent PNG trimmed to the
+// artwork (2251x619) and exported 264px tall: sharp at a 44px logo on 3x
+// screens, 16KB. `size` is the rendered height; the width follows the artwork.
 //
-// So the wordmark below is set in Lato, the brand's own body typeface, NOT in
-// Literata. That respects the instruction (no heading font) without leaving the
-// header as a bare orange circle. When the official wordmark arrives, upload
-// it as the "Logo wordmark" in Site settings - it reaches here as the
-// `wordmarkSrc` prop and the component renders the real asset instead.
-export default function SiteLogo({ size = 40, reversed = false, href = '/', wordmarkSrc = null }) {
-  const label = 'Jigsaw Education Evidence, home';
+// Site settings can replace the file (Organisation, "Logo"). A replacement
+// has to be the same lockup, mark and name together, because nothing else is
+// drawn beside it.
+const DEFAULT_SRC = '/brand/jigsaw-logo.png';
+const ASPECT = 960 / 264;
 
+export default function SiteLogo({ size = 40, href = '/', logoSrc = null }) {
   return (
     <Link
       href={href}
-      aria-label={label}
-      className="inline-flex items-center gap-3 group rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+      aria-label="Jigsaw Education Evidence, home"
+      className="inline-flex shrink-0 items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4"
     >
-      <span
-        className="rounded-full overflow-hidden shrink-0 block"
-        style={{ width: size, height: size }}
-      >
-        {/* Rendered 4x wide and cropped left, because the badge sits in the
-            leftmost quarter of the source PNG. */}
-        <img
-          src="/logo.png"
-          alt=""
-          width={size * 4}
-          height={size}
-          decoding="async"
-          style={{
-            width: size * 4,
-            height: size,
-            maxWidth: 'none',
-            objectFit: 'cover',
-            objectPosition: 'left center',
-            display: 'block'
-          }}
-        />
-      </span>
-
-      {wordmarkSrc ? (
-        <img src={wordmarkSrc} alt="Jigsaw" style={{ height: size * 0.5 }} />
-      ) : (
-        <span className="leading-none">
-          <span
-            className={`font-body font-black tracking-tight block ${
-              reversed ? 'text-cream-50' : 'text-navy-900'
-            }`}
-            style={{ fontSize: size * 0.52 }}
-          >
-            Jigsaw
-          </span>
-          <span
-            className={`font-body text-[10px] uppercase tracking-[0.18em] block mt-1 ${
-              reversed ? 'text-cream-300' : 'text-ink-600'
-            }`}
-          >
-            Education Evidence
-          </span>
-        </span>
-      )}
+      <img
+        src={logoSrc || DEFAULT_SRC}
+        alt=""
+        width={Math.round(size * ASPECT)}
+        height={size}
+        decoding="async"
+        style={{ height: size, width: 'auto' }}
+        className="block max-w-none"
+      />
     </Link>
   );
 }

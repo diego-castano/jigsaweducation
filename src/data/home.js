@@ -12,6 +12,33 @@ export const CORE_SENTENCES = [
   'Our offices are in London and Lusaka.'
 ];
 
+// The three field photographs around the globe in the hero. Design feedback,
+// 15 September 2026, asked for three smaller images instead of one, showing
+// range in places and activities. These are the client's own photographs,
+// already in the media library, each from a published case study and pinned
+// to a country that study worked in. `country.id` is the zero-padded ISO
+// numeric code the admin's country picker stores.
+export const HERO_PHOTOS = [
+  {
+    photo: '/media/migrated/34fcc047ee-tile-fill-akf-photo.png',
+    caption: 'ICT in primary schools',
+    country: { name: 'Kenya', id: '404' },
+    link: '/case-studies/aga-khan-foundation-ict-in-education'
+  },
+  {
+    photo: '/media/migrated/48b3ff9be3-tile-fill-dubai-cares-ecubed-2019-participatory-activity.jpg',
+    caption: 'Voices of Refugee Youth',
+    country: { name: 'Pakistan', id: '586' },
+    link: '/case-studies/voices-of-refugee-youth'
+  },
+  {
+    photo: '/media/migrated/8d24c47f17-tile-fill-group-work-interaction-with-trainer-1-.jpg',
+    caption: 'Teacher professional development',
+    country: { name: 'Rwanda', id: '646' },
+    link: '/case-studies/british-council-environmental-impact-of-tpd'
+  }
+];
+
 // The three signpost boxes. The Distinctives box carries a second link into
 // #our-story: the new sitemap retires the About page, and this is the only
 // route a visitor looking for "about us" has left.

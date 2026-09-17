@@ -12,13 +12,13 @@ import FocusTile from './FocusTile';
 // reversed tiles plus the orange one break the all-cream field the client
 // complained about.
 const LAYOUT = [
-  { span: 'lg:col-span-6', tone: 'sea', height: 'min-h-[260px] lg:min-h-[340px]', titleClass: 'display-m text-2xl lg:text-[2rem]', ghostSize: 140 },
-  { span: 'lg:col-span-6', tone: 'cream', height: 'min-h-[260px] lg:min-h-[340px]', titleClass: 'display-m text-2xl lg:text-[2rem]', ghostSize: 140 },
-  { span: 'lg:col-span-4', tone: 'cream', height: 'min-h-[220px] lg:min-h-[250px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 },
+  { span: 'lg:col-span-6', tone: 'sea', height: 'min-h-[260px] lg:min-h-[340px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 140 },
+  { span: 'lg:col-span-6', tone: 'sun', height: 'min-h-[260px] lg:min-h-[340px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 140 },
   { span: 'lg:col-span-4', tone: 'orange', height: 'min-h-[220px] lg:min-h-[250px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 },
-  { span: 'lg:col-span-4', tone: 'cream', height: 'min-h-[220px] lg:min-h-[250px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 },
-  { span: 'lg:col-span-3', tone: 'cream', height: 'min-h-[210px] lg:min-h-[230px]', titleClass: 'display-s text-lg lg:text-xl', ghostSize: 110 },
-  { span: 'lg:col-span-3', tone: 'cream', height: 'min-h-[210px] lg:min-h-[230px]', titleClass: 'display-s text-lg lg:text-xl', ghostSize: 110 },
+  { span: 'lg:col-span-4', tone: 'sky', height: 'min-h-[220px] lg:min-h-[250px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 },
+  { span: 'lg:col-span-4', tone: 'orange-strong', height: 'min-h-[220px] lg:min-h-[250px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 },
+  { span: 'lg:col-span-3', tone: 'sky', height: 'min-h-[210px] lg:min-h-[230px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 110 },
+  { span: 'lg:col-span-3', tone: 'sun-soft', height: 'min-h-[210px] lg:min-h-[230px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 110 },
   { span: 'lg:col-span-6', tone: 'navy', height: 'min-h-[210px] lg:min-h-[230px]', titleClass: 'display-s text-xl lg:text-2xl', ghostSize: 124 }
 ];
 

@@ -31,7 +31,7 @@ export default async function NotFound() {
         mainNav={settings.mainNav}
         footerNav={settings.footerNav}
         offices={settings.offices}
-        wordmarkSrc={settings.logoWordmark}
+        logoSrc={settings.logoWordmark}
       />
       <main id="main">
         <section className="relative overflow-hidden">
@@ -77,15 +77,11 @@ export default async function NotFound() {
         </section>
       </main>
       <SiteFooter
-        mainNav={settings.mainNav}
         footerNav={settings.footerNav}
         offices={settings.offices}
         legalLine={settings.legalLine}
-        exploreHeading={settings.footerExploreHeading}
-        moreHeading={settings.footerMoreHeading}
-        tagline={settings.tagline}
         linkedin={settings.linkedin}
-        wordmarkSrc={settings.logoWordmark}
+        logoSrc={settings.logoWordmark}
         ui={ui}
       />
     </MobileNavProvider>

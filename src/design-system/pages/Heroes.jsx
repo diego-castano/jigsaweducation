@@ -31,7 +31,7 @@ export default function HeroesPage() {
           </div>
         </div>
         <p className="text-sm text-ink-600 mt-4">
-          Full-page variant, home only: the two blobs above are replaced by <code className="font-mono text-xs bg-cream-200 px-1.5 py-0.5 rounded">GlobeBackdrop</code>, an animated globe rendered with cobe behind the headline. It is a homepage-specific backdrop, not a general hero option.
+          Full-page variant, home only: the right column holds <code className="font-mono text-xs bg-cream-200 px-1.5 py-0.5 rounded">HeroGlobe</code>, a cobe globe with three field photographs threaded to their countries. It is specific to the homepage, not a general hero option.
         </p>
       </Section>
       <Section title="Editorial split hero" description="For homepage and major landing pages. Title left, featured publication right.">

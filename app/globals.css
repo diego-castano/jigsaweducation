@@ -24,6 +24,14 @@
   --color-orange-600: #e6650a;
   --color-orange-700: #b34e07;
 
+  --color-sun-50: #fffaeb;
+  --color-sun-100: #fef1c7;
+  --color-sun-200: #fde49a;
+  --color-sun-300: #fcd46b;
+  --color-sun-400: #f9b233;
+  --color-sun-500: #e0960f;
+  --color-sun-700: #8a5a06;
+
   --color-sea-50: #ecf3f6;
   --color-sea-100: #d8e6ec;
   --color-sea-200: #b1ccd8;
@@ -260,7 +268,17 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: #1a3340;
+}
+
+/* The heading colour default lives in the base layer. Unlayered, it outranked
+   every Tailwind utility, so no heading could take its own colour: on navy
+   bands (the footer's signup heading, the home signposts) headings rendered
+   navy on navy and disappeared. Typography above stays unlayered on purpose,
+   so headings the client has already reviewed keep exactly their look. */
+@layer base {
+  h1, h2, h3, h4, h5 {
+    color: #1a3340;
+  }
 }
 ::selection { background: #ff7816; color: #fff; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }

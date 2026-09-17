@@ -45,7 +45,7 @@ export default function SiteHeader({
   mainNav = DEFAULT_MAIN_NAV,
   footerNav = DEFAULT_FOOTER_NAV,
   offices = DEFAULT_OFFICES,
-  wordmarkSrc = null
+  logoSrc = null
 }) {
   const pathname = usePathname();
   const { menuOpen, setMenuOpen } = useMobileNav();
@@ -156,7 +156,7 @@ export default function SiteHeader({
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <div className="flex items-center justify-between h-20 gap-6">
-            <SiteLogo size={40} wordmarkSrc={wordmarkSrc} />
+            <SiteLogo size={44} logoSrc={logoSrc} />
 
             <nav aria-label="Main" className="hidden lg:block">
               <ul className="flex items-center gap-1">
@@ -229,7 +229,7 @@ export default function SiteHeader({
           aria-label="Menu"
         >
           <div className="flex items-center justify-between h-20 px-6 border-b border-cream-300 shrink-0">
-            <SiteLogo size={36} wordmarkSrc={wordmarkSrc} />
+            <SiteLogo size={40} logoSrc={logoSrc} />
             <button
               ref={closeBtnRef}
               type="button"

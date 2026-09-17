@@ -9,9 +9,11 @@ export const CLASSIFICATION_LABELS = {
   partner: 'Partner',
   partners: 'Partners',
   service: 'Service',
-  method: 'Method',
+  method: 'Service',
+  methods: 'Services',
   methodService: 'Method / service',
-  topic: 'Topic',
+  topic: 'Focus',
+  topics: 'Focus',
   region: 'Region',
   type: 'Type',
   date: 'Date'

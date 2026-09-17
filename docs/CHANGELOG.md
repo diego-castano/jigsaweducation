@@ -5,6 +5,89 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-09-17: Design feedback, round 2 (Kara and Becky, 15 September)
+
+The feedback came as a new section at the end of the sitemap docx ("Design
+feedback/questions - 15.09.2026", now extracted into
+`docs/client/new-website-sitemap.md`), plus two home page screenshots and the
+official logo files. Twelve requests, all done.
+
+### Home
+
+- **Logo.** Header, mobile drawer, footer, admin login and 404 render the
+  client's combined mark-and-name logo, `public/brand/jigsaw-logo.png`
+  (trimmed from their transparent PNG, 960x264, 16KB). Settings, Organisation,
+  Logo can replace it; the help text says a replacement must be the full
+  lockup. `SiteLogo` takes `logoSrc` (was `wordmarkSrc`).
+- **Smaller screens.** Becky's screenshot came from a Windows laptop at about
+  1270x650 CSS pixels: the buttons fell below the fold and the background
+  globe sat on the sentences. Hero type and spacing now scale with viewport
+  height (`clamp()` on `vh`) and the stat line moved under the buttons.
+  Checked at 1267x655, 1280x720, 1366x768, 1468x745, 1536x730, 1920x1080,
+  1024x768, 768x1024 and 390x844: on every desktop size the buttons and all
+  three photos sit in the first screen, and nothing scrolls sideways.
+- **Three photos around the globe** (`HeroGlobe.jsx`, replaces
+  `GlobeBackdrop.jsx`). The cobe globe moved into the hero's right column,
+  up and off the right edge, with three field photographs around it. A thread
+  joins each photo to its country. The globe faces the average of the three
+  countries and sways 16 degrees each way; threads follow through cobe's own
+  projection, unrolled in JS. Photos are a new `heroPhotos` list (photo,
+  caption, country, link) replacing `heroPhoto`, `heroPhotoLink` and
+  `heroPhotoCredit`. Country centres come from world-atlas on the server
+  (`src/lib/country-centroid.js`). Seeds: the client's own library photos
+  from AKF (Kenya), Voices of Refugee Youth (Pakistan) and British Council
+  TPD (Rwanda).
+- cobe v2 has no `onRender`, so the old globe never rotated in production.
+  The new component drives `globe.update()` from its own rAF loop at about
+  30fps, pauses off screen, stays still under reduced motion, and builds a
+  fresh canvas per mount (reusing one left stale WebGL state after Fast
+  Refresh).
+- **Signposts** on navy (`Section tone="navy"`), like the Distinctives stats
+  banner. `Placeholder` gained `reversed`.
+- **Footer** cut to one band: logo with LinkedIn, Policies and Work for us;
+  the two office boxes; the signup on pages without their own; the legal
+  line, kept because UK company details must appear on the site. About 325px
+  tall at 1440 (was about 600). `FooterSignup.jsx` folded into
+  `SiteFooter.jsx`; settings lost `footerExploreHeading` and
+  `footerMoreHeading`.
+
+### Other pages
+
+- **Services.** New `handshake` icon (Lucide geometry, checked against
+  lucide-static) and seed. The live item keeps `heart` until changed in the
+  admin (see Open).
+- **Technical focus.** One title size on all eight tiles, and every tile
+  coloured: a new `sun` yellow scale in `@theme`, tones `sun`, `sun-soft`,
+  `sky` and `orange-strong`.
+- **Distinctives.** IDRC testimonial removed, with its page field and the
+  Testimonials collection (`src/data/testimonials.js` stays for the seed).
+- **Team.** 2, 3, 4 and 5 columns; cards about 213px wide at 1440 (were
+  365px). The staircase stagger follows the column count at each breakpoint.
+- **Case studies.** The filter reads "Focus" (was "Topic"). The detail page
+  drops its photo and runs the four sections as numbered steps on one thread
+  that fills as the reader scrolls (`JourneyThread.jsx`).
+- **Publications.** Filters read "Service" and "Focus" (were "Method" and
+  "Topic"). Labels only: the values already were services and focus areas.
+
+### Fixed on the way
+
+- `globals.css` set heading colour outside any layer, which beat every
+  Tailwind utility: headings on navy rendered navy on navy. Production
+  already hid the footer's signup heading and column labels that way. The
+  colour default now lives in `@layer base`; heading typography stays
+  unlayered so reviewed headings keep their look.
+
+### Open
+
+- Service 06 icon: switch `heart` to `handshake` in the admin once this
+  deploy is live (older code has no `handshake`).
+- Hero photos: the client's image bank is still outstanding. The three seeds
+  are the best field photos in the library, all 600x400; the AKF one is a
+  464KB PNG.
+- The `page-home` search title in the database still contains an em dash.
+
+---
+
 ## 2026-08-03 — The backend session: the CMS, end to end
 
 Three commits, `f4f60d8..d136c85`. The site went from hardcoded `src/data/*`

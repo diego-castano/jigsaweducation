@@ -207,16 +207,16 @@ export const COLLECTIONS = [
       },
       {
         name: 'topics',
-        label: 'Topics',
+        label: 'Focus areas',
         type: 'list',
-        itemLabel: 'Topic',
+        itemLabel: 'Focus area',
         help:
           'The technical focus areas this study touches. Pick from the list ' +
           'so the study appears under the right boxes on the Technical focus page.',
         of: [
           {
             name: 'value',
-            label: 'Topic',
+            label: 'Focus area',
             type: 'select',
             options: FOCUS_TITLES,
             allowCustom: true
@@ -402,24 +402,24 @@ export const COLLECTIONS = [
       ),
       {
         name: 'method',
-        label: 'Method / service',
+        label: 'Service',
         type: 'select',
         options: SERVICE_TITLES,
         allowCustom: true,
         nullable: true,
         help:
-          'Feeds the Method/service filter. Leave blank when the output has ' +
+          'Feeds the Service filter. Leave blank when the output has ' +
           'no research method: an annual report, say.'
       },
       {
         name: 'topic',
-        label: 'Topic',
+        label: 'Focus',
         type: 'select',
         options: FOCUS_TITLES,
         allowCustom: true,
         nullable: true,
         help:
-          'Feeds the Topic filter. Leave blank rather than stretch a label to fit.'
+          'Feeds the Focus filter. Leave blank rather than stretch a label to fit.'
       },
       {
         name: 'summary',
@@ -639,40 +639,6 @@ export const COLLECTIONS = [
         help:
           'SVG preferred. Until one is uploaded the wall shows the name as a ' +
           'typographic plate.'
-      }
-    ]
-  },
-
-  {
-    key: 'testimonials',
-    title: 'Testimonials',
-    itemLabel: 'testimonial',
-    route: '/distinctives',
-    itemRoute: null,
-    icon: 'message',
-    orderable: true,
-    titleField: 'attribution',
-    listColumns: [],
-    slugFrom: 'attribution',
-    // The seed data carries a legacy `id` key on the one existing entry;
-    // items are addressed by slug from here on.
-    fields: [
-      {
-        name: 'quote',
-        label: 'Quote',
-        type: 'textarea',
-        required: true,
-        verbatim: true,
-        help:
-          'Real quotes only: never invent praise. Publish nothing the named ' +
-          'organisation has not actually said.'
-      },
-      {
-        name: 'attribution',
-        label: 'Attribution',
-        type: 'text',
-        required: true,
-        help: 'Who said it, e.g. IDRC.'
       }
     ]
   },

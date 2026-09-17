@@ -15,6 +15,10 @@ import Reveal from './Reveal';
 // destinations are structural and stay here. The Distinctives column keeps its
 // second link into #our-story: the new sitemap retires the About page, so this
 // is the only route left for a visitor looking for "about us".
+//
+// Design feedback, 15 September 2026: the band runs in the bold dark blue of
+// the Distinctives stats banner, so the home page gets one strong block
+// between the hero and the map. The page wraps it in a navy Section.
 const STRUCTURE = [
   { href: '/services' },
   { href: '/technical-focus' },
@@ -23,7 +27,7 @@ const STRUCTURE = [
 
 export default function SignpostTrio({ signposts = [], readMore = 'Read more' }) {
   return (
-    <ul className="grid md:grid-cols-3 border-t border-b border-cream-300">
+    <ul className="grid md:grid-cols-3">
       {signposts.map((s, i) => {
         const structure = STRUCTURE[i] || {};
         return (
@@ -31,26 +35,23 @@ export default function SignpostTrio({ signposts = [], readMore = 'Read more' })
             as="li"
             key={structure.href || i}
             delay={i * 90}
-            // Translucent tint, not opaque fill: with the globe drifting behind
-            // this band, a solid hover patch cut a hard-edged rectangle out of
-            // the backdrop and read as a glitch.
-            className={`group flex flex-col min-h-[16rem] py-9 transition-colors duration-300 hover:bg-cream-100/70 focus-within:bg-cream-100/70 ${
-              i > 0 ? 'border-t border-cream-300 md:border-t-0 md:border-l md:pl-8 lg:pl-10' : ''
+            className={`group flex flex-col min-h-[14rem] py-8 md:py-2 transition-colors duration-300 ${
+              i > 0 ? 'border-t border-navy-700 md:border-t-0 md:border-l md:pl-8 lg:pl-10' : ''
             } ${i < signposts.length - 1 ? 'md:pr-8 lg:pr-10' : ''}`}
           >
             {/* h2, not h3: these columns are the home page's first real sections
                 after the hero, so anything lower would skip a level. */}
-            <h2 className="font-display display-m text-2xl lg:text-[1.75rem] leading-[1.15] text-navy-900">
+            <h2 className="font-display display-m text-2xl lg:text-[1.75rem] leading-[1.15] text-cream-50">
               {s.title}
             </h2>
 
-            <Placeholder className="mt-4 text-[15px] leading-relaxed flex-1">
+            <Placeholder reversed className="mt-4 text-[15px] leading-relaxed flex-1 text-cream-200">
               {s.summary}
             </Placeholder>
 
             <Link
               href={structure.href || '/'}
-              className="inline-flex items-center gap-2 w-fit mt-8 py-2 -my-2 text-sm font-bold text-sea-700 group-hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+              className="inline-flex items-center gap-2 w-fit mt-8 py-2 -my-2 text-sm font-bold text-orange-400 group-hover:text-orange-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-sm"
             >
               <span className="link-sweep">
                 {readMore}
@@ -66,7 +67,7 @@ export default function SignpostTrio({ signposts = [], readMore = 'Read more' })
             {structure.secondaryHref && s.secondaryLinkLabel && (
               <Link
                 href={structure.secondaryHref}
-                className="inline-flex items-center gap-1.5 w-fit mt-4 py-2 -my-1 text-sm text-ink-600 hover:text-orange-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-sm"
+                className="inline-flex items-center gap-1.5 w-fit mt-4 py-2 -my-1 text-sm text-cream-300 hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-sm"
               >
                 <span className="link-sweep">{s.secondaryLinkLabel}</span>
                 <Icon name="arrow-up-right" size={14} />

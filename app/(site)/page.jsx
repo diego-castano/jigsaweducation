@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Section, { SectionHeading } from '../../src/site/components/Section';
 import SignpostTrio from '../../src/site/components/SignpostTrio';
-import GlobeBackdrop from '../../src/site/components/GlobeBackdrop';
+import HeroGlobe from '../../src/site/components/HeroGlobe';
 import WorldMap from '../../src/site/components/WorldMap';
 import PartnerLogoWall from '../../src/site/components/PartnerLogoWall';
 import Placeholder from '../../src/site/components/Placeholder';
@@ -10,6 +10,7 @@ import Icon from '../../src/components/Icon';
 import { getSingleton, getCollection, getMediaMeta } from '../../src/lib/content';
 import { pageMetadata } from '../../src/lib/page-metadata';
 import { altFor, objectPositionFor } from '../../src/lib/media-meta';
+import { countryCentroid } from '../../src/lib/country-centroid';
 
 export async function generateMetadata() {
   const page = await getSingleton('page-home');
@@ -41,6 +42,23 @@ export default async function HomePage() {
 
   const supportingSentences = (home.supportingSentences || []).map((row) => row.text);
 
+  // Three field photographs, each pinned to the country it was taken in. The
+  // country's centre is worked out here on the server, so the browser never
+  // downloads the atlas for three points. A photo with no country still
+  // shows; it simply has no thread.
+  const heroPhotos = (home.heroPhotos || [])
+    .filter((row) => row?.photo)
+    .slice(0, 3)
+    .map((row) => ({
+      src: row.photo,
+      alt: altFor(mediaMeta, row.photo),
+      objectPosition: objectPositionFor(mediaMeta, row.photo),
+      caption: row.caption || '',
+      country: row.country?.name || '',
+      coords: countryCentroid(row.country?.id),
+      href: row.link || '/case-studies'
+    }));
+
   // The document stores { country: { name, id }, office } rows; the map wants
   // flat { name, id, office } with STRING ids - world-atlas keys on them, and
   // a row without an id can never match, so it drops here rather than there.
@@ -54,40 +72,29 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Blocks 1 and 2 share one positioning context so the globe can live
-          uncropped behind both: it rises through the hero's bottom-left and
-          keeps drifting behind the signpost band, on a parallax that lets it
-          recede slower than the page. The signposts sit at z-10 with the page
-          background showing the globe through their hairline gaps. Desktop
-          only: on mobile the hero stacks and a background globe muddies type. */}
-      <div className="relative">
-        {/* The vertical mask is the legibility deal: the sphere runs at full
-            presence through the hero and the seam, then dissolves under the
-            signpost text zone so placeholder copy never fights dot matrix.
-            The parallax drags the fade along with the globe, which keeps the
-            crest visible into the band without ever sitting under words. */}
-        <GlobeBackdrop
-          parallax={0.22}
-          officeCoords={(settings.offices || []).map((office) => office.coords)}
-          className="absolute top-[440px] -left-72 z-0 hidden lg:block opacity-[0.5] [mask-image:linear-gradient(to_bottom,black_32%,transparent_72%)]"
-        />
+      {/* 1. The four core sentences beside the field photographs and the globe.
+          The globe bleeds off the right edge by design; overflow-x-clip keeps
+          it from ever pushing the page sideways.
+          Type and spacing scale with the viewport's HEIGHT as well as its
+          width. Design feedback, 15 September 2026, showed a Windows laptop
+          (about 1270x650 CSS pixels) where the buttons fell below the fold
+          and the old background globe sat on the sentences. Now the opening
+          fits the first screen on short laptops and keeps its size on tall
+          ones. */}
+      <section className="relative overflow-x-clip">
+        {/* The blob keeps its own clipper so it never widens the page. */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <span
+            className="blob"
+            style={{ width: 380, height: 380, top: -190, right: -120, background: '#ffcca8', opacity: 0.22 }}
+          />
+        </div>
 
-        {/* 1. The four core sentences, split hero */}
-        <section className="relative">
-          {/* The blob keeps its own clipper now that the section no longer
-              crops: unclipped it would push the page sideways on the right. */}
-          <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-            <span
-              className="blob"
-              style={{ width: 380, height: 380, top: -190, right: -120, background: '#ffcca8', opacity: 0.22 }}
-            />
-          </div>
-
-        <div className="relative max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-16 pb-16 lg:pt-24 lg:pb-24">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="relative max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-12 pb-16 lg:pt-[clamp(2.5rem,7vh,5.5rem)] lg:pb-[clamp(3rem,9vh,6rem)]">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 xl:gap-14 lg:items-center">
             {/* Left: the words */}
             <div className="lg:col-span-7">
-              <h1 className="font-display display-xl text-navy-900 text-[2.5rem] sm:text-[3.5rem] lg:text-[4.25rem] leading-[1.1] pb-1">
+              <h1 className="font-display display-xl text-navy-900 text-[2.5rem] sm:text-[3.5rem] lg:text-[clamp(2.75rem,min(8.6vh,5.4vw),4.25rem)] leading-[1.1] pb-1">
                 {hasItalicPhrase ? (
                   <>
                     {leadBefore}
@@ -101,20 +108,20 @@ export default async function HomePage() {
 
               {/* Sentences 2 to 4 as three measured lines, not a paragraph
                   stack. Hairline above each, staggered in. */}
-              <div className="mt-10 lg:mt-12 max-w-xl">
+              <div className="mt-10 lg:mt-[clamp(1.75rem,4.5vh,3rem)] max-w-xl">
                 {supportingSentences.map((sentence, i) => (
                   <Reveal
                     key={sentence}
                     as="p"
                     delay={140 + i * 110}
-                    className="border-t border-cream-300 pt-4 pb-5 text-lg sm:text-xl lg:text-[1.375rem] leading-[1.35] text-ink-700"
+                    className="border-t border-cream-300 pt-4 pb-5 lg:pt-[clamp(0.625rem,1.6vh,1rem)] lg:pb-[clamp(0.75rem,2vh,1.25rem)] text-lg sm:text-xl lg:text-[clamp(1.0625rem,2.6vh,1.375rem)] leading-[1.35] text-ink-700"
                   >
                     {sentence}
                   </Reveal>
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8 lg:mt-[clamp(1.25rem,3.5vh,2rem)]">
                 <Link
                   href="/case-studies"
                   className="tactile group inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
@@ -133,58 +140,39 @@ export default async function HomePage() {
                   {home.secondaryCtaLabel}
                 </Link>
               </div>
-            </div>
-
-            {/* Right: the client's own field photo, duotone until you touch it */}
-            <Reveal delay={220} className="lg:col-span-5 lg:pt-2">
-              <Link
-                href={home.heroPhotoLink}
-                className="group block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50"
-              >
-                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-cream-200">
-                  <img
-                    src={home.heroPhoto}
-                    alt={altFor(mediaMeta, home.heroPhoto)}
-                    style={{ objectPosition: objectPositionFor(mediaMeta, home.heroPhoto) }}
-                    decoding="async"
-                    fetchPriority="high"
-                    className="absolute inset-0 w-full h-full object-cover grayscale-[0.55] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0 group-focus-within:grayscale-0 group-hover:scale-[1.02]"
-                  />
-                  <span
-                    className="absolute inset-0 bg-navy-900 mix-blend-multiply opacity-25 transition-opacity duration-500 group-hover:opacity-0 group-focus-within:opacity-0"
-                    aria-hidden="true"
-                  />
-                </div>
-                <span className="flex items-start gap-2 mt-4 text-sm text-ink-600 group-hover:text-navy-900 transition-colors">
-                  <span className="link-sweep">
-                    {home.heroPhotoCredit}
-                  </span>
-                  <Icon name="arrow-up-right" size={14} className="mt-1 shrink-0" />
-                </span>
-              </Link>
-
-              {/* Clay's quiet stat line: one mono row, not a badge strip.
+              {/* Clay's quiet stat line: one mono row, not a badge strip, under the
+                  buttons so the right-hand column stays all photographs.
                   Figures come from Settings → Organisation; the unit words
                   after them belong to this page. */}
               {/* The labels join their figures inside one expression so the
                   server HTML keeps the exact text nodes the static page had. */}
-              <p className="mt-6 pt-4 border-t border-cream-300 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500">
+              <p className="mt-8 lg:mt-[clamp(1.25rem,3.5vh,2rem)] pt-4 border-t border-cream-300 max-w-xl font-mono text-[11px] uppercase tracking-[0.14em] text-ink-500">
                 {settings.years}{` ${home.statYearsLabel}`}
                 <span className="text-cream-400 px-2" aria-hidden="true">/</span>
                 {settings.assignments}{`+ ${home.statAssignmentsLabel}`}
                 <span className="text-cream-400 px-2" aria-hidden="true">/</span>
                 {settings.organisations}{`+ ${home.statOrganisationsLabel}`}
               </p>
-            </Reveal>
+            </div>
+
+            {/* Right: three field photographs pinned to their countries on the
+                globe. On desktop the stage is capped by the viewport height so
+                it never runs past the first screen. */}
+            <div className="lg:col-span-5">
+              <HeroGlobe
+                photos={heroPhotos}
+                className="mx-auto w-full max-w-[520px] lg:max-w-none lg:mr-0 lg:w-[min(100%,calc((100svh-9rem)*0.943))]"
+              />
+
+            </div>
           </div>
         </div>
-        </section>
+      </section>
 
-        {/* 2. Three ways in - z-10 so the columns ride above the globe */}
-        <Section className="relative z-10">
-          <SignpostTrio signposts={home.signposts} readMore={ui.readMore} />
-        </Section>
-      </div>
+      {/* 2. Three ways in, on the bold navy of the Distinctives stats banner */}
+      <Section tone="navy">
+        <SignpostTrio signposts={home.signposts} readMore={ui.readMore} />
+      </Section>
 
       {/* 3. Where we work */}
       <Section tone="sunken">

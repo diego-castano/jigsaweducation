@@ -14,4 +14,5 @@ next-env.d.ts
 # comms notes. None of it ships to GitHub.
 docs/project-context.md
 docs/client/
+feedback/
 .playwright-mcp/

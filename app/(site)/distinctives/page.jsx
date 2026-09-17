@@ -7,7 +7,6 @@ import Reveal from '../../../src/site/components/Reveal';
 import CountUp from '../../../src/site/components/distinctives/CountUp';
 import { getSingleton, getCollection } from '../../../src/lib/content';
 import { pageMetadata } from '../../../src/lib/page-metadata';
-import { getTestimonial } from '../../../src/lib/derive';
 import Prose from '../../../src/site/components/Prose';
 import { isPlaceholder } from '../../../src/data/placeholder';
 
@@ -115,19 +114,17 @@ function DistinctiveRow({ index, side, title, summary }) {
 }
 
 export default async function DistinctivesPage() {
-  const [page, settings, ui, distinctives, testimonials] = await Promise.all([
+  const [page, settings, ui, distinctives] = await Promise.all([
     getSingleton('page-distinctives'),
     getSingleton('site-settings'),
     getSingleton('ui-strings'),
-    getCollection('distinctives'),
-    getCollection('testimonials')
+    getCollection('distinctives')
   ]);
 
   const { introOne, introTwo, introThree } = page;
   const crisisStats = page.crisisStats || [];
   const storyMilestones = page.storyMilestones || [];
   const showReviewNotes = Boolean(settings.showReviewNotes);
-  const testimonial = getTestimonial(testimonials, page.testimonialSlug);
 
   return (
     <>
@@ -244,8 +241,7 @@ export default async function DistinctivesPage() {
       </section>
 
       {/* The five distinctives. Full-width rows, hairlines only, watermark
-          numerals cropped by the row edge, with the IDRC quote breaking the
-          run between the third and the fourth. */}
+          numerals cropped by the row edge. */}
       <section>
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-16 lg:pt-24">
           <Reveal>
@@ -269,26 +265,7 @@ export default async function DistinctivesPage() {
           </ol>
         </div>
 
-        {testimonial && (
-          <figure className="bg-cream-200 border-y border-cream-300 py-16 lg:py-24">
-            <blockquote className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
-              <Reveal>
-                <p className="font-display display-s italic text-2xl sm:text-3xl lg:text-[40px] text-navy-900 leading-[1.22] max-w-[30ch] sm:max-w-[40ch] lg:max-w-[46ch]">
-                  {testimonial.quote}
-                </p>
-              </Reveal>
-            </blockquote>
-            <figcaption className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 mt-8 font-mono text-xs tracking-[0.18em] uppercase text-ink-600">
-              <span
-                className="inline-block align-middle w-8 h-px bg-orange-500 mr-3"
-                aria-hidden="true"
-              />
-              {testimonial.attribution}
-            </figcaption>
-          </figure>
-        )}
-
-        <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
+        <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 mt-10 lg:mt-14">
           <ol start={4}>
             {distinctives.slice(3).map((d, i) => (
               <DistinctiveRow

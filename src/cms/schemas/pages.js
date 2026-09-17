@@ -4,7 +4,7 @@
 // literally. The wiring phase replaces both with reads from these documents.
 
 import { placeholder } from '../../data/placeholder.js';
-import { CORE_SENTENCES, SIGNPOSTS, MAP_SUMMARY, MAP_COUNTRIES } from '../../data/home.js';
+import { CORE_SENTENCES, SIGNPOSTS, MAP_SUMMARY, MAP_COUNTRIES, HERO_PHOTOS } from '../../data/home.js';
 import { PARTNERS_INTRO } from '../../data/partners.js';
 import { SERVICES_INTRO } from '../../data/services.js';
 import { TECHNICAL_FOCUS_INTRO } from '../../data/technical-focus.js';
@@ -81,7 +81,7 @@ export const PAGE_SINGLETONS = [
       {
         id: 'hero',
         title: 'Opening',
-        description: 'The four core sentences, the field photo and the two buttons.',
+        description: 'The four core sentences, the two buttons and the three field photographs around the globe.',
         fields: [
           {
             name: 'headline',
@@ -122,35 +122,44 @@ export const PAGE_SINGLETONS = [
             seed: 'Evidence library'
           },
           {
-            name: 'heroPhoto',
-            label: 'Hero photograph',
-            type: 'image',
-            required: true,
+            name: 'heroPhotos',
+            label: 'Field photographs',
+            type: 'list',
+            itemLabel: 'Photograph',
+            fixed: true,
             help:
-              'The photo on the right of the opening. Jigsaw’s own photographs only: no stock imagery and no AI-generated people; identifiable faces need written consent.',
-            seed:
-              'https://hubble-live-assets.s3.eu-west-1.amazonaws.com/jigsawconsult/image_asset/file/44/tile_fill_Dubai_Cares_-_ecubed_-_2019_-_participatory_activity.JPG'
-          },
-          {
-            name: 'heroPhotoLink',
-            label: 'Photo links to',
-            type: 'link',
-            help: 'The case study the photo opens when clicked.',
-            seed: '/case-studies/voices-of-refugee-youth'
-          },
-          {
-            name: 'heroPhotoCredit',
-            label: 'Photo caption',
-            type: 'text',
-            help: 'The one-line credit under the photo, naming the study it comes from.',
-            seed: 'Voices of Refugee Youth, Pakistan and Rwanda'
+              'Three photographs around the globe on the right of the opening. A thread joins each one to its country on the globe, so choose photos that differ in place and in activity. Jigsaw’s own photographs only: no stock imagery and no AI-generated people; identifiable faces need written consent.',
+            of: [
+              { name: 'photo', label: 'Photograph', type: 'image', required: true },
+              {
+                name: 'caption',
+                label: 'Caption',
+                type: 'text',
+                required: true,
+                help: 'One short line under the country naming the study or the activity. Keep it under about 30 characters: the photos are small.'
+              },
+              {
+                name: 'country',
+                label: 'Country',
+                type: 'country',
+                required: true,
+                help: 'Where the photo was taken. It is shown above the caption and pinned on the globe.'
+              },
+              {
+                name: 'link',
+                label: 'Photo links to',
+                type: 'link',
+                help: 'The case study the photo opens when clicked.'
+              }
+            ],
+            seed: HERO_PHOTOS
           },
           {
             name: 'statYearsLabel',
             label: 'Stat line: years label',
             type: 'text',
             help:
-              'The word after the years figure in the small line under the photo. The figures themselves live in Settings → Organisation.',
+              'The word after the years figure in the small line under the buttons. The figures themselves live in Settings → Organisation.',
             seed: 'years'
           },
           {
@@ -553,14 +562,6 @@ export const PAGE_SINGLETONS = [
           },
           // The five rows themselves are the Distinctives collection -
           // one source of truth, edited under Content → Distinctives.
-          {
-            name: 'testimonialSlug',
-            label: 'Quote between the rows',
-            type: 'text',
-            help:
-              'Which testimonial breaks the run between rows three and four: the slug of an entry under Testimonials. Only real quotations from the live site; never invent praise.',
-            seed: 'idrc'
-          }
         ]
       },
       {

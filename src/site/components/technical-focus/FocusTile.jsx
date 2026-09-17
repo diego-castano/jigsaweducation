@@ -40,6 +40,34 @@ const TONES = {
     plate: 'border-cream-50/30 text-cream-50 group-hover:border-orange-400',
     ghost: 'text-cream-50 opacity-[0.10]',
     mark: 'text-cream-100'
+  },
+  sun: {
+    surface: 'bg-sun-300 hover:bg-sun-400',
+    title: 'text-navy-900',
+    plate: 'border-sun-500/40 bg-sun-200 text-navy-900 group-hover:border-sun-500',
+    ghost: 'text-sun-500 opacity-[0.14]',
+    mark: 'text-navy-900 group-hover:text-sun-700'
+  },
+  'sun-soft': {
+    surface: 'bg-sun-100 hover:bg-sun-200',
+    title: 'text-navy-900',
+    plate: 'border-sun-400 text-sun-500 group-hover:border-sun-500',
+    ghost: 'text-sun-500 opacity-[0.12]',
+    mark: 'text-ink-600 group-hover:text-sun-700'
+  },
+  sky: {
+    surface: 'bg-sea-100 hover:bg-sea-200',
+    title: 'text-navy-900',
+    plate: 'border-sea-400 text-sea-500 group-hover:border-sea-500',
+    ghost: 'text-sea-500 opacity-[0.12]',
+    mark: 'text-ink-600 group-hover:text-sea-600'
+  },
+  'orange-strong': {
+    surface: 'bg-orange-400 hover:bg-orange-500',
+    title: 'text-navy-900',
+    plate: 'border-orange-300 bg-white/30 text-navy-900 group-hover:border-navy-900',
+    ghost: 'text-navy-900 opacity-[0.12]',
+    mark: 'text-navy-900'
   }
 };
 

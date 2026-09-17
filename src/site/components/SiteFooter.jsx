@@ -1,31 +1,21 @@
+'use client';
+
 import Link from 'next/link';
-import FooterTopBand from './FooterSignup';
+import { usePathname } from 'next/navigation';
+import SiteLogo from './SiteLogo';
+import MailingListForm from './MailingListForm';
 
-// The footer is the close of the site, not an afterthought: three bands on
-// navy-900, hairline-divided.
-//   1. Logo + LinkedIn beside the mailing-list capture (the client's
-//      Mailchimp ask - MailingListForm handles validation and submission
-//      itself, this component just places it).
-//   2. A content map: four columns on one grid, every seam a hairline, every
-//      column starting on the same line. Explore runs two deep so seven links
-//      stop dragging that column twice the height of its neighbours, which is
-//      what knocked the band out of alignment.
-//   3. The legal line, copyright and a quiet "back to top" link.
-// No dropdowns anywhere in the header means this is the only way onward (or
-// back) from the bottom of a long page.
+// The footer, cut down to what the client asked to keep (design feedback,
+// 15 September 2026): "LinkedIn URL, Policies page, Work for us page, x2
+// contact boxes, possibly the mailing list signup, but only if there's space."
+// One navy band instead of three: identity and links, the two office boxes,
+// the signup; then the legal line, which stays because UK company law wants
+// the registration details on the website.
 //
-// Everything editable arrives as props from the server layout; the defaults
-// mirror the seed so a missing prop never blanks the footer.
-
-const DEFAULT_MAIN_NAV = [
-  { href: '/services', label: 'Services' },
-  { href: '/technical-focus', label: 'Technical focus' },
-  { href: '/distinctives', label: 'Distinctives' },
-  { href: '/team', label: 'Team' },
-  { href: '/case-studies', label: 'Case studies' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/contact', label: 'Contact' }
-];
+// Client component for one reason: Contact and Work for us embed their own
+// signup, so on those routes the band drops the form and the other columns
+// widen instead of leaving a hole.
+const ROUTES_WITH_OWN_SIGNUP = ['/contact', '/work-for-us'];
 
 const DEFAULT_FOOTER_NAV = [
   { href: '/policies', label: 'Policies' },
@@ -33,148 +23,105 @@ const DEFAULT_FOOTER_NAV = [
 ];
 
 const DEFAULT_OFFICES = [
-  {
-    id: 'uk',
-    org: 'Jigsaw',
-    city: 'London',
-    country: 'United Kingdom',
-    email: 'info@jigsaweducation.org'
-  },
-  {
-    id: 'zm',
-    org: 'Jigsaw Zambia',
-    city: 'Lusaka',
-    country: 'Zambia',
-    email: 'zambiateam@jigsaweducation.org'
-  }
+  { id: 'uk', org: 'Jigsaw', city: 'London', email: 'info@jigsaweducation.org' },
+  { id: 'zm', org: 'Jigsaw Zambia', city: 'Lusaka', email: 'zambiateam@jigsaweducation.org' }
 ];
 
 const DEFAULT_LEGAL_LINE =
   'Jigsaw Education Evidence Ltd. is a certified Social Enterprise and a company registered in England and Wales (company number 06844615 and VAT number GB173850004) and Zambia (company number 120251030229).';
 
-// One label style for all four columns. Identical size, tracking and margin is
-// the whole trick: the columns only share a start line if their headings do.
-const LABEL = 'font-body text-[10px] uppercase tracking-[0.2em] text-cream-400 font-bold mb-4';
-
-// Columns two, three and four. Stacked on small screens the seam is a rule
-// above; from lg it turns and becomes the vertical hairline between columns.
-const SEAM =
-  'mt-9 pt-9 border-t border-navy-800 lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-navy-800 lg:pl-8';
+const LINK =
+  'link-sweep inline-block py-1 text-sm text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400';
 
 export default function SiteFooter({
-  mainNav = DEFAULT_MAIN_NAV,
   footerNav = DEFAULT_FOOTER_NAV,
   offices = DEFAULT_OFFICES,
   legalLine = DEFAULT_LEGAL_LINE,
-  exploreHeading = 'Explore',
-  moreHeading = 'More',
-  tagline,
-  linkedin,
-  wordmarkSrc = null,
-  ui
+  linkedin = 'https://www.linkedin.com/company/jigsaw-education-org/',
+  logoSrc = null,
+  ui = {}
 }) {
+  const pathname = usePathname();
+  const showSignup = !ROUTES_WITH_OWN_SIGNUP.includes(pathname);
   const year = new Date().getFullYear();
 
   return (
-    // No top margin: every page's last section carries its own bottom padding,
-    // and the extra 96px only ever showed up as a stray cream stripe between a
-    // page's closing band and the navy.
+    // No top margin: every page's last section carries its own bottom padding.
     <footer className="bg-navy-900 text-cream-50">
       <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10">
-        {/* The whole band is route-aware: with the signup it is a 5/7 grid;
-            on pages that carry their own signup (Contact, Work for us) it
-            recomposes as one full-width identity row instead of leaving a
-            seven-column hole. */}
-        <FooterTopBand
-          tagline={tagline}
-          linkedin={linkedin}
-          wordmarkSrc={wordmarkSrc}
-          linkedinLabel={ui?.linkedinLabel}
-          signupHeading={ui?.signupHeading}
-          signupBlurb={ui?.signupBlurb}
-          emailPlaceholder={ui?.emailPlaceholder}
-          signupButton={ui?.signupButton}
-          signupErrorEmpty={ui?.signupErrorEmpty}
-          signupErrorInvalid={ui?.signupErrorInvalid}
-          signupSuccess={ui?.signupSuccess}
-        />
-
-        {/* Four columns, one grid. Cells stretch so every hairline runs the
-            full height of the band; the content still starts at the top of
-            each cell, which is the alignment the band was missing. */}
-        <div className="border-t border-navy-800 py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
-          <nav aria-label="Footer" className="lg:col-span-4">
-            <h2 className={LABEL}>{exploreHeading}</h2>
-            {/* Seven links in one column ran twice the height of everything
-                beside it. Two CSS columns flow them 4 + 3 and the band levels
-                out. `columns` keeps reading order down then across, which a
-                two-track grid would not. */}
-            <ul className="text-sm lg:columns-2 lg:gap-x-6">
-              {mainNav.map((item) => (
-                <li key={item.href} className="mb-1.5 break-inside-avoid last:mb-0">
-                  <Link
-                    href={item.href}
-                    className="link-sweep inline-block py-1.5 text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="Legal and careers" className={`lg:col-span-2 ${SEAM}`}>
-            <h2 className={LABEL}>{moreHeading}</h2>
-            <ul className="space-y-1.5 text-sm">
+        <div className="grid gap-y-4 py-8 sm:grid-cols-2 sm:items-start sm:gap-8 lg:grid-cols-12 lg:gap-x-8 lg:py-12">
+          <div
+            className={`flex flex-wrap items-start justify-between gap-x-8 gap-y-4 pb-2 sm:col-span-2 sm:pb-0 lg:flex-col lg:flex-nowrap lg:justify-start ${
+              showSignup ? 'lg:col-span-2' : 'lg:col-span-4'
+            }`}
+          >
+            <SiteLogo size={40} logoSrc={logoSrc} />
+            <ul className="flex flex-wrap gap-x-6 gap-y-1 lg:flex-col">
+              <li>
+                <a href={linkedin} target="_blank" rel="noopener noreferrer" className={LINK}>
+                  {ui.linkedinLabel || 'LinkedIn'}
+                </a>
+              </li>
               {footerNav.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="link-sweep inline-block py-1.5 text-cream-200 hover:text-orange-400 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                  >
+                  <Link href={item.href} className={LINK}>
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
 
-          {/* Each office is its own column rather than a pair squeezed into
-              one, so all four labels sit on the same line. The city carries
-              the label because it is what a reader scans for; <address> takes
-              flow content but not headings, so the h2 stays outside it. */}
+          {/* The two contact boxes. The city is the label because it is what a
+              reader scans for; <address> takes no headings, so it stays a p. */}
           {offices.map((office) => (
-            <div key={office.id} className={`lg:col-span-3 ${SEAM}`}>
-              <h2 className={LABEL}>{office.city}</h2>
-              <address className="not-italic">
-                <span className="block font-display text-lg leading-snug text-cream-50">
-                  {office.org}
-                </span>
-                <span className="block mt-1.5 font-mono text-[11px] tracking-[0.06em] text-cream-300">
-                  {office.country}
-                </span>
-                <a
-                  href={`mailto:${office.email}`}
-                  className="link-sweep inline-block mt-2 py-1.5 text-sm text-cream-200 hover:text-orange-400 transition-colors rounded-sm [overflow-wrap:anywhere] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                >
-                  {office.email}
-                </a>
-              </address>
-            </div>
+            <address
+              key={office.id || office.city}
+              className={`not-italic rounded-2xl border border-navy-800 bg-navy-800/40 p-4 sm:p-5 ${
+                showSignup ? 'lg:col-span-3' : 'lg:col-span-4'
+              }`}
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-orange-400">
+                {office.city}
+              </p>
+              <p className="mt-1.5 font-display text-base leading-snug text-cream-50 sm:mt-2 sm:text-lg">{office.org}</p>
+              <a
+                href={`mailto:${office.email}`}
+                className="link-sweep inline-block mt-1 py-1 text-sm text-cream-200 hover:text-orange-400 transition-colors rounded-sm [overflow-wrap:anywhere] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+              >
+                {office.email}
+              </a>
+            </address>
           ))}
+
+          {showSignup && (
+            <div className="pt-4 sm:col-span-2 sm:pt-0 lg:col-span-4">
+              {ui.signupHeading && (
+                <h2 className="font-display text-lg leading-snug text-cream-50">{ui.signupHeading}</h2>
+              )}
+              {ui.signupBlurb && (
+                <p className="mt-1 mb-4 text-[13px] leading-relaxed text-cream-300">{ui.signupBlurb}</p>
+              )}
+              <MailingListForm
+                reversed
+                compact
+                source="footer"
+                emailPlaceholder={ui.emailPlaceholder}
+                signupButton={ui.signupButton}
+                signupErrorEmpty={ui.signupErrorEmpty}
+                signupErrorInvalid={ui.signupErrorInvalid}
+                signupSuccess={ui.signupSuccess}
+              />
+            </div>
+          )}
         </div>
 
         <div
-          className="border-t border-navy-800 py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
-          style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
+          className="border-t border-navy-800 py-5 flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-8"
+          style={{ paddingBottom: 'calc(1.25rem + env(safe-area-inset-bottom))' }}
         >
-          <p className="text-xs text-cream-400 leading-relaxed max-w-3xl">{legalLine}</p>
-          <div className="flex items-center gap-6 shrink-0">
-            <p className="text-xs text-cream-400">© {year}</p>
-            <a href="#main" className="link-sweep inline-block py-2.5 text-xs text-cream-300 hover:text-orange-400 transition-colors">
-              Back to top
-            </a>
-          </div>
+          <p className="pr-12 text-[11px] leading-relaxed text-cream-400 max-w-3xl lg:pr-0">{legalLine}</p>
+          <p className="text-[11px] text-cream-400 shrink-0">© {year}</p>
         </div>
       </div>
     </footer>
