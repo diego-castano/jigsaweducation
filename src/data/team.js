@@ -7,7 +7,7 @@
 // London"); everyone else's bio names countries they studied, taught or
 // worked in, in the past tense. Inferring a home from that would publish a
 // guess about where a real person lives. The card omits the chip when country
-// is null, and the client fills the gaps — see docs/build-plan.md §7.
+// is null, and the client fills the gaps - see docs/build-plan.md §7.
 //
 // Bios all come in under the brief's 150-word ceiling; the longest is Tim
 // Unwin at 147. Five people have no LinkedIn on their page (Melville-Bain,

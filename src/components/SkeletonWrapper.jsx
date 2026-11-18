@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from 'react';
 /**
  * Wraps a lazy-loaded section with a boneyard `<Skeleton>` if available,
  * else falls back to a shimmer placeholder. Boneyard is loaded lazily on
- * first mount — keeps the initial bundle lean and works without snapshots.
+ * first mount - keeps the initial bundle lean and works without snapshots.
  */
 
 function Fallback({ minHeight = 320, label = 'Loading…' }) {
@@ -24,7 +24,7 @@ export default function SkeletonWrapper({ name, minHeight, children }) {
         if (!cancelled && m && m.Skeleton) setBoneyardSkeleton(() => m.Skeleton);
       })
       .catch(() => {
-        // Boneyard not installed or failed — silently fall back to shimmer
+        // Boneyard not installed or failed - silently fall back to shimmer
       });
     return () => { cancelled = true; };
   }, []);

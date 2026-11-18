@@ -22,7 +22,7 @@ import { useMobileNav } from './MobileNavContext';
 // itself. The defaults mirror the seed so a missing prop never blanks the
 // chrome.
 const DEFAULT_MAIN_NAV = [
-  { href: '/services', label: 'Services' },
+  { href: '/approaches', label: 'Approaches' },
   { href: '/technical-focus', label: 'Technical focus' },
   { href: '/distinctives', label: 'Distinctives' },
   { href: '/team', label: 'Team' },

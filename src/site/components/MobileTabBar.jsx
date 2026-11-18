@@ -17,7 +17,7 @@ import { useMobileNav } from './MobileNavContext';
 // settings) merged over these defaults by position.
 const TABS = [
   { href: '/', label: 'Home', icon: 'home', exact: true },
-  { href: '/services', label: 'Services', icon: 'compass' },
+  { href: '/approaches', label: 'Approaches', icon: 'compass' },
   { href: '/case-studies', label: 'Work', icon: 'briefcase' },
   { href: '/publications', label: 'Library', icon: 'book-open' }
 ];

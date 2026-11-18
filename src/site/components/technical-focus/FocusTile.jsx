@@ -1,11 +1,8 @@
-'use client';
-
 import Icon from '../../../components/Icon';
 
 // Surface treatments for the mosaic. The client's note was that Technical focus
-// and Services read as the same page, so this one never renders a uniform card
-// grid: five cream tiles carry two reversed tiles and one orange tint, and the
-// widths change row by row.
+// and Approaches read as the same page, so this one never renders a uniform
+// card grid: every tile is coloured and the widths change row by row.
 //
 // Contrast, measured against the tokens in globals.css:
 //   cream-50  on sea-600   5.5:1   AA
@@ -71,36 +68,29 @@ const TONES = {
   }
 };
 
-export default function FocusTile({
-  area,
-  tone = 'cream',
-  height,
-  titleClass,
-  ghostSize,
-  selected,
-  buttonId,
-  panelId,
-  onToggle,
-  buttonRef
-}) {
-  const t = TONES[tone] || TONES.cream;
+// Tone of the short bar under each area title, matching its tile.
+export const BARS = {
+  navy: 'bg-navy-900',
+  orange: 'bg-orange-300',
+  sea: 'bg-sea-600',
+  sun: 'bg-sun-300',
+  sky: 'bg-sea-300',
+  'orange-strong': 'bg-orange-400'
+};
+
+export default function FocusTile({ area, tone, height, titleClass, ghostSize }) {
+  const t = TONES[tone];
 
   return (
-    <button
-      ref={buttonRef}
-      id={buttonId}
-      type="button"
-      aria-expanded={selected}
-      aria-controls={panelId}
-      onClick={onToggle}
+    <a
+      href={`#${area.slug}`}
       className={[
-        'group relative w-full flex flex-col justify-between overflow-hidden rounded-2xl',
+        'group relative flex w-full flex-col justify-between overflow-hidden rounded-2xl',
         'p-5 sm:p-6 text-left transition-colors duration-300',
         'focus:outline-none',
         'focus-visible:ring-2 focus-visible:ring-navy-900 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50',
         height,
-        t.surface,
-        selected ? 'ring-2 ring-orange-500 ring-offset-2 ring-offset-cream-50' : ''
+        t.surface
       ].join(' ')}
     >
       {/* Ghost glyph: the icon again, oversized and cropped by the tile edge.
@@ -119,15 +109,13 @@ export default function FocusTile({
           <Icon name={area.icon} size={28} strokeWidth={1.4} />
         </span>
         <span className={`mt-1 shrink-0 transition-colors duration-300 ${t.mark}`} aria-hidden="true">
-          <Icon name={selected ? 'minus' : 'plus'} size={16} />
+          <Icon name="arrow-down" size={16} />
         </span>
       </span>
 
-      <span
-        className={`relative mt-10 block font-display ${titleClass} leading-[1.1] ${t.title}`}
-      >
+      <span className={`relative mt-10 block font-display ${titleClass} leading-[1.1] ${t.title}`}>
         {area.title}
       </span>
-    </button>
+    </a>
   );
 }

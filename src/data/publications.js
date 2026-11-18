@@ -4,20 +4,20 @@ import { placeholder } from './placeholder';
 // live site, with its actual PDF still on the legacy Hubble/S3 bucket.
 //
 // WHAT IS MISSING, AND WHY IT IS NULL RATHER THAN GUESSED:
-// - `date` — the live site publishes no dates on any Learning Brief. For a
+// - `date` - the live site publishes no dates on any Learning Brief. For a
 //   research practice this is a credibility gap, not a cosmetic one. Only the
 //   Year in Review titles carry a period, so those are the only dated entries.
-// - `authors` — no publication on the live site lists an author. Same problem.
-// - `abstract` — the July brief requires one on each subpage. None exist yet.
-// - `coverImage` — the brief asks for a portrait cover thumbnail on each card.
+// - `authors` - no publication on the live site lists an author. Same problem.
+// - `abstract` - the July brief requires one on each subpage. None exist yet.
+// - `coverImage` - the brief asks for a portrait cover thumbnail on each card.
 //   No cover images exist; the card falls back to a typographic plate.
-// - `topic` / `method` — assigned only where the title states it outright.
+// - `topic` / `method` - assigned only where the title states it outright.
 //   Anything less certain is null so the client can classify it themselves.
 //
 // `method` carries a DRAFT classification on the four briefs whose titles
 // state their own method, on the same footing as the case-study tagging:
 // defensible from the source, flagged needsReview, for the client to correct.
-// Year in Review and the anti-racism resources stay null — an annual report
+// Year in Review and the anti-racism resources stay null - an annual report
 // has no research method, and inventing one to feed a filter would be worse
 // than a smaller facet.
 //
@@ -46,7 +46,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'Global',
     countries: [],
-    method: 'Research localisation, training, and capacity strengthening',
+    method: 'Research training and capacity strengthening',
     topic: 'Skills and pathways to employment',
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
@@ -68,7 +68,7 @@ export const PUBLICATIONS = [
     region: 'Global',
     countries: [],
     method: 'Technical assistance and evidence synthesis',
-    topic: 'Technology and education',
+    topic: 'Digital technologies and AI',
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
     // Two copies of this brief sit on S3 (file/225 and file/262) with the same
@@ -89,7 +89,7 @@ export const PUBLICATIONS = [
     year: null,
     region: 'Global',
     countries: [],
-    method: 'Research localisation, training, and capacity strengthening',
+    method: 'Research training and capacity strengthening',
     topic: null,
     summary: placeholder('one-sentence summary for the library card'),
     abstract: placeholder('abstract for the publication page'),
@@ -124,7 +124,7 @@ export const PUBLICATIONS = [
   {
     slug: 'decade-in-review-2013-2023',
     type: 'Year in Review',
-    title: 'Jigsaw Decade in Review 2013–2023',
+    title: 'Jigsaw Decade in Review 2013-2023',
     authors: null,
     date: '2023',
     year: 2023,
@@ -146,7 +146,7 @@ export const PUBLICATIONS = [
   {
     slug: 'year-in-review-2021-2022',
     type: 'Year in Review',
-    title: 'Jigsaw Year in Review 2021–2022',
+    title: 'Jigsaw Year in Review 2021-2022',
     authors: null,
     date: '2022',
     year: 2022,
@@ -166,7 +166,7 @@ export const PUBLICATIONS = [
   {
     slug: 'year-in-review-2020-2021',
     type: 'Year in Review',
-    title: 'Jigsaw Year in Review 2020–2021',
+    title: 'Jigsaw Year in Review 2020-2021',
     authors: null,
     date: '2021',
     year: 2021,
@@ -188,7 +188,7 @@ export const PUBLICATIONS = [
   {
     slug: 'year-in-review-2019-2020',
     type: 'Year in Review',
-    title: 'Jigsaw Year in Review 2019–2020',
+    title: 'Jigsaw Year in Review 2019-2020',
     authors: null,
     date: '2020',
     year: 2020,

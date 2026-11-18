@@ -46,7 +46,7 @@ function withItalic(text, phrase) {
 
 // Same substring discipline, for links: the brief annotates paragraph three
 // with "[link to each relevant page]", so the client's own phrases become the
-// anchors to Services and Technical focus. Segments are matched exactly and
+// anchors to Approaches and Technical focus. Segments are matched exactly and
 // never retyped; a phrase that stops matching simply renders as plain text.
 function withInlineLinks(node, links) {
   let parts = [node];
@@ -84,7 +84,7 @@ function DistinctiveRow({ index, side, title, summary }) {
         <div className="relative overflow-hidden py-11 lg:py-16">
           <span
             aria-hidden="true"
-            className={`pointer-events-none absolute top-1/2 select-none font-display leading-none text-cream-300 text-[104px] sm:text-[150px] lg:text-[200px] transition-colors duration-500 motion-reduce:transition-none group-hover:text-orange-500 ${
+            className={`pointer-events-none absolute top-1/2 select-none font-display leading-none text-cream-300 opacity-60 lg:opacity-100 text-[88px] sm:text-[120px] lg:text-[200px] transition-colors duration-500 motion-reduce:transition-none lg:group-hover:text-orange-500 ${
               side === 'left' ? 'right-0' : 'left-0'
             }`}
             style={{
@@ -99,12 +99,13 @@ function DistinctiveRow({ index, side, title, summary }) {
             <div
               className={`${textCol} transition-transform duration-[350ms] ease-[var(--ease-emphasized)] motion-reduce:transition-none group-hover:translate-x-2`}
             >
-              <h3 className="font-display display-s text-2xl sm:text-3xl lg:text-[38px] text-navy-900 leading-[1.15] max-w-[24ch]">
+              <h3 className="font-display display-s text-2xl sm:text-3xl lg:text-[38px] text-navy-900 leading-[1.15] max-w-[30ch]">
                 {title}
               </h3>
-              <Placeholder className="mt-5 text-base lg:text-lg text-ink-700 leading-relaxed max-w-[58ch]">
-                {summary}
-              </Placeholder>
+              <Prose
+                text={summary}
+                className="mt-5 text-base lg:text-lg text-ink-700 leading-relaxed max-w-[62ch]"
+              />
             </div>
           </div>
         </div>
@@ -167,7 +168,7 @@ export default async function DistinctivesPage() {
           reveal. The citation gap is a single mono line, not a dashed box. */}
       <section className="bg-navy-900 text-cream-50">
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 py-14 lg:py-20">
-          <ul className="grid sm:grid-cols-3 gap-y-10">
+          <ul className="grid sm:grid-cols-2 gap-y-10">
             {crisisStats.map((stat, i) => (
               <Reveal
                 as="li"
@@ -217,11 +218,11 @@ export default async function DistinctivesPage() {
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 py-16 lg:py-20">
           <Reveal>
             {/* The brief marks this paragraph "[link to each relevant page]":
-                the client's own phrases anchor to Services and Technical
+                the client's own phrases anchor to Approaches and Technical
                 focus, and the italic accent rides on the remaining text. */}
             <p className="font-display display-s text-2xl sm:text-3xl lg:text-[40px] text-navy-900 leading-[1.25] max-w-[30ch] sm:max-w-[46ch] lg:max-w-[52ch]">
               {withInlineLinks(introThree, [
-                { phrase: 'suite of bespoke services', href: '/services' },
+                { phrase: 'suite of bespoke services', href: '/approaches' },
                 { phrase: 'technical areas', href: '/technical-focus' }
               ]).map((part, i) =>
                 typeof part === 'string' ? (
@@ -335,7 +336,7 @@ export default async function DistinctivesPage() {
       </Section>
 
       <Section>
-        <CrossLinks hrefs={['/services', '/technical-focus', '/team']} ui={ui} />
+        <CrossLinks hrefs={['/approaches', '/technical-focus', '/team']} ui={ui} />
       </Section>
     </>
   );

@@ -2,7 +2,7 @@ import { ICON_PATHS } from '../icons';
 
 // An icon entry is either a single path string or an array of path strings.
 // v1 only ever rendered one <path>, which capped every glyph at a single
-// stroke — no separate dots, no detached counters. The custom set needs both.
+// stroke - no separate dots, no detached counters. The custom set needs both.
 export default function Icon({ name, size = 20, className = '', strokeWidth = 1.5, title }) {
   const entry = ICON_PATHS[name] || ICON_PATHS.circle;
   const paths = Array.isArray(entry) ? entry : [entry];

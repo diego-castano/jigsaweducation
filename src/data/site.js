@@ -13,7 +13,7 @@ export const SITE = {
 
 // Header: 7 items, no dropdowns. Home is reached via the logo, per the brief.
 export const MAIN_NAV = [
-  { href: '/services', label: 'Services' },
+  { href: '/approaches', label: 'Approaches' },
   { href: '/technical-focus', label: 'Technical focus' },
   { href: '/distinctives', label: 'Distinctives' },
   { href: '/team', label: 'Team' },
@@ -37,7 +37,7 @@ export const OFFICES = [
     city: 'London',
     country: 'United Kingdom',
     countryId: '826', // numeric ISO, matches world-atlas
-    coords: [-0.2405, 51.5449], // [lon, lat] — NW10 4LL
+    coords: [-0.2405, 51.5449], // [lon, lat] - NW10 4LL
     email: 'info@jigsaweducation.org',
     address: ['The Lighthouse', '60-62 High Street', 'London NW10 4LL'],
     addressLabel: 'Office address'
@@ -68,7 +68,7 @@ export const LEGAL = {
 // Track record. The live site has said "over 60 organisations in more than 30
 // countries" for years; the July brief says "over 150 assignments for more than
 // 50 organisations" and drops the country count. Flagged to the client in
-// docs/build-plan.md §7 — these are the brief's figures, pending their answer.
+// docs/build-plan.md §7 - these are the brief's figures, pending their answer.
 export const TRACK_RECORD = {
   years: 15,
   assignments: 150,

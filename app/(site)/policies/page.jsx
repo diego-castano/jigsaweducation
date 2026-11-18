@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PageHero from '../../../src/site/components/PageHero';
 import Section from '../../../src/site/components/Section';
 import Icon from '../../../src/components/Icon';
@@ -10,6 +11,28 @@ export async function generateMetadata() {
 }
 
 function PolicyRow({ policy, ui }) {
+  if (policy.body) {
+    return (
+      <li>
+        <Link
+          href={`/policies/${policy.slug}`}
+          className="flex items-center justify-between gap-4 px-6 py-4 bg-cream-50 hover:bg-cream-100 border-b border-cream-300 last:border-0 transition-colors group"
+        >
+          <span className="flex items-center gap-3 min-w-0">
+            <Icon name="file-text" size={18} className="text-sea-600 shrink-0" />
+            <span className="min-w-0">
+              <span className="block text-navy-900 font-bold">{policy.title}</span>
+              {policy.summary && (
+                <span className="block text-sm text-ink-600 mt-0.5">{policy.summary}</span>
+              )}
+            </span>
+          </span>
+          <Icon name="arrow-right" size={15} className="text-ink-500 shrink-0" />
+        </Link>
+      </li>
+    );
+  }
+
   const content = (
     <>
       <span className="flex items-center gap-3 min-w-0">

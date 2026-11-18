@@ -3,7 +3,7 @@
 /* Self-hosted variable + static fonts (faster than Google Fonts CDN).
    Literata is imported via opsz.css, not index.css - index.css ships the
    weight axis only, which is why the optical-size rules below were dead
-   under Fraunces. This build actually carries opsz 7–72 + wght 200–900. */
+   under Fraunces. This build actually carries opsz 7-72 + wght 200-900. */
 @import "@fontsource-variable/literata/opsz.css";
 @import "@fontsource-variable/literata/opsz-italic.css";
 @import "@fontsource/lato/300.css";

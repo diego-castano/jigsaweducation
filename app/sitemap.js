@@ -4,16 +4,17 @@ import { getSingleton, getCollection } from '../src/lib/content';
 // returns 404 and robots.txt is a single "#". Generated here from the live
 // collections so it can never drift from the routes that actually exist.
 export default async function sitemap() {
-  const [settings, team, caseStudies, publications] = await Promise.all([
+  const [settings, team, caseStudies, publications, policies] = await Promise.all([
     getSingleton('site-settings'),
     getCollection('team'),
     getCollection('case-studies'),
-    getCollection('publications')
+    getCollection('publications'),
+    getCollection('policies')
   ]);
 
   const staticRoutes = [
     { path: '', key: 'page-home', priority: 1.0, changeFrequency: 'monthly' },
-    { path: '/services', key: 'page-services', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/approaches', key: 'page-services', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/technical-focus', key: 'page-technical-focus', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/distinctives', key: 'page-distinctives', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/team', key: 'page-team', priority: 0.8, changeFrequency: 'monthly' },
@@ -49,6 +50,13 @@ export default async function sitemap() {
       url: `${settings.url}/publications/${p.slug}`,
       changeFrequency: 'yearly',
       priority: 0.7
-    }))
+    })),
+    ...policies
+      .filter((p) => p.body)
+      .map((p) => ({
+        url: `${settings.url}/policies/${p.slug}`,
+        changeFrequency: 'yearly',
+        priority: 0.3
+      }))
   ];
 }

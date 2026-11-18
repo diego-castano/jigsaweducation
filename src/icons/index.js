@@ -1,4 +1,4 @@
-// Inline SVG icon paths — stroke 1.5, viewBox 24x24
+// Inline SVG icon paths - stroke 1.5, viewBox 24x24
 export const ICON_PATHS = {
   'arrow-right': 'M5 12h14M13 5l7 7-7 7',
   'arrow-up-right': 'M7 17L17 7M7 7h10v10',

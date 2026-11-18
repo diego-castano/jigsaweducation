@@ -31,7 +31,7 @@ export default async function CaseStudiesPage() {
       </Section>
 
       <Section className="pt-0">
-        <CrossLinks hrefs={['/services', '/technical-focus', '/publications']} ui={ui} />
+        <CrossLinks hrefs={['/approaches', '/technical-focus', '/publications']} ui={ui} />
       </Section>
     </>
   );

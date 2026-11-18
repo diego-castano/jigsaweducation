@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import Icon from '../../components/Icon';
-import Placeholder from './Placeholder';
 import Reveal from './Reveal';
 
-// The three ways into the site: Services, Technical focus, Distinctives.
+// The three ways into the site: Approaches, Technical focus, Distinctives.
 //
 // v1 rendered these as bordered cards with an icon plate on top, which is the
 // pattern the client named as looking AI-generated (a module in a box in a
@@ -20,7 +19,7 @@ import Reveal from './Reveal';
 // the Distinctives stats banner, so the home page gets one strong block
 // between the hero and the map. The page wraps it in a navy Section.
 const STRUCTURE = [
-  { href: '/services' },
+  { href: '/approaches' },
   { href: '/technical-focus' },
   { href: '/distinctives', secondaryHref: '/distinctives#our-story' }
 ];
@@ -45,9 +44,7 @@ export default function SignpostTrio({ signposts = [], readMore = 'Read more' })
               {s.title}
             </h2>
 
-            <Placeholder reversed className="mt-4 text-[15px] leading-relaxed flex-1 text-cream-200">
-              {s.summary}
-            </Placeholder>
+            <p className="mt-4 text-[15px] leading-relaxed flex-1 text-cream-200">{s.summary}</p>
 
             <Link
               href={structure.href || '/'}

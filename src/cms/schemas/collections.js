@@ -197,12 +197,12 @@ export const COLLECTIONS = [
       ),
       {
         name: 'service',
-        label: 'Service',
+        label: 'Approach',
         type: 'select',
         options: SERVICE_TITLES,
         required: true,
         warning:
-          'Links the study to its box on the Services page: the match is ' +
+          'Links the study to its box on the Approaches page: the match is ' +
           'word for word, so pick from the list rather than retyping.'
       },
       {
@@ -402,13 +402,13 @@ export const COLLECTIONS = [
       ),
       {
         name: 'method',
-        label: 'Service',
+        label: 'Approach',
         type: 'select',
         options: SERVICE_TITLES,
         allowCustom: true,
         nullable: true,
         help:
-          'Feeds the Service filter. Leave blank when the output has ' +
+          'Feeds the Approach filter. Leave blank when the output has ' +
           'no research method: an annual report, say.'
       },
       {
@@ -486,20 +486,20 @@ export const COLLECTIONS = [
 
   {
     key: 'services',
-    title: 'Services',
-    itemLabel: 'service',
-    route: '/services',
+    title: 'Approaches',
+    itemLabel: 'approach',
+    route: '/approaches',
     itemRoute: null,
     icon: 'compass',
     orderable: true,
     titleField: 'title',
     listColumns: ['icon'],
     slugFrom: 'title',
-    // Slugs are locked once created: case studies land on /services#<slug>
+    // Slugs are locked once created: case studies land on /approaches#<slug>
     // and the home signposts link the same way. The admin never regenerates
     // an existing slug on rename.
-    // `caseStudySlugs` in the seed data stays but is not editable - the links
-    // under each service derive from the service field on the case studies.
+    // `related` holds the client's named case-study links per approach; the
+    // case study select is nullable because some do not exist yet.
     fields: [
       {
         name: 'title',
@@ -507,21 +507,45 @@ export const COLLECTIONS = [
         type: 'text',
         required: true,
         warning:
-          'Case studies attach to this service by its exact title. Renaming ' +
-          'it here means updating the Service field on every linked case ' +
+          'Case studies attach to this approach by its exact title. Renaming ' +
+          'it here means updating the Approach field on every linked case ' +
           'study in the same sitting, or their links vanish.'
       },
       {
         name: 'summary',
         label: 'Summary',
-        type: 'textarea',
-        help: 'What this service offers, shown when the box expands.'
+        type: 'richtext',
+        help: 'The approach’s full text. Leave a blank line between paragraphs.'
       },
       {
         name: 'icon',
         label: 'Icon',
         type: 'icon',
-        help: 'The small symbol on the service box.'
+        help: 'The small symbol on the approach box.'
+      },
+      {
+        name: 'relatedIntro',
+        label: 'Case studies lead-in',
+        type: 'text',
+        help: 'The sentence before the case study names, e.g. “To learn more about ... read case studies about”.'
+      },
+      {
+        name: 'related',
+        label: 'Case studies',
+        type: 'list',
+        itemLabel: 'Case study',
+        help: 'Names shown after the lead-in. Pick a case study to make the name a link.',
+        of: [
+          { name: 'label', label: 'Name', type: 'text', required: true },
+          {
+            name: 'caseStudy',
+            label: 'Case study',
+            type: 'select',
+            options: CASE_STUDY_SLUGS,
+            nullable: true,
+            allowCustom: false
+          }
+        ]
       }
     ]
   },
@@ -537,7 +561,7 @@ export const COLLECTIONS = [
     titleField: 'title',
     listColumns: ['icon'],
     slugFrom: 'title',
-    // Same slug lock as services: the home globe's focus panels link by slug.
+    // Slugs are locked once created: the page anchors (#slug) use them.
     fields: [
       {
         name: 'title',
@@ -552,8 +576,32 @@ export const COLLECTIONS = [
       {
         name: 'summary',
         label: 'Summary',
-        type: 'textarea',
-        help: 'Why we focus here, shown when the box expands.'
+        type: 'richtext',
+        help: 'The area text shown in full below the mosaic. A blank line starts a new paragraph.'
+      },
+      {
+        name: 'relatedIntro',
+        label: 'Case studies lead-in',
+        type: 'text',
+        help: 'The sentence before the case study names, e.g. "To learn more about our work on ... read case studies about".'
+      },
+      {
+        name: 'related',
+        label: 'Case studies to read',
+        type: 'list',
+        itemLabel: 'case study',
+        help: 'Names shown after the lead-in. Pick a case study to make the name a link; leave it empty to show plain text.',
+        of: [
+          { name: 'label', label: 'Name', type: 'text', required: true },
+          {
+            name: 'caseStudy',
+            label: 'Case study',
+            type: 'select',
+            options: CASE_STUDY_SLUGS,
+            nullable: true,
+            allowCustom: false
+          }
+        ]
       },
       {
         name: 'icon',
@@ -592,14 +640,14 @@ export const COLLECTIONS = [
         required: true,
         verbatim: true,
         help:
-          'A full sentence, full stop included. The five titles are supplied ' +
-          'word for word: reword only as a deliberate decision.'
+          'A full sentence, full stop included. The five titles are the ' +
+          'client\'s own sentences, word for word: reword only as a deliberate decision.'
       },
       {
         name: 'summary',
         label: 'Summary',
-        type: 'textarea',
-        help: 'What this distinctive means in practice when you work with Jigsaw.'
+        type: 'richtext',
+        help: 'The full text of this distinctive.'
       }
     ]
   },
@@ -693,12 +741,22 @@ export const COLLECTIONS = [
     title: 'Policies',
     itemLabel: 'policy',
     route: '/policies',
-    itemRoute: null,
+    itemRoute: '/policies/:slug',
     icon: 'shield',
     orderable: true,
     titleField: 'title',
     listColumns: ['group', 'awaitingFile'],
     slugFrom: 'title',
+    editorSections: [
+      { id: 'basics', title: 'The policy', fields: ['title', 'group'] },
+      {
+        id: 'page',
+        title: 'Policy page',
+        description: 'Fill the text to give the policy its own page; leave it empty to keep the PDF link.',
+        fields: ['summary', 'body', 'updated']
+      },
+      { id: 'file', title: 'PDF', fields: ['file', 'fileSize', 'awaitingFile'] }
+    ],
     fields: [
       {
         name: 'title',
@@ -737,6 +795,27 @@ export const COLLECTIONS = [
         help:
           'Core covers the brief’s six policies; additional covers the two ' +
           'already published: the language and environmental policies.'
+      },
+      {
+        name: 'summary',
+        label: 'Summary',
+        type: 'textarea',
+        help: 'One sentence shown under the title on the Policies page.'
+      },
+      {
+        name: 'body',
+        label: 'Policy text',
+        type: 'richtext',
+        help:
+          'The full policy text. Once filled the policy gets its own page at /policies/<slug> ' +
+          'and the Policies list links there instead of the PDF.'
+      },
+      {
+        name: 'updated',
+        label: 'Last updated',
+        type: 'text',
+        nullable: true,
+        help: 'When the policy was last revised, e.g. March 2026.'
       }
     ]
   }

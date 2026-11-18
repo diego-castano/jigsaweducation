@@ -1,5 +1,5 @@
 /**
- * Jigsaw J badge — uses /public/logo.png (the official orange J mark).
+ * Jigsaw J badge - uses /public/logo.png (the official orange J mark).
  * The PNG is 600x150 with the badge on the left. We render it 4x wide
  * relative to the rounded container so only the J portion is visible.
  */
@@ -28,7 +28,7 @@ export default function LogoMark({ size = 32, alt = 'Jigsaw' }) {
   );
 }
 
-/** Reversed J on cream — for navy or photo backgrounds (used on Brand page) */
+/** Reversed J on cream - for navy or photo backgrounds (used on Brand page) */
 export function LogoMarkReversed({ size = 32 }) {
   return (
     <div

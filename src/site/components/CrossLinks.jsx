@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Icon from '../../components/Icon';
 
-// The brief closes Services, Technical focus and Distinctives by pointing at
+// The brief closes Approaches, Technical focus and Distinctives by pointing at
 // the other two plus Team. With no dropdowns anywhere, these end-of-page
 // signposts carry most of the site's lateral navigation.
 const ALL = {
-  '/services': { title: 'Services', blurb: 'What we offer the teams we work with' },
+  '/approaches': { title: 'Approaches', blurb: 'What we offer the teams we work with' },
   '/technical-focus': { title: 'Technical focus', blurb: 'The areas where we specialise' },
   '/distinctives': { title: 'Distinctives', blurb: 'What sets us apart' },
   '/team': { title: 'Team', blurb: 'The researchers behind the work' },

@@ -181,7 +181,7 @@ export const PAGE_SINGLETONS = [
       {
         id: 'signposts',
         title: 'Three ways in',
-        description: 'The three boxes pointing at Services, Technical focus and Distinctives.',
+        description: 'The three boxes pointing at Approaches, Technical focus and Distinctives.',
         fields: [
           {
             name: 'signposts',
@@ -234,7 +234,7 @@ export const PAGE_SINGLETONS = [
             name: 'mapSummary',
             label: 'Summary beside the map',
             type: 'textarea',
-            help: 'A short paragraph about where Jigsaw works. Still awaited from the Jigsaw team.',
+            help: 'A short paragraph about where Jigsaw works.',
             seed: MAP_SUMMARY
           },
           {
@@ -243,7 +243,7 @@ export const PAGE_SINGLETONS = [
             type: 'text',
             help:
               'Follows the automatic “(number) countries shown.” count: the count itself comes from the country list below and cannot be typed.',
-            seed: 'Drawn from our published case studies and not yet complete.'
+            seed: ''
           },
           {
             name: 'mapCountries',
@@ -288,7 +288,7 @@ export const PAGE_SINGLETONS = [
         id: 'partners',
         title: 'Who we work with',
         description:
-          'The heading, the client’s paragraph and the logo wall. The eighteen partners themselves are edited under Partners.',
+          'The heading, the client’s paragraph and the logo wall. The partners themselves are edited under Partners.',
         fields: [
           {
             name: 'partnersKicker',
@@ -310,7 +310,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The 15 years, 150 assignments and 50 organisations figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others: and the figures themselves are still under discussion with the client.',
+              'The figures in this paragraph also appear in the hero stat line and the site description, fed from Settings → Organisation. Changing a figure in one place does not update the others.',
             seed: PARTNERS_INTRO
           },
           {
@@ -318,7 +318,7 @@ export const PAGE_SINGLETONS = [
             label: 'Pending-logos note',
             type: 'text',
             help: `The small line under the logo wall while the partner logo files are pending. ${REVIEW_NOTE_HELP}`,
-            seed: 'Names are set in type while the partner logo files are pending.'
+            seed: 'ProFuturo joins the wall once a transparent logo file arrives.'
           }
         ]
       },
@@ -334,9 +334,9 @@ export const PAGE_SINGLETONS = [
 
   {
     key: 'page-services',
-    title: 'Services',
-    description: 'The services index. The six services themselves are edited under Services.',
-    route: '/services',
+    title: 'Approaches',
+    description: 'The approaches index. The six approaches themselves are edited under Approaches.',
+    route: '/approaches',
     icon: 'compass',
     sections: [
       {
@@ -349,14 +349,14 @@ export const PAGE_SINGLETONS = [
             label: 'Page title',
             type: 'text',
             required: true,
-            seed: 'Services'
+            seed: 'Approaches'
           },
           {
             name: 'intro',
             label: 'Introduction',
-            type: 'textarea',
+            type: 'richtext',
             help:
-              'The paragraph under the title, explaining what Jigsaw means by services. Still awaited from the Jigsaw team.',
+              'The three summary paragraphs under the title. Leave a blank line between paragraphs.',
             seed: SERVICES_INTRO
           },
           {
@@ -364,7 +364,7 @@ export const PAGE_SINGLETONS = [
             label: 'Count caption',
             type: 'text',
             help:
-              'The small line above the see-also links. If the number of services ever changes, the word “Six” needs changing with it.',
+              'The small line above the see-also links. If the number of approaches ever changes, the word “Six” needs changing with it.',
             seed: 'Six ways of working'
           },
           {
@@ -385,11 +385,11 @@ export const PAGE_SINGLETONS = [
         ]
       },
       seoSection({
-        title: 'Services',
+        title: 'Approaches',
         description:
-          'Large-scale mixed-method studies, design-based and implementation research, research localisation and capacity strengthening, technical assistance and evidence synthesis, strategy and advisory, and embedded learning partnerships.',
+          'Large-scale, mixed-method studies, implementation research, research training and capacity strengthening, technical assistance and evidence synthesis, strategy and advisory, and embedded learning partnerships.',
         descriptionHelp:
-          'This description lists the six service names: if a service is renamed under Services, rename it here too.'
+          'This description lists the six approach names: if an approach is renamed under Approaches, rename it here too.'
       })
     ]
   },
@@ -397,7 +397,7 @@ export const PAGE_SINGLETONS = [
   {
     key: 'page-technical-focus',
     title: 'Technical focus',
-    description: 'The focus-area mosaic. The eight areas themselves are edited under Technical focus.',
+    description: 'The focus-area mosaic. The seven areas themselves are edited under Technical focus.',
     route: '/technical-focus',
     icon: 'microscope',
     sections: [
@@ -415,9 +415,9 @@ export const PAGE_SINGLETONS = [
           {
             name: 'intro',
             label: 'Introduction',
-            type: 'textarea',
+            type: 'richtext',
             help:
-              'The paragraph beside the title, explaining why Jigsaw focuses on certain areas. Still awaited from the Jigsaw team.',
+              'Two paragraphs under the title, explaining why Jigsaw focuses on certain areas. The first is shown larger.',
             seed: TECHNICAL_FOCUS_INTRO
           },
           {
@@ -425,16 +425,16 @@ export const PAGE_SINGLETONS = [
             label: 'Mosaic helper line',
             type: 'text',
             help: 'The short sentence above the tiles telling the reader what tapping one does.',
-            seed: 'Select an area for its summary and the case studies behind it.'
+            seed: 'Choose an area to read more about it.'
           }
         ]
       },
       seoSection({
         title: 'Technical focus',
         description:
-          'Climate-resilient learning environments, education financing, education in crisis and conflict, education policy and systems, foundational learning, skills and pathways to employment, teacher professional development, and technology and education.',
+          'Foundational learning and pedagogy, digital technologies and AI, climate-resilient learning environments, skills and pathways to employment, education in crisis and conflict, cost effectiveness, and education policy, systems and financing.',
         descriptionHelp:
-          'This description lists the eight area names: if an area is renamed under Technical focus, rename it here too.'
+          'This description lists the seven area names: if an area is renamed under Technical focus, rename it here too.'
       })
     ]
   },
@@ -470,7 +470,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The 80%, 250 million and 260 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too: the page does not keep them in step.',
+              'The 80% and 270 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too: the page does not keep them in step.',
             seed: DISTINCTIVES_INTRO[1]
           }
         ]
@@ -478,7 +478,7 @@ export const PAGE_SINGLETONS = [
       {
         id: 'stats',
         title: 'Statistics band',
-        description: 'The three counting figures on the navy band.',
+        description: 'The two counting figures on the navy band.',
         fields: [
           {
             name: 'crisisStats',
@@ -487,7 +487,7 @@ export const PAGE_SINGLETONS = [
             itemLabel: 'Statistic',
             fixed: true,
             warning:
-              'These three figures restate the second opening paragraph. Keep the paragraph and the band agreeing with each other.',
+              'These two figures restate the second opening paragraph. Keep the paragraph and the band agreeing with each other.',
             of: [
               {
                 name: 'value',
@@ -510,8 +510,7 @@ export const PAGE_SINGLETONS = [
                 unit: '%',
                 label: 'of children aged 10 in the lowest income countries cannot read a simple text'
               },
-              { value: 250, unit: 'm', label: 'children never go to school' },
-              { value: 260, unit: 'm', label: 'children cannot learn because of crisis and conflict' }
+              { value: 270, unit: 'm', label: 'children never go to school' }
             ]
           },
           {
@@ -520,7 +519,7 @@ export const PAGE_SINGLETONS = [
             type: 'url',
             nullable: true,
             help:
-              'The source for the three figures: still awaited from the Jigsaw team. While it is empty the band prints a note that the figures should not publish unsourced.',
+              'The source for the two figures: still awaited from the Jigsaw team. While it is empty the band prints a note that the figures should not publish unsourced.',
             seed: DISTINCTIVES_STATS_CITATION
           }
         ]
@@ -536,7 +535,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'Three exact phrases in this paragraph must survive any edit: “suite of bespoke services” and “technical areas” become the links to Services and Technical focus, and “bend the curve of progress” is set in italics. The page finds each phrase inside the text: reword one and its link or italic silently disappears with no error.',
+              'Three exact phrases in this paragraph must survive any edit: “suite of bespoke services” and “technical areas” become the links to Approaches and Technical focus, and “bend the curve of progress” is set in italics. The page finds each phrase inside the text: reword one and its link or italic silently disappears with no error.',
             seed: DISTINCTIVES_INTRO[2]
           },
           {
@@ -629,7 +628,7 @@ export const PAGE_SINGLETONS = [
       seoSection({
         title: 'Distinctives',
         description:
-          'What you should experience when you work with Jigsaw: evidence uptake, combining global and national, mixed methods research, real partnership, and positive disruption.',
+          'What you should experience when you work with Jigsaw: trusted long-term partnerships, generosity in sharing, useful evidence, changing how research is done, and staying in it for the long haul.',
         descriptionHelp:
           'This description names the five distinctives: if one is retitled above, retitle it here too.'
       })
@@ -670,7 +669,7 @@ export const PAGE_SINGLETONS = [
             help:
               'The client’s team paragraph, minus its closing sentence: that sentence sits in the band under the grid, and the two fields together are the paragraph word for word.',
             seed:
-              'We are a group of mixed-method education applied researchers. Our team has diverse professional backgrounds, made up of former teachers, education implementers, NGO workers, and academics. We are united by our shared drive to strengthen education in the world’s most challenging contexts. All the work that we do to build and use evidence in education is founded on the skills and expertise of our team. Most of us are based in London or Lusaka.'
+              'We are a group of mixed-method, applied researchers. Our team has diverse professional backgrounds, made up of former teachers, education implementers, NGO workers, and academics. We are united by our shared drive to strengthen education in the world’s most challenging contexts. All the work that we do to build and use evidence in education is founded on the skills and expertise of our team. Most of us are based in London or Lusaka.'
           }
         ]
       },
@@ -760,7 +759,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             help: `Shown on every study still flagged as restructured-by-us rather than approved. ${REVIEW_NOTE_HELP}`,
             seed:
-              'Draft. This text was restructured from Jigsaw’s existing case study into the four-section format the new brief specifies. It needs the team’s approval before it publishes.'
+              'Draft. The Jigsaw team is still reviewing this case study before it is final.'
           }
         ]
       },
@@ -874,7 +873,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             help: 'The sentence beside the sign-up form.',
             seed:
-              'Sign up here if you would like to receive occasional updates about Jigsaw’s work.'
+              'Sign-up here if you would like to receive occasional updates about Jigsaw’s work.'
           }
         ]
       },
@@ -1013,7 +1012,7 @@ export const PAGE_SINGLETONS = [
             type: 'email',
             nullable: true,
             help:
-              'Where concerns about Jigsaw’s work should be reported: still awaited from the Jigsaw team. While it is empty the card explains that the reporting route is to be confirmed; once filled it reads “To report any concerns about Jigsaw’s work please contact (email)”.',
+              'Where concerns about Jigsaw’s work should be reported: the client supplied info@jigsaweducation.org. While it is empty the card explains that the reporting route is to be confirmed; once filled it reads “To report any concerns about Jigsaw’s work please contact (email)”.',
             seed: CONCERNS_CONTACT
           }
         ]

@@ -1,10 +1,10 @@
+import { PARTNER_LOGO_DIMS } from '../../data/partner-logo-dims';
+
 // The partner organisations, in the client's specified order - the list
 // arrives ordered from the partners collection.
 //
-// ASSET GAP: no individual logos exist. The live site renders the whole wall as
-// one composite PNG with alt="", so every partner name is invisible to both
-// screen readers and search engines. Until real SVGs arrive, each partner gets
-// a typographic plate: readable, indexable, and obviously provisional.
+// Logos are sized by visual area from their intrinsic dims (partner-logo-dims.js).
+// A partner without a logo falls back to a typographic plate.
 //
 // The wall moves as two slow bands (60s a cycle, the second one running the
 // other way). Motion belongs to presentation only: both tracks are aria-hidden
@@ -23,6 +23,13 @@ const MASK_CSS = `
 }
 `;
 
+
+function logoHeight(src) {
+  const d = PARTNER_LOGO_DIMS[src];
+  if (!d) return null;
+  return Math.min(60, Math.max(26, Math.round(72 / Math.sqrt(d[0] / d[1]))));
+}
+
 function Plate({ partner, duplicate = false }) {
   return (
     <div
@@ -34,7 +41,12 @@ function Plate({ partner, duplicate = false }) {
         <img
           src={partner.logo}
           alt=""
-          className="max-h-10 w-auto grayscale opacity-70 transition duration-500 hover:grayscale-0 hover:opacity-100"
+          style={logoHeight(partner.logo) ? { '--logo-h': `${logoHeight(partner.logo)}px` } : undefined}
+          className={`${
+            logoHeight(partner.logo)
+              ? 'h-[calc(var(--logo-h)*0.8)] lg:h-[var(--logo-h)] max-w-[11rem]'
+              : 'h-9 lg:h-11 max-w-[8.5rem] lg:max-w-[10rem]'
+          } w-auto object-contain grayscale opacity-70 transition duration-500 hover:grayscale-0 hover:opacity-100`}
           loading="lazy"
         />
       ) : (

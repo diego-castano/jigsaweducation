@@ -1,6 +1,6 @@
 // The database seed, assembled from the same modules the pages read today.
 // Singleton documents come from the schema `seed` values; collection items are
-// the src/data arrays verbatim — the wiring phase depends on that equivalence,
+// the src/data arrays verbatim - the wiring phase depends on that equivalence,
 // so nothing here renames or reshapes a field. The loaders in src/lib/content.js
 // also use these objects as the fallback when Postgres is unreachable.
 

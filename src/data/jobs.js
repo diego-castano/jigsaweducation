@@ -1,4 +1,4 @@
-// Work for us — a holding page, linked from the footer only.
+// Work for us - a holding page, linked from the footer only.
 //
 // There is no equivalent page on the live site: /pages/careers, /pages/jobs and
 // /pages/work-for-us all 404 today. The empty state below is the real state,

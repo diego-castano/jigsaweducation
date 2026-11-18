@@ -81,7 +81,7 @@ export default async function CaseStudyPage({ params }) {
           {study.title}
         </h1>
 
-        {/* Summary box: countries, partners, method. The brief asks for flags
+        {/* Summary box: countries, partners, approach. The brief asks for flags
             and partner logos here; neither asset exists yet, so this reads as
             plain text rather than pretending. */}
         <dl className="mt-10 grid sm:grid-cols-3 gap-px bg-cream-300 border border-cream-300 rounded-2xl overflow-hidden">
@@ -101,18 +101,18 @@ export default async function CaseStudyPage({ params }) {
           </div>
           <div className="bg-cream-100 p-6">
             <dt className="text-[10px] uppercase tracking-[0.2em] text-orange-500 font-bold mb-3">
-              Method
+              Approach
             </dt>
             <dd className="text-navy-900">
-              {study.method}
               {service && (
                 <Link
-                  href={`/services#${service.slug}`}
-                  className="inline-block mt-1 py-1.5 text-sm text-sea-700 hover:text-orange-600 underline underline-offset-4"
+                  href={`/approaches#${service.slug}`}
+                  className="inline-block py-1.5 text-sea-700 hover:text-orange-600 underline underline-offset-4"
                 >
                   {service.title}
                 </Link>
               )}
+              {study.method && <p className="mt-1 text-sm text-ink-600">{study.method}</p>}
             </dd>
           </div>
         </dl>

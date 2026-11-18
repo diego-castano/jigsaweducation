@@ -4,7 +4,7 @@ export default function Swatch({ name, hex, className = '', onCopy }) {
   return (
     <button
       type="button"
-      onClick={() => onCopy && onCopy(hex, `${hex} copied — ${name}`)}
+      onClick={() => onCopy && onCopy(hex, `${hex} copied - ${name}`)}
       title={`Click to copy ${hex}`}
       className="group text-left w-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-cream-50 rounded-xl"
     >

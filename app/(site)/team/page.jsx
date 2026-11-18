@@ -165,7 +165,7 @@ export default async function TeamPage() {
       )}
 
       <Section className="pt-0">
-        <CrossLinks hrefs={['/services', '/technical-focus', '/case-studies']} ui={ui} />
+        <CrossLinks hrefs={['/approaches', '/technical-focus', '/case-studies']} ui={ui} />
       </Section>
     </>
   );

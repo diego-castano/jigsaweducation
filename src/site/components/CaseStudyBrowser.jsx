@@ -15,8 +15,8 @@ import Icon from '../../components/Icon';
 export default function CaseStudyBrowser({ studies, facets, ui = {}, mediaMeta }) {
   const {
     caseStudySearchPlaceholder = 'Search case studies, partners or countries…',
-    sortAZ = 'A–Z',
-    sortZA = 'Z–A',
+    sortAZ = 'A-Z',
+    sortZA = 'Z-A',
     emptyStateTitle = 'Nothing matches those filters',
     clearAllFilters = 'Clear all filters'
   } = ui;

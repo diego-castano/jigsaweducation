@@ -273,7 +273,7 @@ const SITE_SETTINGS = {
             'The four tabs at the bottom of the screen on phones. Keep labels to one short word: long labels wrap and break the bar.',
           seed: [
             { label: 'Home' },
-            { label: 'Services' },
+            { label: 'Approaches' },
             { label: 'Work' },
             { label: 'Library' }
           ],
@@ -412,8 +412,8 @@ const UI_STRINGS = {
           seed: 'Sort',
           help: 'The small label beside the sort dropdown.'
         },
-        { name: 'sortAZ', label: 'Sort option: A to Z', type: 'text', seed: 'A–Z' },
-        { name: 'sortZA', label: 'Sort option: Z to A', type: 'text', seed: 'Z–A' },
+        { name: 'sortAZ', label: 'Sort option: A to Z', type: 'text', seed: 'A-Z' },
+        { name: 'sortZA', label: 'Sort option: Z to A', type: 'text', seed: 'Z-A' },
         { name: 'sortRecent', label: 'Sort option: most recent', type: 'text', seed: 'Most recent' },
         { name: 'sortOldest', label: 'Sort option: oldest', type: 'text', seed: 'Oldest' },
         {
@@ -490,14 +490,14 @@ const UI_STRINGS = {
           label: 'Related case studies heading',
           type: 'text',
           seed: 'Related case studies',
-          help: 'Above the case-study lists inside the services and technical-focus panels.'
+          help: 'Above the case-study lists inside the approaches and technical-focus panels.'
         },
         {
           name: 'relatedCaseStudiesEmpty',
           label: 'Related case studies empty state',
           type: 'text',
           seed: 'No published case studies tagged to this area yet.',
-          help: 'Shown when a service or technical area has no case studies tagged to it.'
+          help: 'Shown when an approach or technical area has no case studies tagged to it.'
         },
         {
           name: 'relatedWorkHeading',
@@ -640,7 +640,7 @@ const UI_STRINGS = {
           itemLabel: 'Entry',
           fixed: true,
           seed: [
-            { route: '/services', title: 'Services', blurb: 'What we offer the teams we work with' },
+            { route: '/approaches', title: 'Approaches', blurb: 'What we offer the teams we work with' },
             { route: '/technical-focus', title: 'Technical focus', blurb: 'The areas where we specialise' },
             { route: '/distinctives', title: 'Distinctives', blurb: 'What sets us apart' },
             { route: '/team', title: 'Team', blurb: 'The researchers behind the work' },

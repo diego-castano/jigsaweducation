@@ -5,6 +5,92 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-11-18: Round 3, the long copy (sitemap of 3 November, call with Kara on 4 November)
+
+The brief moved to Google Docs. The sitemap doc now carries the client's final,
+much longer copy; a second doc holds 29 case-study drafts; a sheet lists 77
+countries; a Drive folder holds the partner logos. Working copies, the build
+spec and the logo pipeline live in `feedback/round-3/` (gitignored).
+
+### Services is now Approaches
+
+- Route `/approaches`, with a permanent redirect from `/services`
+  (`next.config.mjs`). Nav, tab bar, Continue band, filters, admin titles and
+  the case-study summary box all say Approach or Approaches. Identifiers stay
+  (`services` collection, `page-services`, field `service`), so no migration.
+- Two titles changed: "Implementation research" and "Research training and
+  capacity strengthening". The doc keeps a stray comma from the deleted word
+  "localisation"; the case-studies doc spells it without, and so does the site.
+
+### Pages rebuilt for long copy
+
+- **Approaches**: every approach open, no accordion. Sticky index with a
+  scrollspy on lg; each section carries the numeral, icon, title, the client's
+  paragraphs and their "read case studies about" names. A name links when its
+  case study is published and reads as plain text otherwise.
+- **Technical focus**: seven areas. Teacher professional development folds into
+  "Foundational learning and pedagogy"; "Digital technologies and AI", "Cost
+  effectiveness" and "Education policy, systems and financing" are renamed. The
+  mosaic stays as the overview (rows 7+5, 4+4+4, 5+7, one title size, every tile
+  coloured) and each tile jumps to a full section with its spot illustration.
+- **Distinctives**: five new distinctives and the new intro, mapped onto the
+  existing slots so the layout the client called their favourite stays. The
+  stats band shows the two figures in the client's paragraph (80%, 270 million).
+- **Home**: new hero sentences, signpost summaries, map text, 77 countries on
+  the map, partner paragraph and 25 logos. Team intro and the contact sign-up
+  line follow the doc.
+- Approach and focus items gained `relatedIntro` and `related` (label plus an
+  optional case-study link); their `summary` and the two page intros became
+  rich text.
+
+### Case studies
+
+29 drafts replace the 17 migrated from White Fuse. All keep `isDerived: true`
+and the draft banner (new wording) until Becky has checked the tone. The
+approach is the first one the doc lists; the focus areas include every area
+under which the client names the study. The old studies are hidden in the
+database, not deleted.
+
+### Legal pages
+
+Policies gained `summary`, `body` (rich text) and `updated`. A policy with a body
+gets its own page at `/policies/<slug>` and the list links there; without one
+the list behaves as before. No policy text has arrived yet, so the page looks
+the same until the team fills one in.
+
+### Partner logos
+
+25 of the 26 named partners. Nine Drive files had a checkerboard baked into the
+pixels and a cleanpng watermark: British Council, GIZ, NRC, Save the Children,
+Mastercard Foundation and Dubai Cares now come from Wikimedia Commons; ECW, Aga
+Khan Foundation and UNESCO were keyed out of the client's files. All 25 are
+trimmed, 160px tall WebP in `public/partners/`, and `src/data/partner-logo-dims.js`
+lets the wall size each logo by visual area rather than height alone.
+
+### Database
+
+`scripts/sync-content.mjs` pushes seed changes into the live database. Singleton
+fields merge three ways against an export of the previous seeds, so a field
+someone edited in the admin is reported and left alone. The five rebuilt
+collections are rewritten from the seeds, with missing items hidden; policies
+only gain keys; publications get the renamed classifications; links to case
+studies that moved are remapped. It writes a JSON backup of both tables first
+and only writes with `--apply`.
+
+### Open
+
+- Becky: confirm "70 countries" (the map shows 77) and sign off the case studies.
+- Names in Approaches and Technical focus with no case study yet render as
+  plain text: VSO Sierra Leone, SIEL, MEWAKA, CWTL, EdTech Hub RERs, EdTech Hub
+  Madagascar, UNESCO Sudan, Porticus, MBRGI, UNRWA, IDRC global, Madagascar TA,
+  and UNICEF under Cost effectiveness.
+- Official logo files for ECW, Aga Khan Foundation and UNESCO; ProFuturo.
+- Policy texts, the 22 team bios, case-study imagery (Kara is trying
+  sketch-style illustrations) and the case studies summary paragraph.
+- `src/design-system/*` still has em dashes; it is the archived v1 document.
+
+---
+
 ## 2026-09-17: Design feedback, round 2 (Kara and Becky, 15 September)
 
 The feedback came as a new section at the end of the sitemap docx ("Design

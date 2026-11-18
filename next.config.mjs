@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  async redirects() {
+    return [{ source: '/services', destination: '/approaches', permanent: true }];
+  },
+
   images: {
     // Field photography still lives on the legacy Hubble/S3 bucket while the
     // client assembles their own image bank. Remove once assets migrate.
