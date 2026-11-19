@@ -1,7 +1,7 @@
 {
   "name": "jigsaw-website",
   "version": "1.0.0",
-  "description": "Jigsaw Education Evidence \u2014 website and design system",
+  "description": "Jigsaw Education Evidence — website and design system",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -36,6 +36,7 @@
     "react-dom": "^19.2.8",
     "sanitize-html": "^2.17.6",
     "sharp": "^0.35.3",
+    "three": "^0.187.0",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2"
   },

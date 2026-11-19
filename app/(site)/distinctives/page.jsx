@@ -26,7 +26,7 @@ export async function generateMetadata() {
 
 // Text alternates side down the column so the five rows never settle into a
 // list. Strict alternation keeps it under the two-consecutive limit; the
-// watermark numeral always takes the opposite edge and is cropped by it.
+// watermark numeral always takes the opposite edge.
 const ROW_SIDES = ['left', 'right', 'left', 'right', 'left'];
 
 // Sets one phrase of a client paragraph in italic without altering a character
@@ -81,30 +81,34 @@ function DistinctiveRow({ index, side, title, summary }) {
   return (
     <Reveal as="li" delay={40} className="group border-t border-cream-300">
       <div className="row-sweep" style={{ '--sweep': 'var(--color-cream-100)' }}>
-        <div className="relative overflow-hidden py-11 lg:py-16">
+        <div className="relative py-11 lg:py-16">
           <span
             aria-hidden="true"
-            className={`pointer-events-none absolute top-1/2 select-none font-display leading-none text-cream-300 opacity-60 lg:opacity-100 text-[88px] sm:text-[120px] lg:text-[200px] transition-colors duration-500 motion-reduce:transition-none lg:group-hover:text-orange-500 ${
+            className={`pointer-events-none absolute top-1/2 hidden -translate-y-1/2 select-none font-display leading-none text-cream-300 lg:block lg:text-[200px] transition-colors duration-500 motion-reduce:transition-none lg:group-hover:text-orange-500 ${
               side === 'left' ? 'right-0' : 'left-0'
             }`}
-            style={{
-              fontVariationSettings: "'opsz' 72",
-              transform: side === 'left' ? 'translate(0.12em, -50%)' : 'translate(-0.12em, -50%)'
-            }}
+            style={{ fontVariationSettings: "'opsz' 72" }}
           >
             {numeral}
           </span>
 
           <div className="relative grid grid-cols-12 gap-x-6">
             <div
-              className={`${textCol} transition-transform duration-[350ms] ease-[var(--ease-emphasized)] motion-reduce:transition-none group-hover:translate-x-2`}
+              className={`${textCol} transition-transform duration-[350ms] ease-[var(--ease-emphasized)] motion-reduce:transition-none lg:group-hover:translate-x-2`}
             >
+              <span
+                aria-hidden="true"
+                className="mb-2 block font-display text-[56px] leading-none text-orange-500 lg:hidden"
+                style={{ fontVariationSettings: "'opsz' 72" }}
+              >
+                {numeral}
+              </span>
               <h3 className="font-display display-s text-2xl sm:text-3xl lg:text-[38px] text-navy-900 leading-[1.15] max-w-[30ch]">
                 {title}
               </h3>
               <Prose
                 text={summary}
-                className="mt-5 text-base lg:text-lg text-ink-700 leading-relaxed max-w-[62ch]"
+                className="mt-5 max-w-[62ch] text-base lg:text-lg text-ink-700 leading-relaxed [&>p:first-child]:text-[19px] lg:[&>p:first-child]:text-[21px] [&>p:first-child]:leading-relaxed [&>p:first-child]:text-navy-900 [&>p:first-child]:font-normal [&_p+p]:mt-5"
               />
             </div>
           </div>
@@ -158,7 +162,7 @@ export default async function DistinctivesPage() {
               delay={180}
               className="lg:col-span-4 lg:col-start-9 lg:self-end lg:border-l lg:border-cream-300 lg:pl-10"
             >
-              <p className="text-base sm:text-lg text-ink-700 leading-relaxed">{introTwo}</p>
+              <p className="max-w-[65ch] text-base sm:text-lg text-ink-700 leading-relaxed">{introTwo}</p>
             </Reveal>
           </div>
         </div>
@@ -213,7 +217,7 @@ export default async function DistinctivesPage() {
       </section>
 
       {/* Editorial moment: paragraph three at display size, the preamble
-          running under it in two columns. One surface step off the rows. */}
+          running under it in one capped column. One surface step off the rows. */}
       <section className="bg-cream-100 border-b border-cream-300">
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 py-16 lg:py-20">
           <Reveal>
@@ -233,8 +237,8 @@ export default async function DistinctivesPage() {
               )}
             </p>
           </Reveal>
-          <Reveal delay={120} className="mt-10 lg:mt-14 lg:columns-2 lg:gap-14">
-            <p className="text-base lg:text-[17px] text-ink-700 leading-relaxed">
+          <Reveal delay={120} className="mt-10 lg:mt-14">
+            <p className="max-w-[65ch] text-base lg:text-[17px] text-ink-700 leading-relaxed">
               {page.preamble}
             </p>
           </Reveal>
@@ -242,7 +246,7 @@ export default async function DistinctivesPage() {
       </section>
 
       {/* The five distinctives. Full-width rows, hairlines only, watermark
-          numerals cropped by the row edge. */}
+          numerals set whole beside the text. */}
       <section>
         <div className="max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-16 lg:pt-24">
           <Reveal>

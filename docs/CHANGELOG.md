@@ -5,6 +5,34 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-11-18 (later): Distinctives readability, 3D map
+
+Diego's review of the round 3 deploy.
+
+- **Distinctives.** The 01 to 05 numerals were cropped (overflow-hidden plus a
+  horizontal translate). Below lg they now sit inline in orange above each
+  heading; at lg the big background numeral shows whole. Each summary gained
+  paragraph breaks (words unchanged, checked with a whitespace-collapsed
+  compare); the first paragraph renders as a lead. The preamble after the big
+  statement is one column instead of two CSS columns. The five summaries were
+  pushed to the live DB with `feedback/round-3/tools/push-distinctives.mjs`,
+  which writes only where the live value still equals the previous seed.
+- **Home map.** "Global reach, local evidence" is now a navy section with a
+  tilted, extruded three.js world map (`WorldMap3D.jsx` +
+  `worldmap3d-scene.js`): worked countries rise in sequence, the two offices
+  carry beacons, arcs with travelling lights run from the nearest office to
+  each country, the camera fits the land to the stage width. Hover shows the
+  country name. three (148 KB gzip) loads only when the section nears the
+  viewport; the flat `WorldMap` (now with a dark variant) shows until the
+  first frame and stays as the no-WebGL fallback. Reduced motion renders the
+  final state statically. Not a globe on purpose: the hero already has one.
+- **Open.** Case-study images: the media library holds 10 small (600x400)
+  project photos, enough for about 5 of the 29. Generating a consistent set
+  waits on Diego's OK for the Flow credits.
+- `npm run lint` is broken (`next lint` no longer exists in Next 16).
+
+---
+
 ## 2026-11-18: Round 3, the long copy (sitemap of 3 November, call with Kara on 4 November)
 
 The brief moved to Google Docs. The sitemap doc now carries the client's final,

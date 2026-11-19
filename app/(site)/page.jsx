@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Section, { SectionHeading } from '../../src/site/components/Section';
 import SignpostTrio from '../../src/site/components/SignpostTrio';
 import HeroGlobe from '../../src/site/components/HeroGlobe';
-import WorldMap from '../../src/site/components/WorldMap';
+import WorldMap3D from '../../src/site/components/WorldMap3D';
 import PartnerLogoWall from '../../src/site/components/PartnerLogoWall';
 import Placeholder from '../../src/site/components/Placeholder';
 import Reveal from '../../src/site/components/Reveal';
@@ -174,25 +174,26 @@ export default async function HomePage() {
         <SignpostTrio signposts={home.signposts} readMore={ui.readMore} />
       </Section>
 
-      {/* 3. Where we work */}
-      <Section tone="sunken">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-10 lg:gap-16 items-center">
-          <Reveal className="order-2 lg:order-1">
-            <WorldMap
-              countries={mapCountries}
-              legendOffices={home.legendOfficesLabel}
-              legendWorked={home.legendWorkedLabel}
-            />
-          </Reveal>
-          <div className="order-1 lg:order-2">
-            <SectionHeading title={home.mapHeading} />
-            <Placeholder className="mt-5 text-ink-700 leading-relaxed">{home.mapSummary}</Placeholder>
-            <p className="mt-8 pt-4 border-t border-cream-300 font-mono text-[11px] leading-relaxed text-ink-500">
-              <span className="text-navy-900">{mapCountries.length} countries shown.</span>
+      {/* 3. Where we work: a tilted 3D map on navy. The flat map shows until
+          the 3D scene renders its first frame. */}
+      <Section tone="navy" className="overflow-x-clip">
+        <div className="relative z-10 lg:grid lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeading title={home.mapHeading} reversed />
+            <Placeholder className="mt-5 text-navy-200 leading-relaxed">{home.mapSummary}</Placeholder>
+            <p className="mt-6 font-mono text-[11px] leading-relaxed text-navy-300">
+              <span className="text-cream-50">{mapCountries.length} countries shown.</span>
               {` ${home.mapNote}`}
             </p>
           </div>
         </div>
+        <Reveal className="mt-3 lg:-mt-3">
+          <WorldMap3D
+            countries={mapCountries}
+            legendOffices={home.legendOfficesLabel}
+            legendWorked={home.legendWorkedLabel}
+          />
+        </Reveal>
       </Section>
 
       {/* 4. Who we work with. The page's one kicker is spent here.
