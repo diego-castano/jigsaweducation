@@ -30,12 +30,6 @@ export default function CaseStudyCard({ study, mediaMeta }) {
       )}
 
       <div className="flex flex-col flex-1 p-6">
-        {study.countries?.length > 0 && (
-          <p className="font-mono text-[11px] text-ink-500 mb-3">
-            {study.countries.join(' · ')}
-          </p>
-        )}
-
         <h3 className="font-display text-xl text-navy-900 leading-snug">
           <Link
             href={`/case-studies/${study.slug}`}
@@ -45,7 +39,11 @@ export default function CaseStudyCard({ study, mediaMeta }) {
           </Link>
         </h3>
 
-        <p className="text-sm text-ink-700 leading-relaxed mt-3 flex-1">{study.summary}</p>
+        {study.countries?.length > 0 && (
+          <p className="font-mono text-[11px] text-ink-500 mt-2">
+            {study.countries.join(' · ')}
+          </p>
+        )}
 
         <dl className="mt-5 pt-5 border-t border-cream-300 space-y-2 text-xs">
           {study.partners?.length > 0 && (

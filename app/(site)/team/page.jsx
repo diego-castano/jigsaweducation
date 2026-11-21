@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Icon from '../../../src/components/Icon';
 import Section from '../../../src/site/components/Section';
 import Reveal from '../../../src/site/components/Reveal';
+import PageHero from '../../../src/site/components/PageHero';
 import TeamCard from '../../../src/site/components/TeamCard';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import { getCollection, getSingleton, getMediaMeta } from '../../../src/lib/content';
@@ -46,47 +47,11 @@ export default async function TeamPage() {
 
   return (
     <>
-      {/* Opener. Two columns settling on a shared baseline: the name of the
-          page on the left with one quiet line of real figures under it, the
-          client's paragraph running as a set-in column on the right. No
-          kicker, no hero slab. */}
-      <section className="relative overflow-hidden border-b border-cream-300">
-        <span
-          className="blob"
-          style={{
-            width: 480,
-            height: 480,
-            top: -240,
-            right: -140,
-            background: '#ffcca8',
-            opacity: 0.24
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="relative mx-auto max-w-[1240px] px-6 pt-14 pb-12 sm:px-8 lg:px-10 lg:pt-20 lg:pb-16">
-          <div className="grid gap-y-8 lg:grid-cols-12 lg:items-end lg:gap-x-12">
-            <div className="lg:col-span-5">
-              <Reveal>
-                <h1 className="font-display display-xl text-5xl leading-[0.95] text-navy-900 sm:text-6xl lg:text-[76px]">
-                  {page.heading}
-                </h1>
-              </Reveal>
-              <Reveal delay={140}>
-                <p className="mt-7 border-t border-cream-300 pt-5 font-mono text-[11px] leading-relaxed tracking-[0.08em] text-ink-600">
-                  {`${team.length} ${page.statSuffix}`}
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal delay={70} className="lg:col-span-6 lg:col-start-7 lg:self-end">
-              <p className="max-w-[54ch] text-lg leading-[1.5] text-ink-700 sm:text-xl lg:text-[22px]">
-                {page.introLead}
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title={page.heading}
+        lede={page.introLead}
+        meta={`${team.length} ${page.statSuffix}`}
+      />
 
       <Section>
         {/* The live site lists all 18 names inside a single <h1> with no other

@@ -3,7 +3,7 @@
 // once the client sends a transparent logo.
 
 export const PARTNERS_INTRO =
-  'Over the last 15 years we have completed over 150 assignments in 70 countries. We work in long-term collaboration with governments, bilateral and multilateral donors, international education organisations, private foundations and INGOs. We love working with teams who want to build evidence and put it into action to improve education decision-making.';
+  'Over the last 15 years we have completed over 150 assignments in 77 countries. We work in long-term collaboration with governments, bilateral and multilateral donors, international education organisations, private foundations and INGOs. We love working with teams who want to build evidence and put it into action to improve education decision-making.';
 
 export const PARTNERS = [
   { name: 'UNICEF', full: 'United Nations Children’s Fund', logo: '/partners/unicef.webp' },

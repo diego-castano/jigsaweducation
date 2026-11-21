@@ -5,6 +5,46 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-11-20: Round 4, Kara's email of 20 November and Becky's tracked changes
+
+Working copies in `feedback/round-4/` (gitignored): the sitemap doc exported as
+.docx, `tracked-changes.md` and `sitemap-accepted.md` (Becky's suggestions
+listed and accepted), the team bios doc parsed to `team-bios-2026.json`, and
+the scripts in `tools/`.
+
+- **Uploads.** Images over 1 MB failed in the admin with a 500: Next's Server
+  Actions body cap (1 MB) sat below the media action's own 25 MB limit.
+  `experimental.serverActions.bodySizeLimit` and
+  `experimental.proxyClientMaxBodySize` are now 26mb.
+- **Home.** The 3D map is gone (too much movement, and its navy merged with
+  the navy signposts): the flat cream map from 7e467f3 is back and three is
+  uninstalled. The globe's three cards now show the case studies Kara chose;
+  the orange button reads "See case studies of our work"; partners paragraph
+  says 77 countries; the Distinctives signpost lost its "Our story" link.
+- **One page intro.** Approaches, Technical focus, Distinctives, Team, Case
+  studies and Publications all use `PageHero`: same h1, a one-sentence lede
+  (a plain-text first paragraph over 45 words is split at its first
+  sentence), further paragraphs below in one column, kicker only when set.
+  Kara removed the Case studies and Publications kickers.
+- **Case studies.** Cards show the title first, then countries; no summary.
+  New intro paragraph from Becky.
+- **Distinctives.** "Our story" removed (page, schema, seed). Stats are now
+  70% and 273m, each with its source (World Bank, 2022; UNESCO, 2026), and the
+  intro sentence matches.
+- **Approaches and Technical focus.** Every "read case studies about" list
+  rebuilt from Becky's tracked changes; all 29 labels link to a study.
+- **Team.** The 22 bios from the client's doc pushed with
+  `tools/push-team.mjs`: 20 people updated (name, role, bio, LinkedIn, ORCID;
+  photos untouched; Kara's and Kate Radford's roles kept from the admin
+  because the doc leaves them open), Chisenga Muyoya-Ngenda and Luke Shepherd
+  added, list re-sorted by surname.
+- **Becky** has an admin login (rebecca@jigsaweducation.org).
+- Content pushed with `tools/sync-r4.mjs` (three-way per field, no conflicts).
+- **Draft banner.** It only shows when the site-settings "review notes"
+  switch is on, which it is not in production; Kara saw none. Left as is.
+
+---
+
 ## 2026-11-18 (later): Distinctives readability, 3D map
 
 Diego's review of the round 3 deploy.

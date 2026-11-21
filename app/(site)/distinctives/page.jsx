@@ -1,23 +1,13 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 import Section from '../../../src/site/components/Section';
+import PageHero from '../../../src/site/components/PageHero';
 import CrossLinks from '../../../src/site/components/CrossLinks';
-import Placeholder from '../../../src/site/components/Placeholder';
 import Reveal from '../../../src/site/components/Reveal';
 import CountUp from '../../../src/site/components/distinctives/CountUp';
 import { getSingleton, getCollection } from '../../../src/lib/content';
 import { pageMetadata } from '../../../src/lib/page-metadata';
 import Prose from '../../../src/site/components/Prose';
-import { isPlaceholder } from '../../../src/data/placeholder';
-
-// The story stays a visible placeholder until real copy lands; once written
-// (possibly formatted in the console) it renders as prose.
-const StoryBody = ({ text }) =>
-  isPlaceholder(text) ? (
-    <Placeholder className="mt-6 text-lg text-ink-700 leading-relaxed">{text}</Placeholder>
-  ) : (
-    <Prose text={text} className="mt-6 text-lg text-ink-700 leading-relaxed" />
-  );
 
 export async function generateMetadata() {
   const page = await getSingleton('page-distinctives');
@@ -119,54 +109,18 @@ function DistinctiveRow({ index, side, title, summary }) {
 }
 
 export default async function DistinctivesPage() {
-  const [page, settings, ui, distinctives] = await Promise.all([
+  const [page, ui, distinctives] = await Promise.all([
     getSingleton('page-distinctives'),
-    getSingleton('site-settings'),
     getSingleton('ui-strings'),
     getCollection('distinctives')
   ]);
 
   const { introOne, introTwo, introThree } = page;
   const crisisStats = page.crisisStats || [];
-  const storyMilestones = page.storyMilestones || [];
-  const showReviewNotes = Boolean(settings.showReviewNotes);
 
   return (
     <>
-      {/* Opener. Two columns, no kicker: the h1 and the client's first
-          paragraph carry the left, paragraph two runs as a set-in column on
-          the right and drops to the baseline so the block reads as a spread. */}
-      <section className="relative overflow-hidden border-b border-cream-300">
-        <span
-          className="blob"
-          style={{ width: 520, height: 520, top: -260, right: -160, background: '#ffcca8', opacity: 0.3 }}
-          aria-hidden="true"
-        />
-
-        <div className="relative max-w-[1240px] mx-auto px-6 sm:px-8 lg:px-10 pt-14 pb-14 lg:pt-20 lg:pb-20">
-          <div className="grid lg:grid-cols-12 gap-y-9 lg:gap-x-12">
-            <div className="lg:col-span-7">
-              <Reveal>
-                <h1 className="font-display display-xl text-5xl sm:text-6xl lg:text-[86px] text-navy-900 leading-[0.95]">
-                  {page.heading}
-                </h1>
-              </Reveal>
-              <Reveal delay={90}>
-                <p className="mt-7 lg:mt-9 text-xl sm:text-2xl text-ink-800 leading-[1.45] max-w-[36ch] sm:max-w-[42ch]">
-                  {introOne}
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal
-              delay={180}
-              className="lg:col-span-4 lg:col-start-9 lg:self-end lg:border-l lg:border-cream-300 lg:pl-10"
-            >
-              <p className="max-w-[65ch] text-base sm:text-lg text-ink-700 leading-relaxed">{introTwo}</p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <PageHero title={page.heading} lede={introOne} more={<p>{introTwo}</p>} />
 
       {/* Stats band. Full-bleed navy, hairline-divided, counting up on first
           reveal. The citation gap is a single mono line, not a dashed box. */}
@@ -192,27 +146,14 @@ export default async function DistinctivesPage() {
                 <span className="block mt-5 text-sm lg:text-base text-cream-200 leading-relaxed max-w-[32ch]">
                   {stat.label}
                 </span>
+                {stat.source && (
+                  <span className="block mt-2 font-mono text-[11px] tracking-[0.04em] text-navy-200">
+                    Source: {stat.source}
+                  </span>
+                )}
               </Reveal>
             ))}
           </ul>
-
-          {(page.statsCitation || showReviewNotes) && (
-            <p className="mt-12 pt-5 border-t border-navy-800 font-mono text-[11px] leading-relaxed tracking-[0.04em] text-navy-200">
-              {page.statsCitation ? (
-                <>
-                  Source:{' '}
-                  <a
-                    className="link-sweep focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 rounded-sm"
-                    href={page.statsCitation}
-                  >
-                    {page.statsCitation}
-                  </a>
-                </>
-              ) : (
-                'Citation URL to come from the Jigsaw team. Figures should not publish unsourced.'
-              )}
-            </p>
-          )}
         </div>
       </section>
 
@@ -284,60 +225,6 @@ export default async function DistinctivesPage() {
           </ol>
         </div>
       </section>
-
-      {/* Our story - the About page content the new sitemap left homeless.
-          Linked from the Home signpost, which is the only route a visitor
-          looking for "about us" has left. The #our-story id is load-bearing. */}
-      <Section id="our-story" className="scroll-mt-24 border-t border-cream-300">
-        <div className="grid lg:grid-cols-12 gap-y-10 lg:gap-x-14">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <h2 className="font-display display-m text-3xl sm:text-4xl lg:text-5xl text-navy-900 leading-[1.05]">
-                {page.storyHeading}
-              </h2>
-              <StoryBody text={page.storyBody} />
-            </Reveal>
-
-            {showReviewNotes && page.foundingDateNote && (
-              <Reveal delay={120}>
-                <p className="mt-8 pt-5 border-t border-cream-300 font-mono text-[11px] leading-relaxed text-ink-500">
-                  {page.foundingDateNote}
-                </p>
-              </Reveal>
-            )}
-          </div>
-
-          {/* Timeline rail. The hairline is a sibling of the list, not a child
-              of it: an <ol> takes list items and nothing else. */}
-          <div className="relative lg:col-span-6 lg:col-start-7">
-            <span
-              className="absolute left-[3px] top-3 bottom-3 w-px bg-cream-300"
-              aria-hidden="true"
-            />
-            <ol>
-              {storyMilestones.map((milestone, i) => (
-                <Reveal
-                  as="li"
-                  key={i}
-                  delay={i * 90}
-                  className="relative pl-8 lg:pl-10 pb-9 last:pb-0"
-                >
-                  <span
-                    className="absolute left-0 top-[7px] w-[7px] h-[7px] rounded-full bg-orange-500"
-                    aria-hidden="true"
-                  />
-                  <span className="inline-block font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500 border-b border-dashed border-cream-400 pb-px">
-                    {milestone.year || 'Year tbc'}
-                  </span>
-                  <Placeholder className="mt-3 text-base text-ink-700 leading-relaxed max-w-[52ch]">
-                    {milestone.text}
-                  </Placeholder>
-                </Reveal>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </Section>
 
       <Section>
         <CrossLinks hrefs={['/approaches', '/technical-focus', '/team']} ui={ui} />

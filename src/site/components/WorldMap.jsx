@@ -27,9 +27,7 @@ const toPath = geoPath(projection);
 export default function WorldMap({
   countries = [],
   legendOffices = 'Our offices',
-  legendWorked = 'Where we have worked',
-  dark = false,
-  hideLegend = false
+  legendWorked = 'Where we have worked'
 }) {
   const titleId = useId();
   const [hovered, setHovered] = useState(null);
@@ -79,11 +77,9 @@ export default function WorldMap({
                       ? isHovered
                         ? '#2c5368'
                         : '#407c9b'
-                      : dark
-                        ? '#234454'
-                        : '#E8E2D2'
+                      : '#E8E2D2'
                 }
-                stroke={dark ? '#1a3340' : '#F2EDE0'}
+                stroke="#F2EDE0"
                 strokeWidth={0.5}
                 className={isMatch ? 'cursor-pointer transition-[fill] duration-200' : ''}
                 onMouseEnter={isMatch ? () => setHovered(s) : undefined}
@@ -101,7 +97,6 @@ export default function WorldMap({
 
       {/* Legend and the hover readout share one rule, so the name appears in a
           fixed place instead of floating over the coastline. */}
-      {!hideLegend && (
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 pt-4 border-t border-cream-300 text-xs text-ink-600">
         <span className="inline-flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-sm bg-orange-500" />{` ${legendOffices}`}
@@ -117,7 +112,6 @@ export default function WorldMap({
           {activeName}
         </span>
       </div>
-      )}
     </div>
   );
 }

@@ -18,28 +18,26 @@ export const CORE_SENTENCES = [
 // numeric code the admin's country picker stores.
 export const HERO_PHOTOS = [
   {
-    photo: '/media/migrated/34fcc047ee-tile-fill-akf-photo.png',
-    caption: 'ICT in primary schools',
-    country: { name: 'Kenya', id: '404' },
-    link: '/case-studies'
+    photo: '/media/migrated/48b3ff9be3-tile-fill-dubai-cares-ecubed-2019-participatory-activity.jpg',
+    caption: 'Exploring refugee teacher inclusion pathways in national systems',
+    country: { name: 'Chad, Uganda, Zambia', id: '148' },
+    link: '/case-studies/exploring-refugee-teacher-inclusion-pathways-in-national-systems'
   },
   {
-    photo: '/media/migrated/48b3ff9be3-tile-fill-dubai-cares-ecubed-2019-participatory-activity.jpg',
-    caption: 'Voices of Refugee Youth',
-    country: { name: 'Pakistan', id: '586' },
-    link: '/case-studies/youth-centred-evidence-building-for-post-primary-refugee-education'
+    photo: '/media/migrated/34fcc047ee-tile-fill-akf-photo.png',
+    caption: 'Building evidence on EdTech in crisis contexts',
+    country: { name: 'Palestine, Yemen, Bangladesh, Lebanon', id: '275' },
+    link: '/case-studies/building-evidence-on-edtech-in-crisis-contexts'
   },
   {
     photo: '/media/migrated/8d24c47f17-tile-fill-group-work-interaction-with-trainer-1-.jpg',
-    caption: 'Teacher professional development',
+    caption: 'Measuring the carbon footprint of teacher training',
     country: { name: 'Rwanda', id: '646' },
     link: '/case-studies/measuring-the-carbon-footprint-of-teacher-training'
   }
 ];
 
-// The three signpost boxes. The Distinctives box carries a second link into
-// #our-story: the new sitemap retires the About page, and this is the only
-// route a visitor looking for "about us" has left.
+// The three signpost boxes.
 export const SIGNPOSTS = [
   {
     href: '/approaches',
@@ -60,8 +58,7 @@ export const SIGNPOSTS = [
     title: 'Distinctives',
     kicker: 'What sets us apart',
     icon: 'sparkles',
-    summary: 'We have organisational distinctives alongside our approaches and technical areas. They are the kind of things that you should experience when you work with Jigsaw.',
-    secondaryLink: { href: '/distinctives#our-story', label: 'Our story' }
+    summary: 'We have organisational distinctives alongside our approaches and technical areas. They are the kind of things that you should experience when you work with Jigsaw.'
   }
 ];
 

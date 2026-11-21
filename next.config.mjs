@@ -2,6 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // Admin uploads allow 25 MB (src/cms/actions/media.js). The defaults are 1 MB
+  // for Server Actions and 10 MB for requests that pass through proxy.js.
+  experimental: {
+    serverActions: { bodySizeLimit: '26mb' },
+    proxyClientMaxBodySize: '26mb'
+  },
+
   async redirects() {
     return [{ source: '/services', destination: '/approaches', permanent: true }];
   },

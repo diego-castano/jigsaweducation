@@ -3,16 +3,13 @@
 // drift from the source, copy hardcoded in page JSX is duplicated here
 // literally. The wiring phase replaces both with reads from these documents.
 
-import { placeholder } from '../../data/placeholder.js';
 import { CORE_SENTENCES, SIGNPOSTS, MAP_SUMMARY, MAP_COUNTRIES, HERO_PHOTOS } from '../../data/home.js';
 import { PARTNERS_INTRO } from '../../data/partners.js';
 import { SERVICES_INTRO } from '../../data/services.js';
 import { TECHNICAL_FOCUS_INTRO } from '../../data/technical-focus.js';
 import {
   DISTINCTIVES_INTRO,
-  DISTINCTIVES_PREAMBLE,
-  DISTINCTIVES_STATS_CITATION,
-  OUR_STORY
+  DISTINCTIVES_PREAMBLE
 } from '../../data/distinctives.js';
 import { POLICIES_INTRO, STANDARDS, STANDARDS_INTRO, CONCERNS_CONTACT } from '../../data/policies.js';
 import { JOBS_EMPTY_MESSAGE } from '../../data/jobs.js';
@@ -111,7 +108,7 @@ export const PAGE_SINGLETONS = [
             type: 'text',
             required: true,
             help: 'The main button under the sentences. It always opens the Case studies page.',
-            seed: 'See our work'
+            seed: 'See case studies of our work'
           },
           {
             name: 'secondaryCtaLabel',
@@ -442,7 +439,7 @@ export const PAGE_SINGLETONS = [
   {
     key: 'page-distinctives',
     title: 'Distinctives',
-    description: 'What sets Jigsaw apart, plus the Our story section the About page left behind.',
+    description: 'What sets Jigsaw apart: the opener, the statistics band and the five distinctives.',
     route: '/distinctives',
     icon: 'sparkles',
     sections: [
@@ -470,7 +467,7 @@ export const PAGE_SINGLETONS = [
             type: 'textarea',
             verbatim: true,
             warning:
-              'The 80% and 270 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too: the page does not keep them in step.',
+              'The 70% and 273 million figures in this paragraph are repeated as the large statistics band below. If a figure changes here, change it in the statistics too: the page does not keep them in step.',
             seed: DISTINCTIVES_INTRO[1]
           }
         ]
@@ -502,25 +499,23 @@ export const PAGE_SINGLETONS = [
                 type: 'text',
                 help: 'The orange suffix after the number: % or m.'
               },
-              { name: 'label', label: 'Caption', type: 'text', required: true }
+              { name: 'label', label: 'Caption', type: 'text', required: true },
+              {
+                name: 'source',
+                label: 'Source',
+                type: 'text',
+                help: 'Shown under the caption as "Source: ...", for example World Bank, 2022.'
+              }
             ],
             seed: [
               {
-                value: 80,
+                value: 70,
                 unit: '%',
-                label: 'of children aged 10 in the lowest income countries cannot read a simple text'
+                label: 'of children aged 10 in low- and middle-income countries cannot read a simple text',
+                source: 'World Bank, 2022'
               },
-              { value: 270, unit: 'm', label: 'children never go to school' }
+              { value: 273, unit: 'm', label: 'children never go to school', source: 'UNESCO, 2026' }
             ]
-          },
-          {
-            name: 'statsCitation',
-            label: 'Citation URL',
-            type: 'url',
-            nullable: true,
-            help:
-              'The source for the two figures: still awaited from the Jigsaw team. While it is empty the band prints a note that the figures should not publish unsourced.',
-            seed: DISTINCTIVES_STATS_CITATION
           }
         ]
       },
@@ -561,68 +556,6 @@ export const PAGE_SINGLETONS = [
           },
           // The five rows themselves are the Distinctives collection -
           // one source of truth, edited under Content → Distinctives.
-        ]
-      },
-      {
-        id: 'story',
-        title: 'Our story',
-        description:
-          'The About-page content the new sitemap retired. The Home page signpost links straight here.',
-        fields: [
-          {
-            name: 'storyHeading',
-            label: 'Section heading',
-            type: 'text',
-            required: true,
-            seed: OUR_STORY.heading
-          },
-          {
-            name: 'storyBody',
-            label: 'Story',
-            type: 'richtext',
-            help:
-              'The origin story carried over from the retired About page. Still awaited: note the founding date (2009, 2013 or 15 years ago) is unresolved.',
-            seed: OUR_STORY.body
-          },
-          {
-            name: 'storyMilestones',
-            label: 'Timeline',
-            type: 'list',
-            itemLabel: 'Milestone',
-            minItems: 1,
-            help: 'The dotted rail beside the story. Each milestone needs a year and a sentence.',
-            of: [
-              {
-                name: 'year',
-                label: 'Year',
-                type: 'text',
-                nullable: true,
-                help: 'Shows as “Year tbc” until filled in.'
-              },
-              { name: 'text', label: 'What happened', type: 'textarea', required: true }
-            ],
-            seed: [
-              {
-                year: null,
-                text: placeholder('first milestone: the founding year and what Jigsaw set out to do')
-              },
-              {
-                year: null,
-                text: placeholder(
-                  'second milestone: the point at which the team or country footprint changed'
-                )
-              },
-              { year: null, text: placeholder('third milestone: where the practice stands today') }
-            ]
-          },
-          {
-            name: 'foundingDateNote',
-            label: 'Founding-date note',
-            type: 'textarea',
-            help: REVIEW_NOTE_HELP,
-            seed:
-              'Founding date unresolved: the live site says over the last decade, the Decade in Review covers 2013 to 2023, the July brief says 15 years, and company 06844615 dates to roughly 2009. One date needs choosing before this section publishes.'
-          }
         ]
       },
       seoSection({
@@ -728,7 +661,7 @@ export const PAGE_SINGLETONS = [
             label: 'Kicker',
             type: 'text',
             help: 'The small capitals line above the title.',
-            seed: 'Our work'
+            seed: ''
           },
           {
             name: 'heading',
@@ -744,7 +677,7 @@ export const PAGE_SINGLETONS = [
             help:
               'The brief requires this paragraph to say plainly that the case studies are indicative rather than comprehensive. The current wording is ours and still needs the Jigsaw team’s sign-off.',
             seed:
-              'These case studies are indicative of our work rather than a comprehensive record. Much of what we do is confidential and cannot be published. The examples here show the range of partners we work with, the methods we use, and the contexts we work in.'
+              'We love sharing stories of how evidence can support meaningful decision-making in education. The case studies below illustrate the range of ways we seek to achieve this through our work. While not exhaustive, these examples demonstrate how we tailor each assignment to address the unique priorities and context of the education stakeholders we work alongside.'
           }
         ]
       },
@@ -787,7 +720,7 @@ export const PAGE_SINGLETONS = [
             label: 'Kicker',
             type: 'text',
             help: 'The small capitals line above the title.',
-            seed: 'Evidence library'
+            seed: ''
           },
           {
             name: 'heading',

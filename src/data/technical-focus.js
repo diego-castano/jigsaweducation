@@ -18,20 +18,16 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on foundation learning and pedagogy read case studies about",
     "related": [
       {
-        "label": "VVOB",
-        "caseStudy": "evaluating-structured-pedagogy-alongside-tarl-in-zambia"
-      },
-      {
-        "label": "MEWAKA",
-        "caseStudy": null
-      },
-      {
-        "label": "KIX TaRL",
-        "caseStudy": "optimising-teacher-development-to-scale-tarl"
-      },
-      {
-        "label": "Grade-Wise",
+        "label": "Understanding barriers to reaching higher-order skills in TaRL",
         "caseStudy": "understanding-barriers-to-reaching-higher-order-skills-in-tarl"
+      },
+      {
+        "label": "Optimising technology-supported teacher professional development in Tanzania",
+        "caseStudy": "optimising-technology-supported-teacher-professional-development-in-tanzania"
+      },
+      {
+        "label": "Measuring the impact of TaRL in Uganda",
+        "caseStudy": "measuring-the-impact-of-tarl-in-uganda"
       }
     ]
   },
@@ -44,16 +40,16 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on technology and education read case studies about",
     "related": [
       {
-        "label": "EIDU",
+        "label": "Evaluating digital personalised learning in Kenyan classrooms",
         "caseStudy": "evaluating-digital-personalised-learning-in-kenyan-classrooms"
       },
       {
-        "label": "UNRWA",
-        "caseStudy": null
+        "label": "Building evidence on EdTech in crisis contexts",
+        "caseStudy": "building-evidence-on-edtech-in-crisis-contexts"
       },
       {
-        "label": "Global EiE guidance",
-        "caseStudy": "building-evidence-on-edtech-in-crisis-contexts"
+        "label": "Co-designing digital competence training for lower secondary teachers",
+        "caseStudy": "co-designing-digital-competence-training-for-lower-secondary-teachers"
       }
     ]
   },
@@ -66,15 +62,15 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on climate-resilient learning environments read case studies about",
     "related": [
       {
-        "label": "CRIBS",
+        "label": "Evaluating climate-resilient infrastructure for schools and health centres",
         "caseStudy": "evaluating-climate-resilient-infrastructure-for-schools-and-health-centres"
       },
       {
-        "label": "SIEL",
-        "caseStudy": null
+        "label": "Testing low-cost cooling for heat-exposed classrooms in Ghana",
+        "caseStudy": "testing-low-cost-cooling-for-heat-exposed-classrooms-in-ghana"
       },
       {
-        "label": "Somalia AA",
+        "label": "Developing Anticipatory Action frameworks for education in Somalia",
         "caseStudy": "developing-anticipatory-action-frameworks-for-education-in-somalia"
       }
     ]
@@ -88,11 +84,11 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on skills and pathways to employment read case studies about",
     "related": [
       {
-        "label": "World Bank",
+        "label": "Assessing tech-enabled skills training for displaced youth",
         "caseStudy": "assessing-tech-enabled-skills-training-for-displaced-youth"
       },
       {
-        "label": "GIZ",
+        "label": "Exploring private sector partnerships for digital and green skills development",
         "caseStudy": "exploring-private-sector-partnerships-for-digital-and-green-skills-development"
       }
     ]
@@ -106,12 +102,16 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on education in crisis and conflict read case studies about",
     "related": [
       {
-        "label": "KIX GERE",
+        "label": "Exploring refugee teacher inclusion pathways in national systems",
         "caseStudy": "exploring-refugee-teacher-inclusion-pathways-in-national-systems"
       },
       {
-        "label": "UNESCO Sudan",
-        "caseStudy": null
+        "label": "Youth-centred evidence building for post-primary refugee education",
+        "caseStudy": "youth-centred-evidence-building-for-post-primary-refugee-education"
+      },
+      {
+        "label": "Historical mapping of refugee education provision",
+        "caseStudy": "historical-mapping-of-refugee-education-provision"
       }
     ]
   },
@@ -124,12 +124,12 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on cost-effectiveness read case studies about",
     "related": [
       {
-        "label": "EdTech Hub CEA",
+        "label": "Improving cost-effectiveness analysis in EdTech",
         "caseStudy": "improving-cost-effectiveness-analysis-in-edtech"
       },
       {
-        "label": "UNICEF",
-        "caseStudy": null
+        "label": "Co-creating UNICEF’s global strategy for digital education",
+        "caseStudy": "co-creating-unicef-s-global-strategy-for-digital-education"
       }
     ]
   },
@@ -142,24 +142,16 @@ export const TECHNICAL_FOCUS = [
     "relatedIntro": "To learn more about our work on education policy, systems and financing read case studies about",
     "related": [
       {
-        "label": "Hempel",
+        "label": "Reviewing the Hempel Foundation's education grant strategy",
         "caseStudy": "reviewing-the-hempel-foundation-s-education-grant-strategy"
       },
       {
-        "label": "Plan",
-        "caseStudy": "strengthening-merl-for-education-in-crisis-affected-contexts"
+        "label": "Shaping the future of digital education",
+        "caseStudy": "shaping-the-future-of-digital-education"
       },
       {
-        "label": "IDRC global",
-        "caseStudy": null
-      },
-      {
-        "label": "UNICEF",
-        "caseStudy": "co-creating-unicef-s-global-strategy-for-digital-education"
-      },
-      {
-        "label": "Madagascar TA",
-        "caseStudy": null
+        "label": "Building evidence on inclusive tech-enabled learning and employment pathways in Southeast Asia",
+        "caseStudy": "building-evidence-on-inclusive-tech-enabled-learning-and-employment-pathways-in-southeast-asia"
       }
     ]
   }

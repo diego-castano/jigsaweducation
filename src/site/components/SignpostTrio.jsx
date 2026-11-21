@@ -11,9 +11,8 @@ import Reveal from './Reveal';
 // go with the boxes, under the eyebrow rationing rule.
 //
 // Titles, summaries and link labels arrive from the CMS through props; the
-// destinations are structural and stay here. The Distinctives column keeps its
-// second link into #our-story: the new sitemap retires the About page, so this
-// is the only route left for a visitor looking for "about us".
+// destinations are structural and stay here. A signpost may carry an optional
+// secondary link; none do now that the Our story section is gone.
 //
 // Design feedback, 15 September 2026: the band runs in the bold dark blue of
 // the Distinctives stats banner, so the home page gets one strong block
@@ -21,7 +20,7 @@ import Reveal from './Reveal';
 const STRUCTURE = [
   { href: '/approaches' },
   { href: '/technical-focus' },
-  { href: '/distinctives', secondaryHref: '/distinctives#our-story' }
+  { href: '/distinctives' }
 ];
 
 export default function SignpostTrio({ signposts = [], readMore = 'Read more' }) {

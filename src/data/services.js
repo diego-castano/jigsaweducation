@@ -13,16 +13,16 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our large-scale mixed-method studies read case studies about",
     "related": [
       {
-        "label": "EIDU",
+        "label": "Evaluating digital personalised learning in Kenyan classrooms",
         "caseStudy": "evaluating-digital-personalised-learning-in-kenyan-classrooms"
       },
       {
-        "label": "VSO Sierra Leone",
-        "caseStudy": null
+        "label": "Evaluating structured pedagogy alongside TaRL in Zambia",
+        "caseStudy": "evaluating-structured-pedagogy-alongside-tarl-in-zambia"
       },
       {
-        "label": "SIEL",
-        "caseStudy": null
+        "label": "Testing low-cost cooling for heat-exposed classrooms in Ghana",
+        "caseStudy": "testing-low-cost-cooling-for-heat-exposed-classrooms-in-ghana"
       }
     ]
   },
@@ -34,15 +34,15 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our design-based and implementation research, read case studies about",
     "related": [
       {
-        "label": "MEWAKA",
-        "caseStudy": null
+        "label": "Optimising technology-supported teacher professional development in Tanzania",
+        "caseStudy": "optimising-technology-supported-teacher-professional-development-in-tanzania"
       },
       {
-        "label": "CWTL",
-        "caseStudy": null
+        "label": "Building evidence on EdTech in crisis contexts",
+        "caseStudy": "building-evidence-on-edtech-in-crisis-contexts"
       },
       {
-        "label": "KIX TaRL",
+        "label": "Optimising teacher development to scale TaRL",
         "caseStudy": "optimising-teacher-development-to-scale-tarl"
       }
     ]
@@ -55,11 +55,11 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our research training and capacity strengthening work read case studies about",
     "related": [
       {
-        "label": "KIX GERE",
+        "label": "Exploring refugee teacher inclusion pathways in national systems",
         "caseStudy": "exploring-refugee-teacher-inclusion-pathways-in-national-systems"
       },
       {
-        "label": "VORY",
+        "label": "Youth-centred evidence building for post-primary refugee education",
         "caseStudy": "youth-centred-evidence-building-for-post-primary-refugee-education"
       }
     ]
@@ -72,19 +72,15 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our technical assistance and evidence synthesis read case studies about",
     "related": [
       {
-        "label": "EdTech Hub RERs",
-        "caseStudy": null
+        "label": "Co-designing digital competence training for lower secondary teachers",
+        "caseStudy": "co-designing-digital-competence-training-for-lower-secondary-teachers"
       },
       {
-        "label": "EdTech Hub Madagascar",
-        "caseStudy": null
-      },
-      {
-        "label": "AA framework Somalia",
+        "label": "Developing Anticipatory Action frameworks for education in Somalia",
         "caseStudy": "developing-anticipatory-action-frameworks-for-education-in-somalia"
       },
       {
-        "label": "UNICEF Flagship report",
+        "label": "Shaping the future of digital education",
         "caseStudy": "shaping-the-future-of-digital-education"
       }
     ]
@@ -97,15 +93,15 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our strategy and advisory work read case studies about",
     "related": [
       {
-        "label": "Hempel",
+        "label": "Reviewing the Hempel Foundation's education grant strategy",
         "caseStudy": "reviewing-the-hempel-foundation-s-education-grant-strategy"
       },
       {
-        "label": "UNESCO Sudan",
-        "caseStudy": null
+        "label": "Evaluation of UNESCO knowledge products on health and education",
+        "caseStudy": "evaluation-of-unesco-knowledge-products-on-health-and-education"
       },
       {
-        "label": "UNICEF",
+        "label": "Co-creating UNICEF’s global strategy for digital education",
         "caseStudy": "co-creating-unicef-s-global-strategy-for-digital-education"
       }
     ]
@@ -118,15 +114,7 @@ export const SERVICES = [
     "relatedIntro": "To learn more about our embedded learning partnerships read case studies about",
     "related": [
       {
-        "label": "Porticus",
-        "caseStudy": null
-      },
-      {
-        "label": "MBRGI",
-        "caseStudy": null
-      },
-      {
-        "label": "Plan",
+        "label": "Strengthening MERL for education in crisis-affected contexts",
         "caseStudy": "strengthening-merl-for-education-in-crisis-affected-contexts"
       }
     ]

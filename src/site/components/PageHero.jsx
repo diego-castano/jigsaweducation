@@ -4,7 +4,23 @@ import Placeholder from './Placeholder';
 // Site modules 01 feedback: the blobs are kept but reduced to a single hue.
 // "We're happy with the faint colour blobs, but would prefer them to be the
 // same colour (probably orange), as we find the mix of colours distracting."
-export default function PageHero({ kicker, title, lede, children }) {
+export default function PageHero({ kicker, title, lede: ledeIn, more: moreIn, meta, children }) {
+  let lede = ledeIn;
+  let more = moreIn;
+  if (typeof ledeIn === 'string' && !/<[a-z][^>]*>/i.test(ledeIn) && ledeIn.trim().split(/\s+/).length > 45) {
+    const m = /\. /.exec(ledeIn.slice(19));
+    if (m) {
+      const cut = 19 + m.index + 1;
+      lede = ledeIn.slice(0, cut);
+      const rest = ledeIn.slice(cut).trim();
+      more = (
+        <>
+          <p>{rest}</p>
+          {moreIn}
+        </>
+      );
+    }
+  }
   return (
     <section className="relative overflow-hidden border-b border-cream-300">
       <span
@@ -24,19 +40,28 @@ export default function PageHero({ kicker, title, lede, children }) {
             {kicker}
           </p>
         )}
-        <h1 className="font-display display-l text-4xl sm:text-5xl lg:text-6xl text-navy-900 leading-[1.02] max-w-4xl reveal reveal-1">
+        <h1 className="font-display display-l text-5xl sm:text-6xl lg:text-[4rem] leading-[1.02] text-navy-900 max-w-4xl reveal reveal-1">
           {title}
         </h1>
         {lede &&
           (typeof lede === 'string' ? (
-            <Placeholder className="mt-6 text-lg sm:text-xl text-ink-700 leading-relaxed max-w-3xl reveal reveal-2">
+            <Placeholder className="mt-6 text-xl lg:text-2xl text-navy-900 leading-relaxed max-w-[62ch] reveal reveal-2">
               {lede}
             </Placeholder>
           ) : (
-            <div className="mt-6 text-lg sm:text-xl text-ink-700 leading-relaxed max-w-3xl reveal reveal-2">
+            <div className="mt-6 text-xl lg:text-2xl text-navy-900 leading-relaxed max-w-[62ch] reveal reveal-2">
               {lede}
             </div>
           ))}
+        {/* Every further intro paragraph sits below the lede in one column. */}
+        {more && (
+          <div className="mt-5 space-y-4 text-base lg:text-lg text-ink-700 leading-relaxed max-w-[65ch] reveal reveal-2">
+            {more}
+          </div>
+        )}
+        {meta && (
+          <p className="mt-8 border-t border-cream-300 pt-4 text-sm text-ink-500 reveal reveal-3">{meta}</p>
+        )}
         {children && <div className="mt-8 reveal reveal-3">{children}</div>}
       </div>
     </section>

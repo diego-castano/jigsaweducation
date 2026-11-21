@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Section from '../../../src/site/components/Section';
-import Reveal from '../../../src/site/components/Reveal';
+import PageHero from '../../../src/site/components/PageHero';
 import Prose from '../../../src/site/components/Prose';
 import CrossLinks from '../../../src/site/components/CrossLinks';
 import ServiceIndex from '../../../src/site/components/services/ServiceIndex';
@@ -28,44 +28,16 @@ export default async function ServicesPage() {
   const [lede, ...rest] = paras;
 
   return (
-    <Section className="relative">
-      {/* The clip lives on this wrapper, not on the section: an overflow other
-          than visible on an ancestor of the rail would kill position: sticky. */}
-      <span className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <span
-          className="blob"
-          style={{ width: 520, height: 520, top: -240, right: -140, background: '#ffcca8', opacity: 0.35 }}
-        />
-      </span>
+    <>
+      <PageHero
+        title={page.heading}
+        lede={paras.length > 0 ? lede : <Prose text={page.intro} className="space-y-0" />}
+        more={rest.length > 0 ? rest.map((p) => <Prose key={p} text={p} className="space-y-0" />) : null}
+        meta={page.countCaption}
+      />
 
-      <div className="relative">
-        <Reveal>
-          <h1 className="font-display display-xl text-5xl leading-[1.02] text-navy-900 sm:text-6xl lg:text-[4rem]">
-            {page.heading}
-          </h1>
-        </Reveal>
-
-        <Reveal delay={80}>
-          {paras.length > 0 ? (
-            <>
-              <Prose text={lede} className="mt-6 max-w-3xl text-lg leading-relaxed text-ink-700" />
-              <div className="mt-4 grid max-w-5xl gap-4 lg:grid-cols-2 lg:gap-12">
-                {rest.map((p) => (
-                  <Prose key={p} text={p} className="text-base leading-relaxed text-ink-700" />
-                ))}
-              </div>
-            </>
-          ) : (
-            <Prose text={page.intro} className="mt-6 max-w-3xl text-lg leading-relaxed text-ink-700" />
-          )}
-        </Reveal>
-
-        <Reveal delay={160}>
-          <p className="mt-8 border-t border-cream-300 pt-4 text-sm text-ink-500">{page.countCaption}</p>
-        </Reveal>
-      </div>
-
-      <div className="relative mt-10 grid gap-y-14 lg:mt-14 lg:grid-cols-12 lg:gap-x-16">
+      <Section className="relative">
+      <div className="relative grid gap-y-14 lg:grid-cols-12 lg:gap-x-16">
         <div className="lg:col-span-3 lg:sticky lg:top-28 lg:self-start">
           <ServiceIndex services={services.map((s) => ({ slug: s.slug, title: s.title }))} />
           <p className="mt-6 text-sm text-ink-600">
@@ -91,6 +63,7 @@ export default async function ServicesPage() {
       <div className="relative mt-20 lg:mt-28">
         <CrossLinks hrefs={['/technical-focus', '/distinctives', '/team']} ui={ui} />
       </div>
-    </Section>
+      </Section>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Section from '../../../src/site/components/Section';
+import PageHero from '../../../src/site/components/PageHero';
 import Prose from '../../../src/site/components/Prose';
 import Reveal from '../../../src/site/components/Reveal';
 import CrossLinks from '../../../src/site/components/CrossLinks';
@@ -27,30 +28,13 @@ export default async function TechnicalFocusPage() {
 
   return (
     <>
-      <section className="border-b border-cream-300">
-        <div className="mx-auto max-w-[1240px] px-6 pt-14 pb-10 sm:px-8 lg:px-10 lg:pt-20 lg:pb-14">
-          <h1 className="reveal font-display display-l text-4xl leading-[1.02] text-navy-900 sm:text-5xl lg:text-6xl">
-            {page.heading}
-          </h1>
-          {paras.length > 1 ? (
-            <div className="reveal reveal-2 mt-6 lg:mt-8 lg:grid lg:grid-cols-12 lg:items-start lg:gap-12">
-              <Prose
-                text={paras[0]}
-                className="text-lg leading-relaxed text-navy-900 lg:col-span-7 lg:text-xl"
-              />
-              <Prose
-                text={paras.slice(1).join('\n\n')}
-                className="mt-4 text-base leading-relaxed text-ink-700 lg:col-span-5 lg:mt-0 lg:border-l lg:border-cream-300 lg:pl-8"
-              />
-            </div>
-          ) : (
-            <Prose
-              text={page.intro}
-              className="reveal reveal-2 mt-6 max-w-[68ch] text-base leading-relaxed text-ink-700 lg:mt-8"
-            />
-          )}
-        </div>
-      </section>
+      <PageHero
+        title={page.heading}
+        lede={paras.length > 0 ? paras[0] : <Prose text={page.intro} className="space-y-0" />}
+        more={paras.slice(1).map((p) => (
+          <Prose key={p} text={p} className="space-y-0" />
+        ))}
+      />
 
       <Section>
         <p className="mb-6 text-sm text-ink-600">{page.instruction}</p>
