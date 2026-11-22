@@ -31,17 +31,26 @@ export async function verifySessionToken(token) {
     const { payload } = await jwtVerify(token, sessionKey(), {
       algorithms: ['HS256']
     });
-    return { id: payload.id, email: payload.email, name: payload.name ?? null };
+    return {
+      id: payload.id,
+      email: payload.email,
+      name: payload.name ?? null,
+      mustChange: payload.mustChange === true
+    };
   } catch {
     return null;
   }
 }
 
+// The path a session flagged with mustChange is confined to.
+export const CHANGE_PASSWORD_PATH = '/admin/change-password';
+
 export async function createSession(user) {
   const token = await new SignJWT({
     id: user.id,
     email: user.email,
-    name: user.name ?? null
+    name: user.name ?? null,
+    mustChange: user.mustChange === true
   })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -69,11 +78,18 @@ export async function getSession() {
   return verifySessionToken(token);
 }
 
-export async function requireAdmin() {
+// A session still on its temporary password can do nothing but change it:
+// every console page and admin action lands on the change-password page
+// unless the caller opts in with allowPasswordChange.
+export async function requireAdmin({ allowPasswordChange = false } = {}) {
   const session = await getSession();
   if (!session) {
     const { redirect } = await import('next/navigation');
     redirect('/admin/login');
+  }
+  if (session.mustChange && !allowPasswordChange) {
+    const { redirect } = await import('next/navigation');
+    redirect(CHANGE_PASSWORD_PATH);
   }
   return session;
 }

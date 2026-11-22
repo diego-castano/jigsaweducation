@@ -5,6 +5,21 @@ so `git log` and this file cross-reference. Newest first.
 
 ---
 
+## 2026-11-22: Forced password change on first sign-in
+
+`admin_users.must_change_password` (added in `scripts/migrate.mjs`, already
+applied in production). Login copies the flag into the session JWT
+(`mustChange`); `proxy.js` sends a flagged session to `/admin/change-password`
+from any admin route, and `requireAdmin()` blocks every console page and admin
+action unless called with `allowPasswordChange`. The page reuses
+`changePassword` (temporary password, new password of 10+ characters, must
+differ), which clears the flag, reissues the session and opens the console.
+Becky's account is flagged. `feedback/round-4/tools/add-admin.mjs` flags new
+accounts; `tools/test-forced-change.mjs` is the end-to-end check (it restores
+the account it uses).
+
+---
+
 ## 2026-11-20: Round 4, Kara's email of 20 November and Becky's tracked changes
 
 Working copies in `feedback/round-4/` (gitignored): the sitemap doc exported as

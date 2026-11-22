@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { query } from '../../lib/db';
 import {
+  CHANGE_PASSWORD_PATH,
   createSession,
   destroySession,
   hashPassword,
@@ -71,7 +72,7 @@ export async function login(formData) {
   }
 
   const { rows } = await query(
-    'select id, email, name, password_hash from admin_users where lower(email) = $1',
+    'select id, email, name, password_hash, must_change_password from admin_users where lower(email) = $1',
     [email]
   );
   const user = rows[0];
@@ -83,11 +84,13 @@ export async function login(formData) {
   }
 
   attempts.delete(key);
-  await createSession(user);
+  const mustChange = user.must_change_password === true;
+  await createSession({ ...user, mustChange });
   await query('update admin_users set last_login_at = now() where id = $1', [
     user.id
   ]);
 
+  if (mustChange) redirect(CHANGE_PASSWORD_PATH);
   redirect(SAFE_FROM.test(from) ? from : '/admin');
 }
 
@@ -97,7 +100,7 @@ export async function logout() {
 }
 
 export async function changePassword(formData) {
-  const session = await requireAdmin();
+  const session = await requireAdmin({ allowPasswordChange: true });
   const current = String(formData.get('currentPassword') ?? '');
   const next = String(formData.get('newPassword') ?? '');
   const confirm = String(formData.get('confirmPassword') ?? '');
@@ -107,6 +110,9 @@ export async function changePassword(formData) {
   }
   if (next !== confirm) {
     return { error: 'The new passwords do not match.' };
+  }
+  if (next === current) {
+    return { error: 'Choose a password different from your current one.' };
   }
 
   const { rows } = await query(
@@ -118,10 +124,17 @@ export async function changePassword(formData) {
     return { error: 'Your current password is incorrect.' };
   }
 
-  await query('update admin_users set password_hash = $1 where id = $2', [
-    await hashPassword(next),
-    session.id
-  ]);
+  await query(
+    'update admin_users set password_hash = $1, must_change_password = false where id = $2',
+    [await hashPassword(next), session.id]
+  );
+
+  // A forced change lifts the lock: reissue the session without the flag and
+  // open the console.
+  if (session.mustChange) {
+    await createSession({ id: session.id, email: session.email, name: session.name, mustChange: false });
+    redirect('/admin');
+  }
 
   return { success: 'Password updated.' };
 }

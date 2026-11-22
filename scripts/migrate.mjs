@@ -51,6 +51,10 @@ const STATEMENTS = [
     last_login_at timestamptz
   )`,
 
+  // Accounts created with a temporary password must pick their own on first
+  // sign-in; the console stays locked until they do.
+  `alter table admin_users add column if not exists must_change_password boolean not null default false`,
+
   `create table if not exists revisions (
     id uuid primary key default gen_random_uuid(),
     target_type text,

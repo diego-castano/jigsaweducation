@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { SESSION_COOKIE, verifySessionToken } from './src/lib/auth';
+import { CHANGE_PASSWORD_PATH, SESSION_COOKIE, verifySessionToken } from './src/lib/auth';
 
 // Next 16 renamed this convention to proxy.js; middleware.js still runs
 // unchanged and the rename is a mechanical follow-up when the deprecation
@@ -13,6 +13,9 @@ export async function proxy(request) {
 
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   const session = token ? await verifySessionToken(token) : null;
+  if (session?.mustChange && pathname !== CHANGE_PASSWORD_PATH) {
+    return NextResponse.redirect(new URL(CHANGE_PASSWORD_PATH, request.url));
+  }
   if (session) return NextResponse.next();
 
   const loginUrl = new URL('/admin/login', request.url);
